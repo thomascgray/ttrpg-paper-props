@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+
+.column-count-1 {
+  column-count: 1;
+}
+.column-count-2 {
+  column-count: 2;
+}
+.column-count-3 {
+  column-count: 3;
+}
+.column-count-4 {
+  column-count: 4;
+}
+
+.newspaper-markdown {
+  @apply prose;
+  @apply max-w-none;
+}
+
+.newspaper-markdown > blockquote {
+  border-color: #4b5563;
+}
+
+.newspaper-markdown h2,
+h3,
+h4 {
+  margin-top: 1em !important;
+}
