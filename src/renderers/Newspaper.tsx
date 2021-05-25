@@ -1,9 +1,9 @@
 import React from "react";
-import { PAPER_TYPES } from "../config";
-import ReactMarkdown from "react-markdown";
 // @ts-ignore
 import { Textfit } from "react-textfit";
 import classNames from "classnames";
+import Markdown from "markdown-to-jsx";
+import { PAPER_TYPES } from "../config";
 
 export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
   return (
@@ -53,7 +53,7 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
         </p>
       )}
 
-      <ReactMarkdown
+      <Markdown
         className={classNames(
           `text-justify font-serif copy-markdown column-count-${props.main_copy_columns}`,
           {
@@ -62,7 +62,7 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
         )}
       >
         {props.main_copy}
-      </ReactMarkdown>
+      </Markdown>
     </div>
   );
 };

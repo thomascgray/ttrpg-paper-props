@@ -1,7 +1,7 @@
 import React from "react";
-import { PAPER_TYPES } from "../config";
-import ReactMarkdown from "react-markdown";
 import classNames from "classnames";
+import Markdown from "markdown-to-jsx";
+import { PAPER_TYPES } from "../config";
 
 export const NewspaperClipping = (
   props: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]
@@ -17,7 +17,7 @@ export const NewspaperClipping = (
     >
       <div className="flex h-full items-center border-2 border-black border-t-0 border-b-0 mx-10 px-8">
         <div className="space-y-8">
-          <ReactMarkdown
+          <Markdown
             className={classNames(
               "font-serif text-justify copy-markdown clipping-markdown",
               {
@@ -26,11 +26,11 @@ export const NewspaperClipping = (
             )}
           >
             {props.prefix_copy}
-          </ReactMarkdown>
-          <ReactMarkdown className="font-serif text-justify copy-markdown clipping-markdown">
+          </Markdown>
+          <Markdown className="font-serif text-justify copy-markdown clipping-markdown">
             {props.main_copy}
-          </ReactMarkdown>
-          <ReactMarkdown
+          </Markdown>
+          <Markdown
             className={classNames(
               "font-serif text-justify copy-markdown clipping-markdown",
               {
@@ -39,7 +39,7 @@ export const NewspaperClipping = (
             )}
           >
             {props.suffix_copy}
-          </ReactMarkdown>
+          </Markdown>
         </div>
       </div>
     </div>
