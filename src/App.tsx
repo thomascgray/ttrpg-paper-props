@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className="flex min-h-full">
-      <div className="form w-1/3 bg-gray-300 p-4">
+      <div className="form w-1/3 bg-gray-300 p-4 z-20">
         <label className="block">
           <span className="block mb-1">Paper Type</span>
           <select
@@ -99,7 +99,7 @@ function App() {
         style={{
           backgroundColor: "#2f3640",
         }}
-        className="render-area w-2/3"
+        className="render-area w-2/3 z-10"
       >
         {selectedPaperType === "NEWSPAPER" && (
           <Newspaper
