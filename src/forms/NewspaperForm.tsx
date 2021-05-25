@@ -1,6 +1,7 @@
 import React from "react";
 import { PAPER_TYPES } from "../config";
 import { PaperTextureSelect } from "../components/PaperTextureSelect";
+import { FontSelector } from "../components/FontSelector";
 
 interface iNewspaperFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER"]["data"];
@@ -75,6 +76,14 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         </div>
       </label>
 
+      <FontSelector
+        label="Title Font"
+        value={props.dataset["title_font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("title_font", newValue);
+        }}
+      />
+
       <label className="block">
         <span className="block mb-1">Banner Text</span>
         <div className="flex">
@@ -114,6 +123,14 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           }}
         />
       </label>
+
+      <FontSelector
+        label="Headline Font"
+        value={props.dataset["headline_font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("headline_font", newValue);
+        }}
+      />
 
       <label className="block">
         <span className="block mb-1">Quote / Call Out</span>

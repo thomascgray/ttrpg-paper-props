@@ -11,7 +11,7 @@ import { PAPER_TYPES } from "./config";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("WANTED_POSTER");
+    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 

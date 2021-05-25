@@ -6,8 +6,11 @@ export const PAPER_TYPES = {
       page_width_percentage: 80,
       paper_texture: "grey",
       title: "THE LOREM IPSUM",
+      title_font: "font-sans",
       banner_text: "VOL DLXX",
       headline: "MORBI TEMPUS MOLLIS IPSUM AT!",
+      headline_font: "font-serif",
+
       quote:
         "Maecenas molestie ac, erat sed ultrices. Ut in vehicula est, ut malesuada eros! Nunc condimentum, aliquet ante nec venenatis.",
       main_copy: `Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. 
