@@ -4,6 +4,7 @@ export const PAPER_TYPES = {
     data: {
       rotation_degrees: 2,
       page_width_percentage: 80,
+      zoom: 1,
       paper_texture: "grey",
       title: "THE LOREM IPSUM",
       title_font: "font-sans",

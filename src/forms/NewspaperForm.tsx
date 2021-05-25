@@ -14,6 +14,23 @@ interface iNewspaperFormProps {
 export const NewspaperForm = (props: iNewspaperFormProps) => {
   return (
     <div className="space-y-4">
+      <label className="block w-1/2 mr-2">
+        <span className="block mb-1">
+          Zoom: <span className="font-bold">{props.dataset["zoom"]}</span>
+        </span>
+        <input
+          className="w-full cursor-pointer"
+          type="range"
+          value={props.dataset["zoom"]}
+          onChange={(e) => {
+            props.handleDataChange("zoom", e.target.value);
+          }}
+          step="0.05"
+          min="0.1"
+          max="1.9"
+        />
+      </label>
+
       <div className="flex">
         <label className="block w-1/2 mr-2">
           <span className="block mb-1">
