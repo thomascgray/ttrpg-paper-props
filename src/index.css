@@ -56,23 +56,23 @@ h4 {
 }
 
 .paper-grey {
-  background-image: url("textures/paper-grey.jpg");
+  background-image: url("/textures/paper-grey.jpg");
 }
 
 .paper-beige {
-  background-image: url("textures/paper-beige.jpg");
+  background-image: url("/textures/paper-beige.jpg");
 }
 
 .paper-cream {
-  background-image: url("textures/paper-cream.jpg");
+  background-image: url("/textures/paper-cream.jpg");
 }
 
 .paper-red {
-  background-image: url("textures/paper-red.jpg");
+  background-image: url("/textures/paper-red.jpg");
 }
 
 .paper-blue {
-  background-image: url("textures/paper-blue.jpg");
+  background-image: url("/textures/paper-blue.jpg");
 }
 
 .font-serif {
