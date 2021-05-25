@@ -55,7 +55,37 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
       </div>
 
       <label className="block">
-        <span className="block mb-1">Additional Banner Texts</span>
+        <span className="block mb-1">Paper Texture</span>
+        <div className="flex">
+          <select
+            value={props.dataset["paper_texture"]}
+            className="p-2 text-lg w-full"
+            onChange={(e) => {
+              props.handleDataChange("paper_texture", e.target.value);
+            }}
+          >
+            <option value="grey">Grey</option>
+            <option value="beige">Beige</option>
+            <option value="cream">Cream</option>
+          </select>
+        </div>
+      </label>
+
+      <label className="block">
+        <span className="block mb-1">Title</span>
+        <div className="flex">
+          <input
+            value={props.dataset["title"]}
+            className="p-2 text-lg w-full"
+            onChange={(e) => {
+              props.handleDataChange("title", e.target.value);
+            }}
+          />
+        </div>
+      </label>
+
+      <label className="block">
+        <span className="block mb-1">Banner Text</span>
         <div className="flex">
           <input
             value={props.dataset["banner_text"]}
@@ -79,19 +109,6 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             }}
             min="2018-01-01"
             max="2018-12-31"
-          />
-        </div>
-      </label>
-
-      <label className="block">
-        <span className="block mb-1">Title</span>
-        <div className="flex">
-          <input
-            value={props.dataset["title"]}
-            className="p-2 text-lg w-full"
-            onChange={(e) => {
-              props.handleDataChange("title", e.target.value);
-            }}
           />
         </div>
       </label>
@@ -161,6 +178,20 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           min="1"
           max="4"
         />
+      </label>
+
+      <label className="block">
+        <span className="block mb-1">Is Main Copy Blurry?</span>
+        <div className="flex">
+          <input
+            type="checkbox"
+            checked={props.dataset["is_main_copy_blurry"]}
+            className="p-2 ml-1 mt-1 transform scale-150"
+            onChange={(e) => {
+              props.handleDataChange("is_main_copy_blurry", e.target.checked);
+            }}
+          />
+        </div>
       </label>
     </div>
   );

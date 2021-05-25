@@ -20,17 +20,61 @@ body {
   column-count: 4;
 }
 
-.newspaper-markdown {
+.copy-markdown {
   @apply prose;
+  @apply prose-sm;
   @apply max-w-none;
 }
 
-.newspaper-markdown > blockquote {
+.copy-markdown > blockquote {
   border-color: #4b5563;
 }
 
-.newspaper-markdown h2,
+.copy-markdown h2,
 h3,
 h4 {
   margin-top: 1em !important;
+}
+
+.clipping-markdown img {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.clipping-markdown h1,
+h2,
+h3,
+h4 {
+  text-align: center !important;
+}
+
+.blurry {
+  color: transparent;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -webkit-filter: blur(3px); /* Safari 6.0 - 9.0 */
+  filter: blur(3px);
+}
+
+.paper-grey {
+  background-image: url("textures/paper-grey.jpg");
+}
+
+.paper-beige {
+  background-image: url("textures/paper-beige.jpg");
+}
+
+.paper-cream {
+  background-image: url("textures/paper-cream.jpg");
+}
+
+.font-alfa-slab-one {
+  font-family: "Alfa Slab One", cursive;
+}
+
+.font-newsreader {
+  font-family: "Newsreader", serif;
+}
+
+.font-noticia-text {
+  font-family: "Noticia Text", serif;
 }

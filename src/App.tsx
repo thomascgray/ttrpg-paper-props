@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Newspaper } from "./renderers/Newspaper";
-import { NewspaperForm } from "./forms/NewspaperForm";
 import { WantedPoster } from "./renderers/WantedPoster";
+import { NewspaperClipping } from "./renderers/NewspaperClipping";
+
+import { NewspaperForm } from "./forms/NewspaperForm";
+import { WantedPosterForm } from "./forms/WantedPosterForm";
+import { NewspaperClippingForm } from "./forms/NewspaperClippingForm";
+
 import { PAPER_TYPES } from "./config";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
+    useState<keyof typeof PAPER_TYPES>("WANTED_POSTER");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -31,8 +36,8 @@ function App() {
   };
 
   return (
-    <div className="flex h-full">
-      <div className="form h-full w-1/3 bg-gray-300 p-4">
+    <div className="flex min-h-full">
+      <div className="form w-1/3 bg-gray-300 p-4">
         <label className="block">
           <span className="block mb-1">Paper Type</span>
           <select
@@ -66,12 +71,44 @@ function App() {
             }}
           />
         )}
+
+        {selectedPaperType === "NEWSPAPER_CLIPPING" && (
+          <NewspaperClippingForm
+            dataset={{
+              ...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]),
+            }}
+            handleDataChange={(key, value) => {
+              handleDataChange(key, value);
+            }}
+          />
+        )}
+
+        {selectedPaperType === "WANTED_POSTER" && (
+          <WantedPosterForm
+            dataset={{
+              ...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"]),
+            }}
+            handleDataChange={(key, value) => {
+              handleDataChange(key, value);
+            }}
+          />
+        )}
       </div>
 
-      <div className="render-area w-2/3 bg-gray-800">
+      <div
+        style={{
+          backgroundColor: "#2f3640",
+        }}
+        className="render-area w-2/3"
+      >
         {selectedPaperType === "NEWSPAPER" && (
           <Newspaper
             {...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"])}
+          />
+        )}
+        {selectedPaperType === "NEWSPAPER_CLIPPING" && (
+          <NewspaperClipping
+            {...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"])}
           />
         )}
         {selectedPaperType === "WANTED_POSTER" && (

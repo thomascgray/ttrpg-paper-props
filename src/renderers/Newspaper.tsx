@@ -3,6 +3,7 @@ import { PAPER_TYPES } from "../config";
 import ReactMarkdown from "react-markdown";
 // @ts-ignore
 import { Textfit } from "react-textfit";
+import classNames from "classnames";
 
 export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
   return (
@@ -11,10 +12,10 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
         transform: `rotate(${props.rotation_degrees}deg)`,
         width: `${props.page_width_percentage}%`,
       }}
-      className="paper transform bg-yellow-50 mx-auto mt-8 px-10 py-10"
+      className={`paper paper-${props.paper_texture} transition transform mx-auto mt-8 px-10 py-10`}
     >
       <div className="">
-        <Textfit mode="single" max="35">
+        <Textfit mode="single" max={35}>
           <h1 className="font-sans font-black text-center">{props.title}</h1>
         </Textfit>
       </div>
@@ -22,14 +23,9 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
       <hr className="border-solid border-2 border-gray-600" />
 
       <div className="flex items-center justify-between py-2">
-        {props.banner_text !== "" &&
-          props.banner_text.split("::").map((text) => {
-            return (
-              <span className="text-sm text-gray-800 font-bold font-serif">
-                {text}
-              </span>
-            );
-          })}
+        <span className="text-sm text-gray-800 font-bold font-serif">
+          {props.banner_text}
+        </span>
 
         <span className="text-sm uppercase text-gray-800 font-bold font-serif">
           {new Date(props.date).toLocaleDateString("en-US", {
@@ -43,7 +39,7 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
 
       <hr className="border-solid border-2 border-gray-600" />
 
-      <Textfit mode="single" max="120">
+      <Textfit mode="single" max={120}>
         <h2 className="font-semibold font-serif text-justify">
           {props.headline}
         </h2>
@@ -58,7 +54,12 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
       )}
 
       <ReactMarkdown
-        className={`text-justify font-serif newspaper-markdown column-count-${props.main_copy_columns}`}
+        className={classNames(
+          `text-justify font-serif copy-markdown column-count-${props.main_copy_columns}`,
+          {
+            blurry: props.is_main_copy_blurry,
+          }
+        )}
       >
         {props.main_copy}
       </ReactMarkdown>
