@@ -67,6 +67,24 @@ h4 {
   background-image: url("textures/paper-cream.jpg");
 }
 
+.paper-red {
+  background-image: url("textures/paper-red.jpg");
+}
+
+.paper-blue {
+  background-image: url("textures/paper-blue.jpg");
+}
+
+.font-serif {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.font-sans {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 .font-alfa-slab-one {
   font-family: "Alfa Slab One", cursive;
 }

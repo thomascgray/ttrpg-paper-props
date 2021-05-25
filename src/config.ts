@@ -56,7 +56,7 @@ Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt
       rotation_degrees: 1,
       page_width: 400,
       page_height: 600,
-      paper_texture: "grey",
+      paper_texture: "cream",
       prefix_copy:
         "Nam sed tincidunt velit. Ut ac ultricies magna. Sed gravida metus est, eget bibendum purus pharetra sed. Maecenas scelerisque mauris ut ligula vestibulum auctor. Nulla pharetra arcu eros, eu fermentum tortor aliquet ac. In ut arcu accumsan, dictum massa id, pretium dui.",
       main_copy: `## Aenean ac semper
@@ -76,14 +76,16 @@ Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Pro
   WANTED_POSTER: {
     name: "Wanted Poster",
     data: {
-      rotation_degrees: -1,
+      rotation_degrees: 1,
       page_width: 500,
       paper_texture: "beige",
       image_url: "https://via.placeholder.com/400x500",
       headline: "WANTED!",
-      headline_font: "font-alfa-slab-one",
+      headline_font: "font-serif",
       subtitle: "Etiam tempor, massa blandit cursus efficitur",
+      subtitle_font: "font-serif",
       subtitle2: "DEAD OR ALIVE",
+      subtitle2_font: "font-sans",
     },
   },
 };

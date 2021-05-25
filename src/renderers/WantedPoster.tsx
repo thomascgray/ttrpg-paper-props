@@ -27,15 +27,23 @@ export const WantedPoster = (
         </h1>
       </Textfit>
       <Textfit mode="single" max={18}>
-        <h2 className="mt-4 font-serif font-black text-center">
+        <h2
+          className={`mt-4 font-serif font-black text-center ${props.subtitle_font}`}
+        >
           {props.subtitle}
         </h2>
       </Textfit>
 
-      <img className="mx-auto mt-6" src={props.image_url} alt="" />
+      <img
+        className="border-4 border-solid border-gray-900 mx-auto mt-6"
+        src={props.image_url}
+        alt=""
+      />
 
       <Textfit mode="single" max={50}>
-        <h1 className="mt-4 font-serif font-black text-center">
+        <h1
+          className={`mt-4 font-serif font-black text-center ${props.subtitle2_font}`}
+        >
           {props.subtitle2}
         </h1>
       </Textfit>

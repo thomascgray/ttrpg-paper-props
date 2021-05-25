@@ -1,5 +1,6 @@
 import React from "react";
 import { PAPER_TYPES } from "../config";
+import { PaperTextureSelect } from "../components/PaperTextureSelect";
 
 interface iNewspaperFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER"]["data"];
@@ -54,22 +55,12 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         </label>
       </div>
 
-      <label className="block">
-        <span className="block mb-1">Paper Texture</span>
-        <div className="flex">
-          <select
-            value={props.dataset["paper_texture"]}
-            className="p-2 text-lg w-full"
-            onChange={(e) => {
-              props.handleDataChange("paper_texture", e.target.value);
-            }}
-          >
-            <option value="grey">Grey</option>
-            <option value="beige">Beige</option>
-            <option value="cream">Cream</option>
-          </select>
-        </div>
-      </label>
+      <PaperTextureSelect
+        value={props.dataset["paper_texture"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("paper_texture", newValue);
+        }}
+      />
 
       <label className="block">
         <span className="block mb-1">Title</span>

@@ -1,5 +1,7 @@
 import React from "react";
 import { PAPER_TYPES } from "../config";
+import { PaperTextureSelect } from "../components/PaperTextureSelect";
+import { FontSelector } from "../components/FontSelector";
 
 interface iWantedPosterFormProps {
   dataset: typeof PAPER_TYPES["WANTED_POSTER"]["data"];
@@ -52,22 +54,12 @@ export const WantedPosterForm = (props: iWantedPosterFormProps) => {
         </label>
       </div>
 
-      <label className="block">
-        <span className="block mb-1">Paper Texture</span>
-        <div className="flex">
-          <select
-            value={props.dataset["paper_texture"]}
-            className="p-2 text-lg w-full"
-            onChange={(e) => {
-              props.handleDataChange("paper_texture", e.target.value);
-            }}
-          >
-            <option value="grey">Grey</option>
-            <option value="beige">Beige</option>
-            <option value="cream">Cream</option>
-          </select>
-        </div>
-      </label>
+      <PaperTextureSelect
+        value={props.dataset["paper_texture"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("paper_texture", newValue);
+        }}
+      />
 
       <label className="block">
         <span className="block mb-1">Image URL</span>
@@ -95,22 +87,13 @@ export const WantedPosterForm = (props: iWantedPosterFormProps) => {
         </div>
       </label>
 
-      <label className="block">
-        <span className="block mb-1">Headline Font</span>
-        <div className="flex">
-          <select
-            value={props.dataset["headline_font"]}
-            className="p-2 text-lg w-full"
-            onChange={(e) => {
-              props.handleDataChange("headline_font", e.target.value);
-            }}
-          >
-            <option value="font-alfa-slab-one">Alfa Slab One</option>
-            <option value="font-newsreader">Newsreader</option>
-            <option value="font-noticia-text">Noticia Text</option>
-          </select>
-        </div>
-      </label>
+      <FontSelector
+        label="Headline Font"
+        value={props.dataset["headline_font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("headline_font", newValue);
+        }}
+      />
 
       <label className="block">
         <span className="block mb-1">Subtitle</span>
@@ -125,6 +108,14 @@ export const WantedPosterForm = (props: iWantedPosterFormProps) => {
         </div>
       </label>
 
+      <FontSelector
+        label="Subtitle Font"
+        value={props.dataset["subtitle_font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("subtitle_font", newValue);
+        }}
+      />
+
       <label className="block">
         <span className="block mb-1">Subtitle 2</span>
         <div className="flex">
@@ -137,6 +128,14 @@ export const WantedPosterForm = (props: iWantedPosterFormProps) => {
           />
         </div>
       </label>
+
+      <FontSelector
+        label="Subtitle 2 Font"
+        value={props.dataset["subtitle2_font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("subtitle2_font", newValue);
+        }}
+      />
     </div>
   );
 };
