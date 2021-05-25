@@ -2,7 +2,7 @@ export const PAPER_TYPES = {
   NEWSPAPER: {
     name: "Newspaper",
     data: {
-      rotation_degrees: 1,
+      rotation_degrees: 2,
       page_width_percentage: 80,
       paper_texture: "grey",
       title: "THE LOREM IPSUM",
@@ -56,7 +56,7 @@ Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt
   NEWSPAPER_CLIPPING: {
     name: "Newspaper Clipping",
     data: {
-      rotation_degrees: 1,
+      rotation_degrees: 2,
       page_width: 400,
       page_height: 600,
       paper_texture: "cream",
@@ -79,7 +79,7 @@ Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Pro
   WANTED_POSTER: {
     name: "Wanted Poster",
     data: {
-      rotation_degrees: 1,
+      rotation_degrees: 2,
       page_width: 500,
       paper_texture: "beige",
       image_url: "https://via.placeholder.com/400x500",

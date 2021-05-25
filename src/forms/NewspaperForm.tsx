@@ -29,9 +29,9 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             onChange={(e) => {
               props.handleDataChange("rotation_degrees", e.target.value);
             }}
-            step="1"
-            min="-10"
-            max="10"
+            step="2"
+            min="-20"
+            max="20"
           />
         </label>
 

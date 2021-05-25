@@ -19,7 +19,7 @@ export const NewspaperClipping = (
         <div className="space-y-8">
           <Markdown
             className={classNames(
-              "font-serif text-justify copy-markdown clipping-markdown",
+              "block font-serif text-justify copy-markdown clipping-markdown",
               {
                 blurry: props.is_prefix_blurry,
               }
@@ -27,12 +27,12 @@ export const NewspaperClipping = (
           >
             {props.prefix_copy}
           </Markdown>
-          <Markdown className="font-serif text-justify copy-markdown clipping-markdown">
+          <Markdown className="block font-serif text-justify copy-markdown clipping-markdown">
             {props.main_copy}
           </Markdown>
           <Markdown
             className={classNames(
-              "font-serif text-justify copy-markdown clipping-markdown",
+              "block font-serif text-justify copy-markdown clipping-markdown",
               {
                 blurry: props.is_suffix_blurry,
               }
