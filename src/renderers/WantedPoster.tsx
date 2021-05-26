@@ -11,10 +11,10 @@ export const WantedPoster = (
   return (
     <div
       style={{
-        transform: `rotate(${props.rotation_degrees}deg)`,
+        transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
         width: `${props.page_width}px`,
       }}
-      className={`paper transition paper-${props.paper_texture} transform w-4/5 mx-auto mt-8 p-10`}
+      className={`paper transition paper-${props.paper_texture} transform w-4/5 mx-auto p-10`}
     >
       <Textfit mode="single">
         <h1

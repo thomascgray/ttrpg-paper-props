@@ -14,64 +14,25 @@ interface iNewspaperFormProps {
 export const NewspaperForm = (props: iNewspaperFormProps) => {
   return (
     <div className="space-y-4">
-      <label className="block w-1/2 mr-2">
+      <label className="block">
         <span className="block mb-1">
-          Zoom: <span className="font-bold">{props.dataset["zoom"]}</span>
+          Page Width:{" "}
+          <span className="font-bold">
+            {props.dataset["page_width_percentage"]}%
+          </span>
         </span>
         <input
           className="w-full cursor-pointer"
           type="range"
-          value={props.dataset["zoom"]}
+          value={props.dataset["page_width_percentage"]}
           onChange={(e) => {
-            props.handleDataChange("zoom", e.target.value);
+            props.handleDataChange("page_width_percentage", e.target.value);
           }}
-          step="0.05"
-          min="0.1"
-          max="1.9"
+          step="1"
+          min="0"
+          max="100"
         />
       </label>
-
-      <div className="flex">
-        <label className="block w-1/2 mr-2">
-          <span className="block mb-1">
-            Rotation:{" "}
-            <span className="font-bold">
-              {props.dataset["rotation_degrees"]}°
-            </span>
-          </span>
-          <input
-            className="w-full cursor-pointer"
-            type="range"
-            value={props.dataset["rotation_degrees"]}
-            onChange={(e) => {
-              props.handleDataChange("rotation_degrees", e.target.value);
-            }}
-            step="2"
-            min="-20"
-            max="20"
-          />
-        </label>
-
-        <label className="block w-1/2 ml-2">
-          <span className="block mb-1">
-            Page Width:{" "}
-            <span className="font-bold">
-              {props.dataset["page_width_percentage"]}%
-            </span>
-          </span>
-          <input
-            className="w-full cursor-pointer"
-            type="range"
-            value={props.dataset["page_width_percentage"]}
-            onChange={(e) => {
-              props.handleDataChange("page_width_percentage", e.target.value);
-            }}
-            step="1"
-            min="0"
-            max="100"
-          />
-        </label>
-      </div>
 
       <PaperTextureSelect
         value={props.dataset["paper_texture"]}

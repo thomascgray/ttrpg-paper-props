@@ -8,6 +8,7 @@ import { WantedPosterForm } from "./forms/WantedPosterForm";
 import { NewspaperClippingForm } from "./forms/NewspaperClippingForm";
 
 import { PAPER_TYPES } from "./config";
+import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
@@ -37,69 +38,91 @@ function App() {
 
   return (
     <div className="flex min-h-full">
-      <div className="form w-1/3 bg-gray-300 p-4 z-20">
-        <label className="block">
-          <span className="block mb-1">Paper Type</span>
-          <select
-            value={selectedPaperType}
-            className="p-2 text-lg w-full"
-            onChange={(e) => {
-              setSelectedPaperType(e.target.value as keyof typeof PAPER_TYPES);
-              refreshPaperData(e.target.value as keyof typeof PAPER_TYPES);
-            }}
-          >
-            {Object.keys(PAPER_TYPES).map((typeKey) => {
-              const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
-              return (
-                <option key={typeKey} value={typeKey}>
-                  {p.name}
-                </option>
-              );
-            })}
-          </select>
-        </label>
+      <div
+        style={{
+          height: "100vh",
+          minWidth: "400px",
+        }}
+        className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
+      >
+        <div className="bg-gray-400 p-4">
+          <label className="block mb-4">
+            <span className="block mb-1">Paper Type</span>
+            <select
+              value={selectedPaperType}
+              className="p-2 text-lg w-full"
+              onChange={(e) => {
+                setSelectedPaperType(
+                  e.target.value as keyof typeof PAPER_TYPES
+                );
+                refreshPaperData(e.target.value as keyof typeof PAPER_TYPES);
+              }}
+            >
+              {Object.keys(PAPER_TYPES).map((typeKey) => {
+                const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
+                return (
+                  <option key={typeKey} value={typeKey}>
+                    {p.name}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
 
-        <hr className="border-solid my-8 border-2 border-white" />
-
-        {selectedPaperType === "NEWSPAPER" && (
-          <NewspaperForm
-            dataset={{
-              ...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"]),
+          <RotateAndZoomControls
+            zoomValue={paperData.zoom}
+            rotateValue={paperData.rotation_degrees}
+            onZoomUpdate={(newZoom) => {
+              handleDataChange("zoom", newZoom);
             }}
-            handleDataChange={(key, value) => {
-              handleDataChange(key, value);
+            onRotateUpdate={(newRotate) => {
+              handleDataChange("rotation_degrees", newRotate);
             }}
           />
-        )}
+        </div>
 
-        {selectedPaperType === "NEWSPAPER_CLIPPING" && (
-          <NewspaperClippingForm
-            dataset={{
-              ...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]),
-            }}
-            handleDataChange={(key, value) => {
-              handleDataChange(key, value);
-            }}
-          />
-        )}
+        <div className="bg-gray-300 p-4">
+          {selectedPaperType === "NEWSPAPER" && (
+            <NewspaperForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"]),
+              }}
+              handleDataChange={(key, value) => {
+                handleDataChange(key, value);
+              }}
+            />
+          )}
 
-        {selectedPaperType === "WANTED_POSTER" && (
-          <WantedPosterForm
-            dataset={{
-              ...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"]),
-            }}
-            handleDataChange={(key, value) => {
-              handleDataChange(key, value);
-            }}
-          />
-        )}
+          {selectedPaperType === "NEWSPAPER_CLIPPING" && (
+            <NewspaperClippingForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]),
+              }}
+              handleDataChange={(key, value) => {
+                handleDataChange(key, value);
+              }}
+            />
+          )}
+
+          {selectedPaperType === "WANTED_POSTER" && (
+            <WantedPosterForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"]),
+              }}
+              handleDataChange={(key, value) => {
+                handleDataChange(key, value);
+              }}
+            />
+          )}
+        </div>
       </div>
 
       <div
         style={{
           backgroundColor: "#2f3640",
+          height: "100vh",
         }}
-        className="render-area w-2/3 z-10"
+        className="render-area w-full z-10 overflow-y-scroll py-48"
       >
         {selectedPaperType === "NEWSPAPER" && (
           <Newspaper

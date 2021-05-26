@@ -13,7 +13,7 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
           width: `${props.page_width_percentage}%`,
         }}
-        className={`paper transition paper-${props.paper_texture} transition transform mx-auto mt-24 px-10 py-10`}
+        className={`paper transition paper-${props.paper_texture} transition transform mx-auto px-10 py-10`}
       >
         <div className="">
           <Textfit mode="single" max={35}>

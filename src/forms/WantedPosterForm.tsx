@@ -14,45 +14,23 @@ interface iWantedPosterFormProps {
 export const WantedPosterForm = (props: iWantedPosterFormProps) => {
   return (
     <div className="space-y-4">
-      <div className="flex">
-        <label className="block w-1/2 mr-2">
-          <span className="block mb-1">
-            Rotation:{" "}
-            <span className="font-bold">
-              {props.dataset["rotation_degrees"]}°
-            </span>
-          </span>
-          <input
-            className="w-full cursor-pointer"
-            type="range"
-            value={props.dataset["rotation_degrees"]}
-            onChange={(e) => {
-              props.handleDataChange("rotation_degrees", e.target.value);
-            }}
-            step="2"
-            min="-20"
-            max="20"
-          />
-        </label>
-
-        <label className="block w-1/2 ml-2">
-          <span className="block mb-1">
-            Page Width:{" "}
-            <span className="font-bold">{props.dataset["page_width"]}px</span>
-          </span>
-          <input
-            className="w-full cursor-pointer"
-            type="range"
-            value={props.dataset["page_width"]}
-            onChange={(e) => {
-              props.handleDataChange("page_width", e.target.value);
-            }}
-            step="5"
-            min="350"
-            max="800"
-          />
-        </label>
-      </div>
+      <label className="block">
+        <span className="block mb-1">
+          Page Width:{" "}
+          <span className="font-bold">{props.dataset["page_width"]}px</span>
+        </span>
+        <input
+          className="w-full cursor-pointer"
+          type="range"
+          value={props.dataset["page_width"]}
+          onChange={(e) => {
+            props.handleDataChange("page_width", e.target.value);
+          }}
+          step="5"
+          min="350"
+          max="800"
+        />
+      </label>
 
       <PaperTextureSelect
         value={props.dataset["paper_texture"]}

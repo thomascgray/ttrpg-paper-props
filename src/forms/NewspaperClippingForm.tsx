@@ -16,26 +16,6 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
       <div className="flex">
         <label className="block w-1/2 mr-2">
           <span className="block mb-1">
-            Rotation:{" "}
-            <span className="font-bold">
-              {props.dataset["rotation_degrees"]}°
-            </span>
-          </span>
-          <input
-            className="w-full cursor-pointer"
-            type="range"
-            value={props.dataset["rotation_degrees"]}
-            onChange={(e) => {
-              props.handleDataChange("rotation_degrees", e.target.value);
-            }}
-            step="2"
-            min="-20"
-            max="20"
-          />
-        </label>
-
-        <label className="block w-1/2 ml-2">
-          <span className="block mb-1">
             Clipping Width:{" "}
             <span className="font-bold">{props.dataset["page_width"]}px</span>
           </span>
@@ -51,25 +31,25 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
             max="800"
           />
         </label>
-      </div>
 
-      <label className="block w-1/2">
-        <span className="block mb-1">
-          Clipping Height:{" "}
-          <span className="font-bold">{props.dataset["page_height"]}px</span>
-        </span>
-        <input
-          className="w-full cursor-pointer"
-          type="range"
-          value={props.dataset["page_height"]}
-          onChange={(e) => {
-            props.handleDataChange("page_height", e.target.value);
-          }}
-          step="5"
-          min="250"
-          max="800"
-        />
-      </label>
+        <label className="block w-1/2">
+          <span className="block mb-1">
+            Clipping Height:{" "}
+            <span className="font-bold">{props.dataset["page_height"]}px</span>
+          </span>
+          <input
+            className="w-full cursor-pointer"
+            type="range"
+            value={props.dataset["page_height"]}
+            onChange={(e) => {
+              props.handleDataChange("page_height", e.target.value);
+            }}
+            step="5"
+            min="250"
+            max="800"
+          />
+        </label>
+      </div>
 
       <PaperTextureSelect
         value={props.dataset["paper_texture"]}
