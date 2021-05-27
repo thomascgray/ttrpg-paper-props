@@ -66,7 +66,7 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
           props.handleDataChange("font_weight", newValue);
         }}
       />
-
+{/* 
       <label className="block">
         <span className="block mb-1">
           <span>Prefix Copy</span>
@@ -91,7 +91,7 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
             }}
           />
         </div>
-      </label>
+      </label> */}
 
       <label className="block">
         <span className="block mb-1">
@@ -119,7 +119,7 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
         </div>
       </label>
 
-      <label className="block">
+      {/* <label className="block">
         <span className="block mb-1">
           <span>Suffix Copy</span>
           <span className="ml-2 italic">
@@ -143,7 +143,7 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
             }}
           />
         </div>
-      </label>
+      </label> */}
     </div>
   );
 };

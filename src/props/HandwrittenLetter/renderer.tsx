@@ -16,21 +16,21 @@ export const HandwrittenLetter = (
     >
       <div className="flex h-full items-center mx-10 px-8 py-12">
         <div className="space-y-8">
-          <Markdown
+          {/* <Markdown
             className={`block ${props.font} ${props.font_size} ${props.font_weight} copy-markdown`}
           >
             {props.prefix}
-          </Markdown>
+          </Markdown> */}
           <Markdown
             className={`block ${props.font} ${props.font_size} ${props.font_weight} copy-markdown`}
           >
             {props.main_copy}
           </Markdown>
-          <Markdown
+          {/* <Markdown
             className={`block ${props.font} ${props.font_size} ${props.font_weight} copy-markdown`}
           >
             {props.suffix}
-          </Markdown>
+          </Markdown> */}
         </div>
       </div>
     </div>
