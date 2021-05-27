@@ -7,7 +7,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
     <div className="relative mx-auto flex justify-around">
       <div
         style={{
-          transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
+          transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
           width: `${props.page_width}px`,
           height: `${props.page_height}px`,
         }}
@@ -70,7 +70,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
       </div>
       <div
         style={{
-          transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
+          transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
           width: `${props.page_width}px`,
           height: `${props.page_height}px`,
         }}
