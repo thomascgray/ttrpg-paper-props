@@ -22,9 +22,9 @@ export const RotateAndZoomControls = (props: iRotateAndZoomControlsProps) => {
             onChange={(e) => {
               props.onZoomUpdate(e.target.value);
             }}
-            step="0.05"
-            min="0.1"
-            max="1.9"
+            step="0.25"
+            min="0"
+            max="2"
           />
         </label>
 

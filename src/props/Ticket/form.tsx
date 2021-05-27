@@ -4,6 +4,9 @@ import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { FontSizeSelector } from "../../components/FontSizeSelector";
 import { FontWeightSelector } from "../../components/FontWeightSelector";
+import { BorderRadiusSelector } from "../../components/BorderRadiusSelector";
+import { TextInput } from "../../components/TextInput";
+import { CheckboxInput } from "../../components/CheckboxInput";
 
 interface iTicketFormProps {
   dataset: typeof PAPER_TYPES["TICKET"]["data"];
@@ -20,9 +23,7 @@ export const TicketForm = (props: iTicketFormProps) => {
         <label className="block mr-2">
           <span className="block mb-1">
             Page Width:{" "}
-            <span className="font-bold">
-              {props.dataset["page_width"]}px
-            </span>
+            <span className="font-bold">{props.dataset["page_width"]}px</span>
           </span>
           <input
             className="w-full cursor-pointer"
@@ -31,8 +32,8 @@ export const TicketForm = (props: iTicketFormProps) => {
             onChange={(e) => {
               props.handleDataChange("page_width", e.target.value);
             }}
-            step="5"
-            min="250"
+            step="20"
+            min="240"
             max="800"
           />
         </label>
@@ -40,9 +41,7 @@ export const TicketForm = (props: iTicketFormProps) => {
         <label className="block ml-2">
           <span className="block mb-1">
             Page Height:{" "}
-            <span className="font-bold">
-              {props.dataset["page_height"]}px
-            </span>
+            <span className="font-bold">{props.dataset["page_height"]}px</span>
           </span>
           <input
             className="w-full cursor-pointer"
@@ -51,12 +50,11 @@ export const TicketForm = (props: iTicketFormProps) => {
             onChange={(e) => {
               props.handleDataChange("page_height", e.target.value);
             }}
-            step="5"
-            min="250"
+            step="20"
+            min="240"
             max="800"
           />
         </label>
-
       </div>
 
       <PaperTextureSelect
@@ -66,61 +64,62 @@ export const TicketForm = (props: iTicketFormProps) => {
         }}
       />
 
-      
-{/* 
+      <BorderRadiusSelector
+        label="Rounded Corners"
+        value={props.dataset["rounded_corners"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("rounded_corners", newValue);
+        }}
+      />
+
       <label className="block">
-        <span className="block mb-1">
-          <span>Prefix Copy</span>
-          <span className="ml-2 italic">
-            You can use{" "}
-            <a
-              className="text-blue-400 underline"
-              href="https://www.markdownguide.org/cheat-sheet/"
-            >
-              markdown
-            </a>
-            !
-          </span>
-        </span>
+        <span className="block mb-1">Saw Tooth Borders</span>
         <div className="flex">
-          <textarea
-            value={props.dataset["prefix"]}
-            className="p-2 text-lg w-full"
-            rows={3}
+          <select
+            value={props.dataset["sawtooth_border"]}
+            className={`p-2 text-lg w-full`}
             onChange={(e) => {
-              props.handleDataChange("prefix", e.target.value);
+              props.handleDataChange("sawtooth_border", e.target.value);
             }}
-          />
+          >
+            <option value="sawtooth-border-none">None</option>
+            <option value="sawtooth-border-y">Top & Bottom</option>
+            <option value="sawtooth-border-x">Left & Right</option>
+          </select>
         </div>
-      </label> */}
+      </label>
 
-      
+      <TextInput
+        label="Left Margin Copy"
+        value={props.dataset.left_margin_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("left_margin_copy", newValue);
+        }}
+      />
 
-      {/* <label className="block">
-        <span className="block mb-1">
-          <span>Suffix Copy</span>
-          <span className="ml-2 italic">
-            You can use{" "}
-            <a
-              className="text-blue-400 underline"
-              href="https://www.markdownguide.org/cheat-sheet/"
-            >
-              markdown
-            </a>
-            !
-          </span>
-        </span>
-        <div className="flex">
-          <textarea
-            value={props.dataset["suffix"]}
-            className="p-2 text-lg w-full"
-            rows={3}
-            onChange={(e) => {
-              props.handleDataChange("suffix", e.target.value);
-            }}
-          />
-        </div>
-      </label> */}
+      <CheckboxInput
+        label="Hide Left Margin?"
+        value={props.dataset.hide_left_margin_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("hide_left_margin_copy", newValue);
+        }}
+      />
+
+      <TextInput
+        label="Right Margin Copy"
+        value={props.dataset.right_margin_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("right_margin_copy", newValue);
+        }}
+      />
+
+      <CheckboxInput
+        label="Hide Right Margin?"
+        value={props.dataset.hide_right_margin_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("hide_right_margin_copy", newValue);
+        }}
+      />
     </div>
   );
 };

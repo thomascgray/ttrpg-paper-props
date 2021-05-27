@@ -16,7 +16,7 @@ import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
+    useState<keyof typeof PAPER_TYPES>("TICKET");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -83,8 +83,6 @@ function App() {
               handleDataChange("rotation_degrees", newRotate);
             }}
           />
-
-          
         </div>
 
         <div className="bg-gray-300 p-4">
@@ -132,7 +130,7 @@ function App() {
             />
           )}
 
-{selectedPaperType === "TICKET" && (
+          {selectedPaperType === "TICKET" && (
             <TicketForm
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["TICKET"]["data"]),
@@ -173,9 +171,7 @@ function App() {
           />
         )}
         {selectedPaperType === "TICKET" && (
-          <Ticket
-            {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])}
-          />
+          <Ticket {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])} />
         )}
       </div>
     </div>
