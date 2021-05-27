@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import { PAPER_TYPES } from "../../config";
+import Markdown from "markdown-to-jsx";
 
 export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
-  console.log("props.sawtooth_border", props.sawtooth_border);
   return (
     <div className="relative mx-auto flex justify-around">
       <div
@@ -39,14 +39,18 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                     }}
                     className="block transform rotate-180 ml-3 font-bold"
                   >
-                    {props.left_margin_copy}
+                    <Markdown className="copy-markdown">
+                      {props.left_margin_copy}
+                    </Markdown>
                   </span>
                 </td>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double"
+                  className="border border-gray-900 border-double prose"
                 >
-                  XX 1
+                  <Markdown className="copy-markdown">
+                    {props.top_copy}
+                  </Markdown>
                 </td>
                 <td
                   rowSpan={3}
@@ -63,20 +67,32 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                     }}
                     className="block transform rotate-180 ml-3 font-bold"
                   >
-                    {props.right_margin_copy}
+                    <Markdown className="copy-markdown">
+                      {props.right_margin_copy}
+                    </Markdown>
                   </span>
                 </td>
               </tr>
               <tr>
-                <td className="border border-gray-900 border-double">XX 2</td>
-                <td className="border border-gray-900 border-double">YY 2</td>
+                <td className="border border-gray-900 border-double prose">
+                  <Markdown className="copy-markdown">
+                    {props.middle_left_copy}
+                  </Markdown>
+                </td>
+                <td className="border border-gray-900 border-double prose">
+                  <Markdown className="copy-markdown">
+                    {props.middle_right_copy}
+                  </Markdown>
+                </td>
               </tr>
               <tr>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double"
+                  className="border border-gray-900 border-double prose"
                 >
-                  XX 3
+                  <Markdown className="copy-markdown">
+                    {props.botom_copy}
+                  </Markdown>
                 </td>
               </tr>
             </tbody>

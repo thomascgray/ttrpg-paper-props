@@ -7,6 +7,7 @@ import { FontWeightSelector } from "../../components/FontWeightSelector";
 import { BorderRadiusSelector } from "../../components/BorderRadiusSelector";
 import { TextInput } from "../../components/TextInput";
 import { CheckboxInput } from "../../components/CheckboxInput";
+import { TextArea } from "../../components/TextArea";
 
 interface iTicketFormProps {
   dataset: typeof PAPER_TYPES["TICKET"]["data"];
@@ -102,6 +103,44 @@ export const TicketForm = (props: iTicketFormProps) => {
         value={props.dataset.hide_left_margin_copy}
         onUpdate={(newValue) => {
           props.handleDataChange("hide_left_margin_copy", newValue);
+        }}
+      />
+
+      <TextInput
+        label="Top Copy"
+        value={props.dataset.top_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("top_copy", newValue);
+        }}
+      />
+
+      <div className="flex">
+        <div className="mr-2">
+          <TextInput
+            label="Middle Left Copy"
+            value={props.dataset.middle_left_copy}
+            onUpdate={(newValue) => {
+              props.handleDataChange("middle_left_copy", newValue);
+            }}
+          />
+        </div>
+
+        <div className="ml-2">
+          <TextInput
+            label="Middle Right Copy"
+            value={props.dataset.middle_right_copy}
+            onUpdate={(newValue) => {
+              props.handleDataChange("middle_right_copy", newValue);
+            }}
+          />
+        </div>
+      </div>
+
+      <TextInput
+        label="Bottom Copy"
+        value={props.dataset.botom_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("botom_copy", newValue);
         }}
       />
 
