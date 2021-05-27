@@ -66,15 +66,20 @@ Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt
       page_height: 600,
       prefix_copy:
         "Nam sed tincidunt velit. Ut ac ultricies magna. Sed gravida metus est, eget bibendum purus pharetra sed. Maecenas scelerisque mauris ut ligula vestibulum auctor. Nulla pharetra arcu eros, eu fermentum tortor aliquet ac. In ut arcu accumsan, dictum massa id, pretium dui.",
-      main_copy: `## Aenean ac semper
+      main_copy: `---
 
-![alt text here](https://via.placeholder.com/350x150)
+### Aenean ac semper!
+
+Nulla nisi felis, ultrices nec orci at, sollicitudin viverra mauris. 
+
+Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Proin sed turpis ipsum.
+
+---`,
+      suffix_copy: `## LOREM IPSUM!
 
 Nulla nisi felis, ultrices nec orci at, sollicitudin viverra mauris. 
 
 Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Proin sed turpis ipsum.`,
-      suffix_copy:
-        "Cras tincidunt rhoncus gravida. Nam a sollicitudin risus, consectetur viverra tellus. Mauris tincidunt justo mattis leo viverra vehicula finibus ac eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
 
       is_prefix_blurry: true,
       is_suffix_blurry: true,
@@ -101,7 +106,7 @@ Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Pro
       ...UNIVERSAL_DATA,
       page_width_percentage: 80,
       font_size: "prose-lg",
-      font_weight: "font-indie-flower",
+      font_weight: "font-normal",
       prefix: "To my Dearest,",
       prefix_alignment: "left",
       main_copy: `Dear Lorem Ipsum,
@@ -117,7 +122,22 @@ Nulla scelerisque, sem vel efficitur gravida, nunc velit sagittis sapien, egesta
 Sincerely, Lorem Ipsum`,
       suffix: "Love, Example Name",
       suffix_alignment: "left",
-      font: "font-serif",
+      font: "font-indie-flower",
+    },
+  },
+  TICKET: {
+    name: "Ticket",
+    data: {
+      ...UNIVERSAL_DATA,
+      // page_width_percentage: 80,
+      page_width: 480,
+      page_height: 360,
+      // font_size: "prose-lg",
+      // font_weight: "font-indie-flower",
+      // prefix: "To my Dearest,",
+      // prefix_alignment: "left",
+      
+      // font: "font-serif",
     },
   },
 };

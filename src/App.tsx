@@ -3,14 +3,16 @@ import { Newspaper } from "./props/Newspaper/renderer";
 import { WantedPoster } from "./props/WantedPoster/renderer";
 import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
 import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
+import { Ticket } from "./props/Ticket/renderer";
 
 import { NewspaperForm } from "./props/Newspaper/form";
 import { WantedPosterForm } from "./props/WantedPoster/form";
 import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
+import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
+import { TicketForm } from "./props/Ticket/form";
 
 import { PAPER_TYPES } from "./config";
 import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
-import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
@@ -81,6 +83,8 @@ function App() {
               handleDataChange("rotation_degrees", newRotate);
             }}
           />
+
+          
         </div>
 
         <div className="bg-gray-300 p-4">
@@ -127,6 +131,17 @@ function App() {
               }}
             />
           )}
+
+{selectedPaperType === "TICKET" && (
+            <TicketForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["TICKET"]["data"]),
+              }}
+              handleDataChange={(key, value) => {
+                handleDataChange(key, value);
+              }}
+            />
+          )}
         </div>
       </div>
 
@@ -155,6 +170,11 @@ function App() {
         {selectedPaperType === "HANDWRITTEN_LETTER" && (
           <HandwrittenLetter
             {...(paperData as typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"])}
+          />
+        )}
+        {selectedPaperType === "TICKET" && (
+          <Ticket
+            {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])}
           />
         )}
       </div>

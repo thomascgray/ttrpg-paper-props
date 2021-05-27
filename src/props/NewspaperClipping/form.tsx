@@ -76,7 +76,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <textarea
             value={props.dataset["prefix_copy"]}
             className="p-2 text-lg w-full"
-            rows={10}
+            rows={3}
             onChange={(e) => {
               props.handleDataChange("prefix_copy", e.target.value);
             }}
@@ -142,7 +142,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <textarea
             value={props.dataset["suffix_copy"]}
             className="p-2 text-lg w-full"
-            rows={10}
+            rows={3}
             onChange={(e) => {
               props.handleDataChange("suffix_copy", e.target.value);
             }}
