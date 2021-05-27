@@ -1,7 +1,7 @@
 import React from "react";
-import { PAPER_TYPES } from "../config";
-import { PaperTextureSelect } from "../components/PaperTextureSelect";
-import { FontSelector } from "../components/FontSelector";
+import { PAPER_TYPES } from "../../config";
+import { PaperTextureSelect } from "../../components/PaperTextureSelect";
+import { FontSelector } from "../../components/FontSelector";
 
 interface iWantedPosterFormProps {
   dataset: typeof PAPER_TYPES["WANTED_POSTER"]["data"];

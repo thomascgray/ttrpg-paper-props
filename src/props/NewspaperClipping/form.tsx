@@ -1,6 +1,6 @@
 import React from "react";
-import { PAPER_TYPES } from "../config";
-import { PaperTextureSelect } from "../components/PaperTextureSelect";
+import { PAPER_TYPES } from "../../config";
+import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 
 interface iNewspaperClippingFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"];

@@ -33,6 +33,9 @@ export const FontSelector = (props: iFontSelector) => {
           <option className="font-noticia-text" value="font-noticia-text">
             Noticia Text
           </option>
+          <option className="font-indie-flower" value="font-indie-flower">
+            Indie Flower
+          </option>
         </select>
       </div>
     </label>

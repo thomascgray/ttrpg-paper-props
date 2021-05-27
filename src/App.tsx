@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Newspaper } from "./renderers/Newspaper";
-import { WantedPoster } from "./renderers/WantedPoster";
-import { NewspaperClipping } from "./renderers/NewspaperClipping";
+import { Newspaper } from "./props/Newspaper/renderer";
+import { WantedPoster } from "./props/WantedPoster/renderer";
+import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
+import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
 
-import { NewspaperForm } from "./forms/NewspaperForm";
-import { WantedPosterForm } from "./forms/WantedPosterForm";
-import { NewspaperClippingForm } from "./forms/NewspaperClippingForm";
+import { NewspaperForm } from "./props/Newspaper/form";
+import { WantedPosterForm } from "./props/WantedPoster/form";
+import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
 
 import { PAPER_TYPES } from "./config";
 import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
+import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
@@ -114,6 +116,17 @@ function App() {
               }}
             />
           )}
+
+          {selectedPaperType === "HANDWRITTEN_LETTER" && (
+            <HandwrittenLetterForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"]),
+              }}
+              handleDataChange={(key, value) => {
+                handleDataChange(key, value);
+              }}
+            />
+          )}
         </div>
       </div>
 
@@ -137,6 +150,11 @@ function App() {
         {selectedPaperType === "WANTED_POSTER" && (
           <WantedPoster
             {...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"])}
+          />
+        )}
+        {selectedPaperType === "HANDWRITTEN_LETTER" && (
+          <HandwrittenLetter
+            {...(paperData as typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"])}
           />
         )}
       </div>

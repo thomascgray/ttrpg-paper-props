@@ -21,8 +21,6 @@ body {
 }
 
 .copy-markdown {
-  @apply prose;
-  @apply prose-sm;
   @apply max-w-none;
 }
 
@@ -31,8 +29,8 @@ body {
 }
 
 .copy-markdown h2,
-h3,
-h4 {
+.copy-markdown h3,
+.copy-markdown h4 {
   margin-top: 1em !important;
 }
 
@@ -42,9 +40,9 @@ h4 {
 }
 
 .clipping-markdown h1,
-h2,
-h3,
-h4 {
+.clipping-markdown h2,
+.clipping-markdown h3,
+.clipping-markdown h4 {
   text-align: center !important;
 }
 
@@ -95,4 +93,8 @@ h4 {
 
 .font-noticia-text {
   font-family: "Noticia Text", serif;
+}
+
+.font-indie-flower {
+  font-family: "Indie Flower", cursive;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import Markdown from "markdown-to-jsx";
-import { PAPER_TYPES } from "../config";
+import { PAPER_TYPES } from "../../config";
 
 export const NewspaperClipping = (
   props: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]

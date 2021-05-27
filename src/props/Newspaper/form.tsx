@@ -1,7 +1,7 @@
 import React from "react";
-import { PAPER_TYPES } from "../config";
-import { PaperTextureSelect } from "../components/PaperTextureSelect";
-import { FontSelector } from "../components/FontSelector";
+import { PAPER_TYPES } from "../../config";
+import { PaperTextureSelect } from "../../components/PaperTextureSelect";
+import { FontSelector } from "../../components/FontSelector";
 
 interface iNewspaperFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER"]["data"];

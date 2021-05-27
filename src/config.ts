@@ -95,4 +95,25 @@ Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Pro
       subtitle2_font: "font-sans",
     },
   },
+  HANDWRITTEN_LETTER: {
+    name: "Handwritter Letter",
+    data: {
+      ...UNIVERSAL_DATA,
+      page_width_percentage: 80,
+      font_size: "prose",
+      font_weight: "font-normal",
+      prefix: "To my Dearest,",
+      prefix_alignment: "left",
+      main_copy: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+
+Nulla suscipit sapien at ligula suscipit ultricies. Pellentesque sit amet vulputate sapien, et aliquet augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+
+Morbi eget faucibus ante. Maecenas sed erat non enim dictum aliquam vitae sagittis nunc. Sed vitae neque ut diam imperdiet semper. Quisque tincidunt semper nibh, nec consectetur turpis hendrerit eget. Nullam quis rutrum ligula. Vestibulum euismod sem ut felis luctus rutrum. Curabitur faucibus in enim sed tristique. Aliquam posuere dolor vel nulla efficitur auctor. Fusce at dui magna. 
+
+Nulla scelerisque, sem vel efficitur gravida, nunc velit sagittis sapien, egestas interdum nunc lectus id velit. Donec sem nisl, maximus at orci quis, auctor faucibus elit. Aliquam consectetur rutrum augue eget tincidunt.`,
+      suffix: "Love, Example Name",
+      suffix_alignment: "left",
+      font: "font-serif",
+    },
+  },
 };

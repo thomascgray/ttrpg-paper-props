@@ -1,5 +1,5 @@
 import React from "react";
-import { PAPER_TYPES } from "../config";
+import { PAPER_TYPES } from "../../config";
 
 // @ts-ignore
 import { Textfit } from "react-textfit";
