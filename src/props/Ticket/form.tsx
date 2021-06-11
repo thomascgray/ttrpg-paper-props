@@ -106,8 +106,9 @@ export const TicketForm = (props: iTicketFormProps) => {
         }}
       />
 
-      <TextInput
+      <TextArea
         label="Top Copy"
+        rows={3}
         value={props.dataset.top_copy}
         onUpdate={(newValue) => {
           props.handleDataChange("top_copy", newValue);

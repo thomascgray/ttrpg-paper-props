@@ -46,7 +46,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 </td>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double prose"
+                  className="border border-gray-900 border-double border-b-0 prose"
                 >
                   <Markdown className="copy-markdown">
                     {props.top_copy}
@@ -74,12 +74,12 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 </td>
               </tr>
               <tr>
-                <td className="border border-gray-900 border-double prose">
+                <td className="border border-gray-900 border-double border-r-0 border-t-0 prose">
                   <Markdown className="copy-markdown">
                     {props.middle_left_copy}
                   </Markdown>
                 </td>
-                <td className="border border-gray-900 border-double prose">
+                <td className="border border-gray-900 border-double border-l-0 border-t-0 prose">
                   <Markdown className="copy-markdown">
                     {props.middle_right_copy}
                   </Markdown>

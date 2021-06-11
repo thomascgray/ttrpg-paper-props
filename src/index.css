@@ -134,3 +134,10 @@ body {
   background-size: 12px 12px;
   background-repeat: repeat-y;
 }
+
+.copy-colour-gold * {
+  color: gold !important;
+}
+.copy-colour-red * {
+  color: red !important;
+}

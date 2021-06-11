@@ -12,7 +12,7 @@ export const HandwrittenLetter = (
         transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
         width: `${props.page_width_percentage}%`,
       }}
-      className={`paper transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto`}
+      className={`paper paper-${props.paper_texture} overflow-hidden transition transform mx-auto`}
     >
       <div className="flex h-full items-center mx-10 px-8 py-12">
         <div className="space-y-8">

@@ -150,4 +150,27 @@ Sincerely, Lorem Ipsum`,
       // font: "font-serif",
     },
   },
+  BLANK_PAGES: {
+    name: "Blank Pages",
+    data: {
+      ...UNIVERSAL_DATA,
+    },
+  },
+  RAGGED_JOURNAL_COVER: {
+    name: "Ragged Journal Cover",
+    propName: "RaggedJournalCover",
+    data: {
+      ...UNIVERSAL_DATA,
+
+      prose_size: "prose-2xl",
+      copy_colour: "gold",
+      main_copy: `# MYSTICAL ARTIFACTS
+      
+## A STUDY IN THE STRANGE AND WEIRD
+
+
+### A. COBALT ET.AL`,
+      topPadding: "0em",
+    },
+  },
 };

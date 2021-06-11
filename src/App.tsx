@@ -4,19 +4,23 @@ import { WantedPoster } from "./props/WantedPoster/renderer";
 import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
 import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
 import { Ticket } from "./props/Ticket/renderer";
+import { BlankPages } from "./props/BlankPages/renderer";
+import { RaggedJournalCover } from "./props/RaggedJournalCover/renderer";
 
 import { NewspaperForm } from "./props/Newspaper/form";
 import { WantedPosterForm } from "./props/WantedPoster/form";
 import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
 import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
 import { TicketForm } from "./props/Ticket/form";
+import { RaggedJournalCoverForm } from "./props/RaggedJournalCover/form";
 
 import { PAPER_TYPES } from "./config";
 import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
-  const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("TICKET");
+  const [selectedPaperType, setSelectedPaperType] = useState<
+    keyof typeof PAPER_TYPES
+  >("RAGGED_JOURNAL_COVER");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -140,6 +144,17 @@ function App() {
               }}
             />
           )}
+
+          {selectedPaperType === "RAGGED_JOURNAL_COVER" && (
+            <RaggedJournalCoverForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"]),
+              }}
+              handleDataChange={(key, value) => {
+                handleDataChange(key, value);
+              }}
+            />
+          )}
         </div>
       </div>
 
@@ -172,6 +187,18 @@ function App() {
         )}
         {selectedPaperType === "TICKET" && (
           <Ticket {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])} />
+        )}
+
+        {selectedPaperType === "BLANK_PAGES" && (
+          <BlankPages
+            {...(paperData as typeof PAPER_TYPES["BLANK_PAGES"]["data"])}
+          />
+        )}
+
+        {selectedPaperType === "RAGGED_JOURNAL_COVER" && (
+          <RaggedJournalCover
+            {...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"])}
+          />
         )}
       </div>
     </div>
