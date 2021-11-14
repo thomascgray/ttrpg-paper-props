@@ -130,24 +130,35 @@ Sincerely, Lorem Ipsum`,
     data: {
       ...UNIVERSAL_DATA,
       // page_width_percentage: 80,
-      page_width: 480,
-      page_height: 360,
+      page_width: 500,
+      page_height: 280,
       sawtooth_border: "sawtooth-border-none",
       rounded_corners: "rounded-none",
-      left_margin_copy: "Nulla suscipit sapien",
+
       hide_left_margin_copy: false,
-      right_margin_copy: "Ligula suscipit ultricies",
-      hide_right_margin_copy: false,
+      left_margin_copy: "CARTER AND DARK LTD.",
+
+      hide_top_content: false,
       top_copy: "Nulla suscipit sapien",
+
+      hide_right_margin_copy: false,
+      right_margin_copy: "Ligula suscipit ultricies",
+
+      hide_middle_left_copy: false,
       middle_left_copy: "Nulla suscipit sapien",
+
+      hide_middle_right_copy: false,
       middle_right_copy: "Nulla suscipit sapien",
+
+      hide_botom_copy: false,
       botom_copy: "Nulla suscipit sapien",
+
       // font_size: "prose-lg",
-      // font_weight: "font-indie-flower",
       // prefix: "To my Dearest,",
       // prefix_alignment: "left",
 
-      // font: "font-serif",
+      font_weight: "font-indie-flower",
+      font: "font-serif",
     },
   },
   BLANK_PAGES: {

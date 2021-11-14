@@ -1,10 +1,8 @@
 import React from "react";
 import { PAPER_TYPES } from "../../config";
-import { PaperTextureSelect } from "../../components/PaperTextureSelect";
-import { FontSelector } from "../../components/FontSelector";
 import { FontSizeSelector } from "../../components/FontSizeSelector";
-import { FontWeightSelector } from "../../components/FontWeightSelector";
 import { Select } from "../../components/Select";
+
 interface iRaggedJournalCoverProps {
   dataset: typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"];
   handleDataChange: (
@@ -58,7 +56,7 @@ export const RaggedJournalCoverForm = (props: iRaggedJournalCoverProps) => {
         }}
         options={[
           { value: "gold", label: "Gold" },
-          { value: "red", label: "Red" },
+          { value: "white", label: "White" },
         ]}
       />
     </div>

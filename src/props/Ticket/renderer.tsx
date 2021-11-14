@@ -12,7 +12,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
           width: `${props.page_width}px`,
           height: `${props.page_height}px`,
         }}
-        className={`paper absolute transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto ${props.rounded_corners}`}
+        className={`paper ${props.font} ${props.font_weight}  absolute transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto ${props.rounded_corners}`}
       >
         <div
           className={classNames("w-full h-full", {
@@ -21,13 +21,13 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
             "px-10 py-8": props.sawtooth_border === "sawtooth-border-x",
           })}
         >
-          <table className="table-fixed border-collapse w-full h-full">
+          <table className="table-fixed border-collapse w-full h-full border-none">
             <tbody>
               <tr>
                 <td
                   rowSpan={3}
                   className={classNames(
-                    "border border-gray-900 border-double w-14",
+                    "border border-gray-900 border-double w-14 border-none text-center",
                     {
                       hidden: props.hide_left_margin_copy,
                     }
@@ -46,7 +46,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 </td>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double border-b-0 prose"
+                  className="border border-gray-900 border-double border-b-0 prose border-none text-center"
                 >
                   <Markdown className="copy-markdown">
                     {props.top_copy}
@@ -55,7 +55,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 <td
                   rowSpan={3}
                   className={classNames(
-                    "border border-gray-900 border-double w-14",
+                    "border border-gray-900 border-double w-14 border-none text-center",
                     {
                       hidden: props.hide_right_margin_copy,
                     }
@@ -74,12 +74,12 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 </td>
               </tr>
               <tr>
-                <td className="border border-gray-900 border-double border-r-0 border-t-0 prose">
+                <td className="border border-gray-900 border-double border-r-0 border-t-0 prose border-none text-center">
                   <Markdown className="copy-markdown">
                     {props.middle_left_copy}
                   </Markdown>
                 </td>
-                <td className="border border-gray-900 border-double border-l-0 border-t-0 prose">
+                <td className="border border-gray-900 border-double border-l-0 border-t-0 prose border-none text-center">
                   <Markdown className="copy-markdown">
                     {props.middle_right_copy}
                   </Markdown>
@@ -88,7 +88,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
               <tr>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double prose"
+                  className="border border-gray-900 border-double prose border-none text-center"
                 >
                   <Markdown className="copy-markdown">
                     {props.botom_copy}

@@ -18,9 +18,8 @@ import { PAPER_TYPES } from "./config";
 import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
-  const [selectedPaperType, setSelectedPaperType] = useState<
-    keyof typeof PAPER_TYPES
-  >("RAGGED_JOURNAL_COVER");
+  const [selectedPaperType, setSelectedPaperType] =
+    useState<keyof typeof PAPER_TYPES>("BLANK_PAGES");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 

@@ -90,6 +90,34 @@ export const TicketForm = (props: iTicketFormProps) => {
         </div>
       </label>
 
+      <hr />
+
+      <FontSelector
+        label="Font"
+        value={props.dataset["font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("font", newValue);
+        }}
+      />
+
+      <FontWeightSelector
+        label="Font Weight"
+        value={props.dataset["font_weight"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("font_weight", newValue);
+        }}
+      />
+
+      <hr />
+
+      <CheckboxInput
+        label="Hide Left Margin?"
+        value={props.dataset.hide_left_margin_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("hide_left_margin_copy", newValue);
+        }}
+      />
+
       <TextInput
         label="Left Margin Copy"
         value={props.dataset.left_margin_copy}
@@ -99,10 +127,10 @@ export const TicketForm = (props: iTicketFormProps) => {
       />
 
       <CheckboxInput
-        label="Hide Left Margin?"
-        value={props.dataset.hide_left_margin_copy}
+        label="Hide Top Content?"
+        value={props.dataset.hide_top_content}
         onUpdate={(newValue) => {
-          props.handleDataChange("hide_left_margin_copy", newValue);
+          props.handleDataChange("hide_top_content", newValue);
         }}
       />
 
@@ -117,6 +145,13 @@ export const TicketForm = (props: iTicketFormProps) => {
 
       <div className="flex">
         <div className="mr-2">
+          <CheckboxInput
+            label="Hide Middle Left Text?"
+            value={props.dataset.hide_middle_left_copy}
+            onUpdate={(newValue) => {
+              props.handleDataChange("hide_middle_left_copy", newValue);
+            }}
+          />
           <TextInput
             label="Middle Left Copy"
             value={props.dataset.middle_left_copy}
@@ -127,6 +162,13 @@ export const TicketForm = (props: iTicketFormProps) => {
         </div>
 
         <div className="ml-2">
+          <CheckboxInput
+            label="Hide Middle Right Text?"
+            value={props.dataset.hide_middle_right_copy}
+            onUpdate={(newValue) => {
+              props.handleDataChange("hide_middle_right_copy", newValue);
+            }}
+          />
           <TextInput
             label="Middle Right Copy"
             value={props.dataset.middle_right_copy}
@@ -137,6 +179,13 @@ export const TicketForm = (props: iTicketFormProps) => {
         </div>
       </div>
 
+      <CheckboxInput
+        label="Hide Bottom Text?"
+        value={props.dataset.hide_botom_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("hide_botom_copy", newValue);
+        }}
+      />
       <TextInput
         label="Bottom Copy"
         value={props.dataset.botom_copy}
@@ -145,19 +194,18 @@ export const TicketForm = (props: iTicketFormProps) => {
         }}
       />
 
-      <TextInput
-        label="Right Margin Copy"
-        value={props.dataset.right_margin_copy}
-        onUpdate={(newValue) => {
-          props.handleDataChange("right_margin_copy", newValue);
-        }}
-      />
-
       <CheckboxInput
         label="Hide Right Margin?"
         value={props.dataset.hide_right_margin_copy}
         onUpdate={(newValue) => {
           props.handleDataChange("hide_right_margin_copy", newValue);
+        }}
+      />
+      <TextInput
+        label="Right Margin Copy"
+        value={props.dataset.right_margin_copy}
+        onUpdate={(newValue) => {
+          props.handleDataChange("right_margin_copy", newValue);
         }}
       />
     </div>
