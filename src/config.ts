@@ -91,7 +91,8 @@ Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Pro
       ...UNIVERSAL_DATA,
       page_width: 500,
       paper_texture: "beige",
-      image_url: "https://via.placeholder.com/400x500",
+      image_url:
+        "https://i.pinimg.com/564x/5f/29/93/5f2993a98cc335257eb97eaae9eb38e4.jpg",
       headline: "WANTED!",
       headline_font: "font-serif",
       subtitle: "Etiam tempor, massa blandit cursus efficitur",
@@ -157,7 +158,7 @@ Sincerely, Lorem Ipsum`,
       // prefix: "To my Dearest,",
       // prefix_alignment: "left",
 
-      font_weight: "font-indie-flower",
+      font_weight: "font-normal",
       font: "font-serif",
     },
   },
@@ -182,6 +183,24 @@ Sincerely, Lorem Ipsum`,
 
 ### A. COBALT ET.AL`,
       topPadding: "0em",
+    },
+  },
+  NPC_CARD: {
+    name: "NPC Card",
+    data: {
+      ...UNIVERSAL_DATA,
+      page_width: 300,
+      paper_texture: "beige",
+      image_url:
+        "https://i.pinimg.com/564x/74/35/d4/7435d4e62c3db13e5ec0e1c91293d624.jpg",
+      // image_width: 80,
+      text_line_one: "Phin Farros",
+      text_line_two: "Spark Pusher and Race Fixer",
+      text_line_three: "Arrogant, Indulgent, Brutal",
+      font: "font-serif",
+      font_weight: "font-normal",
+      rounded_corners: "rounded-none",
+      text_alignment: "text-left",
     },
   },
 };

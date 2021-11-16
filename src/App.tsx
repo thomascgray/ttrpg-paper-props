@@ -6,6 +6,7 @@ import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
 import { Ticket } from "./props/Ticket/renderer";
 import { BlankPages } from "./props/BlankPages/renderer";
 import { RaggedJournalCover } from "./props/RaggedJournalCover/renderer";
+import { NPCCard } from "./props/NPCCard/renderer";
 
 import { NewspaperForm } from "./props/Newspaper/form";
 import { WantedPosterForm } from "./props/WantedPoster/form";
@@ -13,13 +14,14 @@ import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
 import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
 import { TicketForm } from "./props/Ticket/form";
 import { RaggedJournalCoverForm } from "./props/RaggedJournalCover/form";
+import { NPCCardForm } from "./props/NPCCard/form";
 
 import { PAPER_TYPES } from "./config";
 import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("BLANK_PAGES");
+    useState<keyof typeof PAPER_TYPES>("NPC_CARD");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -94,9 +96,7 @@ function App() {
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"]),
               }}
-              handleDataChange={(key, value) => {
-                handleDataChange(key, value);
-              }}
+              handleDataChange={handleDataChange}
             />
           )}
 
@@ -105,9 +105,7 @@ function App() {
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]),
               }}
-              handleDataChange={(key, value) => {
-                handleDataChange(key, value);
-              }}
+              handleDataChange={handleDataChange}
             />
           )}
 
@@ -116,9 +114,7 @@ function App() {
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"]),
               }}
-              handleDataChange={(key, value) => {
-                handleDataChange(key, value);
-              }}
+              handleDataChange={handleDataChange}
             />
           )}
 
@@ -127,9 +123,7 @@ function App() {
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"]),
               }}
-              handleDataChange={(key, value) => {
-                handleDataChange(key, value);
-              }}
+              handleDataChange={handleDataChange}
             />
           )}
 
@@ -138,9 +132,7 @@ function App() {
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["TICKET"]["data"]),
               }}
-              handleDataChange={(key, value) => {
-                handleDataChange(key, value);
-              }}
+              handleDataChange={handleDataChange}
             />
           )}
 
@@ -149,9 +141,15 @@ function App() {
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"]),
               }}
-              handleDataChange={(key, value) => {
-                handleDataChange(key, value);
+              handleDataChange={handleDataChange}
+            />
+          )}
+          {selectedPaperType === "NPC_CARD" && (
+            <NPCCardForm
+              dataset={{
+                ...(paperData as typeof PAPER_TYPES["NPC_CARD"]["data"]),
               }}
+              handleDataChange={handleDataChange}
             />
           )}
         </div>
@@ -198,6 +196,9 @@ function App() {
           <RaggedJournalCover
             {...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"])}
           />
+        )}
+        {selectedPaperType === "NPC_CARD" && (
+          <NPCCard {...(paperData as typeof PAPER_TYPES["NPC_CARD"]["data"])} />
         )}
       </div>
     </div>

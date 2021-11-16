@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
-import { PAPER_TYPES } from "../../config";
 import Markdown from "markdown-to-jsx";
+import { PAPER_TYPES } from "../../config";
 
 export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
   return (
@@ -12,7 +12,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
           width: `${props.page_width}px`,
           height: `${props.page_height}px`,
         }}
-        className={`paper ${props.font} ${props.font_weight}  absolute transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto ${props.rounded_corners}`}
+        className={`paper ${props.font} ${props.font_weight} absolute transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto ${props.rounded_corners}`}
       >
         <div
           className={classNames("w-full h-full", {
