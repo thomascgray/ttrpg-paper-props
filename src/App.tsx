@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Newspaper } from "./props/Newspaper/renderer";
 import { WantedPoster } from "./props/WantedPoster/renderer";
 import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
@@ -21,7 +22,7 @@ import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NPC_CARD");
+    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -136,14 +137,14 @@ function App() {
             />
           )}
 
-          {selectedPaperType === "RAGGED_JOURNAL_COVER" && (
+          {/* {selectedPaperType === "RAGGED_JOURNAL_COVER" && (
             <RaggedJournalCoverForm
               dataset={{
                 ...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
-          )}
+          )} */}
           {selectedPaperType === "NPC_CARD" && (
             <NPCCardForm
               dataset={{
@@ -186,7 +187,7 @@ function App() {
           <Ticket {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])} />
         )}
 
-        {selectedPaperType === "BLANK_PAGES" && (
+        {/* {selectedPaperType === "BLANK_PAGES" && (
           <BlankPages
             {...(paperData as typeof PAPER_TYPES["BLANK_PAGES"]["data"])}
           />
@@ -196,7 +197,7 @@ function App() {
           <RaggedJournalCover
             {...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"])}
           />
-        )}
+        )} */}
         {selectedPaperType === "NPC_CARD" && (
           <NPCCard {...(paperData as typeof PAPER_TYPES["NPC_CARD"]["data"])} />
         )}

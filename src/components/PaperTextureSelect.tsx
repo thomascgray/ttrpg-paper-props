@@ -19,6 +19,12 @@ export const PaperTextureSelect = (props: iPaperTextureSelect) => {
         >
           <option value="grey">Grey</option>
           <option value="beige">Beige</option>
+          <option value="beige-2">Beige 2</option>
+          <option value="beige-3">Beige 3</option>
+          <option value="beige-4">Beige 4</option>
+          <option value="beige-5">Beige 5</option>
+          <option value="beige-6">Beige 6</option>
+          <option value="beige-7">Beige 7</option>
           <option value="cream">Cream</option>
           <option value="red">Red</option>
           <option value="blue">Blue</option>

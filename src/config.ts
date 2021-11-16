@@ -12,7 +12,9 @@ export const PAPER_TYPES = {
       page_width_percentage: 80,
       title: "THE LOREM IPSUM",
       title_font: "font-sans",
-      banner_text: "VOL DLXX",
+      banner_text_1: "Lorem ipsum",
+      banner_text_2: "Lorem ipsum",
+      banner_text_3: "Lorem ipsum",
       headline: "MORBI TEMPUS MOLLIS IPSUM AT!",
       headline_font: "font-serif",
 
@@ -55,7 +57,6 @@ Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristi
 Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.`,
       main_copy_columns: 4,
       is_main_copy_blurry: true,
-      date: "1989-11-09",
     },
   },
   NEWSPAPER_CLIPPING: {
@@ -162,31 +163,30 @@ Sincerely, Lorem Ipsum`,
       font: "font-serif",
     },
   },
-  BLANK_PAGES: {
-    name: "Blank Pages",
-    data: {
-      ...UNIVERSAL_DATA,
-    },
-  },
-  RAGGED_JOURNAL_COVER: {
-    name: "Ragged Journal Cover",
-    propName: "RaggedJournalCover",
-    data: {
-      ...UNIVERSAL_DATA,
+  //   BLANK_PAGES: {
+  //     name: "Blank Pages",
+  //     data: {
+  //       ...UNIVERSAL_DATA,
+  //     },
+  //   },
+  //   RAGGED_JOURNAL_COVER: {
+  //     name: "Ragged Journal Cover",
+  //     propName: "RaggedJournalCover",
+  //     data: {
+  //       ...UNIVERSAL_DATA,
 
-      prose_size: "prose-2xl",
-      copy_colour: "gold",
-      main_copy: `# MYSTICAL ARTIFACTS
-      
-## A STUDY IN THE STRANGE AND WEIRD
+  //       prose_size: "prose-2xl",
+  //       copy_colour: "gold",
+  //       main_copy: `# MYSTICAL ARTIFACTS
 
+  // ## A STUDY IN THE STRANGE AND WEIRD
 
-### A. COBALT ET.AL`,
-      topPadding: "0em",
-    },
-  },
+  // ### A. COBALT ET.AL`,
+  //       topPadding: "0em",
+  //     },
+  //   },
   NPC_CARD: {
-    name: "NPC Card",
+    name: "Character Card",
     data: {
       ...UNIVERSAL_DATA,
       page_width: 300,

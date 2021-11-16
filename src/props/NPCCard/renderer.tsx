@@ -54,6 +54,7 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
           )}
           {props.text_line_three !== "" && (
             <span
+              className="italic text-gray-700"
               style={{
                 display: "block",
                 marginLeft: "10%",

@@ -42,7 +42,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
       />
 
       <label className="block">
-        <span className="block mb-1">Title</span>
+        <span className="block mb-1">Newspaper Title</span>
         <div className="flex">
           <input
             value={props.dataset["title"]}
@@ -63,30 +63,40 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
       />
 
       <label className="block">
-        <span className="block mb-1">Banner Text</span>
+        <span className="block mb-1">Banner Text 1</span>
         <div className="flex">
           <input
-            value={props.dataset["banner_text"]}
+            value={props.dataset["banner_text_1"]}
             className="p-2 text-lg w-full"
             onChange={(e) => {
-              props.handleDataChange("banner_text", e.target.value);
+              props.handleDataChange("banner_text_1", e.target.value);
             }}
           />
         </div>
       </label>
 
       <label className="block">
-        <span className="block mb-1">Date</span>
+        <span className="block mb-1">Banner Text 2</span>
         <div className="flex">
           <input
-            type="date"
+            value={props.dataset["banner_text_2"]}
             className="p-2 text-lg w-full"
-            value={props.dataset["date"]}
             onChange={(e) => {
-              props.handleDataChange("date", e.target.value);
+              props.handleDataChange("banner_text_2", e.target.value);
             }}
-            min="2018-01-01"
-            max="2018-12-31"
+          />
+        </div>
+      </label>
+
+      <label className="block">
+        <span className="block mb-1">Banner Text 3</span>
+        <div className="flex">
+          <input
+            value={props.dataset["banner_text_3"]}
+            className="p-2 text-lg w-full"
+            onChange={(e) => {
+              props.handleDataChange("banner_text_3", e.target.value);
+            }}
           />
         </div>
       </label>

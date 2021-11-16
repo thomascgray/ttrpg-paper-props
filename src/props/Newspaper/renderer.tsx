@@ -25,18 +25,17 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
 
         <hr className="border-solid border-2 border-gray-600" />
 
-        <div className="flex items-center justify-between py-2">
-          <span className="text-sm text-gray-800 font-bold font-serif">
-            {props.banner_text}
+        <div className="flex justify-between py-2">
+          <span className="text-sm text-left text-gray-800 font-bold font-serif w-4/12">
+            {props.banner_text_1}
           </span>
 
-          <span className="text-sm uppercase text-gray-800 font-bold font-serif">
-            {new Date(props.date).toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+          <span className="text-sm text-center text-gray-800 font-bold font-serif w-4/12">
+            {props.banner_text_2}
+          </span>
+
+          <span className="text-sm text-right text-gray-800 font-bold font-serif w-4/12">
+            {props.banner_text_3}
           </span>
         </div>
 
