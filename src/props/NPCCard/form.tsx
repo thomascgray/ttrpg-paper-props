@@ -30,7 +30,7 @@ export const NPCCardForm = (props: iNPCCardForm) => {
           }}
           step="5"
           min="150"
-          max="400"
+          max="700"
         />
       </label>
 

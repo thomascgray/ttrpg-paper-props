@@ -24,6 +24,16 @@ body {
   @apply max-w-none;
 }
 
+.copy-markdown ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.copy-markdown ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
 .copy-markdown > blockquote {
   border-color: #4b5563;
 }
@@ -170,6 +180,7 @@ body {
 .font-medieval-sharp {
   font-family: "MedievalSharp", cursive;
 }
+
 /* render area background colour is 2f3640 */
 .sawtooth-border-y {
   /* background-color: yellowgreen; */

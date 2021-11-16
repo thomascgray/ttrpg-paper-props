@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import { Textfit } from "react-textfit";
 import classNames from "classnames";
-import Markdown from "markdown-to-jsx";
+import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
 export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {

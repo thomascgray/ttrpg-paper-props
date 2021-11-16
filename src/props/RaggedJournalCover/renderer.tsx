@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import Markdown from "markdown-to-jsx";
+import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
 export const RaggedJournalCover = (
