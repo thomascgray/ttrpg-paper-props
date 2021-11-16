@@ -92,6 +92,10 @@ body {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.font-cursive {
+  font-family: cursive;
+}
+
 .font-alfa-slab-one {
   font-family: "Alfa Slab One", cursive;
 }
@@ -112,6 +116,36 @@ body {
   font-family: "Dancing Script", cursive;
 }
 
+.font-yuji-syuku {
+  font-family: "Yuji Syuku", serif;
+}
+
+.font-crete-round {
+  font-family: "Crete Round", serif;
+}
+
+.font-playfair-display-sc {
+  font-family: "Playfair Display SC", serif;
+}
+
+.font-quattrocento {
+  font-family: "Quattrocento", serif;
+}
+
+.font-im-fell {
+  font-family: "IM Fell English", serif;
+}
+.font-im-fell-display {
+  font-family: "IM Fell Great Primer SC", serif;
+}
+
+.font-fantasy {
+  font-family: fantasy;
+}
+
+.font-medieval-sharp {
+  font-family: "MedievalSharp", cursive;
+}
 /* render area background colour is 2f3640 */
 .sawtooth-border-y {
   /* background-color: yellowgreen; */
