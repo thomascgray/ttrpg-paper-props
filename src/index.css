@@ -116,6 +116,14 @@ body {
   background-image: url("/textures/paper-blue.jpg");
 }
 
+.paper-white {
+  background-image: url("/textures/paper-white.jpg");
+}
+
+.paper-cream-2 {
+  background-image: url("/textures/paper-cream-2.jpg");
+}
+
 .font-serif {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
