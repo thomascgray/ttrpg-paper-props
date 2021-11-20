@@ -2,6 +2,7 @@ import React from "react";
 import { PAPER_TYPES } from "../../config";
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
+import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 
 interface iWantedPosterFormProps {
   dataset: typeof PAPER_TYPES["WANTED_POSTER"]["data"];
@@ -51,6 +52,14 @@ export const WantedPosterForm = (props: iWantedPosterFormProps) => {
           />
         </div>
       </label>
+
+      <ImageFilterSelector
+        label="Image Effect"
+        value={props.dataset.image_filter}
+        onUpdate={(newVal) => {
+          props.handleDataChange("image_filter", newVal);
+        }}
+      />
 
       <label className="block">
         <span className="block mb-1">Headline</span>

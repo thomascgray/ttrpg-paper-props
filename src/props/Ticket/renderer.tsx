@@ -48,9 +48,11 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                   colSpan={2}
                   className="border border-gray-900 border-double border-b-0 prose border-none text-center"
                 >
-                  <Markdown className="copy-markdown">
-                    {props.top_copy}
-                  </Markdown>
+                  {!props.hide_top_content && (
+                    <Markdown className="copy-markdown">
+                      {props.top_copy}
+                    </Markdown>
+                  )}
                 </td>
                 <td
                   rowSpan={3}
@@ -75,14 +77,18 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
               </tr>
               <tr>
                 <td className="border border-gray-900 border-double border-r-0 border-t-0 prose border-none text-center">
-                  <Markdown className="copy-markdown">
-                    {props.middle_left_copy}
-                  </Markdown>
+                  {!props.hide_middle_left_copy && (
+                    <Markdown className="copy-markdown">
+                      {props.middle_left_copy}
+                    </Markdown>
+                  )}
                 </td>
                 <td className="border border-gray-900 border-double border-l-0 border-t-0 prose border-none text-center">
-                  <Markdown className="copy-markdown">
-                    {props.middle_right_copy}
-                  </Markdown>
+                  {!props.hide_middle_right_copy && (
+                    <Markdown className="copy-markdown">
+                      {props.middle_right_copy}
+                    </Markdown>
+                  )}
                 </td>
               </tr>
               <tr>
@@ -90,9 +96,11 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                   colSpan={2}
                   className="border border-gray-900 border-double prose border-none text-center"
                 >
-                  <Markdown className="copy-markdown">
-                    {props.botom_copy}
-                  </Markdown>
+                  {!props.hide_botom_copy && (
+                    <Markdown className="copy-markdown">
+                      {props.botom_copy}
+                    </Markdown>
+                  )}
                 </td>
               </tr>
             </tbody>

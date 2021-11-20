@@ -14,12 +14,14 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
         className={`inline-block ${props.font} ${props.font_weight} absolute transition paper-${props.paper_texture} overflow-hidden transform mx-auto`}
       >
         <img
-          className="border-4 border-solid border-gray-900"
+          className=""
           src={props.image_url}
           style={{
             margin: "10%",
             marginBottom: "6%",
             width: "calc(100% - 20%)",
+            filter: `${props.image_filter}`,
+            border: `${props.image_border}`,
           }}
         />
 

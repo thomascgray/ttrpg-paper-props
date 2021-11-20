@@ -4,6 +4,7 @@ import { FontWeightSelector } from "../../components/FontWeightSelector";
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { TextAlignmentSelector } from "../../components/TextAlignmentSelector";
 import { PAPER_TYPES } from "../../config";
+import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 
 interface iNPCCardForm {
   dataset: typeof PAPER_TYPES["NPC_CARD"]["data"];
@@ -55,6 +56,14 @@ export const NPCCardForm = (props: iNPCCardForm) => {
           />
         </div>
       </label>
+
+      <ImageFilterSelector
+        label="Image Effect"
+        value={props.dataset.image_filter}
+        onUpdate={(newVal) => {
+          props.handleDataChange("image_filter", newVal);
+        }}
+      />
 
       <FontSelector
         label="Lines Font"

@@ -37,6 +37,9 @@ export const WantedPoster = (
       <img
         className="border-4 border-solid border-gray-900 mx-auto mt-6"
         src={props.image_url}
+        style={{
+          filter: `${props.image_filter}`,
+        }}
         alt=""
       />
 
