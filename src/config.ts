@@ -159,7 +159,7 @@ Sincerely, Lorem Ipsum`,
       page_width: 300,
       paper_texture: "beige",
       image_url:
-        "https://images.unsplash.com/photo-1632231484610-c34114abf16f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1308&q=80",
+        "https://i.pinimg.com/564x/49/c1/4d/49c14d528399386e820dd116a25590b2.jpg",
       image_filter: "none",
       image_border: "none",
       text_line_one: "Lorem Ipsum",
