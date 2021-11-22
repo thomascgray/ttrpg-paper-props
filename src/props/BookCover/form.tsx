@@ -3,15 +3,15 @@ import { PAPER_TYPES } from "../../config";
 import { FontSizeSelector } from "../../components/FontSizeSelector";
 import { Select } from "../../components/Select";
 
-interface iRaggedJournalCoverProps {
-  dataset: typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"];
+interface iBookCoverProps {
+  dataset: typeof PAPER_TYPES["BOOK_COVER"]["data"];
   handleDataChange: (
-    key: keyof typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"],
+    key: keyof typeof PAPER_TYPES["BOOK_COVER"]["data"],
     value: any
   ) => void;
 }
 
-export const RaggedJournalCoverForm = (props: iRaggedJournalCoverProps) => {
+export const BookCoverForm = (props: iBookCoverProps) => {
   return (
     <div className="space-y-4">
       <FontSizeSelector

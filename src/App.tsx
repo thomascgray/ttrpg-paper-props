@@ -6,7 +6,7 @@ import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
 import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
 import { Ticket } from "./props/Ticket/renderer";
 import { BlankPages } from "./props/BlankPages/renderer";
-import { RaggedJournalCover } from "./props/RaggedJournalCover/renderer";
+import { BookCover } from "./props/BookCover/renderer";
 import { NPCCard } from "./props/NPCCard/renderer";
 
 import { NewspaperForm } from "./props/Newspaper/form";
@@ -14,7 +14,7 @@ import { WantedPosterForm } from "./props/WantedPoster/form";
 import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
 import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
 import { TicketForm } from "./props/Ticket/form";
-import { RaggedJournalCoverForm } from "./props/RaggedJournalCover/form";
+import { BookCoverForm } from "./props/BookCover/form";
 import { NPCCardForm } from "./props/NPCCard/form";
 
 import { PAPER_TYPES } from "./config";
@@ -26,8 +26,14 @@ function App() {
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
+  const savedDataString = window.localStorage.getItem(
+    `paper_data_${selectedPaperType}`
+  );
+  const savedData = savedDataString ? JSON.parse(savedDataString) : {};
+
   const [paperData, setPaperData] = useState({
     ...paperType.data,
+    ...savedData,
   });
 
   const handleDataChange = (name: string, value: any) => {
@@ -37,12 +43,19 @@ function App() {
       [name]: value,
     };
     setPaperData(newPaperData);
+    window.localStorage.setItem(
+      `paper_data_${selectedPaperType}`,
+      JSON.stringify(newPaperData)
+    );
   };
 
   const refreshPaperData = (key: keyof typeof PAPER_TYPES) => {
     const paperType = PAPER_TYPES[key];
+    const savedDataString = window.localStorage.getItem(`paper_data_${key}`);
+    const savedData = savedDataString ? JSON.parse(savedDataString) : {};
     setPaperData({
       ...paperType.data,
+      ...savedData,
     });
   };
 
@@ -137,14 +150,14 @@ function App() {
             />
           )}
 
-          {/* {selectedPaperType === "RAGGED_JOURNAL_COVER" && (
-            <RaggedJournalCoverForm
+          {selectedPaperType === "BOOK_COVER" && (
+            <BookCoverForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"]),
+                ...(paperData as typeof PAPER_TYPES["BOOK_COVER"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
-          )} */}
+          )}
           {selectedPaperType === "NPC_CARD" && (
             <NPCCardForm
               dataset={{
@@ -187,17 +200,11 @@ function App() {
           <Ticket {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])} />
         )}
 
-        {/* {selectedPaperType === "BLANK_PAGES" && (
-          <BlankPages
-            {...(paperData as typeof PAPER_TYPES["BLANK_PAGES"]["data"])}
+        {selectedPaperType === "BOOK_COVER" && (
+          <BookCover
+            {...(paperData as typeof PAPER_TYPES["BOOK_COVER"]["data"])}
           />
         )}
-
-        {selectedPaperType === "RAGGED_JOURNAL_COVER" && (
-          <RaggedJournalCover
-            {...(paperData as typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"])}
-          />
-        )} */}
         {selectedPaperType === "NPC_CARD" && (
           <NPCCard {...(paperData as typeof PAPER_TYPES["NPC_CARD"]["data"])} />
         )}

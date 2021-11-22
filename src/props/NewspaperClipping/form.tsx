@@ -1,6 +1,8 @@
 import React from "react";
 import { PAPER_TYPES } from "../../config";
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
+import { FontSelector } from "../../components/FontSelector";
+import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 
 interface iNewspaperClippingFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"];
@@ -55,6 +57,22 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
         value={props.dataset["paper_texture"]}
         onUpdate={(newValue) => {
           props.handleDataChange("paper_texture", newValue);
+        }}
+      />
+
+      <FontSelector
+        label="Font"
+        value={props.dataset["font"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("font", newValue);
+        }}
+      />
+
+      <ImageFilterSelector
+        label="Image Effect"
+        value={props.dataset.image_filter}
+        onUpdate={(newVal) => {
+          props.handleDataChange("image_filter", newVal);
         }}
       />
 

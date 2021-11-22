@@ -17,7 +17,12 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
       >
         <div className="">
           <Textfit mode="single" max={35}>
-            <h1 className={`${props.title_font} font-black text-center`}>
+            <h1
+              className={`${props.title_font} font-black text-center`}
+              style={{
+                fontSize: `${props.title_size}px`,
+              }}
+            >
               {props.title}
             </h1>
           </Textfit>

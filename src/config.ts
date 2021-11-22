@@ -12,6 +12,7 @@ export const PAPER_TYPES = {
       page_width_percentage: 80,
       title: "THE LOREM IPSUM",
       title_font: "font-sans",
+      title_size: "34",
       banner_text_1: "Lorem ipsum",
       banner_text_2: "Lorem ipsum",
       banner_text_3: "Lorem ipsum",
@@ -31,6 +32,8 @@ export const PAPER_TYPES = {
       ...UNIVERSAL_DATA,
       page_width: 400,
       page_height: 600,
+      font: "font-serif",
+      image_filter: "none",
       prefix_copy:
         "Nam sed tincidunt velit. Ut ac ultricies magna. Sed gravida metus est, eget bibendum purus pharetra sed. Maecenas scelerisque mauris ut ligula vestibulum auctor. Nulla pharetra arcu eros, eu fermentum tortor aliquet ac. In ut arcu accumsan, dictum massa id, pretium dui.",
       main_copy: `---
@@ -136,22 +139,21 @@ Sincerely, Lorem Ipsum`,
   //       ...UNIVERSAL_DATA,
   //     },
   //   },
-  //   RAGGED_JOURNAL_COVER: {
-  //     name: "Ragged Journal Cover",
-  //     propName: "RaggedJournalCover",
-  //     data: {
-  //       ...UNIVERSAL_DATA,
+  BOOK_COVER: {
+    name: "Book Cover",
+    data: {
+      ...UNIVERSAL_DATA,
 
-  //       prose_size: "prose-2xl",
-  //       copy_colour: "gold",
-  //       main_copy: `# MYSTICAL ARTIFACTS
+      prose_size: "prose-2xl",
+      copy_colour: "gold",
+      main_copy: `# MYSTICAL ARTIFACTS
 
-  // ## A STUDY IN THE STRANGE AND WEIRD
+  ## A STUDY IN THE STRANGE AND WEIRD
 
-  // ### A. COBALT ET.AL`,
-  //       topPadding: "0em",
-  //     },
-  //   },
+  ### A. COBALT ET.AL`,
+      topPadding: "0em",
+    },
+  },
   NPC_CARD: {
     name: "Character Card",
     data: {
@@ -170,5 +172,9 @@ Sincerely, Lorem Ipsum`,
       rounded_corners: "rounded-none",
       text_alignment: "text-left",
     },
+  },
+  PUB_SIGN: {
+    name: "Pub Sign",
+    data: {},
   },
 };

@@ -3,9 +3,7 @@ import classNames from "classnames";
 import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
-export const RaggedJournalCover = (
-  props: typeof PAPER_TYPES["RAGGED_JOURNAL_COVER"]["data"]
-) => {
+export const BookCover = (props: typeof PAPER_TYPES["BOOK_COVER"]["data"]) => {
   return (
     <div
       style={{

@@ -42,7 +42,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
       />
 
       <label className="block">
-        <span className="block mb-1">Newspaper Title</span>
+        <span className="block mb-1">Title</span>
         <div className="flex">
           <input
             value={props.dataset["title"]}
@@ -61,6 +61,24 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           props.handleDataChange("title_font", newValue);
         }}
       />
+
+      <label className="block">
+        <span className="block mb-1">
+          Title Size:{" "}
+          <span className="font-bold">{props.dataset["title_size"]}px</span>
+        </span>
+        <input
+          className="w-full cursor-pointer"
+          type="range"
+          value={props.dataset["title_size"]}
+          onChange={(e) => {
+            props.handleDataChange("title_size", e.target.value);
+          }}
+          step="2"
+          min="26"
+          max="80"
+        />
+      </label>
 
       <label className="block">
         <span className="block mb-1">Banner Text 1</span>
