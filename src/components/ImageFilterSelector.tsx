@@ -18,18 +18,18 @@ export const ImageFilterSelector = (props: iImageFilterSelector) => {
             props.onUpdate(e.target.value);
           }}
         >
-          <option value="none">None</option>
-          <option value="grayscale(1)">Grayscale</option>
-          <option value="sepia(1)">Sepia</option>
-          <option value="contrast(1.3)">Medium Contrast</option>
-          <option value="contrast(2)">High Contrast</option>
-          <option value="grayscale(1) contrast(1.3)">
+          <option value="img-filter-none">None</option>
+          <option value="img-filter-grayscale">Grayscale</option>
+          <option value="img-filter-sepia">Sepia</option>
+          <option value="img-filter-medium-contrast">Medium Contrast</option>
+          <option value="img-filter-high-contrast(2)">High Contrast</option>
+          <option value="img-filter-grayscale-medium-contrast">
             Grayscale, Medium Contrast
           </option>
-          <option value="grayscale(1) contrast(2)">
+          <option value="img-filter-grayscale-high-contrast">
             Grayscale, High Contrast
           </option>
-          <option value="grayscale(1) contrast(7)">
+          <option value="img-filter-grayscale-extreme-contrast">
             Grayscale, Extreme Contrast
           </option>
         </select>

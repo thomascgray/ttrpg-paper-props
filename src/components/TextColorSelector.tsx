@@ -1,12 +1,12 @@
 import React from "react";
 
-interface iTextColorSelector {
+interface iInkColorSelector {
   label: string;
   value: string;
   onUpdate: (value: any) => void;
 }
 
-export const TextColorSelector = (props: iTextColorSelector) => {
+export const InkColorSelector = (props: iInkColorSelector) => {
   return (
     <label className="block">
       <span className="block mb-1">{props.label}</span>
@@ -18,8 +18,8 @@ export const TextColorSelector = (props: iTextColorSelector) => {
             props.onUpdate(e.target.value);
           }}
         >
-          <option value="text-flat-black">Black</option>
-          <option value="text-flat-red">Red</option>
+          <option value="ink-black">Black</option>
+          <option value="ink-red">Red</option>
         </select>
       </div>
     </label>

@@ -5,13 +5,13 @@ import { PAPER_TYPES } from "../../config";
 
 export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
   return (
-    <div className="relative mx-auto flex justify-around">
+    <div className="relative mx-auto flex justify-around mt-10">
       <div
         style={{
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
           width: `${props.page_width}px`,
         }}
-        className={`inline-block ${props.font} ${props.font_weight} absolute transition paper-${props.paper_texture} overflow-hidden transform mx-auto`}
+        className={`inline-block ${props.font} ${props.font_weight} ${props.image_filter} absolute transition paper-${props.paper_texture} overflow-hidden transform mx-auto`}
       >
         <img
           className=""
@@ -20,7 +20,6 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
             margin: "10%",
             marginBottom: "6%",
             width: "calc(100% - 20%)",
-            filter: `${props.image_filter}`,
             border: `${props.image_border}`,
           }}
         />

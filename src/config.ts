@@ -31,8 +31,9 @@ export const PAPER_TYPES = {
     data: {
       ...UNIVERSAL_DATA,
       page_width: 400,
-      page_height: 600,
+      page_height: 700,
       font: "font-serif",
+      text_color: "text-flat-black",
       image_filter: "none",
       prefix_copy:
         "Nam sed tincidunt velit. Ut ac ultricies magna. Sed gravida metus est, eget bibendum purus pharetra sed. Maecenas scelerisque mauris ut ligula vestibulum auctor. Nulla pharetra arcu eros, eu fermentum tortor aliquet ac. In ut arcu accumsan, dictum massa id, pretium dui.",

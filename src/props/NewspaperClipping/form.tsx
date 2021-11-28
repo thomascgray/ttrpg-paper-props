@@ -3,6 +3,7 @@ import { PAPER_TYPES } from "../../config";
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
+import { InkColorSelector } from "../../components/TextColorSelector";
 
 interface iNewspaperClippingFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"];
@@ -47,8 +48,8 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
               props.handleDataChange("page_height", e.target.value);
             }}
             step="5"
-            min="250"
-            max="800"
+            min="400"
+            max="1200"
           />
         </label>
       </div>
@@ -65,6 +66,14 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
         value={props.dataset["font"]}
         onUpdate={(newValue) => {
           props.handleDataChange("font", newValue);
+        }}
+      />
+
+      <InkColorSelector
+        label="Ink Colour"
+        value={props.dataset["text_color"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("text_color", newValue);
         }}
       />
 

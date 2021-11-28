@@ -189,12 +189,29 @@ body {
   font-family: "MedievalSharp", cursive;
 }
 
-.text-flat-red {
-  color: #d63031;
+.img-filter-none img {
+  filter: none;
 }
-
-.text-flat-black {
-  color: #2d3436;
+.img-filter-grayscale img {
+  filter: grayscale(1);
+}
+.img-filter-sepia img {
+  filter: sepia(1);
+}
+.img-filter-medium-contrast img {
+  filter: contrast(1.3);
+}
+.img-filter-high-contrast img {
+  filter: contrast(2);
+}
+.img-filter-grayscale-medium-contrast img {
+  filter: grayscale(1) contrast(1.3);
+}
+.img-filter-grayscale-high-contrast img {
+  filter: grayscale(1) contrast(2);
+}
+.img-filter-grayscale-extreme-contrast img {
+  filter: grayscale(1) contrast(7);
 }
 
 /* render area background colour is 2f3640 */
