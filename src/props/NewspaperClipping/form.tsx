@@ -71,9 +71,9 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
 
       <InkColorSelector
         label="Ink Colour"
-        value={props.dataset["text_color"]}
+        value={props.dataset["ink_color"]}
         onUpdate={(newValue) => {
-          props.handleDataChange("text_color", newValue);
+          props.handleDataChange("ink_color", newValue);
         }}
       />
 

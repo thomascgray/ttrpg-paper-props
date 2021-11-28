@@ -19,7 +19,7 @@ export const HandwrittenLetter = (
         <div className="space-y-8">
           <Markdown
             remarkPlugins={[remarkGfm]}
-            className={`block ${props.font} ${props.font_size} ${props.font_weight} copy-markdown list-inside list-disc`}
+            className={`block ${props.ink_color} ${props.font} ${props.font_size} ${props.font_weight} copy-markdown list-inside list-disc`}
           >
             {props.main_copy}
           </Markdown>

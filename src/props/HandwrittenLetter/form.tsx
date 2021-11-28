@@ -4,6 +4,7 @@ import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { FontSizeSelector } from "../../components/FontSizeSelector";
 import { FontWeightSelector } from "../../components/FontWeightSelector";
+import { InkColorSelector } from "../../components/InkColorSelector";
 
 interface iHandwrittenLetterFormProps {
   dataset: typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"];
@@ -51,6 +52,14 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
         }}
       />
 
+      <InkColorSelector
+        label="Ink Colour"
+        value={props.dataset["ink_color"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("ink_color", newValue);
+        }}
+      />
+
       <FontSizeSelector
         label="Text Size"
         value={props.dataset["font_size"]}
@@ -66,7 +75,7 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
           props.handleDataChange("font_weight", newValue);
         }}
       />
-{/* 
+      {/* 
       <label className="block">
         <span className="block mb-1">
           <span>Prefix Copy</span>

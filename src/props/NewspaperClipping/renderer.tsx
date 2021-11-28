@@ -16,13 +16,13 @@ export const NewspaperClipping = (
       className={`paper transition paper-${props.paper_texture} transition transform mx-auto`}
     >
       <div
-        className={`flex h-full items-center border-2 border-t-0 border-b-0 mx-10 px-8 overflow-hidden ${props.text_color}`}
+        className={`flex h-full items-center border-2 border-t-0 border-b-0 mx-10 px-8 overflow-hidden ${props.ink_color}`}
       >
         <div className="space-y-8">
           {props.prefix_copy && (
             <Markdown
               className={classNames(
-                `block font-serif text-justify copy-markdown prose clipping-markdown ${props.font} ${props.text_color} ${props.image_filter}`,
+                `block font-serif text-justify copy-markdown prose clipping-markdown ${props.font} ${props.ink_color} ${props.image_filter}`,
                 {
                   blurry: props.is_prefix_blurry,
                 }
@@ -33,7 +33,7 @@ export const NewspaperClipping = (
           )}
           {props.main_copy && (
             <Markdown
-              className={`block font-serif text-justify prose copy-markdown clipping-markdown ${props.font} ${props.text_color} ${props.image_filter}`}
+              className={`block font-serif text-justify prose copy-markdown clipping-markdown ${props.font} ${props.ink_color} ${props.image_filter}`}
             >
               {props.main_copy}
             </Markdown>
@@ -41,7 +41,7 @@ export const NewspaperClipping = (
           {props.suffix_copy && (
             <Markdown
               className={classNames(
-                `block font-serif text-justify copy-markdown prose clipping-markdown ${props.font} ${props.text_color} ${props.image_filter}`,
+                `block font-serif text-justify copy-markdown prose clipping-markdown ${props.font} ${props.ink_color} ${props.image_filter}`,
                 {
                   blurry: props.is_suffix_blurry,
                 }
