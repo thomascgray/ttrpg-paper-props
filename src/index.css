@@ -189,6 +189,14 @@ body {
   font-family: "MedievalSharp", cursive;
 }
 
+.text-flat-red {
+  color: #d63031;
+}
+
+.text-flat-black {
+  color: #2d3436;
+}
+
 /* render area background colour is 2f3640 */
 .sawtooth-border-y {
   /* background-color: yellowgreen; */

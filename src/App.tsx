@@ -61,6 +61,7 @@ function App() {
 
   return (
     <div className="flex min-h-full">
+      {/* form */}
       <div
         style={{
           height: "100vh",
@@ -166,16 +167,54 @@ function App() {
               handleDataChange={handleDataChange}
             />
           )}
+
+          <span className="block mt-6">
+            Made by{" "}
+            <a
+              className="text-blue-600 underline hover:text-blue-900"
+              target="_blank"
+              href="https://twitter.com/tmcgry"
+            >
+              Tom
+            </a>
+          </span>
         </div>
       </div>
 
+      {/* render area */}
       <div
         style={{
           backgroundColor: "#2f3640",
           height: "100vh",
         }}
-        className="render-area w-full z-10 overflow-y-scroll py-48"
+        className="render-area relative flex flex-col w-full z-10 overflow-y-scroll py-48"
       >
+        <div className="absolute w-full text-center top-0 mt-4 italic text-gray-300 text-xs">
+          <span className="font-bold">How to use:</span>
+          <ol className="list-decimal">
+            <li>
+              Choose a "prop type" from the dropdown at the top left of the
+              page.
+            </li>
+            <li>
+              Use the controls on the left to change the information that gets
+              rendered.
+            </li>
+            <li>
+              Play around with Zoom, Rotate and prop widths until you get
+              something you're happy with.
+            </li>
+            <li>Take a screenshot of the prop and put it wherever you like!</li>
+            <li>
+              To take a screenshot to clipboard on Windows: Win Key + Shift + S
+            </li>
+            <li>
+              To take a screenshot to clipboard on Mac OS: Shift + Control +
+              Command + 4
+            </li>
+          </ol>
+        </div>
+
         {selectedPaperType === "NEWSPAPER" && (
           <Newspaper
             {...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"])}
