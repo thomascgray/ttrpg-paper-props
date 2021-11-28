@@ -71,7 +71,7 @@ function App() {
       >
         <div className="bg-gray-400 p-4">
           <label className="block mb-4">
-            <span className="block mb-1">Paper Type</span>
+            <span className="block mb-1">Prop Type</span>
             <select
               value={selectedPaperType}
               className="p-2 text-lg w-full"

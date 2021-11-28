@@ -20,6 +20,10 @@ export const InkColorSelector = (props: iInkColorSelector) => {
         >
           <option value="ink-black">Black</option>
           <option value="ink-red">Red</option>
+          <option value="ink-green">Green</option>
+          <option value="ink-blue">Blue</option>
+          <option value="ink-purple">Purple</option>
+          <option value="ink-silver">Silver</option>
         </select>
       </div>
     </label>

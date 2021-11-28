@@ -3,7 +3,7 @@ import { PAPER_TYPES } from "../../config";
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
-import { InkColorSelector } from "../../components/TextColorSelector";
+import { InkColorSelector } from "../../components/InkColorSelector";
 
 interface iNewspaperClippingFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"];
