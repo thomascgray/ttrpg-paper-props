@@ -22,7 +22,7 @@ import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("TICKET");
+    useState<keyof typeof PAPER_TYPES>("NEWSPAPER_CLIPPING");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 

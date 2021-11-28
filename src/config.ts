@@ -33,7 +33,7 @@ export const PAPER_TYPES = {
       page_width: 400,
       page_height: 700,
       font: "font-serif",
-      ink_color: "text-flat-black",
+      ink_color: "ink-black",
       image_filter: "none",
       prefix_copy:
         "Nam sed tincidunt velit. Ut ac ultricies magna. Sed gravida metus est, eget bibendum purus pharetra sed. Maecenas scelerisque mauris ut ligula vestibulum auctor. Nulla pharetra arcu eros, eu fermentum tortor aliquet ac. In ut arcu accumsan, dictum massa id, pretium dui.",
@@ -79,7 +79,7 @@ Mauris in pharetra nunc. Nullam semper metus mi, a iaculis nisi maximus sed. Pro
       ...UNIVERSAL_DATA,
       page_width_percentage: 80,
       font_size: "prose-lg",
-      ink_color: "text-flat-black",
+      ink_color: "ink-black",
       font_weight: "font-normal",
       prefix: "To my Dearest,",
       prefix_alignment: "left",

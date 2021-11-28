@@ -1,7 +1,6 @@
 import React from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-// import ReactMarkdown from 'react-markdown'
 import { PAPER_TYPES } from "../../config";
 
 export const HandwrittenLetter = (
