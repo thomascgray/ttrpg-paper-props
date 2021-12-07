@@ -103,6 +103,11 @@ function App() {
               handleDataChange("rotation_degrees", newRotate);
             }}
           />
+          {/* collections control */}
+          <div className="flex">
+            <button>Save</button>
+            <select></select>
+          </div>
         </div>
 
         <div className="bg-gray-300 p-4">

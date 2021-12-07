@@ -1,6 +1,4 @@
 import React from "react";
-import classNames from "classnames";
-import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
 export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
@@ -25,14 +23,14 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
         />
 
         <div
-          className={`${props.text_alignment} space-y-2`}
+          className={`${props.text_alignment} ${props.ink_color} space-y-2`}
           style={{
             marginBottom: "6%",
           }}
         >
           {props.text_line_one !== "" && (
             <span
-              className="font-black text-2xl"
+              className={`font-black text-2xl `}
               style={{
                 display: "block",
                 marginLeft: "10%",
@@ -55,7 +53,7 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
           )}
           {props.text_line_three !== "" && (
             <span
-              className="italic text-gray-700"
+              className={`italic text-gray-700 `}
               style={{
                 display: "block",
                 marginLeft: "10%",

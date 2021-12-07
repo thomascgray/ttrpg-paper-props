@@ -5,6 +5,7 @@ import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { TextAlignmentSelector } from "../../components/TextAlignmentSelector";
 import { PAPER_TYPES } from "../../config";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
+import { InkColorSelector } from "../../components/InkColorSelector";
 
 interface iNPCCardForm {
   dataset: typeof PAPER_TYPES["NPC_CARD"]["data"];
@@ -70,6 +71,14 @@ export const NPCCardForm = (props: iNPCCardForm) => {
         value={props.dataset["font"]}
         onUpdate={(newValue) => {
           props.handleDataChange("font", newValue);
+        }}
+      />
+
+      <InkColorSelector
+        label="Ink Colour"
+        value={props.dataset["ink_color"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("ink_color", newValue);
         }}
       />
 
