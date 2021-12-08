@@ -148,10 +148,10 @@ Sincerely, Lorem Ipsum`,
       book_cover_template: "/images/ragged-journal-cover.png",
       book_cover_template_image_effect: "none",
       text_effect: "none",
-      font: "font-serif",
+      font: "font-im-fell-display",
       zoom_level_percentage: "30",
-      prose_size: "prose-2xl",
-      ink_color: "ink-black",
+      prose_size: "prose",
+      ink_color: "ink-red",
       extra_left_margin: 0,
       main_copy: `# MYSTICAL ARTIFACTS
 
