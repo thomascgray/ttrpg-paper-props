@@ -6,6 +6,7 @@ import { TextAlignmentSelector } from "../../components/TextAlignmentSelector";
 import { PAPER_TYPES } from "../../config";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
+import { ImageUrl } from "../../components/ImageUrl";
 
 interface iNPCCardForm {
   dataset: typeof PAPER_TYPES["NPC_CARD"]["data"];
@@ -45,18 +46,13 @@ export const NPCCardForm = (props: iNPCCardForm) => {
         }}
       />
 
-      <label className="block">
-        <span className="block mb-1">Image URL</span>
-        <div className="flex">
-          <input
-            value={props.dataset["image_url"]}
-            className="p-2 text-lg w-full"
-            onChange={(e) => {
-              props.handleDataChange("image_url", e.target.value);
-            }}
-          />
-        </div>
-      </label>
+      <ImageUrl
+        label="Image URL"
+        value={props.dataset.image_url}
+        onUpdate={(newVal) => {
+          props.handleDataChange("image_url", newVal);
+        }}
+      />
 
       <ImageFilterSelector
         label="Image Effect"

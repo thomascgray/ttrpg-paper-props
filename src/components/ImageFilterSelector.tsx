@@ -22,7 +22,7 @@ export const ImageFilterSelector = (props: iImageFilterSelector) => {
           <option value="img-filter-grayscale">Grayscale</option>
           <option value="img-filter-sepia">Sepia</option>
           <option value="img-filter-medium-contrast">Medium Contrast</option>
-          <option value="img-filter-high-contrast(2)">High Contrast</option>
+          <option value="img-filter-high-contrast">High Contrast</option>
           <option value="img-filter-grayscale-medium-contrast">
             Grayscale, Medium Contrast
           </option>

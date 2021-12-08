@@ -145,15 +145,19 @@ Sincerely, Lorem Ipsum`,
     name: "Book Cover",
     data: {
       ...UNIVERSAL_DATA,
-
+      book_cover_template: "/images/ragged-journal-cover.png",
+      book_cover_template_image_effect: "none",
+      text_effect: "none",
+      font: "font-serif",
+      zoom_level_percentage: "30",
       prose_size: "prose-2xl",
-      copy_colour: "gold",
+      ink_color: "ink-black",
+      extra_left_margin: 0,
       main_copy: `# MYSTICAL ARTIFACTS
 
   ## A STUDY IN THE STRANGE AND WEIRD
 
   ### A. COBALT ET.AL`,
-      topPadding: "0em",
     },
   },
   NPC_CARD: {

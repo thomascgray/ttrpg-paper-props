@@ -1,10 +1,10 @@
 import React from "react";
 import { iStandardComponentProps } from "./";
 
-export const TextInput = (props: iStandardComponentProps) => {
+export const ImageUrl = (props: iStandardComponentProps) => {
   return (
     <label className="block">
-      <span className="block mb-1">{props.label}</span>
+      <span className="block mb-1">Image URL</span>
       <div className="flex">
         <input
           value={props.value}

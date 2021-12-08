@@ -210,6 +210,14 @@ body {
   filter: grayscale(1) contrast(7);
 }
 
+.text-filter-none * {
+  text-shadow: none !important;
+}
+
+.text-filter-embossed * {
+  text-shadow: -1px -1px 1px #d4d4d4, 1px 1px 1px #2a2a2a !important;
+}
+
 /* render area background colour is 2f3640 */
 .sawtooth-border-y {
   /* background-color: yellowgreen; */
@@ -231,11 +239,4 @@ body {
   background-position: top left, top left, top right, top right;
   background-size: 12px 12px;
   background-repeat: repeat-y;
-}
-
-.copy-colour-gold * {
-  color: gold !important;
-}
-.copy-colour-red * {
-  color: red !important;
 }

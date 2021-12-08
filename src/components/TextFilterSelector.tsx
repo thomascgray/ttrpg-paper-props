@@ -1,16 +1,12 @@
 import React from "react";
 
-interface iFontSizeSelector {
+interface iTextFilterSelector {
   label: string;
   value: string;
   onUpdate: (value: any) => void;
-  options: {
-    value: string;
-    label: string;
-  }[];
 }
 
-export const Select = (props: iFontSizeSelector) => {
+export const TextFilterSelector = (props: iTextFilterSelector) => {
   return (
     <label className="block">
       <span className="block mb-1">{props.label}</span>
@@ -19,17 +15,11 @@ export const Select = (props: iFontSizeSelector) => {
           value={props.value}
           className={`p-2 text-lg w-full`}
           onChange={(e) => {
-            console.log("e.target.value", e.target.value);
             props.onUpdate(e.target.value);
           }}
         >
-          {props.options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            );
-          })}
+          <option value="text-filter-none">None</option>
+          <option value="text-filter-embossed">Embossed</option>
         </select>
       </div>
     </label>
