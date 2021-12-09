@@ -28,7 +28,7 @@ export const InkColorSelector = (props: iInkColorSelector) => {
               style={{
                 backgroundColor: hexCode,
               }}
-              className="h-10 w-10 border-4 border-solid border-gray-100"
+              className="h-10 w-16 border-4 border-solid border-gray-100"
               onClick={() => {
                 props.onUpdate(`ink-${colourName}`);
               }}

@@ -5,6 +5,8 @@ import { FontSelector } from "../../components/FontSelector";
 import { FontSizeSelector } from "../../components/FontSizeSelector";
 import { FontWeightSelector } from "../../components/FontWeightSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
+import { TextAlignmentSelector } from "../../components/TextAlignmentSelector";
+import { ButtonGroup } from "../../components/ButtonGroup";
 
 interface iHandwrittenLetterFormProps {
   dataset: typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"];
@@ -37,6 +39,21 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
         />
       </label>
 
+      <ButtonGroup
+        label="Copy Padding"
+        value={props.dataset["padding"]}
+        onUpdate={(val) => {
+          props.handleDataChange("padding", val);
+        }}
+        tupleSet={[
+          ["p-2", "XS"],
+          ["p-4", "S"],
+          ["p-8", "M"],
+          ["p-12", "L"],
+          ["p-16", "XL"],
+        ]}
+      />
+
       <PaperTextureSelect
         value={props.dataset["paper_texture"]}
         onUpdate={(newValue) => {
@@ -68,39 +85,21 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
         }}
       />
 
-      <FontWeightSelector
-        label="Font Weight"
+      <TextAlignmentSelector
+        label="Text Alignment"
         value={props.dataset["font_weight"]}
         onUpdate={(newValue) => {
           props.handleDataChange("font_weight", newValue);
         }}
       />
-      {/* 
-      <label className="block">
-        <span className="block mb-1">
-          <span>Prefix Copy</span>
-          <span className="ml-2 italic">
-            You can use{" "}
-            <a
-              className="text-blue-400 underline"
-              href="https://www.markdownguide.org/cheat-sheet/"
-            >
-              markdown
-            </a>
-            !
-          </span>
-        </span>
-        <div className="flex">
-          <textarea
-            value={props.dataset["prefix"]}
-            className="p-2 text-lg w-full"
-            rows={3}
-            onChange={(e) => {
-              props.handleDataChange("prefix", e.target.value);
-            }}
-          />
-        </div>
-      </label> */}
+
+      <FontWeightSelector
+        label="Font Weight"
+        value={props.dataset["text_alignment"]}
+        onUpdate={(newValue) => {
+          props.handleDataChange("text_alignment", newValue);
+        }}
+      />
 
       <label className="block">
         <span className="block mb-1">
@@ -127,32 +126,6 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
           />
         </div>
       </label>
-
-      {/* <label className="block">
-        <span className="block mb-1">
-          <span>Suffix Copy</span>
-          <span className="ml-2 italic">
-            You can use{" "}
-            <a
-              className="text-blue-400 underline"
-              href="https://www.markdownguide.org/cheat-sheet/"
-            >
-              markdown
-            </a>
-            !
-          </span>
-        </span>
-        <div className="flex">
-          <textarea
-            value={props.dataset["suffix"]}
-            className="p-2 text-lg w-full"
-            rows={3}
-            onChange={(e) => {
-              props.handleDataChange("suffix", e.target.value);
-            }}
-          />
-        </div>
-      </label> */}
     </div>
   );
 };

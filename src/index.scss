@@ -68,6 +68,10 @@ body {
   filter: blur(3px);
 }
 
+.paper * {
+  mix-blend-mode: multiply;
+}
+
 .paper-grey {
   background-image: url("/textures/paper-grey.jpg");
 }

@@ -14,11 +14,11 @@ export const HandwrittenLetter = (
       }}
       className={`paper paper-${props.paper_texture} overflow-hidden transition transform mx-auto`}
     >
-      <div className="flex h-full items-center mx-10 px-8 py-12">
-        <div className="space-y-8">
+      <div className={`flex h-full items-center ${props.padding}`}>
+        <div className="">
           <Markdown
             remarkPlugins={[remarkGfm]}
-            className={`block ${props.ink_color} ${props.font} ${props.font_size} ${props.font_weight} copy-markdown list-inside list-disc`}
+            className={`block ${props.text_alignment} ${props.ink_color} ${props.font} ${props.font_size} ${props.font_weight} copy-markdown list-inside list-disc`}
           >
             {props.main_copy}
           </Markdown>
