@@ -14,6 +14,9 @@ export const ButtonGroup = (props: iButtonGroupProps) => {
         {props.tupleSet.map((tuple) => {
           const [val, label] = tuple;
 
+          const firstCharacterOfLabel = label[0];
+          const restOfLabel = label.substring(1);
+
           return (
             <button
               className={classnames(
@@ -24,7 +27,8 @@ export const ButtonGroup = (props: iButtonGroupProps) => {
                 props.onUpdate(val);
               }}
             >
-              {label}
+              <span className="font-bold">{firstCharacterOfLabel}</span>
+              <span className="font-normal">{restOfLabel}</span>
             </button>
           );
         })}

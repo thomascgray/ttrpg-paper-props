@@ -85,21 +85,49 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
         }}
       />
 
-      <TextAlignmentSelector
+      <ButtonGroup
+        label="Text Alignment"
+        value={props.dataset["text_alignment"]}
+        onUpdate={(val) => {
+          props.handleDataChange("text_alignment", val);
+        }}
+        tupleSet={[
+          ["text-left", "Left"],
+          ["text-center", "Center"],
+          ["text-right", "Right"],
+          ["text-justify", "Justify"],
+        ]}
+      />
+
+      <ButtonGroup
+        label="Font Weight"
+        value={props.dataset["font_weight"]}
+        onUpdate={(val) => {
+          props.handleDataChange("font_weight", val);
+        }}
+        tupleSet={[
+          ["font-light", "Light"],
+          ["font-normal", "Normal"],
+          ["font-semibold", "Semi"],
+          ["font-bold", "Bold"],
+        ]}
+      />
+
+      {/* <TextAlignmentSelector
         label="Text Alignment"
         value={props.dataset["font_weight"]}
         onUpdate={(newValue) => {
           props.handleDataChange("font_weight", newValue);
         }}
-      />
+      /> */}
 
-      <FontWeightSelector
+      {/* <FontWeightSelector
         label="Font Weight"
         value={props.dataset["text_alignment"]}
         onUpdate={(newValue) => {
           props.handleDataChange("text_alignment", newValue);
         }}
-      />
+      /> */}
 
       <label className="block">
         <span className="block mb-1">
