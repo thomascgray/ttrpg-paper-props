@@ -20,6 +20,9 @@ export const PAPER_TYPES = {
       banner_text_2: "Lorem ipsum",
       banner_text_3: "Lorem ipsum",
       banner_font: "font-serif",
+      banner_size: "16",
+      hide_top_banner_border: false,
+      hide_bottom_banner_border: false,
 
       headline: "MORBI TEMPUS MOLLIS IPSUM AT!",
       headline_font: "font-serif",

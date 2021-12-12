@@ -20,7 +20,7 @@ export const ButtonGroup = (props: iButtonGroupProps) => {
           return (
             <button
               className={classnames(
-                `h-10 w-16 border-4 border-solid border-gray-100 font-bold`,
+                `h-10 w-16 border-4 border-solid border-gray-100`,
                 { "border-red-400": props.value === val }
               )}
               onClick={() => {

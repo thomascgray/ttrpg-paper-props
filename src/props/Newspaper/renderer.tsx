@@ -28,29 +28,42 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
           </Textfit>
         </div>
 
-        <hr className="border-solid border-2 border-gray-600" />
+        {!props.hide_top_banner_border && (
+          <hr className="border-solid border-2 border-gray-600" />
+        )}
 
         <div className="flex justify-between py-2">
           <span
-            className={`text-sm text-left text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
+            style={{
+              fontSize: `${props.banner_size}px`,
+            }}
+            className={`text-left text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
           >
             {props.banner_text_1}
           </span>
 
           <span
-            className={`text-sm text-center text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
+            style={{
+              fontSize: `${props.banner_size}px`,
+            }}
+            className={`text-center text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
           >
             {props.banner_text_2}
           </span>
 
           <span
-            className={`text-sm text-right text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
+            style={{
+              fontSize: `${props.banner_size}px`,
+            }}
+            className={`text-right text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
           >
             {props.banner_text_3}
           </span>
         </div>
 
-        <hr className="border-solid border-2 border-gray-600" />
+        {!props.hide_bottom_banner_border && (
+          <hr className="border-solid border-2 border-gray-600" />
+        )}
 
         <Textfit mode="single" max={120}>
           <h2 className={`${props.headline_font} font-semibold text-justify`}>
