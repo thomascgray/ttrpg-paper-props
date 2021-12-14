@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Newspaper } from "./props/Newspaper/renderer";
 import { WantedPoster } from "./props/WantedPoster/renderer";
@@ -36,6 +36,27 @@ function App() {
     ...savedData,
   });
 
+  let existingVersionsRaw = window.localStorage.getItem(
+    `paper_data_versions_${selectedPaperType}`
+  );
+  if (existingVersionsRaw === null) {
+    existingVersionsRaw = "[]";
+  }
+  const [versionsList, setVersionsList] = useState([
+    ...JSON.parse(existingVersionsRaw),
+  ]);
+
+  const [selectedVersion, setSelectedVersion] = useState(
+    versionsList[0]?.timestamp.toString() || null
+  );
+
+  useEffect(() => {
+    //whenever we update the version list, set the selected version to the first from the version list
+    if (versionsList.length >= 1) {
+      setSelectedVersion(versionsList[0].timestamp.toString());
+    }
+  }, [versionsList]);
+
   const handleDataChange = (name: string, value: any) => {
     const newPaperData = {
       ...paperType.data,
@@ -49,13 +70,59 @@ function App() {
     );
   };
 
-  const refreshPaperData = (key: keyof typeof PAPER_TYPES) => {
+  const refreshData = (key: keyof typeof PAPER_TYPES) => {
     const paperType = PAPER_TYPES[key];
     const savedDataString = window.localStorage.getItem(`paper_data_${key}`);
     const savedData = savedDataString ? JSON.parse(savedDataString) : {};
     setPaperData({
       ...paperType.data,
       ...savedData,
+    });
+
+    let existingVersionsRaw = window.localStorage.getItem(
+      `paper_data_versions_${key}`
+    );
+    if (existingVersionsRaw === null) {
+      existingVersionsRaw = "[]";
+    }
+    const existingVersions = JSON.parse(existingVersionsRaw);
+
+    setVersionsList(existingVersions);
+  };
+
+  const handleSave = () => {
+    // get the current list out of the app
+    let existingVersionsRaw = window.localStorage.getItem(
+      `paper_data_versions_${selectedPaperType}`
+    );
+    if (existingVersionsRaw === null) {
+      existingVersionsRaw = "[]";
+    }
+    const versions = JSON.parse(existingVersionsRaw);
+
+    // add the current data to it
+    versions.unshift({
+      ...paperData,
+      timestamp: Date.now(),
+    });
+
+    // resave that list into both local state and app state
+    setVersionsList(versions);
+    window.localStorage.setItem(
+      `paper_data_versions_${selectedPaperType}`,
+      JSON.stringify(versions)
+    );
+  };
+
+  const handleVersionSelect = (selectedTimeStamp: string) => {
+    const selectedVersion = versionsList.find(
+      (v) => v.timestamp.toString() === selectedTimeStamp.toString()
+    );
+
+    setSelectedVersion(selectedTimeStamp);
+    setPaperData({
+      ...selectedVersion,
+      timestamp: undefined,
     });
   };
 
@@ -79,7 +146,7 @@ function App() {
                 setSelectedPaperType(
                   e.target.value as keyof typeof PAPER_TYPES
                 );
-                refreshPaperData(e.target.value as keyof typeof PAPER_TYPES);
+                refreshData(e.target.value as keyof typeof PAPER_TYPES);
               }}
             >
               {Object.keys(PAPER_TYPES).map((typeKey) => {
@@ -105,8 +172,20 @@ function App() {
           />
           {/* collections control */}
           <div className="flex">
-            <button>Save</button>
-            <select></select>
+            <button onClick={handleSave} className="bg-red-200 w-28 mr-4">
+              Save
+            </button>
+            {selectedVersion && versionsList.length >= 1 && (
+              <select
+                value={selectedVersion}
+                onChange={(e) => handleVersionSelect(e.target.value)}
+                className="w-full"
+              >
+                {versionsList.map((v) => {
+                  return <option key={v.timestamp}>{v.timestamp}</option>;
+                })}
+              </select>
+            )}
           </div>
         </div>
 

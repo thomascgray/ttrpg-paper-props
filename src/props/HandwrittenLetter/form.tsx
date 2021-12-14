@@ -113,22 +113,6 @@ export const HandwrittenLetterForm = (props: iHandwrittenLetterFormProps) => {
         ]}
       />
 
-      {/* <TextAlignmentSelector
-        label="Text Alignment"
-        value={props.dataset["font_weight"]}
-        onUpdate={(newValue) => {
-          props.handleDataChange("font_weight", newValue);
-        }}
-      /> */}
-
-      {/* <FontWeightSelector
-        label="Font Weight"
-        value={props.dataset["text_alignment"]}
-        onUpdate={(newValue) => {
-          props.handleDataChange("text_alignment", newValue);
-        }}
-      /> */}
-
       <label className="block">
         <span className="block mb-1">
           <span>Main Copy</span>

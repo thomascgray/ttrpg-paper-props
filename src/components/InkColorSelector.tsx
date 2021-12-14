@@ -21,6 +21,7 @@ export const InkColorSelector = (props: iStandardComponentProps) => {
 
           return (
             <button
+              key={colourName}
               style={{
                 backgroundColor: hexCode,
               }}

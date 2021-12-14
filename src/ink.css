@@ -1,0 +1,35 @@
+.ink-black,
+.ink-black * {
+  border-color: #2d3436 !important;
+  color: #2d3436 !important;
+}
+
+.ink-red,
+.ink-red * {
+  border-color: #c0392b !important;
+  color: #c0392b !important;
+}
+
+.ink-green,
+.ink-green * {
+  border-color: #27ae60 !important;
+  color: #27ae60 !important;
+}
+
+.ink-blue,
+.ink-blue * {
+  border-color: #2980b9 !important;
+  color: #2980b9 !important;
+}
+
+.ink-purple,
+.ink-purple * {
+  border-color: #4834d4 !important;
+  color: #4834d4 !important;
+}
+
+.ink-silver,
+.ink-silver * {
+  border-color: #bdc3c7 !important;
+  color: #bdc3c7 !important;
+}

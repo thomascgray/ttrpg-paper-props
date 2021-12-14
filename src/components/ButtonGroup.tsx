@@ -4,6 +4,7 @@ import { iStandardComponentProps } from "./";
 
 export interface iButtonGroupProps extends iStandardComponentProps {
   tupleSet: string[][];
+  buttonClassName?: string;
 }
 
 export const ButtonGroup = (props: iButtonGroupProps) => {
@@ -19,8 +20,9 @@ export const ButtonGroup = (props: iButtonGroupProps) => {
 
           return (
             <button
+              key={`${firstCharacterOfLabel}${val}`}
               className={classnames(
-                `h-10 w-16 border-4 border-solid border-gray-100`,
+                `h-10 px-2 border-4 border-solid border-gray-100 rounded shadow min-w-[50px]`,
                 { "border-red-400": props.value === val }
               )}
               onClick={() => {

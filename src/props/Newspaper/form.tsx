@@ -234,6 +234,24 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             props.handleDataChange("quote_font", newValue);
           }}
         />
+
+        <label className="block">
+          <span className="block mb-1">
+            Quote Size:{" "}
+            <span className="font-bold">{props.dataset["quote_size"]}px</span>
+          </span>
+          <input
+            className="w-full cursor-pointer"
+            type="range"
+            value={props.dataset["quote_size"]}
+            onChange={(e) => {
+              props.handleDataChange("quote_size", e.target.value);
+            }}
+            step="1"
+            min="12"
+            max="60"
+          />
+        </label>
       </div>
 
       <div className="bg-gray-400 space-y-4 p-2">

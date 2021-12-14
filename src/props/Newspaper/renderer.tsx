@@ -75,7 +75,10 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
 
         {props.quote !== "" && (
           <p
-            className={`font-serif font-bold text-3xl text-justify italic my-4 ${props.quote_font}`}
+            style={{
+              fontSize: `${props.quote_size}px`,
+            }}
+            className={`font-serif font-bold text-justify italic my-4 ${props.quote_font}`}
           >
             {props.quote}
           </p>
