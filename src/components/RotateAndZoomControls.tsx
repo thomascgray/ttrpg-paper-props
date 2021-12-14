@@ -16,7 +16,7 @@ export const RotateAndZoomControls = (props: iRotateAndZoomControlsProps) => {
             Zoom: <span className="font-bold">{props.zoomValue}</span>
           </span>
           <input
-            className="w-full cursor-pointer"
+            className="w-full cursor-pointer bg-red-500"
             type="range"
             value={props.zoomValue}
             onChange={(e) => {

@@ -117,7 +117,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <input
             type="checkbox"
             checked={props.dataset["is_prefix_blurry"]}
-            className="p-2 ml-1 mt-1 transform scale-150"
+            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
             onChange={(e) => {
               props.handleDataChange("is_prefix_blurry", e.target.checked);
             }}
@@ -183,7 +183,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <input
             type="checkbox"
             checked={props.dataset["is_suffix_blurry"]}
-            className="p-2 ml-1 mt-1 transform scale-150"
+            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
             onChange={(e) => {
               props.handleDataChange("is_suffix_blurry", e.target.checked);
             }}

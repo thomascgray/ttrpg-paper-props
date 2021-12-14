@@ -165,7 +165,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
               <input
                 type="checkbox"
                 checked={props.dataset["hide_top_banner_border"]}
-                className="p-2 ml-1 mt-1 transform scale-150"
+                className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
                 onChange={(e) => {
                   props.handleDataChange(
                     "hide_top_banner_border",
@@ -181,7 +181,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
               <input
                 type="checkbox"
                 checked={props.dataset["hide_bottom_banner_border"]}
-                className="p-2 ml-1 mt-1 transform scale-150"
+                className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
                 onChange={(e) => {
                   props.handleDataChange(
                     "hide_bottom_banner_border",
@@ -314,7 +314,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             <input
               type="checkbox"
               checked={props.dataset["is_main_copy_blurry"]}
-              className="p-2 ml-1 mt-1 transform scale-150"
+              className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
               onChange={(e) => {
                 props.handleDataChange("is_main_copy_blurry", e.target.checked);
               }}

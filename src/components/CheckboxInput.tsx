@@ -14,7 +14,7 @@ export const CheckboxInput = (props: iCheckboxInputProps) => {
         <input
           type="checkbox"
           checked={props.value}
-          className="p-2 ml-1 mt-1 transform scale-150"
+          className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
           onChange={(e) => {
             props.onUpdate(e.target.checked);
           }}

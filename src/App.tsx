@@ -172,14 +172,17 @@ function App() {
           />
           {/* collections control */}
           <div className="flex">
-            <button onClick={handleSave} className="bg-red-200 w-28 mr-4">
+            <button
+              onClick={handleSave}
+              className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"
+            >
               Save
             </button>
             {selectedVersion && versionsList.length >= 1 && (
               <select
                 value={selectedVersion}
                 onChange={(e) => handleVersionSelect(e.target.value)}
-                className="w-full"
+                className="grow rounded shadow px-4 py-2"
               >
                 {versionsList.map((v) => {
                   return <option key={v.timestamp}>{v.timestamp}</option>;
