@@ -2,32 +2,33 @@
   "name": "papers-generator",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "start:dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "concurrently \"vite\" \"npx tailwindcss -i ./src/index.css -o ./src/build.css --watch\"",
+    "build": "tsc && npx tailwindcss -i ./src/index.css -o ./src/build.css --minify && vite build",
     "serve": "vite preview"
   },
   "dependencies": {
     "classnames": "^2.3.1",
     "html2canvas": "^1.3.2",
     "markdown-to-jsx": "^7.1.3",
-    "node-sass": "^6.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-markdown": "^7.1.0",
     "react-textfit": "^1.1.1",
-    "remark-gfm": "^3.0.1",
-    "sass": "^1.43.5"
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.4.0",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.4.0",
+    "@tailwindcss/line-clamp": "^0.3.0",
+    "@tailwindcss/typography": "^0.5.0",
     "@types/markdown-to-jsx": "^7.0.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@vitejs/plugin-react-refresh": "^1.3.1",
-    "autoprefixer": "^10.2.5",
-    "postcss": "^8.3.0",
-    "tailwindcss": "^2.1.2",
+    "autoprefixer": "^10.4.0",
+    "concurrently": "^6.4.0",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.2",
     "typescript": "^4.1.2",
     "vite": "^2.3.3"
   }
