@@ -11,6 +11,9 @@ export const HandwrittenLetter = (
       style={{
         transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
         width: `${props.page_width_percentage}%`,
+        boxShadow: `${
+          props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+        }`,
       }}
       className={`paper paper-${props.paper_texture} transform mx-auto`}
     >

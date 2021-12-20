@@ -13,6 +13,9 @@ export const WantedPoster = (
       style={{
         transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
         width: `${props.page_width}px`,
+        boxShadow: `${
+          props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+        }`,
       }}
       className={`paper transition paper-${props.paper_texture} transform w-4/5 mx-auto p-10`}
     >

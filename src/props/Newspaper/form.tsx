@@ -43,6 +43,20 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         }}
       />
 
+      <label className="block">
+        <span className="block mb-1">Enable paper inset shadow?</span>
+        <div className="flex">
+          <input
+            type="checkbox"
+            checked={props.dataset["is_paper_shadow"]}
+            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
+            onChange={(e) => {
+              props.handleDataChange("is_paper_shadow", e.target.checked);
+            }}
+          />
+        </div>
+      </label>
+
       <InkColorSelector
         label="Ink Colour"
         value={props.dataset["ink_color"]}

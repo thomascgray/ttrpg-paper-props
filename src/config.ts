@@ -2,6 +2,7 @@ export const UNIVERSAL_DATA = {
   rotation_degrees: 0,
   zoom: 1,
   paper_texture: "grey",
+  is_paper_shadow: true,
 };
 
 export const PAPER_TYPES = {

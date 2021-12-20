@@ -11,6 +11,9 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
           width: `${props.page_width}px`,
           height: `${props.page_height}px`,
+          boxShadow: `${
+            props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+          }`,
         }}
         className={`paper ${props.font} ${props.font_weight} absolute transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto ${props.rounded_corners}`}
       >
