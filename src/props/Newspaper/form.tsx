@@ -4,6 +4,7 @@ import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
+import { CheckboxInput } from "../../components/CheckboxInput";
 
 interface iNewspaperFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER"]["data"];
@@ -43,19 +44,11 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         }}
       />
 
-      <label className="block">
-        <span className="block mb-1">Enable paper inset shadow?</span>
-        <div className="flex">
-          <input
-            type="checkbox"
-            checked={props.dataset["is_paper_shadow"]}
-            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-            onChange={(e) => {
-              props.handleDataChange("is_paper_shadow", e.target.checked);
-            }}
-          />
-        </div>
-      </label>
+      <CheckboxInput
+        label="Enable paper inset shadow?"
+        value={props.dataset["is_paper_shadow"]}
+        onUpdate={(val) => props.handleDataChange("is_paper_shadow", val)}
+      />
 
       <InkColorSelector
         label="Ink Colour"
@@ -172,39 +165,21 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           />
         </label>
 
-        <div className="flex flex-row">
-          <label className="block mr-4">
-            <span className="block mb-1">Hide top banner border?</span>
-            <div className="flex">
-              <input
-                type="checkbox"
-                checked={props.dataset["hide_top_banner_border"]}
-                className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-                onChange={(e) => {
-                  props.handleDataChange(
-                    "hide_top_banner_border",
-                    e.target.checked
-                  );
-                }}
-              />
-            </div>
-          </label>
-          <label className="block mr-4">
-            <span className="block mb-1">Hide bottom banner border?</span>
-            <div className="flex">
-              <input
-                type="checkbox"
-                checked={props.dataset["hide_bottom_banner_border"]}
-                className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-                onChange={(e) => {
-                  props.handleDataChange(
-                    "hide_bottom_banner_border",
-                    e.target.checked
-                  );
-                }}
-              />
-            </div>
-          </label>
+        <div className="flex flex-row items-center space-x-4">
+          <CheckboxInput
+            label="Hide top banner border?"
+            value={props.dataset["hide_top_banner_border"]}
+            onUpdate={(val) =>
+              props.handleDataChange("hide_top_banner_border", val)
+            }
+          />
+          <CheckboxInput
+            label="Hide bottom banner border?"
+            value={props.dataset["hide_bottom_banner_border"]}
+            onUpdate={(val) =>
+              props.handleDataChange("hide_bottom_banner_border", val)
+            }
+          />
         </div>
       </div>
 
@@ -322,19 +297,11 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           }}
         />
 
-        <label className="block">
-          <span className="block mb-1">Is Main Copy Blurry?</span>
-          <div className="flex">
-            <input
-              type="checkbox"
-              checked={props.dataset["is_main_copy_blurry"]}
-              className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-              onChange={(e) => {
-                props.handleDataChange("is_main_copy_blurry", e.target.checked);
-              }}
-            />
-          </div>
-        </label>
+        <CheckboxInput
+          label="Is Main Copy Blurry?"
+          value={props.dataset["is_main_copy_blurry"]}
+          onUpdate={(val) => props.handleDataChange("is_main_copy_blurry", val)}
+        />
       </div>
     </div>
   );

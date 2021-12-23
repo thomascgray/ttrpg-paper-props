@@ -9,8 +9,8 @@ interface iCheckboxInputProps {
 export const CheckboxInput = (props: iCheckboxInputProps) => {
   return (
     <label className="block">
-      <span className="block mb-1">{props.label}</span>
-      <div className="flex">
+      <div className="flex flex-row items-center">
+        <span className="block mr-4">{props.label}</span>
         <input
           type="checkbox"
           checked={props.value}

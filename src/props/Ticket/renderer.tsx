@@ -30,7 +30,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 <td
                   rowSpan={3}
                   className={classNames(
-                    "border border-gray-900 border-double w-14 border-none text-center",
+                    "border border-gray-900 w-14 border-none text-center",
                     {
                       hidden: props.hide_left_margin_copy,
                     }
@@ -49,7 +49,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 </td>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double border-b-0 prose border-none text-center"
+                  className="border border-gray-900 prose border-none text-center"
                 >
                   {!props.hide_top_content && (
                     <Markdown className="copy-markdown">
@@ -60,7 +60,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 <td
                   rowSpan={3}
                   className={classNames(
-                    "border border-gray-900 border-double w-14 border-none text-center",
+                    "border border-gray-900 w-14 border-none text-center",
                     {
                       hidden: props.hide_right_margin_copy,
                     }
@@ -79,25 +79,48 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
                 </td>
               </tr>
               <tr>
-                <td className="border border-gray-900 border-double border-r-0 border-t-0 prose border-none text-center">
-                  {!props.hide_middle_left_copy && (
-                    <Markdown className="copy-markdown">
-                      {props.middle_left_copy}
-                    </Markdown>
+                {props.hide_middle_left_copy === false &&
+                  props.hide_middle_right_copy === true && (
+                    <td
+                      colSpan={2}
+                      className="border border-gray-900 prose border-none text-center"
+                    >
+                      <Markdown className="copy-markdown">
+                        {props.middle_left_copy}
+                      </Markdown>
+                    </td>
                   )}
-                </td>
-                <td className="border border-gray-900 border-double border-l-0 border-t-0 prose border-none text-center">
-                  {!props.hide_middle_right_copy && (
-                    <Markdown className="copy-markdown">
-                      {props.middle_right_copy}
-                    </Markdown>
+                {props.hide_middle_left_copy === true &&
+                  props.hide_middle_right_copy === false && (
+                    <td
+                      colSpan={2}
+                      className="border border-gray-900 prose border-none text-center"
+                    >
+                      <Markdown className="copy-markdown">
+                        {props.middle_right_copy}
+                      </Markdown>
+                    </td>
                   )}
-                </td>
+                {props.hide_middle_left_copy === false &&
+                  props.hide_middle_right_copy === false && (
+                    <React.Fragment>
+                      <td className="border border-gray-900 prose border-none text-center">
+                        <Markdown className="copy-markdown">
+                          {props.middle_left_copy}
+                        </Markdown>
+                      </td>
+                      <td className="border border-gray-900 prose border-none text-center">
+                        <Markdown className="copy-markdown">
+                          {props.middle_right_copy}
+                        </Markdown>
+                      </td>
+                    </React.Fragment>
+                  )}
               </tr>
               <tr>
                 <td
                   colSpan={2}
-                  className="border border-gray-900 border-double prose border-none text-center"
+                  className="border border-gray-900 prose border-none text-center"
                 >
                   {!props.hide_botom_copy && (
                     <Markdown className="copy-markdown">

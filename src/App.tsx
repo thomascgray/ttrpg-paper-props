@@ -171,7 +171,7 @@ function App() {
             }}
           />
           {/* collections control */}
-          <div className="flex">
+          <div className="flex mt-4">
             <button
               onClick={handleSave}
               className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"

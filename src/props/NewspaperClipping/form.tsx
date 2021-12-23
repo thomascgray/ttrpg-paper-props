@@ -4,6 +4,7 @@ import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
+import { CheckboxInput } from "../../components/CheckboxInput";
 
 interface iNewspaperClippingFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"];
@@ -61,19 +62,11 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
         }}
       />
 
-      <label className="block">
-        <span className="block mb-1">Enable paper inset shadow?</span>
-        <div className="flex">
-          <input
-            type="checkbox"
-            checked={props.dataset["is_paper_shadow"]}
-            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-            onChange={(e) => {
-              props.handleDataChange("is_paper_shadow", e.target.checked);
-            }}
-          />
-        </div>
-      </label>
+      <CheckboxInput
+        label="Enable paper inset shadow?"
+        value={props.dataset["is_paper_shadow"]}
+        onUpdate={(val) => props.handleDataChange("is_paper_shadow", val)}
+      />
 
       <FontSelector
         label="Font"
@@ -125,19 +118,11 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
         </div>
       </label>
 
-      <label className="block">
-        <span className="block mb-1">Is Prefix Blurry?</span>
-        <div className="flex">
-          <input
-            type="checkbox"
-            checked={props.dataset["is_prefix_blurry"]}
-            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-            onChange={(e) => {
-              props.handleDataChange("is_prefix_blurry", e.target.checked);
-            }}
-          />
-        </div>
-      </label>
+      <CheckboxInput
+        label="Is Prefix Blurry?"
+        value={props.dataset["is_prefix_blurry"]}
+        onUpdate={(val) => props.handleDataChange("is_prefix_blurry", val)}
+      />
 
       <label className="block">
         <span className="block mb-1">
@@ -191,19 +176,11 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
         </div>
       </label>
 
-      <label className="block">
-        <span className="block mb-1">Is Suffix Blurry?</span>
-        <div className="flex">
-          <input
-            type="checkbox"
-            checked={props.dataset["is_suffix_blurry"]}
-            className="p-2 ml-1 mt-1 transform scale-150 text-red-500"
-            onChange={(e) => {
-              props.handleDataChange("is_suffix_blurry", e.target.checked);
-            }}
-          />
-        </div>
-      </label>
+      <CheckboxInput
+        label="Is Suffix Blurry?"
+        value={props.dataset["is_suffix_blurry"]}
+        onUpdate={(val) => props.handleDataChange("is_suffix_blurry", val)}
+      />
     </div>
   );
 };
