@@ -1,4 +1,8 @@
-making paper props for TTRPGs
+# TTRPG Paper Props
+
+A webtool for making "props" for roleplaying games, handouts that you can give your players. Newspaper clippings, character cards, handwritten notes, etc.
+
+You play with it live [right here!](https://ttrpg-paper-props.netlify.app/)
 
 ## quick start
 
