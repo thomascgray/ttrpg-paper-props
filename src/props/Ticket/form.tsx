@@ -65,6 +65,12 @@ export const TicketForm = (props: iTicketFormProps) => {
         }}
       />
 
+      <CheckboxInput
+        label="Enable paper inset shadow?"
+        value={props.dataset["is_paper_shadow"]}
+        onUpdate={(val) => props.handleDataChange("is_paper_shadow", val)}
+      />
+
       <BorderRadiusSelector
         label="Rounded Corners"
         value={props.dataset["rounded_corners"]}
@@ -90,8 +96,6 @@ export const TicketForm = (props: iTicketFormProps) => {
         </div>
       </label>
 
-      <hr />
-
       <FontSelector
         label="Font"
         value={props.dataset["font"]}
@@ -107,8 +111,6 @@ export const TicketForm = (props: iTicketFormProps) => {
           props.handleDataChange("font_weight", newValue);
         }}
       />
-
-      <hr />
 
       <CheckboxInput
         label="Hide Left Margin?"
@@ -144,7 +146,7 @@ export const TicketForm = (props: iTicketFormProps) => {
       />
 
       <div className="flex">
-        <div className="mr-2">
+        <div className="mr-2 space-y-4">
           <CheckboxInput
             label="Hide Middle Left Text?"
             value={props.dataset.hide_middle_left_copy}
@@ -161,7 +163,7 @@ export const TicketForm = (props: iTicketFormProps) => {
           />
         </div>
 
-        <div className="ml-2">
+        <div className="ml-2 space-y-4">
           <CheckboxInput
             label="Hide Middle Right Text?"
             value={props.dataset.hide_middle_right_copy}

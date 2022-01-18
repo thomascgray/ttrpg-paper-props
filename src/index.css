@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.copy-markdown {
+  @apply max-w-none;
+}
+
 html,
 body {
   height: 100%;
@@ -18,10 +22,6 @@ body {
 }
 .column-count-4 {
   column-count: 4;
-}
-
-.copy-markdown {
-  @apply max-w-none;
 }
 
 .copy-markdown ul {

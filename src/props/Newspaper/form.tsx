@@ -4,6 +4,7 @@ import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
+import { CheckboxInput } from "../../components/CheckboxInput";
 
 interface iNewspaperFormProps {
   dataset: typeof PAPER_TYPES["NEWSPAPER"]["data"];
@@ -41,6 +42,12 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         onUpdate={(newValue) => {
           props.handleDataChange("paper_texture", newValue);
         }}
+      />
+
+      <CheckboxInput
+        label="Enable paper inset shadow?"
+        value={props.dataset["is_paper_shadow"]}
+        onUpdate={(val) => props.handleDataChange("is_paper_shadow", val)}
       />
 
       <InkColorSelector
@@ -87,14 +94,14 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             }}
             step="2"
             min="26"
-            max="80"
+            max="200"
           />
         </label>
       </div>
 
       <div className="bg-gray-400 space-y-4 p-2">
         <label className="block">
-          <span className="block mb-1">Banner Text 1</span>
+          <span className="block mb-1">Banner Item Text 1</span>
           <div className="flex">
             <input
               value={props.dataset["banner_text_1"]}
@@ -107,7 +114,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         </label>
 
         <label className="block">
-          <span className="block mb-1">Banner Text 2</span>
+          <span className="block mb-1">Banner Item Text 2</span>
           <div className="flex">
             <input
               value={props.dataset["banner_text_2"]}
@@ -120,7 +127,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         </label>
 
         <label className="block">
-          <span className="block mb-1">Banner Text 3</span>
+          <span className="block mb-1">Banner Item Text 3</span>
           <div className="flex">
             <input
               value={props.dataset["banner_text_3"]}
@@ -133,12 +140,47 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         </label>
 
         <FontSelector
-          label="Title Font"
+          label="Banner Items Font"
           value={props.dataset["banner_font"]}
           onUpdate={(newValue) => {
             props.handleDataChange("banner_font", newValue);
           }}
         />
+
+        <label className="block">
+          <span className="block mb-1">
+            Banner Text Size:{" "}
+            <span className="font-bold">{props.dataset["banner_size"]}px</span>
+          </span>
+          <input
+            className="w-full cursor-pointer"
+            type="range"
+            value={props.dataset["banner_size"]}
+            onChange={(e) => {
+              props.handleDataChange("banner_size", e.target.value);
+            }}
+            step="2"
+            min="12"
+            max="60"
+          />
+        </label>
+
+        <div className="flex flex-row items-center space-x-4">
+          <CheckboxInput
+            label="Hide top banner border?"
+            value={props.dataset["hide_top_banner_border"]}
+            onUpdate={(val) =>
+              props.handleDataChange("hide_top_banner_border", val)
+            }
+          />
+          <CheckboxInput
+            label="Hide bottom banner border?"
+            value={props.dataset["hide_bottom_banner_border"]}
+            onUpdate={(val) =>
+              props.handleDataChange("hide_bottom_banner_border", val)
+            }
+          />
+        </div>
       </div>
 
       <div className="bg-gray-400 space-y-4 p-2">
@@ -175,12 +217,30 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         </label>
 
         <FontSelector
-          label="Title Font"
+          label="Quote Font"
           value={props.dataset["quote_font"]}
           onUpdate={(newValue) => {
             props.handleDataChange("quote_font", newValue);
           }}
         />
+
+        <label className="block">
+          <span className="block mb-1">
+            Quote Size:{" "}
+            <span className="font-bold">{props.dataset["quote_size"]}px</span>
+          </span>
+          <input
+            className="w-full cursor-pointer"
+            type="range"
+            value={props.dataset["quote_size"]}
+            onChange={(e) => {
+              props.handleDataChange("quote_size", e.target.value);
+            }}
+            step="1"
+            min="12"
+            max="60"
+          />
+        </label>
       </div>
 
       <div className="bg-gray-400 space-y-4 p-2">
@@ -237,19 +297,11 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           }}
         />
 
-        <label className="block">
-          <span className="block mb-1">Is Main Copy Blurry?</span>
-          <div className="flex">
-            <input
-              type="checkbox"
-              checked={props.dataset["is_main_copy_blurry"]}
-              className="p-2 ml-1 mt-1 transform scale-150"
-              onChange={(e) => {
-                props.handleDataChange("is_main_copy_blurry", e.target.checked);
-              }}
-            />
-          </div>
-        </label>
+        <CheckboxInput
+          label="Is Main Copy Blurry?"
+          value={props.dataset["is_main_copy_blurry"]}
+          onUpdate={(val) => props.handleDataChange("is_main_copy_blurry", val)}
+        />
       </div>
     </div>
   );

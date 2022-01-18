@@ -8,6 +8,9 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
         style={{
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
           width: `${props.page_width}px`,
+          boxShadow: `${
+            props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+          }`,
         }}
         className={`inline-block ${props.font} ${props.font_weight} ${props.image_filter} absolute transition paper-${props.paper_texture} overflow-hidden transform mx-auto`}
       >

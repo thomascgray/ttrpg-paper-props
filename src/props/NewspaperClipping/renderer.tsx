@@ -12,8 +12,13 @@ export const NewspaperClipping = (
         transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
         width: `${props.page_width}px`,
         height: `${props.page_height}px`,
+        boxShadow: `${
+          props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+        }`,
       }}
-      className={`paper transition paper-${props.paper_texture} transition transform mx-auto`}
+      className={classNames(
+        `paper transition paper-${props.paper_texture} transition transform mx-auto`
+      )}
     >
       <div
         className={`flex h-full items-center border-2 border-t-0 border-b-0 mx-10 px-8 overflow-hidden ${props.ink_color}`}

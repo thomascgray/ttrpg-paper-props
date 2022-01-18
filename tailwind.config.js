@@ -1,6 +1,5 @@
 module.exports = {
-  purge: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./index.html", "./src/**/*.{html,tsx}"],
   theme: {
     extend: {
       typography: {},
@@ -9,5 +8,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

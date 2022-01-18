@@ -1,10 +1,6 @@
 import React from "react";
-
-interface iInkColorSelector {
-  label: string;
-  value: string;
-  onUpdate: (value: any) => void;
-}
+import classnames from "classnames";
+import { iStandardComponentProps } from "./";
 
 const colours = [
   ["black", "#2d3436"],
@@ -15,7 +11,7 @@ const colours = [
   ["silver", "#bdc3c7"],
 ];
 
-export const InkColorSelector = (props: iInkColorSelector) => {
+export const InkColorSelector = (props: iStandardComponentProps) => {
   return (
     <label className="block">
       <span className="block mb-1">{props.label}</span>
@@ -25,10 +21,14 @@ export const InkColorSelector = (props: iInkColorSelector) => {
 
           return (
             <button
+              key={colourName}
               style={{
                 backgroundColor: hexCode,
               }}
-              className="h-10 w-16 border-4 border-solid border-gray-100"
+              className={classnames(
+                `h-10 w-16 border-4 border-solid border-gray-100 rounded shadow`,
+                { "border-red-400": props.value === `ink-${colourName}` }
+              )}
               onClick={() => {
                 props.onUpdate(`ink-${colourName}`);
               }}

@@ -3,6 +3,7 @@ import { PAPER_TYPES } from "../../config";
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
+import { CheckboxInput } from "../../components/CheckboxInput";
 
 interface iWantedPosterFormProps {
   dataset: typeof PAPER_TYPES["WANTED_POSTER"]["data"];
@@ -38,6 +39,12 @@ export const WantedPosterForm = (props: iWantedPosterFormProps) => {
         onUpdate={(newValue) => {
           props.handleDataChange("paper_texture", newValue);
         }}
+      />
+
+      <CheckboxInput
+        label="Enable paper inset shadow?"
+        value={props.dataset["is_paper_shadow"]}
+        onUpdate={(val) => props.handleDataChange("is_paper_shadow", val)}
       />
 
       <label className="block">
