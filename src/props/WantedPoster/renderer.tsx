@@ -3,10 +3,9 @@ import { PAPER_TYPES } from "../../config";
 
 // @ts-ignore
 import { Textfit } from "react-textfit";
-import classNames from "classnames";
 
 export const WantedPoster = (
-  props: typeof PAPER_TYPES["WANTED_POSTER"]["data"]
+  props: (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]
 ) => {
   return (
     <div
@@ -16,9 +15,12 @@ export const WantedPoster = (
         boxShadow: `${
           props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
         }`,
+        marginTop: `${props.y_offset}%`,
+        marginLeft: `${props.x_offset}%`,
       }}
-      className={`paper transition paper-${props.paper_texture} transform w-4/5 mx-auto p-10`}
+      className={`paper paper-${props.paper_texture} w-4/5 p-10`}
     >
+      {/* headline */}
       <Textfit mode="single">
         <h1
           style={{

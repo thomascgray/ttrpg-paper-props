@@ -3,6 +3,8 @@ export const UNIVERSAL_DATA = {
   zoom: 1,
   paper_texture: "grey",
   is_paper_shadow: true,
+  x_offset: 0,
+  y_offset: 0,
 };
 
 export const PAPER_TYPES = {

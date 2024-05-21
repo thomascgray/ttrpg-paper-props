@@ -5,9 +5,8 @@ import remarkBreaks from "remark-breaks";
 import { PAPER_TYPES } from "../../config";
 
 export const HandwrittenLetter = (
-  props: typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"]
+  props: (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]
 ) => {
-  console.log("props.main_copy", JSON.stringify(props.main_copy, null, 2));
   return (
     <div
       style={{
@@ -16,8 +15,10 @@ export const HandwrittenLetter = (
         boxShadow: `${
           props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
         }`,
+        marginTop: `${props.y_offset}%`,
+        marginLeft: `${props.x_offset}%`,
       }}
-      className={`paper paper-${props.paper_texture} transform mx-auto`}
+      className={`paper paper-${props.paper_texture}`}
     >
       <div className={`flex h-full items-center ${props.padding}`}>
         <Markdown

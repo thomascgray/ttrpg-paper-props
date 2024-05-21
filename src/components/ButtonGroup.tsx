@@ -11,7 +11,15 @@ export interface iButtonGroupProps extends iStandardComponentProps {
 export const ButtonGroup = (props: iButtonGroupProps) => {
   return (
     <label className="block">
-      <span className="block mb-1">{props.label}</span>
+      <span className="block mb-1">
+        {props.label}
+        {props.caption && (
+          <span className="block text-sm italic text-gray-700">
+            {props.caption}
+          </span>
+        )}
+      </span>
+
       <div className="flex space-x-4">
         {props.tupleSet != null &&
           props.tupleSet.map((tuple) => {

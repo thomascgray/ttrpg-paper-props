@@ -11,4 +11,4 @@ _Very W.I.P, apologies for any bugs!_
 ## Quick start
 
 `npm install`
-`npm run start:dev`
+`npm run dev`
