@@ -9,9 +9,47 @@ export const UNIVERSAL_DATA = {
 
 export const PAPER_TYPES = {
   NEWSPAPER: {
-    name: "Newspaper",
+    name: "Newspaper (Spread Top)",
     data: {
       ...UNIVERSAL_DATA,
+      page_width_percentage: 80,
+      ink_color: "ink-black",
+
+      title: "THE LOREM IPSUM",
+      title_font: "font-sans",
+      title_size: "34",
+
+      banner_text_1: "Lorem ipsum",
+      banner_text_2: "Lorem ipsum",
+      banner_text_3: "Lorem ipsum",
+      banner_font: "font-serif",
+      banner_size: "16",
+      hide_top_banner_border: false,
+      hide_bottom_banner_border: false,
+
+      headline: "MORBI TEMPUS MOLLIS IPSUM AT!",
+      headline_font: "font-serif",
+
+      quote:
+        "Maecenas molestie ac, erat sed ultrices. Ut in vehicula est, ut malesuada eros! Nunc condimentum, aliquet ante nec venenatis.",
+
+      quote_font: "font-serif",
+      quote_size: "32",
+
+      main_copy: `Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. ![alt text](https://static.standard.co.uk/s3fs-public/thumbnails/image/2016/05/18/17/black_chronicles_exhibition_at_the_national_portrait_gallery.00_01_37_07.still001.jpg?width=1200) Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. ### Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. # Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. ![alt text](http://images.summitmedia-digital.com/esquiremagph/images/2020/07/09/bearded-batman-1800s-MAIN.jpg) Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Sed euismod metus sed mauris accumsan. ### Aenean faucibus placerat felis Nnec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. ![alt text](https://static.stacker.com/s3fs-public/00007074_0.png) Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. ![alt text](https://media.npr.org/assets/img/2015/09/15/oldsmobile-loc_custom-d4496485e41ba2476a7392c5252f3d0a5cdce3f9.jpg) Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.`,
+      main_copy_columns: 3,
+      image_filter: "img-filter-grayscale",
+      is_main_copy_blurry: true,
+    },
+  },
+  NEWSPAPER_ALT: {
+    name: "Newspaper (ALT 1)",
+    data: {
+      ...UNIVERSAL_DATA,
+      gridData: {
+        totalColumns: 3,
+        elements: [],
+      },
       page_width_percentage: 80,
       ink_color: "ink-black",
 
@@ -196,8 +234,8 @@ Sincerely, Lorem Ipsum`,
       text_alignment: "text-left",
     },
   },
-  PUB_SIGN: {
-    name: "Pub Sign",
-    data: {},
-  },
+  // PUB_SIGN: {
+  //   name: "Pub Sign",
+  //   data: {},
+  // },
 };

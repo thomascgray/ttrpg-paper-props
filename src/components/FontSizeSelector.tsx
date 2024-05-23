@@ -23,6 +23,8 @@ export const FontSizeSelector = (props: iFontSizeSelector) => {
           <option value="prose-lg">Large</option>
           <option value="prose-xl">X Large</option>
           <option value="prose-2xl">2X Large</option>
+          <option value="text-[1.75rem] space-y-[1.333em]">3X Large</option>
+          <option value="text-[2.2rem] space-y-[1.333em]">4X Large</option>
         </select>
       </div>
     </label>

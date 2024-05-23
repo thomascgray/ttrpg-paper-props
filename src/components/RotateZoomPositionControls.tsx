@@ -29,7 +29,7 @@ export const RotateZoomPositionControls = (
             onChange={(e) => {
               props.onZoomUpdate(e.target.value);
             }}
-            step="0.25"
+            step="0.05"
             min="0"
             max="6"
           />

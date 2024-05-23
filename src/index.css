@@ -68,7 +68,16 @@ body {
   filter: blur(3px);
 }
 
-.paper * {
+.paper h1,
+.paper h2,
+.paper h3,
+.paper h4,
+.paper h5,
+.paper h6,
+.paper p, 
+.paper label, 
+.paper hr, 
+.paper img {
   mix-blend-mode: multiply;
 }
 
@@ -188,6 +197,48 @@ body {
 .font-medieval-sharp {
   font-family: "MedievalSharp", cursive;
 }
+
+.font-zeyada {
+  font-family: "Zeyada", cursive;
+}
+
+.font-macondo-regular {
+  font-family: "Macondo", cursive;
+}
+
+.font-merienda {
+  font-family: "Merienda", cursive;
+  font-optical-sizing: auto;
+}
+
+.font-shadows-into-light {
+  font-family: "Shadows Into Light", cursive;
+}
+
+.font-caveat {
+  font-family: "Caveat", cursive;
+}
+
+.font-unifrakturmaguntia {
+  font-family: "UnifrakturMaguntia", cursive;
+}
+
+.font-unifrakturcook {
+  font-family: "UnifrakturCook", cursive;
+}
+
+.font-pirata-one {
+  font-family: "Pirata One", system-ui;
+}
+
+.font-new-rocker {
+  font-family: "New Rocker", system-ui;
+}
+
+.font-macondo-swash-caps {
+  font-family: "Macondo Swash Caps", cursive;
+}
+
 
 .img-filter-none img {
   filter: none;

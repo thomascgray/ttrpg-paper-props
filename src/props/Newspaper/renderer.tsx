@@ -5,7 +5,7 @@ import classNames from "classnames";
 import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
-export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
+export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
   return (
     <React.Fragment>
       <div
@@ -15,13 +15,15 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
           boxShadow: `${
             props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
           }`,
+          marginTop: `${props.y_offset}%`,
+          marginLeft: `${props.x_offset}%`,
         }}
-        className={`paper transition paper-${props.paper_texture} ${props.ink_color} transition transform mx-auto px-10 py-10`}
+        className={`paper paper-${props.paper_texture} ${props.ink_color} p-10`}
       >
-        <div className="">
+        <div>
           <Textfit mode="single" max={35}>
             <h1
-              className={`${props.title_font} font-black text-center`}
+              className={`newspaper-title ${props.title_font} font-black text-center`}
               style={{
                 fontSize: `${props.title_size}px`,
               }}
@@ -36,32 +38,32 @@ export const Newspaper = (props: typeof PAPER_TYPES["NEWSPAPER"]["data"]) => {
         )}
 
         <div className="flex justify-between py-2">
-          <span
+          <label
             style={{
               fontSize: `${props.banner_size}px`,
             }}
             className={`text-left text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
           >
             {props.banner_text_1}
-          </span>
+          </label>
 
-          <span
+          <label
             style={{
               fontSize: `${props.banner_size}px`,
             }}
             className={`text-center text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
           >
             {props.banner_text_2}
-          </span>
+          </label>
 
-          <span
+          <label
             style={{
               fontSize: `${props.banner_size}px`,
             }}
             className={`text-right text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
           >
             {props.banner_text_3}
-          </span>
+          </label>
         </div>
 
         {!props.hide_bottom_banner_border && (

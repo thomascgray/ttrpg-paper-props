@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import { Newspaper } from "./props/Newspaper/renderer";
+import { NewspaperAlt1 } from "./props/NewspaperAlt1/renderer";
 import { WantedPoster } from "./props/WantedPoster/renderer";
 import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
 import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
 import { Ticket } from "./props/Ticket/renderer";
-import { BlankPages } from "./props/BlankPages/renderer";
 import { BookCover } from "./props/BookCover/renderer";
 import { NPCCard } from "./props/NPCCard/renderer";
 
 import { NewspaperForm } from "./props/Newspaper/form";
+import { NewspaperFormAlt1 } from "./props/NewspaperAlt1/form";
 import { WantedPosterForm } from "./props/WantedPoster/form";
 import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
 import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
@@ -19,6 +20,8 @@ import { NPCCardForm } from "./props/NPCCard/form";
 
 import { PAPER_TYPES } from "./config";
 import { RotateZoomPositionControls } from "./components/RotateZoomPositionControls";
+
+import { Helmet } from "react-helmet";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
@@ -58,6 +61,8 @@ function App() {
   }, [versionsList]);
 
   const handleDataChange = (name: string, value: any) => {
+    console.log("name", name);
+    console.log("value", value);
     const newPaperData = {
       ...paperType.data, // so this is the base data
       ...paperData, // this is the current data
@@ -126,9 +131,23 @@ function App() {
     });
   };
 
+  const [highlighted, setHighlighted] = useState("");
   return (
     <div className="flex min-h-full">
       {/* form */}
+      <Helmet>
+        <style>
+          {`
+          @keyframes blink { 
+            50% { outline-style: dotted; } 
+         }
+.${highlighted} {
+    outline: 5px dashed #00FF00;
+    animation: blink .5s step-end infinite alternate;
+}
+`}
+        </style>
+      </Helmet>
       <div
         style={{
           height: "100vh",
@@ -149,14 +168,16 @@ function App() {
                 refreshData(e.target.value as keyof typeof PAPER_TYPES);
               }}
             >
-              {Object.keys(PAPER_TYPES).map((typeKey) => {
-                const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
-                return (
-                  <option key={typeKey} value={typeKey}>
-                    {p.name}
-                  </option>
-                );
-              })}
+              <optgroup label="Paper/Stationary/Print">
+                {Object.keys(PAPER_TYPES).map((typeKey) => {
+                  const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
+                  return (
+                    <option key={typeKey} value={typeKey}>
+                      {p.name}
+                    </option>
+                  );
+                })}
+              </optgroup>
             </select>
           </label>
 
@@ -178,14 +199,19 @@ function App() {
               handleDataChange("y_offset", parseInt(yOffset));
             }}
             onReset={() => {
-              setPaperData({
+              const newPaperData = {
                 ...paperType.data, // so this is the base data
                 ...paperData, // this is the current data
                 zoom: 1,
                 rotation_degrees: 0,
                 x_offset: 0,
                 y_offset: 0,
-              });
+              };
+              setPaperData(newPaperData);
+              window.localStorage.setItem(
+                `paper_data_${selectedPaperType}`,
+                JSON.stringify(newPaperData)
+              );
             }}
           />
           {/* collections control */}
@@ -220,6 +246,17 @@ function App() {
                 ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
               }}
               handleDataChange={handleDataChange}
+              setHighlighted={setHighlighted}
+            />
+          )}
+
+          {selectedPaperType === "NEWSPAPER_ALT" && (
+            <NewspaperFormAlt1
+              dataset={{
+                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
+              }}
+              handleDataChange={handleDataChange}
+              setHighlighted={setHighlighted}
             />
           )}
 
@@ -318,6 +355,11 @@ function App() {
         {selectedPaperType === "NEWSPAPER" && (
           <Newspaper
             {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
+          />
+        )}
+        {selectedPaperType === "NEWSPAPER_ALT" && (
+          <NewspaperAlt1
+            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
           />
         )}
         {selectedPaperType === "NEWSPAPER_CLIPPING" && (

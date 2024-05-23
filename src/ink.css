@@ -32,4 +32,19 @@
 .ink-silver * {
   border-color: #bdc3c7 !important;
   color: #bdc3c7 !important;
+  mix-blend-mode: normal !important;
 }
+
+.ink-true-black,
+.ink-true-black * {
+  border-color: #000 !important;
+  color: #000 !important;
+}
+
+.ink-true-white,
+.ink-true-white * {
+  border-color: #eee !important;
+  color: #eee !important;
+  mix-blend-mode: normal !important;
+}
+

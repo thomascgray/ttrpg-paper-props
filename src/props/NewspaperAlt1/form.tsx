@@ -5,19 +5,31 @@ import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
 import { CheckboxInput } from "../../components/CheckboxInput";
+import { GridBuilder } from "../../components/GridBuilder";
 
 interface iNewspaperFormProps {
-  dataset: (typeof PAPER_TYPES)["NEWSPAPER"]["data"];
+  dataset: (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"];
   handleDataChange: (
-    key: keyof (typeof PAPER_TYPES)["NEWSPAPER"]["data"],
+    key: keyof (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"],
     value: any
   ) => void;
   setHighlighted: (section: string) => void;
 }
 
-export const NewspaperForm = (props: iNewspaperFormProps) => {
+export const NewspaperFormAlt1 = (props: iNewspaperFormProps) => {
   return (
     <div className="space-y-4">
+      <label className="block">
+        <span className="block mb-1">Grid Builder</span>
+        <GridBuilder
+          gridData={props.dataset.gridData}
+          onGridDataUpdate={(gridData) => {
+            console.log("gridData", gridData);
+            props.handleDataChange("gridData", gridData);
+          }}
+        />
+      </label>
+
       <label className="block">
         <span className="block mb-1">
           Page Width:{" "}
