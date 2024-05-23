@@ -88,7 +88,7 @@ export const GridBuilder = (props: iGridBuilderProps) => {
                 />
               </p>
             </label>
-            <label className="rowSpan">
+            <label className="content">
               <p>
                 Content
                 <textarea
@@ -104,6 +104,21 @@ export const GridBuilder = (props: iGridBuilderProps) => {
                   }}
                 />
               </p>
+            </label>
+            <label className="remove">
+              <button
+                onClick={() => {
+                  const newElements = [...gridData.elements];
+                  newElements.splice(index, 1);
+                  setGridData({ ...gridData, elements: newElements });
+                  props.onGridDataUpdate({
+                    ...gridData,
+                    elements: newElements,
+                  });
+                }}
+              >
+                Delete
+              </button>
             </label>
           </div>
         );
