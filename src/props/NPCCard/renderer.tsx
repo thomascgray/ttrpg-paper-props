@@ -1,9 +1,10 @@
 import React from "react";
 import { PAPER_TYPES } from "../../config";
 
-export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
+export const NPCCard = (props: (typeof PAPER_TYPES)["NPC_CARD"]["data"]) => {
   return (
-    <div className="relative mx-auto flex justify-around mt-10">
+    <>
+      {/* the whole thing */}
       <div
         style={{
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
@@ -11,8 +12,10 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
           boxShadow: `${
             props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
           }`,
+          marginTop: `${props.y_offset}%`,
+          marginLeft: `${props.x_offset}%`,
         }}
-        className={`inline-block ${props.font} ${props.font_weight} ${props.image_filter} absolute transition paper-${props.paper_texture} overflow-hidden transform mx-auto`}
+        className={`inline-block ${props.font} ${props.font_weight} ${props.image_filter} paper-${props.paper_texture} overflow-hidden`}
       >
         <img
           className=""
@@ -68,6 +71,6 @@ export const NPCCard = (props: typeof PAPER_TYPES["NPC_CARD"]["data"]) => {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };

@@ -9,6 +9,8 @@ const colours = [
   ["blue", "#2980b9"],
   ["purple", "#4834d4"],
   ["silver", "#bdc3c7"],
+  ["true-black", "#000"],
+  ["true-white", "#FFF"],
 ];
 
 export const InkColorSelector = (props: iStandardComponentProps) => {

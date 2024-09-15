@@ -3,9 +3,15 @@ import classNames from "classnames";
 import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
-export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
+export const Ticket = (props: (typeof PAPER_TYPES)["TICKET"]["data"]) => {
   return (
-    <div className="relative mx-auto flex justify-around">
+    <div
+      className="relative"
+      style={{
+        marginTop: `${props.y_offset}%`,
+        marginLeft: `${props.x_offset}%`,
+      }}
+    >
       <div
         style={{
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
@@ -15,7 +21,7 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
             props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
           }`,
         }}
-        className={`paper ${props.font} ${props.font_weight} absolute transition paper-${props.paper_texture} overflow-hidden transition transform mx-auto ${props.rounded_corners}`}
+        className={`paper ${props.font} ${props.font_weight} paper-${props.paper_texture} overflow-hidden transition ${props.rounded_corners}`}
       >
         <div
           className={classNames("w-full h-full", {
@@ -136,11 +142,11 @@ export const Ticket = (props: typeof PAPER_TYPES["TICKET"]["data"]) => {
       <div
         style={{
           transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
-          width: `${props.page_width}px`,
+          width: `${props.page_width + 4}px`,
           height: `${props.page_height}px`,
         }}
         className={classNames(
-          `absolute ${props.sawtooth_border} pointer-events-none`
+          `sawtooths absolute top-0 left-0 ${props.sawtooth_border} pointer-events-none`
         )}
       ></div>
     </div>

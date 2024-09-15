@@ -10,7 +10,7 @@ export const CheckboxInput = (props: iCheckboxInputProps) => {
   return (
     <label className="block">
       <div className="flex flex-row items-center">
-        <span className="block mr-4">{props.label}</span>
+        <span className="block mr-4 text-sm">{props.label}</span>
         <input
           type="checkbox"
           checked={props.value}

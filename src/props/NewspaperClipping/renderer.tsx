@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 
 export const NewspaperClipping = (
-  props: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]
+  props: (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]
 ) => {
   return (
     <div
@@ -15,10 +15,10 @@ export const NewspaperClipping = (
         boxShadow: `${
           props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
         }`,
+        marginTop: `${props.y_offset}%`,
+        marginLeft: `${props.x_offset}%`,
       }}
-      className={classNames(
-        `paper transition paper-${props.paper_texture} transition transform mx-auto`
-      )}
+      className={classNames(`paper transition paper-${props.paper_texture}`)}
     >
       <div
         className={`flex h-full items-center border-2 border-t-0 border-b-0 mx-10 px-8 overflow-hidden ${props.ink_color}`}

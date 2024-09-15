@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import { Newspaper } from "./props/Newspaper/renderer";
+import { NewspaperAlt1 } from "./props/NewspaperAlt1/renderer";
 import { WantedPoster } from "./props/WantedPoster/renderer";
 import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
 import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
 import { Ticket } from "./props/Ticket/renderer";
-import { BlankPages } from "./props/BlankPages/renderer";
 import { BookCover } from "./props/BookCover/renderer";
 import { NPCCard } from "./props/NPCCard/renderer";
 
 import { NewspaperForm } from "./props/Newspaper/form";
+import { NewspaperFormAlt1 } from "./props/NewspaperAlt1/form";
 import { WantedPosterForm } from "./props/WantedPoster/form";
 import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
 import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
@@ -18,11 +19,13 @@ import { BookCoverForm } from "./props/BookCover/form";
 import { NPCCardForm } from "./props/NPCCard/form";
 
 import { PAPER_TYPES } from "./config";
-import { RotateAndZoomControls } from "./components/RotateAndZoomControls";
+import { RotateZoomPositionControls } from "./components/RotateZoomPositionControls";
+
+import { Helmet } from "react-helmet";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
+    useState<keyof typeof PAPER_TYPES>("NEWSPAPER_ALT");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -32,8 +35,8 @@ function App() {
   const savedData = savedDataString ? JSON.parse(savedDataString) : {};
 
   const [paperData, setPaperData] = useState({
-    ...paperType.data,
-    ...savedData,
+    ...paperType.data, // so this is the base data
+    ...savedData, // then we're overwriting it with any saved data
   });
 
   let existingVersionsRaw = window.localStorage.getItem(
@@ -58,10 +61,12 @@ function App() {
   }, [versionsList]);
 
   const handleDataChange = (name: string, value: any) => {
+    console.log("name", name);
+    console.log("value", value);
     const newPaperData = {
-      ...paperType.data,
-      ...paperData,
-      [name]: value,
+      ...paperType.data, // so this is the base data
+      ...paperData, // this is the current data
+      [name]: value, // this is the new data
     };
     setPaperData(newPaperData);
     window.localStorage.setItem(
@@ -126,9 +131,23 @@ function App() {
     });
   };
 
+  const [highlighted, setHighlighted] = useState("");
   return (
     <div className="flex min-h-full">
       {/* form */}
+      <Helmet>
+        <style>
+          {`
+          @keyframes blink { 
+            50% { outline-style: dotted; } 
+         }
+.${highlighted} {
+    outline: 5px dashed #00FF00;
+    animation: blink .5s step-end infinite alternate;
+}
+`}
+        </style>
+      </Helmet>
       <div
         style={{
           height: "100vh",
@@ -136,7 +155,7 @@ function App() {
         }}
         className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
       >
-        <div className="bg-gray-400 p-4">
+        <div className="bg-gray-300 p-4">
           <label className="block mb-4">
             <span className="block mb-1">Prop Type</span>
             <select
@@ -149,28 +168,56 @@ function App() {
                 refreshData(e.target.value as keyof typeof PAPER_TYPES);
               }}
             >
-              {Object.keys(PAPER_TYPES).map((typeKey) => {
-                const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
-                return (
-                  <option key={typeKey} value={typeKey}>
-                    {p.name}
-                  </option>
-                );
-              })}
+              <optgroup label="Paper/Stationary/Print">
+                {Object.keys(PAPER_TYPES).map((typeKey) => {
+                  const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
+                  return (
+                    <option key={typeKey} value={typeKey}>
+                      {p.name}
+                    </option>
+                  );
+                })}
+              </optgroup>
             </select>
           </label>
 
-          <RotateAndZoomControls
+          <RotateZoomPositionControls
             zoomValue={paperData.zoom}
             rotateValue={paperData.rotation_degrees}
+            xOffsetValue={paperData.x_offset}
+            yOffsetValue={paperData.y_offset}
             onZoomUpdate={(newZoom) => {
               handleDataChange("zoom", newZoom);
             }}
             onRotateUpdate={(newRotate) => {
               handleDataChange("rotation_degrees", newRotate);
             }}
+            onXOffsetUpdate={(xOffset) => {
+              handleDataChange("x_offset", parseInt(xOffset));
+            }}
+            onYOffsetUpdate={(yOffset) => {
+              handleDataChange("y_offset", parseInt(yOffset));
+            }}
+            onReset={() => {
+              const newPaperData = {
+                ...paperType.data, // so this is the base data
+                ...paperData, // this is the current data
+                zoom: 1,
+                rotation_degrees: 0,
+                x_offset: 0,
+                y_offset: 0,
+              };
+              setPaperData(newPaperData);
+              window.localStorage.setItem(
+                `paper_data_${selectedPaperType}`,
+                JSON.stringify(newPaperData)
+              );
+            }}
           />
           {/* collections control */}
+        </div>
+
+        <div className="bg-gray-400 p-4">
           <div className="flex mt-4">
             <button
               onClick={handleSave}
@@ -196,16 +243,27 @@ function App() {
           {selectedPaperType === "NEWSPAPER" && (
             <NewspaperForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
               }}
               handleDataChange={handleDataChange}
+              setHighlighted={setHighlighted}
+            />
+          )}
+
+          {selectedPaperType === "NEWSPAPER_ALT" && (
+            <NewspaperFormAlt1
+              dataset={{
+                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
+              }}
+              handleDataChange={handleDataChange}
+              setHighlighted={setHighlighted}
             />
           )}
 
           {selectedPaperType === "NEWSPAPER_CLIPPING" && (
             <NewspaperClippingForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
@@ -214,7 +272,7 @@ function App() {
           {selectedPaperType === "WANTED_POSTER" && (
             <WantedPosterForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
@@ -223,7 +281,7 @@ function App() {
           {selectedPaperType === "HANDWRITTEN_LETTER" && (
             <HandwrittenLetterForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
@@ -232,7 +290,7 @@ function App() {
           {selectedPaperType === "TICKET" && (
             <TicketForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["TICKET"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
@@ -241,7 +299,7 @@ function App() {
           {selectedPaperType === "BOOK_COVER" && (
             <BookCoverForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["BOOK_COVER"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
@@ -249,7 +307,7 @@ function App() {
           {selectedPaperType === "NPC_CARD" && (
             <NPCCardForm
               dataset={{
-                ...(paperData as typeof PAPER_TYPES["NPC_CARD"]["data"]),
+                ...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
               }}
               handleDataChange={handleDataChange}
             />
@@ -274,65 +332,64 @@ function App() {
           backgroundColor: "#2f3640",
           height: "100vh",
         }}
-        className="render-area relative flex flex-col w-full z-10 overflow-y-scroll py-48"
+        className="render-area relative w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around items-center"
       >
-        <div className="absolute w-full text-center top-0 mt-4 italic text-gray-300 text-xs">
-          <span className="font-bold">How to use:</span>
-          <ol className="list-decimal">
-            <li>
-              Choose a "prop type" from the dropdown at the top left of the
-              page.
-            </li>
-            <li>
-              Use the controls on the left to change the information that gets
-              rendered.
-            </li>
-            <li>
-              Play around with Zoom, Rotate and prop widths until you get
-              something you're happy with.
-            </li>
-            <li>Take a screenshot of the prop and put it wherever you like!</li>
-            <li>
-              To take a screenshot to clipboard on Windows: Win Key + Shift + S
-            </li>
-            <li>
-              To take a screenshot to clipboard on Mac OS: Shift + Control +
-              Command + 4
-            </li>
-          </ol>
-        </div>
+        {/* help text */}
+
+        {/* <button className="absolute top-0 left-0 stroke-black bg-white rounded-full">
+          <svg
+            className="w-10 h-10"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7.49991 0.876892C3.84222 0.876892 0.877075 3.84204 0.877075 7.49972C0.877075 11.1574 3.84222 14.1226 7.49991 14.1226C11.1576 14.1226 14.1227 11.1574 14.1227 7.49972C14.1227 3.84204 11.1576 0.876892 7.49991 0.876892ZM1.82707 7.49972C1.82707 4.36671 4.36689 1.82689 7.49991 1.82689C10.6329 1.82689 13.1727 4.36671 13.1727 7.49972C13.1727 10.6327 10.6329 13.1726 7.49991 13.1726C4.36689 13.1726 1.82707 10.6327 1.82707 7.49972ZM8.24992 4.49999C8.24992 4.9142 7.91413 5.24999 7.49992 5.24999C7.08571 5.24999 6.74992 4.9142 6.74992 4.49999C6.74992 4.08577 7.08571 3.74999 7.49992 3.74999C7.91413 3.74999 8.24992 4.08577 8.24992 4.49999ZM6.00003 5.99999H6.50003H7.50003C7.77618 5.99999 8.00003 6.22384 8.00003 6.49999V9.99999H8.50003H9.00003V11H8.50003H7.50003H6.50003H6.00003V9.99999H6.50003H7.00003V6.99999H6.50003H6.00003V5.99999Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button> */}
 
         {selectedPaperType === "NEWSPAPER" && (
           <Newspaper
-            {...(paperData as typeof PAPER_TYPES["NEWSPAPER"]["data"])}
+            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
+          />
+        )}
+        {selectedPaperType === "NEWSPAPER_ALT" && (
+          <NewspaperAlt1
+            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
           />
         )}
         {selectedPaperType === "NEWSPAPER_CLIPPING" && (
           <NewspaperClipping
-            {...(paperData as typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"])}
+            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
           />
         )}
         {selectedPaperType === "WANTED_POSTER" && (
           <WantedPoster
-            {...(paperData as typeof PAPER_TYPES["WANTED_POSTER"]["data"])}
+            {...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
           />
         )}
         {selectedPaperType === "HANDWRITTEN_LETTER" && (
           <HandwrittenLetter
-            {...(paperData as typeof PAPER_TYPES["HANDWRITTEN_LETTER"]["data"])}
+            {...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
           />
         )}
         {selectedPaperType === "TICKET" && (
-          <Ticket {...(paperData as typeof PAPER_TYPES["TICKET"]["data"])} />
+          <Ticket {...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"])} />
         )}
 
         {selectedPaperType === "BOOK_COVER" && (
           <BookCover
-            {...(paperData as typeof PAPER_TYPES["BOOK_COVER"]["data"])}
+            {...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
           />
         )}
         {selectedPaperType === "NPC_CARD" && (
-          <NPCCard {...(paperData as typeof PAPER_TYPES["NPC_CARD"]["data"])} />
+          <NPCCard
+            {...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
+          />
         )}
       </div>
     </div>
