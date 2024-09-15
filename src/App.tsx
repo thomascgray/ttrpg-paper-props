@@ -25,7 +25,7 @@ import { Helmet } from "react-helmet";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
+    useState<keyof typeof PAPER_TYPES>("NEWSPAPER_ALT");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 

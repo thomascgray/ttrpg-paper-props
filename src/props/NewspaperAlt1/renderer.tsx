@@ -83,10 +83,11 @@ export const NewspaperAlt1 = (
         className={`paper paper-${props.paper_texture} ${props.ink_color} p-10`}
       >
         <div
+          className="grid"
           style={{
             gridTemplateColumns: `repeat(${props.gridData.totalColumns}, minmax(0, 1fr))`,
+            gap: `${props.gridData.gridGap}em`,
           }}
-          className="grid gap-10"
         >
           {props.gridData.elements.map((element, index) => {
             const el = element as iGridElement;

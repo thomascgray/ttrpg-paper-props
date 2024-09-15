@@ -48,6 +48,7 @@ export const PAPER_TYPES = {
       ...UNIVERSAL_DATA,
       gridData: {
         totalColumns: 3,
+        gridGap: 10,
         elements: [],
       },
       page_width_percentage: 80,
@@ -189,12 +190,12 @@ Sincerely, Lorem Ipsum`,
       font: "font-serif",
     },
   },
-  //   BLANK_PAGES: {
-  //     name: "Blank Pages",
-  //     data: {
-  //       ...UNIVERSAL_DATA,
-  //     },
-  //   },
+  BLANK_PAGES: {
+    name: "Blank Pages",
+    data: {
+      ...UNIVERSAL_DATA,
+    },
+  },
   BOOK_COVER: {
     name: "Book Cover",
     data: {
