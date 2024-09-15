@@ -12,3 +12,7 @@ _Very W.I.P, apologies for any bugs!_
 
 `npm install`
 `npm run dev`
+
+## Build
+
+`npm run build`
