@@ -1,6 +1,6 @@
 import React from "react";
 // @ts-ignore
-import { Textfit } from "react-textfit";
+// import { Textfit } from "react-textfit";
 import classNames from "classnames";
 import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
@@ -21,16 +21,16 @@ export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
         className={`paper paper-${props.paper_texture} ${props.ink_color} p-10`}
       >
         <div>
-          <Textfit mode="single" max={35}>
-            <h1
-              className={`newspaper-title ${props.title_font} font-black text-center`}
-              style={{
-                fontSize: `${props.title_size}px`,
-              }}
-            >
-              {props.title}
-            </h1>
-          </Textfit>
+          {/* <Textfit mode="single" max={35}> */}
+          <h1
+            className={`newspaper-title ${props.title_font} font-black text-center`}
+            style={{
+              fontSize: `${props.title_size}px`,
+            }}
+          >
+            {props.title}
+          </h1>
+          {/* </Textfit> */}
         </div>
 
         {!props.hide_top_banner_border && (
@@ -70,11 +70,11 @@ export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
           <hr className="border-solid border-2 border-gray-600" />
         )}
 
-        <Textfit mode="single" max={120}>
-          <h2 className={`${props.headline_font} font-semibold text-justify`}>
-            {props.headline}
-          </h2>
-        </Textfit>
+        {/* <Textfit mode="single" max={120}> */}
+        <h2 className={`${props.headline_font} font-semibold text-justify`}>
+          {props.headline}
+        </h2>
+        {/* </Textfit> */}
 
         <hr className="border-solid border-4 border-gray-800 my-4" />
 
