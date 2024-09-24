@@ -4,6 +4,7 @@ import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
+import { Headline } from "../../components/Headline";
 
 export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
   return (
@@ -20,24 +21,25 @@ export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
         }}
         className={`paper paper-${props.paper_texture} ${props.ink_color} p-10`}
       >
-        <div>
-          {/* <Textfit mode="single" max={35}> */}
-          <h1
-            className={`newspaper-title ${props.title_font} font-black text-center`}
+        <div id="newspaper-title">
+          <span
+            className={`${props.title_font} font-black text-center flex items-center justify-around`}
             style={{
               fontSize: `${props.title_size}px`,
+              lineHeight: `${props.line_height}em`,
+              marginTop: `${props.top_margin}px`,
+              marginBottom: `${props.bottom_margin}px`,
             }}
           >
             {props.title}
-          </h1>
-          {/* </Textfit> */}
+          </span>
         </div>
 
         {!props.hide_top_banner_border && (
           <hr className="border-solid border-2 border-gray-600" />
         )}
 
-        <div className="flex justify-between py-2">
+        <div id="newspaper-banner-texts" className="flex justify-between py-2">
           <label
             style={{
               fontSize: `${props.banner_size}px`,
@@ -70,16 +72,22 @@ export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
           <hr className="border-solid border-2 border-gray-600" />
         )}
 
-        {/* <Textfit mode="single" max={120}> */}
-        <h2 className={`${props.headline_font} font-semibold text-justify`}>
+        <span
+          id="newspaper-headline"
+          className={`${props.headline_font} font-semibold whitespace-pre-line block text-center`}
+          style={{
+            textWrap: "balance",
+            fontSize: `${props.headline_font_size}px`,
+          }}
+        >
           {props.headline}
-        </h2>
-        {/* </Textfit> */}
+        </span>
 
         <hr className="border-solid border-4 border-gray-800 my-4" />
 
         {props.quote !== "" && (
           <p
+            id="newspaper-quote-call-out"
             style={{
               fontSize: `${props.quote_size}px`,
             }}
@@ -89,16 +97,18 @@ export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
           </p>
         )}
 
-        <Markdown
-          className={classNames(
-            `text-justify font-serif copy-markdown column-count-${props.main_copy_columns} ${props.image_filter}`,
-            {
-              blurry: props.is_main_copy_blurry,
-            }
-          )}
-        >
-          {props.main_copy}
-        </Markdown>
+        <div id="newspaper-main-copy">
+          <Markdown
+            className={classNames(
+              `text-justify font-serif copy-markdown column-count-${props.main_copy_columns} ${props.image_filter}`,
+              {
+                blurry: props.is_main_copy_blurry,
+              }
+            )}
+          >
+            {props.main_copy}
+          </Markdown>
+        </div>
       </div>
     </React.Fragment>
   );

@@ -10,9 +10,9 @@ import { TextFilterSelector } from "../../components/TextFilterSelector";
 import { FontSelector } from "../../components/FontSelector";
 
 interface iBookCoverProps {
-  dataset: typeof PAPER_TYPES["BOOK_COVER"]["data"];
+  dataset: (typeof PAPER_TYPES)["BOOK_COVER"]["data"];
   handleDataChange: (
-    key: keyof typeof PAPER_TYPES["BOOK_COVER"]["data"],
+    key: keyof (typeof PAPER_TYPES)["BOOK_COVER"]["data"],
     value: any
   ) => void;
 }
@@ -108,6 +108,7 @@ export const BookCoverForm = (props: iBookCoverProps) => {
           <span className="ml-2 italic">
             You can use{" "}
             <a
+              target="_blank"
               className="text-blue-400 underline"
               href="https://www.markdownguide.org/cheat-sheet/"
             >

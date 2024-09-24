@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 
 import { Newspaper } from "./props/Newspaper/renderer";
 import { NewspaperAlt1 } from "./props/NewspaperAlt1/renderer";
@@ -22,10 +22,11 @@ import { PAPER_TYPES } from "./config";
 import { RotateZoomPositionControls } from "./components/RotateZoomPositionControls";
 
 import { Helmet } from "react-helmet";
+import { StateContext } from "./context";
 
 function App() {
   const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER_ALT");
+    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
 
   const paperType = PAPER_TYPES[selectedPaperType];
 
@@ -61,8 +62,6 @@ function App() {
   }, [versionsList]);
 
   const handleDataChange = (name: string, value: any) => {
-    console.log("name", name);
-    console.log("value", value);
     const newPaperData = {
       ...paperType.data, // so this is the base data
       ...paperData, // this is the current data
@@ -131,212 +130,231 @@ function App() {
     });
   };
 
-  const [highlighted, setHighlighted] = useState("");
+  const [highlighted, setHighlighted] = useState("tteesstt");
+
   return (
-    <div className="flex min-h-full">
-      {/* form */}
-      <Helmet>
-        <style>
-          {`
+    <StateContext.Provider
+      value={{
+        highlighted,
+        setHighlighted,
+        onChange: handleDataChange,
+      }}
+    >
+      <div className="flex min-h-full">
+        {/* form */}
+        <Helmet>
+          <style>
+            {`
           @keyframes blink { 
             50% { outline-style: dotted; } 
          }
-.${highlighted} {
-    outline: 5px dashed #00FF00;
+#${highlighted} {
+    outline: 5px dashed #e74c3c;
+    outline-offset: 1em;
     animation: blink .5s step-end infinite alternate;
 }
 `}
-        </style>
-      </Helmet>
-      <div
-        style={{
-          height: "100vh",
-          minWidth: "400px",
-        }}
-        className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
-      >
-        <div className="bg-gray-300 p-4">
-          <label className="block mb-4">
-            <span className="block mb-1">Prop Type</span>
-            <select
-              value={selectedPaperType}
-              className="p-2 text-lg w-full"
-              onChange={(e) => {
-                setSelectedPaperType(
-                  e.target.value as keyof typeof PAPER_TYPES
-                );
-                refreshData(e.target.value as keyof typeof PAPER_TYPES);
-              }}
-            >
-              <optgroup label="Paper/Stationary/Print">
-                {Object.keys(PAPER_TYPES).map((typeKey) => {
-                  const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
-                  return (
-                    <option key={typeKey} value={typeKey}>
-                      {p.name}
-                    </option>
-                  );
-                })}
-              </optgroup>
-            </select>
-          </label>
-
-          <RotateZoomPositionControls
-            zoomValue={paperData.zoom}
-            rotateValue={paperData.rotation_degrees}
-            xOffsetValue={paperData.x_offset}
-            yOffsetValue={paperData.y_offset}
-            onZoomUpdate={(newZoom) => {
-              handleDataChange("zoom", newZoom);
-            }}
-            onRotateUpdate={(newRotate) => {
-              handleDataChange("rotation_degrees", newRotate);
-            }}
-            onXOffsetUpdate={(xOffset) => {
-              handleDataChange("x_offset", parseInt(xOffset));
-            }}
-            onYOffsetUpdate={(yOffset) => {
-              handleDataChange("y_offset", parseInt(yOffset));
-            }}
-            onReset={() => {
-              const newPaperData = {
-                ...paperType.data, // so this is the base data
-                ...paperData, // this is the current data
-                zoom: 1,
-                rotation_degrees: 0,
-                x_offset: 0,
-                y_offset: 0,
-              };
-              setPaperData(newPaperData);
-              window.localStorage.setItem(
-                `paper_data_${selectedPaperType}`,
-                JSON.stringify(newPaperData)
-              );
-            }}
-          />
-          {/* collections control */}
-        </div>
-
-        <div className="bg-gray-400 p-4">
-          <div className="flex mt-4">
-            <button
-              onClick={handleSave}
-              className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"
-            >
-              Save
-            </button>
-            {selectedVersion && versionsList.length >= 1 && (
+          </style>
+        </Helmet>
+        <div
+          style={{
+            height: "100vh",
+            minWidth: "400px",
+          }}
+          className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
+        >
+          <div className="bg-gray-300 p-4">
+            <label className="block mb-4">
+              <span className="block mb-1">Prop Type</span>
               <select
-                value={selectedVersion}
-                onChange={(e) => handleVersionSelect(e.target.value)}
-                className="grow rounded shadow px-4 py-2"
+                value={selectedPaperType}
+                className="p-2 text-lg w-full"
+                onChange={(e) => {
+                  setSelectedPaperType(
+                    e.target.value as keyof typeof PAPER_TYPES
+                  );
+                  refreshData(e.target.value as keyof typeof PAPER_TYPES);
+                }}
               >
-                {versionsList.map((v) => {
-                  return <option key={v.timestamp}>{v.timestamp}</option>;
-                })}
+                <optgroup label="Paper / Stationary / Print">
+                  {Object.keys(PAPER_TYPES).map((typeKey) => {
+                    const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
+                    return (
+                      <option key={typeKey} value={typeKey}>
+                        {p.name}
+                      </option>
+                    );
+                  })}
+                </optgroup>
               </select>
+            </label>
+
+            <RotateZoomPositionControls
+              zoomValue={paperData.zoom}
+              rotateValue={paperData.rotation_degrees}
+              xOffsetValue={paperData.x_offset}
+              yOffsetValue={paperData.y_offset}
+              onZoomUpdate={(newZoom) => {
+                handleDataChange("zoom", newZoom);
+              }}
+              onRotateUpdate={(newRotate) => {
+                handleDataChange("rotation_degrees", newRotate);
+              }}
+              onXOffsetUpdate={(xOffset) => {
+                handleDataChange("x_offset", parseInt(xOffset));
+              }}
+              onYOffsetUpdate={(yOffset) => {
+                handleDataChange("y_offset", parseInt(yOffset));
+              }}
+              onReset={() => {
+                const newPaperData = {
+                  ...paperType.data, // so this is the base data
+                  ...paperData, // this is the current data
+                  zoom: 1,
+                  rotation_degrees: 0,
+                  x_offset: 0,
+                  y_offset: 0,
+                };
+                setPaperData(newPaperData);
+                window.localStorage.setItem(
+                  `paper_data_${selectedPaperType}`,
+                  JSON.stringify(newPaperData)
+                );
+              }}
+            />
+            {/* collections control */}
+          </div>
+
+          <div className="bg-gray-400 p-4 flex flex-col space-y-2">
+            <div className="flex items-center">
+              <button
+                onClick={handleSave}
+                className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"
+              >
+                Save
+              </button>
+              {versionsList.length <= 0 && (
+                <span className="italic">No copies saved yet</span>
+              )}
+              {selectedVersion && versionsList.length >= 1 && (
+                <select
+                  value={selectedVersion}
+                  onChange={(e) => handleVersionSelect(e.target.value)}
+                  className="grow rounded shadow px-4 py-2"
+                >
+                  {versionsList.map((v) => {
+                    return <option key={v.timestamp}>{v.timestamp}</option>;
+                  })}
+                </select>
+              )}
+            </div>
+            <span className="text-xs italic">
+              Copies are saved locally to your machine - no data is sent to any
+              server.
+            </span>
+          </div>
+
+          <div className="bg-gray-300 p-4">
+            {selectedPaperType === "NEWSPAPER" && (
+              <NewspaperForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+                setHighlighted={setHighlighted}
+              />
             )}
+
+            {selectedPaperType === "NEWSPAPER_ALT" && (
+              <NewspaperFormAlt1
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+                setHighlighted={setHighlighted}
+              />
+            )}
+
+            {selectedPaperType === "NEWSPAPER_CLIPPING" && (
+              <NewspaperClippingForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+              />
+            )}
+
+            {selectedPaperType === "WANTED_POSTER" && (
+              <WantedPosterForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+              />
+            )}
+
+            {selectedPaperType === "HANDWRITTEN_LETTER" && (
+              <HandwrittenLetterForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+              />
+            )}
+
+            {selectedPaperType === "TICKET" && (
+              <TicketForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+              />
+            )}
+
+            {selectedPaperType === "BOOK_COVER" && (
+              <BookCoverForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+              />
+            )}
+            {selectedPaperType === "NPC_CARD" && (
+              <NPCCardForm
+                dataset={{
+                  ...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
+                }}
+                handleDataChange={handleDataChange}
+              />
+            )}
+
+            <span className="block mt-6">
+              Made by{" "}
+              <a
+                className="text-blue-600 underline hover:text-blue-900"
+                target="_blank"
+                href="https://twitter.com/tmcgry"
+              >
+                Tom
+              </a>
+            </span>
+            <span className="italic text-sm">
+              This tool is in alpha and constant flux. Apologies for any bugs!
+            </span>
           </div>
         </div>
 
-        <div className="bg-gray-300 p-4">
-          {selectedPaperType === "NEWSPAPER" && (
-            <NewspaperForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-              setHighlighted={setHighlighted}
-            />
-          )}
+        {/* render area */}
+        <div
+          style={{
+            backgroundColor: "#2f3640",
+            height: "100vh",
+          }}
+          className="render-area relative w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around items-center"
+        >
+          {/* help text */}
 
-          {selectedPaperType === "NEWSPAPER_ALT" && (
-            <NewspaperFormAlt1
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-              setHighlighted={setHighlighted}
-            />
-          )}
-
-          {selectedPaperType === "NEWSPAPER_CLIPPING" && (
-            <NewspaperClippingForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "WANTED_POSTER" && (
-            <WantedPosterForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "HANDWRITTEN_LETTER" && (
-            <HandwrittenLetterForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "TICKET" && (
-            <TicketForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "BOOK_COVER" && (
-            <BookCoverForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-          {selectedPaperType === "NPC_CARD" && (
-            <NPCCardForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          <span className="block mt-6">
-            Made by{" "}
-            <a
-              className="text-blue-600 underline hover:text-blue-900"
-              target="_blank"
-              href="https://twitter.com/tmcgry"
-            >
-              Tom
-            </a>
-          </span>
-        </div>
-      </div>
-
-      {/* render area */}
-      <div
-        style={{
-          backgroundColor: "#2f3640",
-          height: "100vh",
-        }}
-        className="render-area relative w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around items-center"
-      >
-        {/* help text */}
-
-        {/* <button className="absolute top-0 left-0 stroke-black bg-white rounded-full">
+          {/* <button className="absolute top-0 left-0 stroke-black bg-white rounded-full">
           <svg
             className="w-10 h-10"
             viewBox="0 0 15 15"
@@ -352,47 +370,50 @@ function App() {
           </svg>
         </button> */}
 
-        {selectedPaperType === "NEWSPAPER" && (
-          <Newspaper
-            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "NEWSPAPER_ALT" && (
-          <NewspaperAlt1
-            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
-          />
-        )}
-        {selectedPaperType === "NEWSPAPER_CLIPPING" && (
-          <NewspaperClipping
-            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
-          />
-        )}
-        {selectedPaperType === "WANTED_POSTER" && (
-          <WantedPoster
-            {...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "HANDWRITTEN_LETTER" && (
-          <HandwrittenLetter
-            {...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "TICKET" && (
-          <Ticket {...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"])} />
-        )}
+          {selectedPaperType === "NEWSPAPER" && (
+            <Newspaper
+              {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
+            />
+          )}
+          {selectedPaperType === "NEWSPAPER_ALT" && (
+            <NewspaperAlt1
+              {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
+            />
+          )}
+          {selectedPaperType === "NEWSPAPER_CLIPPING" && (
+            <NewspaperClipping
+              {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
+            />
+          )}
+          {selectedPaperType === "WANTED_POSTER" && (
+            <WantedPoster
+              {...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
+            />
+          )}
+          {selectedPaperType === "HANDWRITTEN_LETTER" && (
+            <HandwrittenLetter
+              {...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
+            />
+          )}
+          {selectedPaperType === "TICKET" && (
+            <Ticket
+              {...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"])}
+            />
+          )}
 
-        {selectedPaperType === "BOOK_COVER" && (
-          <BookCover
-            {...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "NPC_CARD" && (
-          <NPCCard
-            {...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
-          />
-        )}
+          {selectedPaperType === "BOOK_COVER" && (
+            <BookCover
+              {...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
+            />
+          )}
+          {selectedPaperType === "NPC_CARD" && (
+            <NPCCard
+              {...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </StateContext.Provider>
   );
 }
 

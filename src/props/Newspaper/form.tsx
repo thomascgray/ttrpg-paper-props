@@ -5,6 +5,10 @@ import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
 import { InkColorSelector } from "../../components/InkColorSelector";
 import { CheckboxInput } from "../../components/CheckboxInput";
+import { FormDetails } from "../../components/FormDetails";
+import { RangeInput } from "../../components/RangeInput";
+import { NEWSPAPER } from "../../config2";
+import { ConfigFormRenderer } from "../../ConfigFormRenderer";
 
 interface iNewspaperFormProps {
   dataset: (typeof PAPER_TYPES)["NEWSPAPER"]["data"];
@@ -18,7 +22,9 @@ interface iNewspaperFormProps {
 export const NewspaperForm = (props: iNewspaperFormProps) => {
   return (
     <div className="space-y-4">
-      <label className="block">
+      <ConfigFormRenderer config={NEWSPAPER} dataset={props.dataset} />
+
+      {/* <label className="block">
         <span className="block mb-1">
           Page Width:{" "}
           <span className="font-bold">
@@ -36,9 +42,9 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           min="0"
           max="100"
         />
-      </label>
+      </label> */}
 
-      <PaperTextureSelect
+      {/* <PaperTextureSelect
         value={props.dataset["paper_texture"]}
         onUpdate={(newValue) => {
           props.handleDataChange("paper_texture", newValue);
@@ -59,16 +65,12 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
         }}
       />
 
-      <div className="bg-gray-400 space-y-4 p-2">
-        <label
-          className="block"
-          // onMouseOver={() => {
-          //   props.setHighlighted("newspaper-title");
-          // }}
-          // onMouseLeave={() => {
-          //   props.setHighlighted("");
-          // }}
-        >
+      <FormDetails
+        for="newspaper-title"
+        title="Title"
+        description="Main title of the newspaper"
+      >
+        <label className="block">
           <span className="block mb-1">Title</span>
           <div className="flex">
             <input
@@ -106,15 +108,56 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             max="200"
           />
         </label>
-      </div>
 
-      <div className="bg-gray-400 space-y-4 p-2">
+        <label className="block">
+          <span className="block mb-1">
+            Line Height:{" "}
+            <span className="font-bold">{props.dataset["line_height"]}em</span>
+          </span>
+          <input
+            className="w-full cursor-pointer"
+            type="range"
+            value={props.dataset["line_height"]}
+            onChange={(e) => {
+              props.handleDataChange("line_height", e.target.value);
+            }}
+            step="0.1"
+            min="0.2"
+            max="4"
+          />
+        </label>
+
+        <RangeInput
+          label="Top Margin"
+          value={props.dataset["top_margin"]}
+          onUpdate={(newValue) => {
+            props.handleDataChange("top_margin", newValue);
+          }}
+          suffix="px"
+          min={-100}
+          max={100}
+          step={1}
+        />
+        <RangeInput
+          label="Bottom Margin"
+          value={props.dataset["bottom_margin"]}
+          onUpdate={(newValue) => {
+            props.handleDataChange("bottom_margin", newValue);
+          }}
+          suffix="px"
+          min={-100}
+          max={100}
+          step={1}
+        />
+      </FormDetails> */}
+
+      <FormDetails title="Banner Texts" for="newspaper-banner-texts">
         <label className="block">
           <span className="block mb-1">Banner Item Text 1</span>
           <div className="flex">
             <input
               value={props.dataset["banner_text_1"]}
-              className="p-2 text-sm w-full"
+              className="p-2 text-lg w-full"
               onChange={(e) => {
                 props.handleDataChange("banner_text_1", e.target.value);
               }}
@@ -190,15 +233,17 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             }
           />
         </div>
-      </div>
+      </FormDetails>
 
-      <div className="bg-gray-400 space-y-4 p-2">
+      <FormDetails title="Headline" for="newspaper-headline">
         <label className="block">
           <span className="block mb-1">Headline</span>
-          <input
+          <textarea
             value={props.dataset["headline"]}
             className="w-full p-2 text-lg"
+            rows={3}
             onChange={(e) => {
+              console.log("e.target.value", e.target.value);
               props.handleDataChange("headline", e.target.value);
             }}
           />
@@ -211,9 +256,21 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             props.handleDataChange("headline_font", newValue);
           }}
         />
-      </div>
 
-      <div className="bg-gray-400 space-y-4 p-2">
+        <RangeInput
+          label="Font Size"
+          value={props.dataset["headline_font_size"]}
+          onUpdate={(newValue) => {
+            props.handleDataChange("headline_font_size", newValue);
+          }}
+          suffix="px"
+          min={26}
+          max={200}
+          step={2}
+        />
+      </FormDetails>
+
+      <FormDetails title="Quote / Call Out" for="newspaper-quote-call-out">
         <label className="block">
           <span className="block mb-1">Quote / Call Out</span>
           <input
@@ -250,15 +307,16 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
             max="60"
           />
         </label>
-      </div>
+      </FormDetails>
 
-      <div className="bg-gray-400 space-y-4 p-2">
+      <FormDetails title="Main Copy" for="newspaper-main-copy">
         <label className="block">
           <span className="block mb-1">
             Main Copy{" "}
             <span className="italic">
               You can use{" "}
               <a
+                target="_blank"
                 className="text-blue-400 underline"
                 href="https://www.markdownguide.org/cheat-sheet/"
               >
@@ -311,7 +369,7 @@ export const NewspaperForm = (props: iNewspaperFormProps) => {
           value={props.dataset["is_main_copy_blurry"]}
           onUpdate={(val) => props.handleDataChange("is_main_copy_blurry", val)}
         />
-      </div>
+      </FormDetails>
     </div>
   );
 };
