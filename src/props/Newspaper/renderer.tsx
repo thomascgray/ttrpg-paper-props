@@ -16,15 +16,17 @@ export const Newspaper = ({
     <React.Fragment>
       <div
         style={{
-          transform: `rotate(${handout.rotation_degrees.value}deg) scale(${handout.zoom.value})`,
+          transform: `rotate(${handout.positioning_and_paper.rotation_degrees.value}deg) scale(${handout.positioning_and_paper.zoom.value})`,
           width: `${handout.page_width_percentage.value}%`,
           boxShadow: `${
-            handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
+            handout.positioning_and_paper.is_paper_shadow.value
+              ? "inset 0 0 25px #000000"
+              : "none"
           }`,
-          marginTop: `${handout.y_offset.value}%`,
-          marginLeft: `${handout.x_offset.value}%`,
+          marginTop: `${handout.positioning_and_paper.y_offset.value}%`,
+          marginLeft: `${handout.positioning_and_paper.x_offset.value}%`,
         }}
-        className={`paper paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10`}
+        className={`paper paper-${handout.positioning_and_paper.paper_texture.value} ${handout.ink_color.value} p-10`}
       >
         <div id="title">
           <span

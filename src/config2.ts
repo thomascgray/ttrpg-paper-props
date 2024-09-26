@@ -132,16 +132,18 @@ const _yOffset: iDataInputRange = {
 export const UNIVERSAL_DATA = {
   rotation_degrees: _rotationDegrees,
   zoom: _zoom,
-  paper_texture: _paperTexture,
-  is_paper_shadow: _isPaperShadow,
   x_offset: _xOffset,
   y_offset: _yOffset,
+  paper_texture: _paperTexture,
+  is_paper_shadow: _isPaperShadow,
 };
 
 export const NEWSPAPER = {
   name: "Newspaper",
   data: {
-    ...UNIVERSAL_DATA,
+    positioning_and_paper: {
+      ...UNIVERSAL_DATA,
+    },
     page_width_percentage: {
       name: "Page Width",
       type: "range",
