@@ -1,39 +1,105 @@
 import React from "react";
-import { iHandoutDefinition, isHandoutData, tHandoutData } from "./config2";
+import {
+  eHandoutDefinitions,
+  iHandoutDefinition,
+  isHandoutData,
+  tHandoutData,
+} from "./config2";
 import { RangeInput } from "./components/RangeInput";
 import { StateContext } from "./context";
+import * as _ from "lodash";
+import { InkColorSelector } from "./components/InkColorSelector";
+import { FontSelector } from "./components/FontSelector";
+import { CheckboxInput } from "./components/CheckboxInput";
+import { PaperTextureSelect } from "./components/PaperTextureSelect";
 
 interface iConfigFormRendererProps {
-  dataset: any;
+  handoutDefinitionKey: eHandoutDefinitions;
+  dataset: iHandoutDefinition["data"];
   config: iHandoutDefinition;
 }
 
 const renderHandoutData = (
-  key: string,
-  data: tHandoutData,
+  handoutDefinitionKey: eHandoutDefinitions,
+  compoundKey: string,
+  config: tHandoutData,
   dataset: any,
-  onChange: (key: string, value: any) => void
+  onChange: (key: string, value: any) => void,
+  valueAccessKey: string
 ) => {
-  if (data.type === "range") {
-    return (
-      <RangeInput
-        label={data.name}
-        value={dataset[key]}
-        onUpdate={(newValue) => {
-          onChange(key, newValue);
-        }}
-        suffix="px"
-        min={26}
-        max={200}
-        step={2}
-      />
-    );
-  } else if (data.type === "input") {
-    return <div>input</div>;
-  } else if (data.type === "ink_color_picker") {
-    return <div>ink_color_picker</div>;
-  } else if (data.type === "font_picker") {
-    return <div>font_picker</div>;
+  const val = _.get(dataset, valueAccessKey);
+  const finalKey = `${compoundKey}`;
+
+  switch (config.type) {
+    case "range":
+      return (
+        <RangeInput
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+          suffix={config.suffix}
+          min={config.min}
+          max={config.max}
+          step={config.step}
+        />
+      );
+    case "input":
+      return (
+        <label className="block">
+          <span className="block mb-1">{config.name}</span>
+          <div className="flex">
+            <input
+              value={val}
+              className="p-2 text-lg w-full"
+              onChange={(e) => {
+                onChange(finalKey, e.target.value);
+              }}
+            />
+          </div>
+        </label>
+      );
+    case "ink_color_picker":
+      return (
+        <InkColorSelector
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+    case "font_picker":
+      return (
+        <FontSelector
+          label="Headline Font"
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+    case "boolean":
+      return (
+        <CheckboxInput
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => onChange(finalKey, newValue)}
+        />
+      );
+    case "paper_texture":
+      return (
+        <PaperTextureSelect
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+
+    default:
+      return <div>unknown type</div>;
   }
 };
 
@@ -45,33 +111,51 @@ export const ConfigFormRenderer = (props: iConfigFormRendererProps) => {
   const stateContext = React.useContext(StateContext);
 
   return (
-    <div>
+    <div className="space-y-4">
       {Object.keys(data).map((key) => {
         if (isHandoutData(data[key])) {
           return (
             <div key={key}>
               {renderHandoutData(
+                props.handoutDefinitionKey,
                 key,
-                data[key],
-                props.dataset,
-                stateContext.onChange
+                data[key] as tHandoutData,
+                _.get(props.dataset, key),
+                stateContext.onChange,
+                "value"
               )}
             </div>
           );
         } else {
-          return Object.keys(data[key]).map((nestedKey) => {
-            const nestedHandoutData = (data[key] as any)[nestedKey];
-            return (
-              <div key={nestedKey}>
-                {renderHandoutData(
-                  `${key}.${nestedKey}`,
-                  nestedHandoutData,
-                  props.dataset,
-                  stateContext.onChange
-                )}
+          return (
+            <details
+              onMouseEnter={() => stateContext.setHighlighted(key)}
+              onMouseLeave={() => stateContext.setHighlighted("")}
+              key={key}
+              className="bg-gray-400 space-y-4 p-2"
+            >
+              <summary className="cursor-pointer font-bold">
+                {_.startCase(_.toLower(key))}
+              </summary>
+              <div className="flex flex-col space-y-4">
+                {Object.keys(data[key]).map((nestedKey) => {
+                  const nestedHandoutData = (data[key] as any)[nestedKey];
+                  return (
+                    <div key={nestedKey}>
+                      {renderHandoutData(
+                        props.handoutDefinitionKey,
+                        `${key}.${nestedKey}`,
+                        nestedHandoutData,
+                        _.get(props.dataset, `${key}`),
+                        stateContext.onChange,
+                        `${nestedKey}.value`
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            );
-          });
+            </details>
+          );
         }
       })}
     </div>

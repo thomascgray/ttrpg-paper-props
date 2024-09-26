@@ -5,108 +5,113 @@ import classNames from "classnames";
 import Markdown from "react-markdown";
 import { PAPER_TYPES } from "../../config";
 import { Headline } from "../../components/Headline";
+import { NEWSPAPER, NewspaperType } from "../../config2";
 
-export const Newspaper = (props: (typeof PAPER_TYPES)["NEWSPAPER"]["data"]) => {
+export const Newspaper = ({
+  handout,
+}: {
+  handout: (typeof NEWSPAPER)["data"];
+}) => {
   return (
     <React.Fragment>
       <div
         style={{
-          transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
-          width: `${props.page_width_percentage}%`,
+          transform: `rotate(${handout.rotation_degrees.value}deg) scale(${handout.zoom.value})`,
+          width: `${handout.page_width_percentage.value}%`,
           boxShadow: `${
-            props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+            handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
           }`,
-          marginTop: `${props.y_offset}%`,
-          marginLeft: `${props.x_offset}%`,
+          marginTop: `${handout.y_offset.value}%`,
+          marginLeft: `${handout.x_offset.value}%`,
         }}
-        className={`paper paper-${props.paper_texture} ${props.ink_color} p-10`}
+        className={`paper paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10`}
       >
-        <div id="newspaper-title">
+        <div id="title">
           <span
-            className={`${props.title_font} font-black text-center flex items-center justify-around`}
+            className={`${handout.title.title_font.value} font-black text-center flex items-center justify-around`}
             style={{
-              fontSize: `${props.title_size}px`,
-              lineHeight: `${props.line_height}em`,
-              marginTop: `${props.top_margin}px`,
-              marginBottom: `${props.bottom_margin}px`,
+              fontSize: `${handout.title.title_font_size.value}px`,
+              lineHeight: `${handout.title.line_height.value}em`,
+              marginTop: `${handout.title.top_margin.value}px`,
+              marginBottom: `${handout.title.bottom_margin.value}px`,
             }}
           >
-            {props.title}
+            {handout.title.title.value}
           </span>
         </div>
 
-        {!props.hide_top_banner_border && (
+        {!handout.banner_texts.hide_top_banner_border.value && (
           <hr className="border-solid border-2 border-gray-600" />
         )}
 
-        <div id="newspaper-banner-texts" className="flex justify-between py-2">
+        <div id="banner_texts" className="flex justify-between py-2">
           <label
             style={{
-              fontSize: `${props.banner_size}px`,
+              fontSize: `${handout.banner_texts.banner_size.value}px`,
             }}
-            className={`text-left text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
+            className={`text-left text-gray-800 font-bold font-serif w-4/12 ${handout.banner_texts.banner_font.value}`}
           >
-            {props.banner_text_1}
+            {handout.banner_texts.banner_text_1.value}
           </label>
 
           <label
             style={{
-              fontSize: `${props.banner_size}px`,
+              fontSize: `${handout.banner_texts.banner_size.value}px`,
             }}
-            className={`text-center text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
+            className={`text-center text-gray-800 font-bold font-serif w-4/12 ${handout.banner_texts.banner_font.value}`}
           >
-            {props.banner_text_2}
+            {handout.banner_texts.banner_text_2.value}
           </label>
 
           <label
             style={{
-              fontSize: `${props.banner_size}px`,
+              fontSize: `${handout.banner_texts.banner_size.value}px`,
             }}
-            className={`text-right text-gray-800 font-bold font-serif w-4/12 ${props.banner_font}`}
+            className={`text-right text-gray-800 font-bold font-serif w-4/12 ${handout.banner_texts.banner_font.value}`}
           >
-            {props.banner_text_3}
+            {handout.banner_texts.banner_text_3.value}
           </label>
         </div>
 
-        {!props.hide_bottom_banner_border && (
+        {!handout.banner_texts.hide_bottom_banner_border.value && (
           <hr className="border-solid border-2 border-gray-600" />
         )}
 
         <span
-          id="newspaper-headline"
-          className={`${props.headline_font} font-semibold whitespace-pre-line block text-center`}
+          id="headline"
+          className={`${handout.headline.headline_font.value} font-semibold whitespace-pre-line block text-center`}
           style={{
             textWrap: "balance",
-            fontSize: `${props.headline_font_size}px`,
+            fontSize: `${handout.headline.headline_font_size.value}px`,
           }}
         >
-          {props.headline}
+          {handout.headline.headline.value}
         </span>
 
         <hr className="border-solid border-4 border-gray-800 my-4" />
 
-        {props.quote !== "" && (
+        {(handout.quote.quote.value as string) !== "" && (
           <p
-            id="newspaper-quote-call-out"
+            id="quote"
             style={{
-              fontSize: `${props.quote_size}px`,
+              fontSize: `${handout.quote.quote_font_size.value}px`,
             }}
-            className={`font-serif font-bold text-justify italic my-4 ${props.quote_font}`}
+            className={`font-serif font-bold text-justify italic my-4 ${handout.quote.quote_font.value}`}
           >
-            {props.quote}
+            {handout.quote.quote.value}
           </p>
         )}
 
-        <div id="newspaper-main-copy">
+        <div id="main_copy">
           <Markdown
             className={classNames(
-              `text-justify font-serif copy-markdown column-count-${props.main_copy_columns} ${props.image_filter}`,
+              `text-justify font-serif copy-markdown column-count-${handout.main_copy.main_copy_columns.value} ${handout.main_copy.image_filter.value}`,
               {
-                blurry: props.is_main_copy_blurry,
+                blurry: handout.main_copy.is_main_copy_blurry.value,
               }
             )}
           >
-            {props.main_copy}
+            {handout.main_copy.main_copy_content.value}
           </Markdown>
         </div>
       </div>

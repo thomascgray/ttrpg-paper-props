@@ -22,7 +22,7 @@ interface iNewspaperFormProps {
 export const NewspaperForm = (props: iNewspaperFormProps) => {
   return (
     <div className="space-y-4">
-      <ConfigFormRenderer config={NEWSPAPER} dataset={props.dataset} />
+      {/* <ConfigFormRenderer config={NEWSPAPER} dataset={props.dataset} /> */}
 
       {/* <label className="block">
         <span className="block mb-1">

@@ -9,7 +9,6 @@ import { Ticket } from "./props/Ticket/renderer";
 import { BookCover } from "./props/BookCover/renderer";
 import { NPCCard } from "./props/NPCCard/renderer";
 
-import { NewspaperForm } from "./props/Newspaper/form";
 import { NewspaperFormAlt1 } from "./props/NewspaperAlt1/form";
 import { WantedPosterForm } from "./props/WantedPoster/form";
 import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
@@ -17,31 +16,46 @@ import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
 import { TicketForm } from "./props/Ticket/form";
 import { BookCoverForm } from "./props/BookCover/form";
 import { NPCCardForm } from "./props/NPCCard/form";
-
-import { PAPER_TYPES } from "./config";
+import { ConfigFormRenderer } from "./ConfigFormRenderer";
+import * as _ from "lodash";
+// import { PAPER_TYPES } from "./config";
 import { RotateZoomPositionControls } from "./components/RotateZoomPositionControls";
 
 import { Helmet } from "react-helmet";
 import { StateContext } from "./context";
 
-function App() {
-  const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER");
+import {
+  ALL_HANDOUT_DEFINITIONS,
+  eHandoutDefinitions,
+  iHandoutDefinition,
+  NEWSPAPER,
+} from "./config2";
 
-  const paperType = PAPER_TYPES[selectedPaperType];
+const localStorageKey = "tombola_digital_ttrpg_handouts";
+
+function App() {
+  // the type of this useState should be a key of ALL_HANDOUT_DEFINITIONS
+  const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
+    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
+
+  const currentHandoutConfig =
+    ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
 
   const savedDataString = window.localStorage.getItem(
-    `paper_data_${selectedPaperType}`
+    `${localStorageKey}_${currentHandoutDefinitionKey}`
   );
+
   const savedData = savedDataString ? JSON.parse(savedDataString) : {};
 
-  const [paperData, setPaperData] = useState({
-    ...paperType.data, // so this is the base data
+  const [currentHandoutData, setCurrentHandoutData] = useState<
+    iHandoutDefinition["data"]
+  >({
+    ...currentHandoutConfig.data, // so this is the base data
     ...savedData, // then we're overwriting it with any saved data
   });
 
   let existingVersionsRaw = window.localStorage.getItem(
-    `paper_data_versions_${selectedPaperType}`
+    `${localStorageKey}_versions_${currentHandoutDefinitionKey}`
   );
   if (existingVersionsRaw === null) {
     existingVersionsRaw = "[]";
@@ -62,42 +76,46 @@ function App() {
   }, [versionsList]);
 
   const handleDataChange = (name: string, value: any) => {
-    const newPaperData = {
-      ...paperType.data, // so this is the base data
-      ...paperData, // this is the current data
-      [name]: value, // this is the new data
+    const newHandoutData = {
+      ...currentHandoutConfig.data, // so this is the base data
+      ...currentHandoutData, // this is the current data
     };
-    setPaperData(newPaperData);
-    window.localStorage.setItem(
-      `paper_data_${selectedPaperType}`,
-      JSON.stringify(newPaperData)
-    );
-  };
-
-  const refreshData = (key: keyof typeof PAPER_TYPES) => {
-    const paperType = PAPER_TYPES[key];
-    const savedDataString = window.localStorage.getItem(`paper_data_${key}`);
-    const savedData = savedDataString ? JSON.parse(savedDataString) : {};
-    setPaperData({
-      ...paperType.data,
-      ...savedData,
+    _.set(newHandoutData, name, {
+      ..._.get(newHandoutData, name),
+      value,
     });
 
-    let existingVersionsRaw = window.localStorage.getItem(
-      `paper_data_versions_${key}`
+    setCurrentHandoutData(newHandoutData);
+    window.localStorage.setItem(
+      `${localStorageKey}_${currentHandoutDefinitionKey}`,
+      JSON.stringify(newHandoutData)
     );
-    if (existingVersionsRaw === null) {
-      existingVersionsRaw = "[]";
-    }
-    const existingVersions = JSON.parse(existingVersionsRaw);
-
-    setVersionsList(existingVersions);
   };
+
+  // const refreshData = (key: keyof typeof PAPER_TYPES) => {
+  //   const paperType = PAPER_TYPES[key];
+  //   const savedDataString = window.localStorage.getItem(`paper_data_${key}`);
+  //   const savedData = savedDataString ? JSON.parse(savedDataString) : {};
+  //   setCurrentHandoutData({
+  //     ...paperType.data,
+  //     ...savedData,
+  //   });
+
+  //   let existingVersionsRaw = window.localStorage.getItem(
+  //     `paper_data_versions_${key}`
+  //   );
+  //   if (existingVersionsRaw === null) {
+  //     existingVersionsRaw = "[]";
+  //   }
+  //   const existingVersions = JSON.parse(existingVersionsRaw);
+
+  //   setVersionsList(existingVersions);
+  // };
 
   const handleSave = () => {
     // get the current list out of the app
     let existingVersionsRaw = window.localStorage.getItem(
-      `paper_data_versions_${selectedPaperType}`
+      `paper_data_versions_${currentHandoutDefinitionKey}`
     );
     if (existingVersionsRaw === null) {
       existingVersionsRaw = "[]";
@@ -106,14 +124,14 @@ function App() {
 
     // add the current data to it
     versions.unshift({
-      ...paperData,
+      ...currentHandoutData,
       timestamp: Date.now(),
     });
 
     // resave that list into both local state and app state
     setVersionsList(versions);
     window.localStorage.setItem(
-      `paper_data_versions_${selectedPaperType}`,
+      `paper_data_versions_${currentHandoutDefinitionKey}`,
       JSON.stringify(versions)
     );
   };
@@ -124,14 +142,15 @@ function App() {
     );
 
     setSelectedVersion(selectedTimeStamp);
-    setPaperData({
+    setCurrentHandoutData({
       ...selectedVersion,
       timestamp: undefined,
     });
   };
 
-  const [highlighted, setHighlighted] = useState("tteesstt");
+  const [highlighted, setHighlighted] = useState("");
 
+  console.log("highlighted", highlighted);
   return (
     <StateContext.Provider
       value={{
@@ -167,18 +186,19 @@ function App() {
             <label className="block mb-4">
               <span className="block mb-1">Prop Type</span>
               <select
-                value={selectedPaperType}
+                value={currentHandoutDefinitionKey}
                 className="p-2 text-lg w-full"
                 onChange={(e) => {
-                  setSelectedPaperType(
-                    e.target.value as keyof typeof PAPER_TYPES
-                  );
-                  refreshData(e.target.value as keyof typeof PAPER_TYPES);
+                  // setCurrentHandoutDefinitionKey(
+                  //   e.target.value as keyof typeof PAPER_TYPES
+                  // );
+                  // refreshData(e.target.value as keyof typeof PAPER_TYPES);
                 }}
               >
                 <optgroup label="Paper / Stationary / Print">
-                  {Object.keys(PAPER_TYPES).map((typeKey) => {
-                    const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
+                  {Object.keys(ALL_HANDOUT_DEFINITIONS).map((typeKey) => {
+                    const p =
+                      ALL_HANDOUT_DEFINITIONS[typeKey as eHandoutDefinitions];
                     return (
                       <option key={typeKey} value={typeKey}>
                         {p.name}
@@ -189,11 +209,11 @@ function App() {
               </select>
             </label>
 
-            <RotateZoomPositionControls
-              zoomValue={paperData.zoom}
-              rotateValue={paperData.rotation_degrees}
-              xOffsetValue={paperData.x_offset}
-              yOffsetValue={paperData.y_offset}
+            {/* <RotateZoomPositionControls
+              zoomValue={currentHandoutData.zoom}
+              rotateValue={currentHandoutData.rotation_degrees}
+              xOffsetValue={currentHandoutData.x_offset}
+              yOffsetValue={currentHandoutData.y_offset}
               onZoomUpdate={(newZoom) => {
                 handleDataChange("zoom", newZoom);
               }}
@@ -208,20 +228,20 @@ function App() {
               }}
               onReset={() => {
                 const newPaperData = {
-                  ...paperType.data, // so this is the base data
-                  ...paperData, // this is the current data
+                  ...currentHandoutConfig.data, // so this is the base data
+                  ...currentHandoutData, // this is the current data
                   zoom: 1,
                   rotation_degrees: 0,
                   x_offset: 0,
                   y_offset: 0,
                 };
-                setPaperData(newPaperData);
+                // setCurrentHandoutData(newPaperData);
                 window.localStorage.setItem(
-                  `paper_data_${selectedPaperType}`,
+                  `paper_data_${currentHandoutDefinitionKey}`,
                   JSON.stringify(newPaperData)
                 );
               }}
-            />
+            /> */}
             {/* collections control */}
           </div>
 
@@ -255,78 +275,83 @@ function App() {
           </div>
 
           <div className="bg-gray-300 p-4">
-            {selectedPaperType === "NEWSPAPER" && (
+            <ConfigFormRenderer
+              handoutDefinitionKey={currentHandoutDefinitionKey}
+              config={currentHandoutConfig}
+              dataset={currentHandoutData}
+            />
+            {/* {currentHandoutDefinitionKey === "NEWSPAPER" && (
               <NewspaperForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
                 setHighlighted={setHighlighted}
               />
             )}
 
-            {selectedPaperType === "NEWSPAPER_ALT" && (
+            {currentHandoutDefinitionKey === "NEWSPAPER_ALT" && (
               <NewspaperFormAlt1
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
                 setHighlighted={setHighlighted}
               />
             )}
 
-            {selectedPaperType === "NEWSPAPER_CLIPPING" && (
+            {currentHandoutDefinitionKey === "NEWSPAPER_CLIPPING" && (
               <NewspaperClippingForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
               />
             )}
 
-            {selectedPaperType === "WANTED_POSTER" && (
+            {currentHandoutDefinitionKey === "WANTED_POSTER" && (
               <WantedPosterForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
               />
             )}
 
-            {selectedPaperType === "HANDWRITTEN_LETTER" && (
+            {currentHandoutDefinitionKey === "HANDWRITTEN_LETTER" && (
               <HandwrittenLetterForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
               />
             )}
 
-            {selectedPaperType === "TICKET" && (
+            {currentHandoutDefinitionKey === "TICKET" && (
               <TicketForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["TICKET"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
               />
             )}
 
-            {selectedPaperType === "BOOK_COVER" && (
+            {currentHandoutDefinitionKey === "BOOK_COVER" && (
               <BookCoverForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
               />
             )}
-            {selectedPaperType === "NPC_CARD" && (
+            {currentHandoutDefinitionKey === "NPC_CARD" && (
               <NPCCardForm
                 dataset={{
-                  ...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
+                  ...(currentHandoutData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
                 }}
                 handleDataChange={handleDataChange}
               />
-            )}
+            )} */}
 
             <span className="block mt-6">
               Made by{" "}
@@ -370,47 +395,53 @@ function App() {
           </svg>
         </button> */}
 
-          {selectedPaperType === "NEWSPAPER" && (
+          {currentHandoutDefinitionKey === "NEWSPAPER" && (
             <Newspaper
-              {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
-            />
-          )}
-          {selectedPaperType === "NEWSPAPER_ALT" && (
-            <NewspaperAlt1
-              {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
-            />
-          )}
-          {selectedPaperType === "NEWSPAPER_CLIPPING" && (
-            <NewspaperClipping
-              {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
-            />
-          )}
-          {selectedPaperType === "WANTED_POSTER" && (
-            <WantedPoster
-              {...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
-            />
-          )}
-          {selectedPaperType === "HANDWRITTEN_LETTER" && (
-            <HandwrittenLetter
-              {...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
-            />
-          )}
-          {selectedPaperType === "TICKET" && (
-            <Ticket
-              {...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"])}
+              handout={currentHandoutData as (typeof NEWSPAPER)["data"]}
             />
           )}
 
-          {selectedPaperType === "BOOK_COVER" && (
+          {/* {currentHandoutDefinitionKey === "NEWSPAPER" && (
+            <Newspaper
+              {...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
+            />
+          )}
+          {currentHandoutDefinitionKey === "NEWSPAPER_ALT" && (
+            <NewspaperAlt1
+              {...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
+            />
+          )}
+          {currentHandoutDefinitionKey === "NEWSPAPER_CLIPPING" && (
+            <NewspaperClipping
+              {...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
+            />
+          )}
+          {currentHandoutDefinitionKey === "WANTED_POSTER" && (
+            <WantedPoster
+              {...(currentHandoutData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
+            />
+          )}
+          {currentHandoutDefinitionKey === "HANDWRITTEN_LETTER" && (
+            <HandwrittenLetter
+              {...(currentHandoutData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
+            />
+          )}
+          {currentHandoutDefinitionKey === "TICKET" && (
+            <Ticket
+              {...(currentHandoutData as (typeof PAPER_TYPES)["TICKET"]["data"])}
+            />
+          )}
+
+          {currentHandoutDefinitionKey === "BOOK_COVER" && (
             <BookCover
-              {...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
+              {...(currentHandoutData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
             />
           )}
-          {selectedPaperType === "NPC_CARD" && (
+          {currentHandoutDefinitionKey === "NPC_CARD" && (
             <NPCCard
-              {...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
+              {...(currentHandoutData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
             />
-          )}
+          )} */}
         </div>
       </div>
     </StateContext.Provider>
