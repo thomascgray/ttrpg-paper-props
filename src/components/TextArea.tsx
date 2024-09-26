@@ -27,7 +27,7 @@ export const TextArea = (props: iTextAreaProps) => {
 
       <textarea
         value={props.value}
-        className="w-full p-2 text-lg"
+        className="w-full p-2 text-sm"
         rows={props.rows}
         onChange={(e) => {
           props.onUpdate(e.target.value);

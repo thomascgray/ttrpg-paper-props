@@ -1,72 +1,80 @@
 import React from "react";
 import { PAPER_TYPES } from "../../config";
+import { CHARACTER_CARD } from "../../config2";
 
-export const NPCCard = (props: (typeof PAPER_TYPES)["NPC_CARD"]["data"]) => {
+export const NPCCard = ({
+  handout,
+}: {
+  handout: (typeof CHARACTER_CARD)["data"];
+}) => {
+  console.log("handout", handout);
   return (
     <>
       {/* the whole thing */}
       <div
         style={{
-          transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom}) translateZ(0)`,
-          width: `${props.page_width}px`,
+          transform: `rotate(${handout.positioning.rotation_degrees.value}deg) scale(${handout.positioning.zoom.value}) translateZ(0)`,
+          width: `${handout.page_width.value}px`,
           boxShadow: `${
-            props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+            handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
           }`,
-          marginTop: `${props.y_offset}%`,
-          marginLeft: `${props.x_offset}%`,
+          marginTop: `${handout.positioning.y_offset.value}%`,
+          marginLeft: `${handout.positioning.x_offset.value}%`,
         }}
-        className={`inline-block ${props.font} ${props.font_weight} ${props.image_filter} paper-${props.paper_texture} overflow-hidden`}
+        className={`inline-block overflow-visible ${handout.font.value} ${handout.font_weight.value} ${handout.image_filter.value} paper-${handout.paper_texture.value}`}
       >
         <img
           className=""
-          src={props.image_url}
+          src={handout.image_url.value}
           style={{
             margin: "10%",
             marginBottom: "6%",
             width: "calc(100% - 20%)",
-            border: `${props.image_border}`,
           }}
         />
 
         <div
-          className={`${props.text_alignment} ${props.ink_color} space-y-2`}
+          className={`${handout.text_align.value} ${handout.ink_color.value} space-y-2`}
           style={{
             marginBottom: "6%",
           }}
         >
-          {props.text_line_one !== "" && (
+          {(handout.text_line_one.value as string) !== "" && (
             <span
-              className={`font-black text-2xl `}
+              className={`font-black`}
               style={{
                 display: "block",
                 marginLeft: "10%",
                 marginRight: "10%",
+                fontSize: `${handout.font_size.value * 2.5}px`,
               }}
             >
-              {props.text_line_one}
+              {handout.text_line_one.value}
             </span>
           )}
-          {props.text_line_two !== "" && (
+          {(handout.text_line_two.value as string) !== "" && (
             <span
               style={{
                 display: "block",
                 marginLeft: "10%",
                 marginRight: "10%",
+                fontSize: `${handout.font_size.value * 1.5}px`,
               }}
             >
-              {props.text_line_two}
+              {handout.text_line_two.value}
             </span>
           )}
-          {props.text_line_three !== "" && (
+          {(handout.text_line_three.value as string) !== "" && (
             <span
               className={`italic text-gray-700 `}
               style={{
                 display: "block",
                 marginLeft: "10%",
                 marginRight: "10%",
+                fontSize: `${handout.font_size.value}px`,
               }}
             >
-              {props.text_line_three}
+              {handout.text_line_three.value}
             </span>
           )}
         </div>

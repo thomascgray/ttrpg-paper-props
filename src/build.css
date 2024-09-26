@@ -1913,6 +1913,26 @@ select {
   right: -0.5rem;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
+.bottom-20 {
+  bottom: 5rem;
+}
+
+.bottom-\[57px\] {
+  bottom: 57px;
+}
+
+.-right-\[25px\] {
+  right: -25px;
+}
+
 .z-20 {
   z-index: 20;
 }
@@ -2053,6 +2073,18 @@ select {
   height: 100%;
 }
 
+.h-\[calc\(100\%-57px\)\] {
+  height: calc(100% - 57px);
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-20 {
+  height: 5rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -2099,6 +2131,14 @@ select {
 
 .w-4\/5 {
   width: 80%;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-20 {
+  width: 5rem;
 }
 
 .min-w-\[50px\] {
@@ -2194,6 +2234,12 @@ select {
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -2204,12 +2250,6 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.333em * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.333em * var(--tw-space-y-reverse));
-}
-
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
@@ -2232,6 +2272,14 @@ select {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-clip {
+  overflow: clip;
+}
+
+.overflow-visible {
+  overflow: visible;
 }
 
 .overflow-y-scroll {
@@ -2268,6 +2316,18 @@ select {
 
 .rounded-sm {
   border-radius: 0.125rem;
+}
+
+.rounded-bl-lg {
+  border-bottom-left-radius: 0.5rem;
+}
+
+.rounded-bl-\[2rem\] {
+  border-bottom-left-radius: 2rem;
+}
+
+.rounded-br-\[2rem\] {
+  border-bottom-right-radius: 2rem;
 }
 
 .border-4 {
@@ -2634,6 +2694,22 @@ body {
 
 .copy-markdown > blockquote {
   border-color: #4b5563;
+}
+
+.copy-markdown h1 {
+  font-size: 2.5rem;
+}
+
+.copy-markdown h2 {
+  font-size: 2rem;
+}
+
+.copy-markdown h3 {
+  font-size: 1.5rem;
+}
+
+.copy-markdown h4 {
+  font-size: 1.25rem;
 }
 
 .copy-markdown h2,

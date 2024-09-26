@@ -12,6 +12,10 @@ import { InkColorSelector } from "./components/InkColorSelector";
 import { FontSelector } from "./components/FontSelector";
 import { CheckboxInput } from "./components/CheckboxInput";
 import { PaperTextureSelect } from "./components/PaperTextureSelect";
+import { ImageFilterSelector } from "./components/ImageFilterSelector";
+import { TextArea } from "./components/TextArea";
+import { TextAlignmentSelector } from "./components/TextAlignmentSelector";
+import { FontWeightSelector } from "./components/FontWeightSelector";
 
 interface iConfigFormRendererProps {
   handoutDefinitionKey: eHandoutDefinitions;
@@ -73,7 +77,7 @@ const renderHandoutData = (
     case "font_picker":
       return (
         <FontSelector
-          label="Headline Font"
+          label={config.name}
           value={val}
           onUpdate={(newValue) => {
             onChange(finalKey, newValue);
@@ -91,6 +95,50 @@ const renderHandoutData = (
     case "paper_texture":
       return (
         <PaperTextureSelect
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+    case "image_filter":
+      return (
+        <ImageFilterSelector
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+
+    case "textarea":
+      return (
+        <TextArea
+          label={config.name}
+          rows={10}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+
+    case "text_align":
+      return (
+        <TextAlignmentSelector
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+
+    case "font_weight_picker":
+      return (
+        <FontWeightSelector
+          label={config.name}
           value={val}
           onUpdate={(newValue) => {
             onChange(finalKey, newValue);

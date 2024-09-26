@@ -26,6 +26,7 @@ import { StateContext } from "./context";
 
 import {
   ALL_HANDOUT_DEFINITIONS,
+  CHARACTER_CARD,
   eHandoutDefinitions,
   iHandoutDefinition,
   NEWSPAPER,
@@ -86,36 +87,39 @@ function App() {
     });
 
     setCurrentHandoutData(newHandoutData);
-    window.localStorage.setItem(
-      `${localStorageKey}_${currentHandoutDefinitionKey}`,
-      JSON.stringify(newHandoutData)
-    );
+    // window.localStorage.setItem(
+    //   `${localStorageKey}_${currentHandoutDefinitionKey}`,
+    //   JSON.stringify(newHandoutData)
+    // );
   };
 
-  // const refreshData = (key: keyof typeof PAPER_TYPES) => {
-  //   const paperType = PAPER_TYPES[key];
-  //   const savedDataString = window.localStorage.getItem(`paper_data_${key}`);
-  //   const savedData = savedDataString ? JSON.parse(savedDataString) : {};
-  //   setCurrentHandoutData({
-  //     ...paperType.data,
-  //     ...savedData,
-  //   });
+  const refreshData = (key: eHandoutDefinitions) => {
+    // const paperType = PAPER_TYPES[key];
+    const config = ALL_HANDOUT_DEFINITIONS[key];
+    const savedDataString = window.localStorage.getItem(
+      `${localStorageKey}_${key}`
+    );
+    const savedData = savedDataString ? JSON.parse(savedDataString) : {};
+    setCurrentHandoutData({
+      ...config.data,
+      ...savedData,
+    });
 
-  //   let existingVersionsRaw = window.localStorage.getItem(
-  //     `paper_data_versions_${key}`
-  //   );
-  //   if (existingVersionsRaw === null) {
-  //     existingVersionsRaw = "[]";
-  //   }
-  //   const existingVersions = JSON.parse(existingVersionsRaw);
+    let existingVersionsRaw = window.localStorage.getItem(
+      `${localStorageKey}_versions_${key}`
+    );
+    if (existingVersionsRaw === null) {
+      existingVersionsRaw = "[]";
+    }
+    const existingVersions = JSON.parse(existingVersionsRaw);
 
-  //   setVersionsList(existingVersions);
-  // };
+    setVersionsList(existingVersions);
+  };
 
   const handleSave = () => {
     // get the current list out of the app
     let existingVersionsRaw = window.localStorage.getItem(
-      `paper_data_versions_${currentHandoutDefinitionKey}`
+      `${localStorageKey}_versions_${currentHandoutDefinitionKey}`
     );
     if (existingVersionsRaw === null) {
       existingVersionsRaw = "[]";
@@ -131,7 +135,7 @@ function App() {
     // resave that list into both local state and app state
     setVersionsList(versions);
     window.localStorage.setItem(
-      `paper_data_versions_${currentHandoutDefinitionKey}`,
+      `${localStorageKey}_versions_${currentHandoutDefinitionKey}`,
       JSON.stringify(versions)
     );
   };
@@ -150,7 +154,6 @@ function App() {
 
   const [highlighted, setHighlighted] = useState("");
 
-  console.log("highlighted", highlighted);
   return (
     <StateContext.Provider
       value={{
@@ -166,11 +169,14 @@ function App() {
             {`
           @keyframes blink { 
             50% { outline-style: dotted; } 
-         }
+          }
+          @keyframes outlinepulse { 
+            50% { outline-offset: 1.5em; } 
+          }
 #${highlighted} {
-    outline: 5px dashed #e74c3c;
+    outline: 5px dashed #00FF00;
     outline-offset: 1em;
-    animation: blink .5s step-end infinite alternate;
+    animation: blink .5s step-end infinite alternate, outlinepulse .5s step-end infinite alternate;
 }
 `}
           </style>
@@ -189,6 +195,10 @@ function App() {
                 value={currentHandoutDefinitionKey}
                 className="p-2 text-lg w-full"
                 onChange={(e) => {
+                  setCurrentHandoutDefinitionKey(
+                    e.target.value as eHandoutDefinitions
+                  );
+                  refreshData(e.target.value as eHandoutDefinitions);
                   // setCurrentHandoutDefinitionKey(
                   //   e.target.value as keyof typeof PAPER_TYPES
                   // );
@@ -208,41 +218,6 @@ function App() {
                 </optgroup>
               </select>
             </label>
-
-            {/* <RotateZoomPositionControls
-              zoomValue={currentHandoutData.zoom}
-              rotateValue={currentHandoutData.rotation_degrees}
-              xOffsetValue={currentHandoutData.x_offset}
-              yOffsetValue={currentHandoutData.y_offset}
-              onZoomUpdate={(newZoom) => {
-                handleDataChange("zoom", newZoom);
-              }}
-              onRotateUpdate={(newRotate) => {
-                handleDataChange("rotation_degrees", newRotate);
-              }}
-              onXOffsetUpdate={(xOffset) => {
-                handleDataChange("x_offset", parseInt(xOffset));
-              }}
-              onYOffsetUpdate={(yOffset) => {
-                handleDataChange("y_offset", parseInt(yOffset));
-              }}
-              onReset={() => {
-                const newPaperData = {
-                  ...currentHandoutConfig.data, // so this is the base data
-                  ...currentHandoutData, // this is the current data
-                  zoom: 1,
-                  rotation_degrees: 0,
-                  x_offset: 0,
-                  y_offset: 0,
-                };
-                // setCurrentHandoutData(newPaperData);
-                window.localStorage.setItem(
-                  `paper_data_${currentHandoutDefinitionKey}`,
-                  JSON.stringify(newPaperData)
-                );
-              }}
-            /> */}
-            {/* collections control */}
           </div>
 
           <div className="bg-gray-400 p-4 flex flex-col space-y-2">
@@ -358,7 +333,7 @@ function App() {
               <a
                 className="text-blue-600 underline hover:text-blue-900"
                 target="_blank"
-                href="https://twitter.com/tmcgry"
+                href="https://tomg.cool/"
               >
                 Tom
               </a>
@@ -398,6 +373,11 @@ function App() {
           {currentHandoutDefinitionKey === "NEWSPAPER" && (
             <Newspaper
               handout={currentHandoutData as (typeof NEWSPAPER)["data"]}
+            />
+          )}
+          {currentHandoutDefinitionKey === "CHARACTER_CARD" && (
+            <NPCCard
+              handout={currentHandoutData as (typeof CHARACTER_CARD)["data"]}
             />
           )}
 
