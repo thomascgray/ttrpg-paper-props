@@ -2,26 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/*markdown styles*/
 .copy-markdown {
   @apply max-w-none;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-.column-count-1 {
-  column-count: 1;
-}
-.column-count-2 {
-  column-count: 2;
-}
-.column-count-3 {
-  column-count: 3;
-}
-.column-count-4 {
-  column-count: 4;
 }
 
 .copy-markdown ul {
@@ -39,21 +22,49 @@ body {
 }
 
 .copy-markdown h1 {
-  font-size: 2.5rem;
+  font-size: 2.5em;
 }
 .copy-markdown h2 {
-  font-size: 2rem;
+  font-size: 2em;
 }
 .copy-markdown h3 {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 .copy-markdown h4 {
-  font-size: 1.25rem;
+  font-size: 1.25em;
 }
+
+.copy-markdown h1,
 .copy-markdown h2,
 .copy-markdown h3,
-.copy-markdown h4 {
-  margin-top: 1em !important;
+.copy-markdown h4,
+.copy-markdown h5,
+.copy-markdown h6 {
+  line-height: 1.3em;
+}
+
+.copy-markdown *:not(:first-child) {
+  margin-top: 0.6em;
+}
+
+/* .copy-markdown > :not([hidden]) ~ :not([hidden]) */
+
+html,
+body {
+  height: 100%;
+}
+
+.column-count-1 {
+  column-count: 1;
+}
+.column-count-2 {
+  column-count: 2;
+}
+.column-count-3 {
+  column-count: 3;
+}
+.column-count-4 {
+  column-count: 4;
 }
 
 .clipping-markdown img {

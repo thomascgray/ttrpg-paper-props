@@ -16,6 +16,7 @@ import { ImageFilterSelector } from "./components/ImageFilterSelector";
 import { TextArea } from "./components/TextArea";
 import { TextAlignmentSelector } from "./components/TextAlignmentSelector";
 import { FontWeightSelector } from "./components/FontWeightSelector";
+import { Select } from "./components/Select";
 
 interface iConfigFormRendererProps {
   handoutDefinitionKey: eHandoutDefinitions;
@@ -145,6 +146,17 @@ const renderHandoutData = (
           }}
         />
       );
+    case "select":
+      return (
+        <Select
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+          options={config.options}
+        />
+      );
 
     default:
       return <div>unknown type</div>;
@@ -163,7 +175,11 @@ export const ConfigFormRenderer = (props: iConfigFormRendererProps) => {
       {Object.keys(data).map((key) => {
         if (isHandoutData(data[key])) {
           return (
-            <div key={key}>
+            <div
+              key={key}
+              onMouseEnter={() => stateContext.setHighlighted(key)}
+              onMouseLeave={() => stateContext.setHighlighted("")}
+            >
               {renderHandoutData(
                 props.handoutDefinitionKey,
                 key,

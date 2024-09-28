@@ -62,6 +62,12 @@ type iDataInputFontWeightPicker = {
   type: "font_weight_picker";
   value: string;
 };
+type iDataInputSelect = {
+  name: string;
+  type: "select";
+  value: string;
+  options: any[];
+};
 
 export type tHandoutData =
   | iDataInputRange
@@ -73,16 +79,12 @@ export type tHandoutData =
   | iDataInputImageFilter
   | iDataInputTextArea
   | iDataInputTextAlign
-  | iDataInputFontWeightPicker;
-
-// make an interface that matches the NEWSPAPER below
-// its an object with a name and a data
-// and inside the data, each key is EITHER
-// an input type, like a input or a range or an ink color picker
-// OR its a nested object that has those input types
+  | iDataInputFontWeightPicker
+  | iDataInputSelect;
 
 export type iHandoutDefinition = {
   name?: string;
+  caption?: string;
   data: {
     [key: string]:
       | tHandoutData
@@ -96,11 +98,6 @@ export const isHandoutData = (obj: any): obj is tHandoutData => {
   return obj.type !== undefined;
 };
 
-const _input: iDataInputPlainText = {
-  name: "Title",
-  value: "THE LOREM IPSUM",
-  type: "input",
-};
 const _fontSizeRange: iDataInputRange = {
   name: "Font Size",
   type: "range",
@@ -166,12 +163,14 @@ export const POSITIONING_DATA = {
 
 export const NEWSPAPER = {
   name: "Newspaper (Front Page)",
+  caption:
+    "The front page of a newspaper. Configurable title, banners, headline, call-out and copy. Make the copy blurry for a more dramatic effect.",
   data: {
     positioning: {
       ...POSITIONING_DATA,
       y_offset: {
         ..._yOffset,
-        value: -10,
+        value: 0,
       },
     },
 
@@ -367,9 +366,9 @@ export const NEWSPAPER = {
     },
   },
 } as const;
-
 export const CHARACTER_CARD = {
   name: "Character Card",
+  caption: "An easy-to-use character card. A picture with 3 lines of text.",
   data: {
     positioning: {
       ...POSITIONING_DATA,
@@ -387,7 +386,10 @@ export const CHARACTER_CARD = {
       step: 1,
       suffix: "px",
     },
-    paper_texture: _paperTexture,
+    paper_texture: {
+      ..._paperTexture,
+      value: "beige-3",
+    },
     is_paper_shadow: _isPaperShadow,
     image_url: {
       name: "Image URL",
@@ -434,6 +436,99 @@ export const CHARACTER_CARD = {
       name: "Font Size (Relative)",
       type: "range",
       min: 8,
+      value: 24,
+      max: 100,
+      step: 1,
+      suffix: "px",
+    },
+    font_weight: {
+      name: "Font Weight",
+      type: "font_weight_picker",
+      value: "font-normal",
+    },
+    text_align: {
+      name: "Text Align",
+      type: "text_align",
+      value: "text-left",
+    },
+  },
+} as const;
+
+export const PLAIN_LETTER = {
+  name: "Plain Letter",
+  caption:
+    "A simple plain sheet of paper. Completely configurable via markdown.",
+  data: {
+    positioning: {
+      ...POSITIONING_DATA,
+      zoom: {
+        ..._zoom,
+        value: 1,
+      },
+    },
+
+    page_width: {
+      name: "Page Width",
+      type: "range",
+      value: 850,
+      min: 100,
+      max: 1500,
+      step: 1,
+      suffix: "px",
+    },
+    is_paper_shadow: _isPaperShadow,
+    paper_texture: _paperTexture,
+
+    ink_color: {
+      name: "Ink Colour",
+      type: "ink_color_picker",
+      value: "ink-black",
+    },
+
+    padding: {
+      name: "Padding",
+      type: "range",
+      min: 0,
+      max: 100,
+      value: 20,
+      step: 1,
+      suffix: "px",
+    },
+    main_copy: {
+      name: "Main Copy",
+      type: "textarea",
+      value: `# Lorem ipsum dolor sit amet
+
+consectetur adipiscing elit. Duis leo purus, porta eget imperdiet id, commodo quis ligula. Vivamus convallis tortor vel odio suscipit, vel faucibus erat bibendum. 
+
+![](https://i.imgur.com/WZLUP8D.jpeg)
+
+### Duis at magna porta, vestibulum lorem et
+
+lacinia ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer convallis id magna et porta. Curabitur at arcu in nibh volutpat consectetur. Phasellus sit amet porta tellus, id sagittis est. Donec et est id felis ullamcorper dictum quis vel mi. Aenean eget lacinia quam, eget placerat neque. Pellentesque 
+
+sed tincidunt leo, a suscipit enim. Morbi id mi ac felis molestie vulputate ut sit amet tortor. Curabitur non hendrerit dolor. Ut quis rutrum est, nec pulvinar neque. Fusce at posuere libero.
+
+# Cras fermentum consequat 
+
+faucibus. Phasellus hendrerit risus ut feugiat consectetur. Maecenas urna leo, congue sed sagittis ut, pulvinar vel erat. Pellentesque risus lectus, fringilla vel commodo ut, feugiat a est. Cras quam elit, placerat vel ante non, gravida sollicitudin libero. Suspendisse imperdiet porttitor ante nec finibus. Nullam non tempor sapien. Etiam vulputate at felis ut congue. Donec quis porttitor neque, at hendrerit mi. Etiam egestas leo hendrerit leo ullamcorper, id vehicula mauris tincidunt. 
+
+Nunc pretium non enim sed accumsan. Nullam et velit a sapien feugiat efficitur. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ultricies risus auctor, mollis arcu vitae, aliquet augue.
+
+Sed et erat at lorem pharetra dignissim. Vivamus in diam feugiat, feugiat urna ac, scelerisque nulla. Mauris lobortis ligula libero, et pretium erat pretium vel. Integer fermentum laoreet convallis. Fusce et libero vel mauris aliquet molestie. Integer non velit a felis mattis faucibus. Nunc eu viverra eros. Fusce sed rutrum lorem. Donec ac semper massa, ac aliquet lacus. Maecenas scelerisque ligula eget turpis fermentum ultrices. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat volutpat risus, fermentum sollicitudin risus posuere sed. Morbi iaculis 
+
+## dapibus quam, quis egestas urna sodales sit amet.`,
+      isMarkdown: true,
+    },
+    font: {
+      name: "Font",
+      type: "font_picker",
+      value: "font-serif",
+    },
+    font_size: {
+      name: "Font Size (Relative)",
+      type: "range",
+      min: 8,
       value: 12,
       max: 100,
       step: 1,
@@ -455,9 +550,14 @@ export const CHARACTER_CARD = {
 export enum eHandoutDefinitions {
   NEWSPAPER = "NEWSPAPER",
   CHARACTER_CARD = "CHARACTER_CARD",
+  PLAIN_LETTER = "PLAIN_LETTER",
 }
 
-export const ALL_HANDOUT_DEFINITIONS = {
+export const ALL_HANDOUT_DEFINITIONS: {
+  [key in eHandoutDefinitions]: iHandoutDefinition;
+} = {
   NEWSPAPER,
   CHARACTER_CARD,
+  // @ts-ignore
+  PLAIN_LETTER,
 };

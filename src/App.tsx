@@ -4,7 +4,7 @@ import { Newspaper } from "./props/Newspaper/renderer";
 import { NewspaperAlt1 } from "./props/NewspaperAlt1/renderer";
 import { WantedPoster } from "./props/WantedPoster/renderer";
 import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
-import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
+import { PlainLetter } from "./props/HandwrittenLetter/renderer";
 import { Ticket } from "./props/Ticket/renderer";
 import { BookCover } from "./props/BookCover/renderer";
 import { NPCCard } from "./props/NPCCard/renderer";
@@ -30,6 +30,7 @@ import {
   eHandoutDefinitions,
   iHandoutDefinition,
   NEWSPAPER,
+  PLAIN_LETTER,
 } from "./config2";
 
 const localStorageKey = "tombola_digital_ttrpg_handouts";
@@ -37,7 +38,7 @@ const localStorageKey = "tombola_digital_ttrpg_handouts";
 function App() {
   // the type of this useState should be a key of ALL_HANDOUT_DEFINITIONS
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.PLAIN_LETTER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -154,6 +155,14 @@ function App() {
 
   const [highlighted, setHighlighted] = useState("");
 
+  const rotationValue: number | undefined =
+    // @ts-ignore
+    currentHandoutData.positioning.rotation_degrees.value;
+
+  const zoomValue: number | undefined =
+    // @ts-ignore
+    currentHandoutData.positioning.zoom.value;
+
   return (
     <StateContext.Provider
       value={{
@@ -218,6 +227,8 @@ function App() {
                 </optgroup>
               </select>
             </label>
+
+            <span className="text-sm">{currentHandoutConfig.caption}</span>
           </div>
 
           <div className="bg-gray-400 p-4 flex flex-col space-y-2">
@@ -255,78 +266,6 @@ function App() {
               config={currentHandoutConfig}
               dataset={currentHandoutData}
             />
-            {/* {currentHandoutDefinitionKey === "NEWSPAPER" && (
-              <NewspaperForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-                setHighlighted={setHighlighted}
-              />
-            )}
-
-            {currentHandoutDefinitionKey === "NEWSPAPER_ALT" && (
-              <NewspaperFormAlt1
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-                setHighlighted={setHighlighted}
-              />
-            )}
-
-            {currentHandoutDefinitionKey === "NEWSPAPER_CLIPPING" && (
-              <NewspaperClippingForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-              />
-            )}
-
-            {currentHandoutDefinitionKey === "WANTED_POSTER" && (
-              <WantedPosterForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-              />
-            )}
-
-            {currentHandoutDefinitionKey === "HANDWRITTEN_LETTER" && (
-              <HandwrittenLetterForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-              />
-            )}
-
-            {currentHandoutDefinitionKey === "TICKET" && (
-              <TicketForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["TICKET"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-              />
-            )}
-
-            {currentHandoutDefinitionKey === "BOOK_COVER" && (
-              <BookCoverForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-              />
-            )}
-            {currentHandoutDefinitionKey === "NPC_CARD" && (
-              <NPCCardForm
-                dataset={{
-                  ...(currentHandoutData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
-                }}
-                handleDataChange={handleDataChange}
-              />
-            )} */}
 
             <span className="block mt-6">
               Made by{" "}
@@ -350,8 +289,39 @@ function App() {
             backgroundColor: "#2f3640",
             height: "100vh",
           }}
-          className="render-area relative w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around items-center"
+          className="render-area-wrapper relative w-full h-screen z-10 overflow-clip"
         >
+          <div
+            className="render-area-content w-full h-screen flex flex-col justify-around items-center"
+            style={{
+              transformOrigin: "center",
+              transform: `rotate(${rotationValue || 0}deg) scale(${
+                zoomValue || 1
+              })`,
+            }}
+          >
+            {currentHandoutDefinitionKey === "NEWSPAPER" && (
+              <Newspaper
+                handout={
+                  currentHandoutData as unknown as (typeof NEWSPAPER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey === "CHARACTER_CARD" && (
+              <NPCCard
+                handout={
+                  currentHandoutData as unknown as (typeof CHARACTER_CARD)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey === "PLAIN_LETTER" && (
+              <PlainLetter
+                handout={
+                  currentHandoutData as unknown as (typeof PLAIN_LETTER)["data"]
+                }
+              />
+            )}
+          </div>
           {/* help text */}
 
           {/* <button className="absolute top-0 left-0 stroke-black bg-white rounded-full">
@@ -369,59 +339,6 @@ function App() {
             ></path>
           </svg>
         </button> */}
-
-          {currentHandoutDefinitionKey === "NEWSPAPER" && (
-            <Newspaper
-              handout={currentHandoutData as (typeof NEWSPAPER)["data"]}
-            />
-          )}
-          {currentHandoutDefinitionKey === "CHARACTER_CARD" && (
-            <NPCCard
-              handout={currentHandoutData as (typeof CHARACTER_CARD)["data"]}
-            />
-          )}
-
-          {/* {currentHandoutDefinitionKey === "NEWSPAPER" && (
-            <Newspaper
-              {...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
-            />
-          )}
-          {currentHandoutDefinitionKey === "NEWSPAPER_ALT" && (
-            <NewspaperAlt1
-              {...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
-            />
-          )}
-          {currentHandoutDefinitionKey === "NEWSPAPER_CLIPPING" && (
-            <NewspaperClipping
-              {...(currentHandoutData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
-            />
-          )}
-          {currentHandoutDefinitionKey === "WANTED_POSTER" && (
-            <WantedPoster
-              {...(currentHandoutData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
-            />
-          )}
-          {currentHandoutDefinitionKey === "HANDWRITTEN_LETTER" && (
-            <HandwrittenLetter
-              {...(currentHandoutData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
-            />
-          )}
-          {currentHandoutDefinitionKey === "TICKET" && (
-            <Ticket
-              {...(currentHandoutData as (typeof PAPER_TYPES)["TICKET"]["data"])}
-            />
-          )}
-
-          {currentHandoutDefinitionKey === "BOOK_COVER" && (
-            <BookCover
-              {...(currentHandoutData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
-            />
-          )}
-          {currentHandoutDefinitionKey === "NPC_CARD" && (
-            <NPCCard
-              {...(currentHandoutData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
-            />
-          )} */}
         </div>
       </div>
     </StateContext.Provider>

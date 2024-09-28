@@ -7,13 +7,11 @@ export const NPCCard = ({
 }: {
   handout: (typeof CHARACTER_CARD)["data"];
 }) => {
-  console.log("handout", handout);
   return (
     <>
       {/* the whole thing */}
       <div
         style={{
-          transform: `rotate(${handout.positioning.rotation_degrees.value}deg) scale(${handout.positioning.zoom.value}) translateZ(0)`,
           width: `${handout.page_width.value}px`,
           boxShadow: `${
             handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
@@ -27,6 +25,7 @@ export const NPCCard = ({
           className=""
           src={handout.image_url.value}
           style={{
+            mixBlendMode: "multiply",
             margin: "10%",
             marginBottom: "6%",
             width: "calc(100% - 20%)",
@@ -41,6 +40,7 @@ export const NPCCard = ({
         >
           {(handout.text_line_one.value as string) !== "" && (
             <span
+              id="text_line_one"
               className={`font-black`}
               style={{
                 display: "block",
@@ -54,6 +54,7 @@ export const NPCCard = ({
           )}
           {(handout.text_line_two.value as string) !== "" && (
             <span
+              id="text_line_two"
               style={{
                 display: "block",
                 marginLeft: "10%",
@@ -66,6 +67,7 @@ export const NPCCard = ({
           )}
           {(handout.text_line_three.value as string) !== "" && (
             <span
+              id="text_line_three"
               className={`italic text-gray-700 `}
               style={{
                 display: "block",

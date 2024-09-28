@@ -3,29 +3,37 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import { PAPER_TYPES } from "../../config";
+import { PLAIN_LETTER } from "../../config2";
 
-export const HandwrittenLetter = (
-  props: (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]
-) => {
+export const PlainLetter = ({
+  handout,
+}: {
+  handout: (typeof PLAIN_LETTER)["data"];
+}) => {
   return (
     <div
       style={{
-        transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
-        width: `${props.page_width_percentage}%`,
+        width: `${handout.page_width.value}px`,
         boxShadow: `${
-          props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+          handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
         }`,
-        marginTop: `${props.y_offset}%`,
-        marginLeft: `${props.x_offset}%`,
+        marginTop: `${handout.positioning.y_offset.value}%`,
+        marginLeft: `${handout.positioning.x_offset.value}%`,
       }}
-      className={`paper paper-${props.paper_texture}`}
+      className={`paper paper-${handout.paper_texture.value}`}
     >
-      <div className={`flex h-full items-center ${props.padding}`}>
+      <div
+        className={`flex h-full items-center`}
+        style={{
+          fontSize: `${handout.font_size.value}px`,
+          padding: `${handout.padding.value}px`,
+        }}
+      >
         <Markdown
           remarkPlugins={[remarkGfm, remarkBreaks]}
-          className={`block ${props.text_alignment} ${props.ink_color} ${props.font} ${props.font_size} ${props.font_weight} copy-markdown list-inside list-disc`}
+          className={`block ${handout.text_align.value} ${handout.ink_color.value} ${handout.font.value} ${handout.font_weight.value} copy-markdown list-inside list-disc`}
         >
-          {props.main_copy}
+          {handout.main_copy.value}
         </Markdown>
       </div>
     </div>

@@ -16,10 +16,10 @@ export const Newspaper = ({
     <div
       className="relative"
       style={{
-        transform: `rotate(${handout.positioning.rotation_degrees.value}deg) scale(${handout.positioning.zoom.value})`,
         width: `${handout.page_width_percentage.value}%`,
-        marginTop: `${handout.positioning.y_offset.value}%`,
+        marginTop: `-58px`,
         marginLeft: `${handout.positioning.x_offset.value}%`,
+        transformOrigin: "center",
       }}
     >
       {/* the "fake page" behind it */}
@@ -38,7 +38,7 @@ export const Newspaper = ({
           // marginTop: `${handout.positioning.y_offset.value}%`,
           // marginLeft: `${handout.positioning.x_offset.value}%`,
         }}
-        className={`paper relative z-10 w-full h-[calc(100%-57px)] paper-behind paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10`}
+        className={`paper relative z-10 w-full h-[calc(100%-58px)] paper-behind paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10`}
       ></div>
 
       {/* the front page */}
@@ -153,7 +153,7 @@ export const Newspaper = ({
               : "none"
           }`,
         }}
-        className={`paper paper-${handout.paper_texture.value} absolute bottom-[57px] -right-[25px] w-20 h-20 rounded-br-[2rem]`}
+        className={`paper paper-${handout.paper_texture.value} absolute bottom-[58px] -right-[25px] w-20 h-20 rounded-br-[2rem]`}
       ></div>
     </div>
   );

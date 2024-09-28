@@ -15,6 +15,7 @@
     "react-dom": "17.0.0",
     "react-helmet": "6.1.0",
     "react-markdown": "7.1.0",
+    "remark-align": "^1.2.15",
     "remark-breaks": "3.0.2",
     "remark-gfm": "3.0.1"
   },
