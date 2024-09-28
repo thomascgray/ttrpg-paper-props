@@ -1,8 +1,7 @@
 import React from "react";
-import { PAPER_TYPES } from "../../config";
-import { CHARACTER_CARD } from "../../config2";
+import { CHARACTER_CARD } from "../config2";
 
-export const NPCCard = ({
+export const CharacterCard = ({
   handout,
 }: {
   handout: (typeof CHARACTER_CARD)["data"];

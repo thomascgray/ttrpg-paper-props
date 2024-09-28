@@ -68,6 +68,16 @@ type iDataInputSelect = {
   value: string;
   options: any[];
 };
+type iDataInputRawImageUrl = {
+  name: string;
+  type: "raw_image_url";
+  value: string;
+};
+type iDataInputTextFilter = {
+  name: string;
+  type: "text_filter";
+  value: string;
+};
 
 export type tHandoutData =
   | iDataInputRange
@@ -80,7 +90,9 @@ export type tHandoutData =
   | iDataInputTextArea
   | iDataInputTextAlign
   | iDataInputFontWeightPicker
-  | iDataInputSelect;
+  | iDataInputSelect
+  | iDataInputRawImageUrl
+  | iDataInputTextFilter;
 
 export type iHandoutDefinition = {
   name?: string;
@@ -547,17 +559,79 @@ Sed et erat at lorem pharetra dignissim. Vivamus in diam feugiat, feugiat urna a
   },
 } as const;
 
+export const BOOK_COVER = {
+  name: "Book Cover",
+  caption: "A book cover",
+  data: {
+    book_cover_template: {
+      name: "Book Cover Template",
+      type: "raw_image_url",
+      value: "/images/ragged-journal-cover.png",
+    },
+    positioning: {
+      ...POSITIONING_DATA,
+      zoom: {
+        ..._zoom,
+        value: 1,
+      },
+    },
+    ink_color: {
+      name: "Ink Colour",
+      type: "ink_color_picker",
+      value: "ink-white",
+    },
+    font: {
+      name: "Font",
+      type: "font_picker",
+      value: "font-serif",
+    },
+    font_size: {
+      name: "Font Size (Relative)",
+      type: "range",
+      min: 8,
+      value: 12,
+      max: 100,
+      step: 1,
+      suffix: "px",
+    },
+    font_weight: {
+      name: "Font Weight",
+      type: "font_weight_picker",
+      value: "font-normal",
+    },
+    text_align: {
+      name: "Text Align",
+      type: "text_align",
+      value: "text-left",
+    },
+    text_effect: {
+      name: "Text Effect",
+      type: "text_filter",
+      value: "text-filter-none",
+    },
+    main_copy: {
+      name: "Main Copy",
+      type: "textarea",
+      isMarkdown: true,
+      value: `# MYSTICAL ARTIFACTS
+
+## A STUDY IN THE STRANGE AND WEIRD
+
+### A. COBALT ET.AL`,
+    },
+  },
+} as const;
+
 export enum eHandoutDefinitions {
   NEWSPAPER = "NEWSPAPER",
   CHARACTER_CARD = "CHARACTER_CARD",
   PLAIN_LETTER = "PLAIN_LETTER",
+  BOOK_COVER = "BOOK_COVER",
 }
 
-export const ALL_HANDOUT_DEFINITIONS: {
-  [key in eHandoutDefinitions]: iHandoutDefinition;
-} = {
+export const ALL_HANDOUT_DEFINITIONS = {
   NEWSPAPER,
   CHARACTER_CARD,
-  // @ts-ignore
   PLAIN_LETTER,
+  BOOK_COVER,
 };

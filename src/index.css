@@ -296,6 +296,18 @@ body {
   text-shadow: -1px -1px 1px #d4d4d4, 1px 1px 1px #2a2a2a !important;
 }
 
+.text-filter-color-multiply * {
+  mix-blend-mode: multiply !important;
+}
+
+.text-filter-color-burn * {
+  mix-blend-mode: color-burn !important;
+}
+
+.text-filter-overlay * {
+  mix-blend-mode: overlay !important;
+}
+
 /* render area background colour is 2f3640 */
 .sawtooth-border-y {
   /* background-color: yellowgreen; */

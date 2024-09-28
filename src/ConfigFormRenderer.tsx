@@ -17,6 +17,7 @@ import { TextArea } from "./components/TextArea";
 import { TextAlignmentSelector } from "./components/TextAlignmentSelector";
 import { FontWeightSelector } from "./components/FontWeightSelector";
 import { Select } from "./components/Select";
+import { TextFilterSelector } from "./components/TextFilterSelector";
 
 interface iConfigFormRendererProps {
   handoutDefinitionKey: eHandoutDefinitions;
@@ -157,6 +158,19 @@ const renderHandoutData = (
           options={config.options}
         />
       );
+
+    case "text_filter":
+      return (
+        <TextFilterSelector
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+    case "raw_image_url":
+      return null;
 
     default:
       return <div>unknown type</div>;

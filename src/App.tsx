@@ -1,24 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 
-import { Newspaper } from "./props/Newspaper/renderer";
-import { NewspaperAlt1 } from "./props/NewspaperAlt1/renderer";
-import { WantedPoster } from "./props/WantedPoster/renderer";
-import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
-import { PlainLetter } from "./props/HandwrittenLetter/renderer";
-import { Ticket } from "./props/Ticket/renderer";
-import { BookCover } from "./props/BookCover/renderer";
-import { NPCCard } from "./props/NPCCard/renderer";
-
-import { NewspaperFormAlt1 } from "./props/NewspaperAlt1/form";
-import { WantedPosterForm } from "./props/WantedPoster/form";
-import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
-import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
-import { TicketForm } from "./props/Ticket/form";
-import { BookCoverForm } from "./props/BookCover/form";
-import { NPCCardForm } from "./props/NPCCard/form";
 import { ConfigFormRenderer } from "./ConfigFormRenderer";
 import * as _ from "lodash";
-// import { PAPER_TYPES } from "./config";
 import { RotateZoomPositionControls } from "./components/RotateZoomPositionControls";
 
 import { Helmet } from "react-helmet";
@@ -26,19 +9,24 @@ import { StateContext } from "./context";
 
 import {
   ALL_HANDOUT_DEFINITIONS,
+  BOOK_COVER,
   CHARACTER_CARD,
   eHandoutDefinitions,
   iHandoutDefinition,
   NEWSPAPER,
   PLAIN_LETTER,
 } from "./config2";
+import { Newspaper } from "./renderer/Newspaper";
+import { CharacterCard } from "./renderer/CharacterCard";
+import { PlainLetter } from "./renderer/PlainLetter";
+import { BookCover } from "./renderer/BookCover";
 
-const localStorageKey = "tombola_digital_ttrpg_handouts";
+const localStorageKey = "tomg_rpg_handout_builder";
 
 function App() {
   // the type of this useState should be a key of ALL_HANDOUT_DEFINITIONS
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.PLAIN_LETTER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.BOOK_COVER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -88,10 +76,10 @@ function App() {
     });
 
     setCurrentHandoutData(newHandoutData);
-    // window.localStorage.setItem(
-    //   `${localStorageKey}_${currentHandoutDefinitionKey}`,
-    //   JSON.stringify(newHandoutData)
-    // );
+    window.localStorage.setItem(
+      `${localStorageKey}_${currentHandoutDefinitionKey}`,
+      JSON.stringify(newHandoutData)
+    );
   };
 
   const refreshData = (key: eHandoutDefinitions) => {
@@ -300,24 +288,33 @@ function App() {
               })`,
             }}
           >
-            {currentHandoutDefinitionKey === "NEWSPAPER" && (
+            {currentHandoutDefinitionKey === eHandoutDefinitions.NEWSPAPER && (
               <Newspaper
                 handout={
                   currentHandoutData as unknown as (typeof NEWSPAPER)["data"]
                 }
               />
             )}
-            {currentHandoutDefinitionKey === "CHARACTER_CARD" && (
-              <NPCCard
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.CHARACTER_CARD && (
+              <CharacterCard
                 handout={
                   currentHandoutData as unknown as (typeof CHARACTER_CARD)["data"]
                 }
               />
             )}
-            {currentHandoutDefinitionKey === "PLAIN_LETTER" && (
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.PLAIN_LETTER && (
               <PlainLetter
                 handout={
                   currentHandoutData as unknown as (typeof PLAIN_LETTER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey === eHandoutDefinitions.BOOK_COVER && (
+              <BookCover
+                handout={
+                  currentHandoutData as unknown as (typeof BOOK_COVER)["data"]
                 }
               />
             )}

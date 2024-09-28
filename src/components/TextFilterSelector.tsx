@@ -20,6 +20,9 @@ export const TextFilterSelector = (props: iTextFilterSelector) => {
         >
           <option value="text-filter-none">None</option>
           <option value="text-filter-embossed">Embossed</option>
+          <option value="text-filter-color-multiply">color-multiply</option>
+          <option value="text-filter-color-burn">color-burn</option>
+          <option value="text-filter-overlay">overlay</option>
         </select>
       </div>
     </label>

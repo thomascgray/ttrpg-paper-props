@@ -3,9 +3,7 @@ import React from "react";
 // import { Textfit } from "react-textfit";
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { PAPER_TYPES } from "../../config";
-import { Headline } from "../../components/Headline";
-import { NEWSPAPER } from "../../config2";
+import { NEWSPAPER } from "../config2";
 
 export const Newspaper = ({
   handout,
@@ -17,7 +15,7 @@ export const Newspaper = ({
       className="relative"
       style={{
         width: `${handout.page_width_percentage.value}%`,
-        marginTop: `-58px`,
+        marginTop: `calc(-100px + ${handout.positioning.y_offset.value}%)`,
         marginLeft: `${handout.positioning.x_offset.value}%`,
         transformOrigin: "center",
       }}

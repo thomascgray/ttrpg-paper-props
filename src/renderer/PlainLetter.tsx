@@ -2,8 +2,7 @@ import React from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
-import { PAPER_TYPES } from "../../config";
-import { PLAIN_LETTER } from "../../config2";
+import { PLAIN_LETTER } from "../config2";
 
 export const PlainLetter = ({
   handout,
