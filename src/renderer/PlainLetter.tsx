@@ -3,15 +3,20 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import { PLAIN_LETTER } from "../config2";
+import { hexToRgba } from "../utils";
 
 export const PlainLetter = ({
   handout,
 }: {
   handout: (typeof PLAIN_LETTER)["data"];
 }) => {
+  const paperTint = hexToRgba(handout.paper_tint.value, 0.5);
+
   return (
     <div
       style={{
+        backgroundColor: paperTint,
+        backgroundBlendMode: "multiply",
         width: `${handout.page_width.value}px`,
         boxShadow: `${
           handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
@@ -22,6 +27,7 @@ export const PlainLetter = ({
       className={`paper paper-${handout.paper_texture.value}`}
     >
       <div
+        id="main_copy"
         className={`flex h-full items-center`}
         style={{
           fontSize: `${handout.font_size.value}px`,

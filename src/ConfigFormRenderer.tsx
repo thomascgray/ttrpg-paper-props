@@ -17,7 +17,8 @@ import { TextArea } from "./components/TextArea";
 import { TextAlignmentSelector } from "./components/TextAlignmentSelector";
 import { FontWeightSelector } from "./components/FontWeightSelector";
 import { Select } from "./components/Select";
-import { TextFilterSelector } from "./components/TextFilterSelector";
+import { BlendModeSelector } from "./components/TextFilterSelector";
+import { ColourPicker } from "./components/ColourPicker";
 
 interface iConfigFormRendererProps {
   handoutDefinitionKey: eHandoutDefinitions;
@@ -159,9 +160,20 @@ const renderHandoutData = (
         />
       );
 
-    case "text_filter":
+    case "blend_mode":
       return (
-        <TextFilterSelector
+        <BlendModeSelector
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
+
+    case "color":
+      return (
+        <ColourPicker
           label={config.name}
           value={val}
           onUpdate={(newValue) => {

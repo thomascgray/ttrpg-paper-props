@@ -84,13 +84,17 @@ body {
   margin-bottom: 1em !important;
 }
 
-.blurry {
+/* we DONT do images because all img tags inside markdown get rendered inside p tags, so just the P gets blurred and the image gets blurred "for free" */
+.blurry :not(img) {
   color: transparent;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   -webkit-filter: blur(3px); /* Safari 6.0 - 9.0 */
   filter: blur(3px);
 }
 
+.paper {
+  background-size: contain;
+}
 .paper h1,
 .paper h2,
 .paper h3,
@@ -140,20 +144,16 @@ body {
   background-image: url("/textures/paper-cream.jpg");
 }
 
-.paper-red {
-  background-image: url("/textures/paper-red.jpg");
-}
-
-.paper-blue {
-  background-image: url("/textures/paper-blue.jpg");
-}
-
 .paper-white {
   background-image: url("/textures/paper-white.jpg");
 }
 
 .paper-cream-2 {
   background-image: url("/textures/paper-cream-2.jpg");
+}
+
+.paper-stained {
+  background-image: url("/textures/paper-yellow-stain.jpg");
 }
 
 .font-serif {
@@ -261,6 +261,9 @@ body {
 .font-macondo-swash-caps {
   font-family: "Macondo Swash Caps", cursive;
 }
+.font-poppins {
+  font-family: "Poppins", cursive;
+}
 
 
 .img-filter-none img {
@@ -288,25 +291,24 @@ body {
   filter: grayscale(1) contrast(7);
 }
 
-.text-filter-none * {
-  text-shadow: none !important;
-}
-
-.text-filter-embossed * {
-  text-shadow: -1px -1px 1px #d4d4d4, 1px 1px 1px #2a2a2a !important;
-}
-
-.text-filter-color-multiply * {
-  mix-blend-mode: multiply !important;
-}
-
-.text-filter-color-burn * {
-  mix-blend-mode: color-burn !important;
-}
-
-.text-filter-overlay * {
-  mix-blend-mode: overlay !important;
-}
+.blend-mode-normal { mix-blend-mode: normal; }
+.blend-mode-multiply { mix-blend-mode: multiply; }
+.blend-mode-screen { mix-blend-mode: screen; }
+.blend-mode-overlay { mix-blend-mode: overlay; }
+.blend-mode-darken { mix-blend-mode: darken; }
+.blend-mode-lighten { mix-blend-mode: lighten; }
+.blend-mode-color-dodge { mix-blend-mode: color-dodge; }
+.blend-mode-color-burn { mix-blend-mode: color-burn; }
+.blend-mode-hard-light { mix-blend-mode: hard-light; }
+.blend-mode-soft-light { mix-blend-mode: soft-light; }
+.blend-mode-difference { mix-blend-mode: difference; }
+.blend-mode-exclusion { mix-blend-mode: exclusion; }
+.blend-mode-hue { mix-blend-mode: hue; }
+.blend-mode-saturation { mix-blend-mode: saturation; }
+.blend-mode-color { mix-blend-mode: color; }
+.blend-mode-luminosity { mix-blend-mode: luminosity; }
+.blend-mode-plus-darker { mix-blend-mode: plus-darker; }
+.blend-mode-plus-lighter { mix-blend-mode: plus-lighter; }
 
 /* render area background colour is 2f3640 */
 .sawtooth-border-y {

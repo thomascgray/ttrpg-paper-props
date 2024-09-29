@@ -73,9 +73,14 @@ type iDataInputRawImageUrl = {
   type: "raw_image_url";
   value: string;
 };
-type iDataInputTextFilter = {
+type iDataInputBlendMode = {
   name: string;
-  type: "text_filter";
+  type: "blend_mode";
+  value: string;
+};
+type iDataInputColor = {
+  name: string;
+  type: "color";
   value: string;
 };
 
@@ -92,7 +97,8 @@ export type tHandoutData =
   | iDataInputFontWeightPicker
   | iDataInputSelect
   | iDataInputRawImageUrl
-  | iDataInputTextFilter;
+  | iDataInputBlendMode
+  | iDataInputColor;
 
 export type iHandoutDefinition = {
   name?: string;
@@ -196,12 +202,18 @@ export const NEWSPAPER = {
       suffix: "%",
     },
     paper_texture: _paperTexture,
-    is_paper_shadow: _isPaperShadow,
+    paper_tint: {
+      name: "Paper Colour Tint",
+      type: "color",
+      value: "#FFFFFF",
+    },
+
     ink_color: {
       name: "Ink Colour",
       type: "ink_color_picker",
       value: "ink-black",
     },
+    is_paper_shadow: _isPaperShadow,
     title: {
       title: {
         name: "Title",
@@ -419,11 +431,6 @@ export const CHARACTER_CARD = {
       type: "image_filter",
       value: "none",
     },
-    image_border: {
-      name: "Image Border",
-      type: "input",
-      value: "none",
-    },
     text_line_one: {
       name: "Line 1",
       type: "input",
@@ -465,7 +472,6 @@ export const CHARACTER_CARD = {
     },
   },
 } as const;
-
 export const PLAIN_LETTER = {
   name: "Plain Letter",
   caption:
@@ -491,6 +497,12 @@ export const PLAIN_LETTER = {
     is_paper_shadow: _isPaperShadow,
     paper_texture: _paperTexture,
 
+    paper_tint: {
+      name: "Paper Colour Tint",
+      type: "color",
+      value: "#FFFFFF",
+    },
+
     ink_color: {
       name: "Ink Colour",
       type: "ink_color_picker",
@@ -502,7 +514,7 @@ export const PLAIN_LETTER = {
       type: "range",
       min: 0,
       max: 100,
-      value: 20,
+      value: 50,
       step: 1,
       suffix: "px",
     },
@@ -558,15 +570,20 @@ Sed et erat at lorem pharetra dignissim. Vivamus in diam feugiat, feugiat urna a
     },
   },
 } as const;
-
 export const BOOK_COVER = {
   name: "Book Cover",
-  caption: "A book cover",
+  caption: "A book cover, with markdown-configurable cover text",
   data: {
     book_cover_template: {
       name: "Book Cover Template",
-      type: "raw_image_url",
-      value: "/images/ragged-journal-cover.png",
+      type: "select",
+      value: "/images/book-cover-1.avif",
+      options: [
+        { label: "Book Cover 1", value: "/images/book-cover-1.avif" },
+        { label: "Book Cover 2", value: "/images/book-cover-2.avif" },
+        { label: "Book Cover 3", value: "/images/book-cover-3.png" },
+        { label: "Book Cover 4", value: "/images/book-cover-4.png" },
+      ],
     },
     positioning: {
       ...POSITIONING_DATA,
@@ -589,7 +606,7 @@ export const BOOK_COVER = {
       name: "Font Size (Relative)",
       type: "range",
       min: 8,
-      value: 12,
+      value: 40,
       max: 100,
       step: 1,
       suffix: "px",
@@ -599,15 +616,24 @@ export const BOOK_COVER = {
       type: "font_weight_picker",
       value: "font-normal",
     },
+    text_left_margin: {
+      name: "Text Left Margin",
+      type: "range",
+      value: 13,
+      min: -100,
+      max: 100,
+      step: 1,
+      suffix: "px",
+    },
     text_align: {
       name: "Text Align",
       type: "text_align",
-      value: "text-left",
+      value: "text-center",
     },
     text_effect: {
       name: "Text Effect",
-      type: "text_filter",
-      value: "text-filter-none",
+      type: "blend_mode",
+      value: "blend-mode-normal",
     },
     main_copy: {
       name: "Main Copy",

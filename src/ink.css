@@ -45,6 +45,9 @@
 .ink-true-white * {
   border-color: #eee !important;
   color: #eee !important;
+}
+
+.ink-true-white :not(img) {
   mix-blend-mode: normal !important;
 }
 

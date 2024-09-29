@@ -15,32 +15,25 @@ export const BookCover = ({
       }}
       className="relative"
     >
-      <div
-        className={`image-wrapper w-[80vw] h-[80vh] m-auto flex justify-center`}
-      >
+      <div className={`image-wrapper`}>
         <img
-          style={
-            {
-              // transform: `translateX(${handout.extra_left_margin}em)`,
-            }
-          }
           src={handout.book_cover_template.value}
           alt="The book cover"
+          width={700}
         />
       </div>
 
       <div
+        id="main_copy"
         style={{
-          top: "9%",
-          left: "27%",
-          width: "47%",
-          height: "81%",
           fontSize: `${handout.font_size.value}px`,
+          marginLeft: `${handout.text_left_margin.value}px`,
+          width: "80%",
         }}
-        className={`absolute p-12 ${handout.text_effect.value} ${handout.font.value}`}
+        className={`absolute ${handout.text_effect.value} ${handout.font.value} ${handout.font_weight.value} top-[2em] left-[2em]`}
       >
         <Markdown
-          className={`block copy-markdown font-extrabold ${handout.ink_color.value} ${handout.text_align.value}`}
+          className={`block copy-markdown ${handout.ink_color.value} ${handout.text_align.value}`}
         >
           {handout.main_copy.value}
         </Markdown>

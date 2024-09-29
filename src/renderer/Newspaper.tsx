@@ -4,12 +4,15 @@ import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
 import { NEWSPAPER } from "../config2";
+import { hexToRgba } from "../utils";
 
 export const Newspaper = ({
   handout,
 }: {
   handout: (typeof NEWSPAPER)["data"];
 }) => {
+  const paperTint = hexToRgba(handout.paper_tint.value, 0.5);
+
   return (
     <div
       className="relative"
@@ -23,18 +26,16 @@ export const Newspaper = ({
       {/* the "fake page" behind it */}
       <div
         style={{
+          backgroundColor: paperTint,
+          backgroundBlendMode: "multiply",
           position: "absolute",
           top: "-25px",
           left: "25px",
-          // transform: `rotate(${handout.positioning.rotation_degrees.value}deg) scale(${handout.positioning.zoom.value})`,
-          // width: `${handout.page_width_percentage.value}%`,
           boxShadow: `${
             handout.is_paper_shadow.value
               ? "inset -10px 10px 25px #000000"
               : "none"
           }`,
-          // marginTop: `${handout.positioning.y_offset.value}%`,
-          // marginLeft: `${handout.positioning.x_offset.value}%`,
         }}
         className={`paper relative z-10 w-full h-[calc(100%-58px)] paper-behind paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10`}
       ></div>
@@ -42,13 +43,11 @@ export const Newspaper = ({
       {/* the front page */}
       <div
         style={{
-          // transform: `rotate(${handout.positioning.rotation_degrees.value}deg) scale(${handout.positioning.zoom.value})`,
-          // width: `${handout.page_width_percentage.value}%`,
+          backgroundColor: paperTint,
+          backgroundBlendMode: "multiply",
           boxShadow: `${
             handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
           }`,
-          // marginTop: `${handout.positioning.y_offset.value}%`,
-          // marginLeft: `${handout.positioning.x_offset.value}%`,
         }}
         className={`paper relative z-20 h-[calc(100%-57px)] paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10 overflow-clip rounded-bl-[2rem]`}
       >
@@ -145,6 +144,8 @@ export const Newspaper = ({
       {/* the weird curve */}
       <div
         style={{
+          backgroundColor: paperTint,
+          backgroundBlendMode: "multiply",
           boxShadow: `${
             handout.is_paper_shadow.value
               ? "inset -10px 0 25px #000000"

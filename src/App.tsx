@@ -26,7 +26,7 @@ const localStorageKey = "tomg_rpg_handout_builder";
 function App() {
   // the type of this useState should be a key of ALL_HANDOUT_DEFINITIONS
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.BOOK_COVER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -186,6 +186,10 @@ function App() {
           className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
         >
           <div className="bg-gray-300 p-4">
+            <h1 className="text-xl font-poppins font-bold mb-4">
+              📜 Tom G's RPG Handout Builder
+            </h1>
+
             <label className="block mb-4">
               <span className="block mb-1">Prop Type</span>
               <select
@@ -196,13 +200,9 @@ function App() {
                     e.target.value as eHandoutDefinitions
                   );
                   refreshData(e.target.value as eHandoutDefinitions);
-                  // setCurrentHandoutDefinitionKey(
-                  //   e.target.value as keyof typeof PAPER_TYPES
-                  // );
-                  // refreshData(e.target.value as keyof typeof PAPER_TYPES);
                 }}
               >
-                <optgroup label="Paper / Stationary / Print">
+                <optgroup label="'Pseudo' Paper / Print">
                   {Object.keys(ALL_HANDOUT_DEFINITIONS).map((typeKey) => {
                     const p =
                       ALL_HANDOUT_DEFINITIONS[typeKey as eHandoutDefinitions];
