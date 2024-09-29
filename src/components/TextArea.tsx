@@ -15,6 +15,7 @@ export const TextArea = (props: iTextAreaProps) => {
         <span className="italic">
           You can use{" "}
           <a
+            target="_blank"
             className="text-blue-400 underline"
             href="https://www.markdownguide.org/cheat-sheet/"
           >
@@ -26,7 +27,7 @@ export const TextArea = (props: iTextAreaProps) => {
 
       <textarea
         value={props.value}
-        className="w-full p-2 text-lg"
+        className="w-full p-2 text-sm"
         rows={props.rows}
         onChange={(e) => {
           props.onUpdate(e.target.value);

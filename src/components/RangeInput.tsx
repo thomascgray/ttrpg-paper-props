@@ -11,7 +11,7 @@ export interface iRangeInputProps extends iStandardComponentProps {
 export const RangeInput = (props: iRangeInputProps) => {
   return (
     <label className="block w-full">
-      <span className="block mb-1">
+      <span className="block">
         {props.label}:{" "}
         <span className="font-bold">
           {props.value}

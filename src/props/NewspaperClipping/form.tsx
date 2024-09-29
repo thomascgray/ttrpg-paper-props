@@ -7,9 +7,9 @@ import { InkColorSelector } from "../../components/InkColorSelector";
 import { CheckboxInput } from "../../components/CheckboxInput";
 
 interface iNewspaperClippingFormProps {
-  dataset: typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"];
+  dataset: (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"];
   handleDataChange: (
-    key: keyof typeof PAPER_TYPES["NEWSPAPER_CLIPPING"]["data"],
+    key: keyof (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"],
     value: any
   ) => void;
 }
@@ -98,6 +98,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <span className="ml-2 italic">
             You can use{" "}
             <a
+              target="_blank"
               className="text-blue-400 underline"
               href="https://www.markdownguide.org/cheat-sheet/"
             >
@@ -130,6 +131,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <span className="ml-2 italic">
             You can use{" "}
             <a
+              target="_blank"
               className="text-blue-400 underline"
               href="https://www.markdownguide.org/cheat-sheet/"
             >
@@ -156,6 +158,7 @@ export const NewspaperClippingForm = (props: iNewspaperClippingFormProps) => {
           <span className="ml-2 italic">
             You can use{" "}
             <a
+              target="_blank"
               className="text-blue-400 underline"
               href="https://www.markdownguide.org/cheat-sheet/"
             >

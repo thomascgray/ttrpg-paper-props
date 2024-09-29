@@ -271,6 +271,7 @@ export const NewspaperFormAlt1 = (props: iNewspaperFormProps) => {
             <span className="italic">
               You can use{" "}
               <a
+                target="_blank"
                 className="text-blue-400 underline"
                 href="https://www.markdownguide.org/cheat-sheet/"
               >

@@ -1,46 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 
-import { Newspaper } from "./props/Newspaper/renderer";
-import { NewspaperAlt1 } from "./props/NewspaperAlt1/renderer";
-import { WantedPoster } from "./props/WantedPoster/renderer";
-import { NewspaperClipping } from "./props/NewspaperClipping/renderer";
-import { HandwrittenLetter } from "./props/HandwrittenLetter/renderer";
-import { Ticket } from "./props/Ticket/renderer";
-import { BookCover } from "./props/BookCover/renderer";
-import { NPCCard } from "./props/NPCCard/renderer";
-
-import { NewspaperForm } from "./props/Newspaper/form";
-import { NewspaperFormAlt1 } from "./props/NewspaperAlt1/form";
-import { WantedPosterForm } from "./props/WantedPoster/form";
-import { NewspaperClippingForm } from "./props/NewspaperClipping/form";
-import { HandwrittenLetterForm } from "./props/HandwrittenLetter/form";
-import { TicketForm } from "./props/Ticket/form";
-import { BookCoverForm } from "./props/BookCover/form";
-import { NPCCardForm } from "./props/NPCCard/form";
-
-import { PAPER_TYPES } from "./config";
+import { ConfigFormRenderer } from "./ConfigFormRenderer";
+import * as _ from "lodash";
 import { RotateZoomPositionControls } from "./components/RotateZoomPositionControls";
 
 import { Helmet } from "react-helmet";
+import { StateContext } from "./context";
+
+import {
+  ALL_HANDOUT_DEFINITIONS,
+  BOOK_COVER,
+  CHARACTER_CARD,
+  eHandoutDefinitions,
+  iHandoutDefinition,
+  NEWSPAPER,
+  PLAIN_LETTER,
+} from "./config2";
+import { Newspaper } from "./renderer/Newspaper";
+import { CharacterCard } from "./renderer/CharacterCard";
+import { PlainLetter } from "./renderer/PlainLetter";
+import { BookCover } from "./renderer/BookCover";
+
+const localStorageKey = "tomg_rpg_handout_builder";
 
 function App() {
-  const [selectedPaperType, setSelectedPaperType] =
-    useState<keyof typeof PAPER_TYPES>("NEWSPAPER_ALT");
+  // the type of this useState should be a key of ALL_HANDOUT_DEFINITIONS
+  const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
+    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
 
-  const paperType = PAPER_TYPES[selectedPaperType];
+  const currentHandoutConfig =
+    ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
 
   const savedDataString = window.localStorage.getItem(
-    `paper_data_${selectedPaperType}`
+    `${localStorageKey}_${currentHandoutDefinitionKey}`
   );
+
   const savedData = savedDataString ? JSON.parse(savedDataString) : {};
 
-  const [paperData, setPaperData] = useState({
-    ...paperType.data, // so this is the base data
+  const [currentHandoutData, setCurrentHandoutData] = useState<
+    iHandoutDefinition["data"]
+  >({
+    ...currentHandoutConfig.data, // so this is the base data
     ...savedData, // then we're overwriting it with any saved data
   });
 
   let existingVersionsRaw = window.localStorage.getItem(
-    `paper_data_versions_${selectedPaperType}`
+    `${localStorageKey}_versions_${currentHandoutDefinitionKey}`
   );
   if (existingVersionsRaw === null) {
     existingVersionsRaw = "[]";
@@ -61,31 +66,36 @@ function App() {
   }, [versionsList]);
 
   const handleDataChange = (name: string, value: any) => {
-    console.log("name", name);
-    console.log("value", value);
-    const newPaperData = {
-      ...paperType.data, // so this is the base data
-      ...paperData, // this is the current data
-      [name]: value, // this is the new data
+    const newHandoutData = {
+      ...currentHandoutConfig.data, // so this is the base data
+      ...currentHandoutData, // this is the current data
     };
-    setPaperData(newPaperData);
+    _.set(newHandoutData, name, {
+      ..._.get(newHandoutData, name),
+      value,
+    });
+
+    setCurrentHandoutData(newHandoutData);
     window.localStorage.setItem(
-      `paper_data_${selectedPaperType}`,
-      JSON.stringify(newPaperData)
+      `${localStorageKey}_${currentHandoutDefinitionKey}`,
+      JSON.stringify(newHandoutData)
     );
   };
 
-  const refreshData = (key: keyof typeof PAPER_TYPES) => {
-    const paperType = PAPER_TYPES[key];
-    const savedDataString = window.localStorage.getItem(`paper_data_${key}`);
+  const refreshData = (key: eHandoutDefinitions) => {
+    // const paperType = PAPER_TYPES[key];
+    const config = ALL_HANDOUT_DEFINITIONS[key];
+    const savedDataString = window.localStorage.getItem(
+      `${localStorageKey}_${key}`
+    );
     const savedData = savedDataString ? JSON.parse(savedDataString) : {};
-    setPaperData({
-      ...paperType.data,
+    setCurrentHandoutData({
+      ...config.data,
       ...savedData,
     });
 
     let existingVersionsRaw = window.localStorage.getItem(
-      `paper_data_versions_${key}`
+      `${localStorageKey}_versions_${key}`
     );
     if (existingVersionsRaw === null) {
       existingVersionsRaw = "[]";
@@ -98,7 +108,7 @@ function App() {
   const handleSave = () => {
     // get the current list out of the app
     let existingVersionsRaw = window.localStorage.getItem(
-      `paper_data_versions_${selectedPaperType}`
+      `${localStorageKey}_versions_${currentHandoutDefinitionKey}`
     );
     if (existingVersionsRaw === null) {
       existingVersionsRaw = "[]";
@@ -107,14 +117,14 @@ function App() {
 
     // add the current data to it
     versions.unshift({
-      ...paperData,
+      ...currentHandoutData,
       timestamp: Date.now(),
     });
 
     // resave that list into both local state and app state
     setVersionsList(versions);
     window.localStorage.setItem(
-      `paper_data_versions_${selectedPaperType}`,
+      `${localStorageKey}_versions_${currentHandoutDefinitionKey}`,
       JSON.stringify(versions)
     );
   };
@@ -125,218 +135,193 @@ function App() {
     );
 
     setSelectedVersion(selectedTimeStamp);
-    setPaperData({
+    setCurrentHandoutData({
       ...selectedVersion,
       timestamp: undefined,
     });
   };
 
   const [highlighted, setHighlighted] = useState("");
+
+  const rotationValue: number | undefined =
+    // @ts-ignore
+    currentHandoutData.positioning.rotation_degrees.value;
+
+  const zoomValue: number | undefined =
+    // @ts-ignore
+    currentHandoutData.positioning.zoom.value;
+
   return (
-    <div className="flex min-h-full">
-      {/* form */}
-      <Helmet>
-        <style>
-          {`
+    <StateContext.Provider
+      value={{
+        highlighted,
+        setHighlighted,
+        onChange: handleDataChange,
+      }}
+    >
+      <div className="flex min-h-full">
+        {/* form */}
+        <Helmet>
+          <style>
+            {`
           @keyframes blink { 
             50% { outline-style: dotted; } 
-         }
-.${highlighted} {
+          }
+          @keyframes outlinepulse { 
+            50% { outline-offset: 1.5em; } 
+          }
+#${highlighted} {
     outline: 5px dashed #00FF00;
-    animation: blink .5s step-end infinite alternate;
+    outline-offset: 1em;
+    animation: blink .5s step-end infinite alternate, outlinepulse .5s step-end infinite alternate;
 }
 `}
-        </style>
-      </Helmet>
-      <div
-        style={{
-          height: "100vh",
-          minWidth: "400px",
-        }}
-        className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
-      >
-        <div className="bg-gray-300 p-4">
-          <label className="block mb-4">
-            <span className="block mb-1">Prop Type</span>
-            <select
-              value={selectedPaperType}
-              className="p-2 text-lg w-full"
-              onChange={(e) => {
-                setSelectedPaperType(
-                  e.target.value as keyof typeof PAPER_TYPES
-                );
-                refreshData(e.target.value as keyof typeof PAPER_TYPES);
-              }}
-            >
-              <optgroup label="Paper/Stationary/Print">
-                {Object.keys(PAPER_TYPES).map((typeKey) => {
-                  const p = PAPER_TYPES[typeKey as keyof typeof PAPER_TYPES];
-                  return (
-                    <option key={typeKey} value={typeKey}>
-                      {p.name}
-                    </option>
-                  );
-                })}
-              </optgroup>
-            </select>
-          </label>
+          </style>
+        </Helmet>
+        <div
+          style={{
+            height: "100vh",
+            minWidth: "400px",
+          }}
+          className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
+        >
+          <div className="bg-gray-300 p-4">
+            <h1 className="text-xl font-poppins font-bold mb-4">
+              📜 Tom G's RPG Handout Builder
+            </h1>
 
-          <RotateZoomPositionControls
-            zoomValue={paperData.zoom}
-            rotateValue={paperData.rotation_degrees}
-            xOffsetValue={paperData.x_offset}
-            yOffsetValue={paperData.y_offset}
-            onZoomUpdate={(newZoom) => {
-              handleDataChange("zoom", newZoom);
-            }}
-            onRotateUpdate={(newRotate) => {
-              handleDataChange("rotation_degrees", newRotate);
-            }}
-            onXOffsetUpdate={(xOffset) => {
-              handleDataChange("x_offset", parseInt(xOffset));
-            }}
-            onYOffsetUpdate={(yOffset) => {
-              handleDataChange("y_offset", parseInt(yOffset));
-            }}
-            onReset={() => {
-              const newPaperData = {
-                ...paperType.data, // so this is the base data
-                ...paperData, // this is the current data
-                zoom: 1,
-                rotation_degrees: 0,
-                x_offset: 0,
-                y_offset: 0,
-              };
-              setPaperData(newPaperData);
-              window.localStorage.setItem(
-                `paper_data_${selectedPaperType}`,
-                JSON.stringify(newPaperData)
-              );
-            }}
-          />
-          {/* collections control */}
-        </div>
-
-        <div className="bg-gray-400 p-4">
-          <div className="flex mt-4">
-            <button
-              onClick={handleSave}
-              className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"
-            >
-              Save
-            </button>
-            {selectedVersion && versionsList.length >= 1 && (
+            <label className="block mb-4">
+              <span className="block mb-1">Prop Type</span>
               <select
-                value={selectedVersion}
-                onChange={(e) => handleVersionSelect(e.target.value)}
-                className="grow rounded shadow px-4 py-2"
+                value={currentHandoutDefinitionKey}
+                className="p-2 text-lg w-full"
+                onChange={(e) => {
+                  setCurrentHandoutDefinitionKey(
+                    e.target.value as eHandoutDefinitions
+                  );
+                  refreshData(e.target.value as eHandoutDefinitions);
+                }}
               >
-                {versionsList.map((v) => {
-                  return <option key={v.timestamp}>{v.timestamp}</option>;
-                })}
+                <optgroup label="'Pseudo' Paper / Print">
+                  {Object.keys(ALL_HANDOUT_DEFINITIONS).map((typeKey) => {
+                    const p =
+                      ALL_HANDOUT_DEFINITIONS[typeKey as eHandoutDefinitions];
+                    return (
+                      <option key={typeKey} value={typeKey}>
+                        {p.name}
+                      </option>
+                    );
+                  })}
+                </optgroup>
               </select>
-            )}
+            </label>
+
+            <span className="text-sm">{currentHandoutConfig.caption}</span>
+          </div>
+
+          <div className="bg-gray-400 p-4 flex flex-col space-y-2">
+            <div className="flex items-center">
+              <button
+                onClick={handleSave}
+                className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"
+              >
+                Save
+              </button>
+              {versionsList.length <= 0 && (
+                <span className="italic">No copies saved yet</span>
+              )}
+              {selectedVersion && versionsList.length >= 1 && (
+                <select
+                  value={selectedVersion}
+                  onChange={(e) => handleVersionSelect(e.target.value)}
+                  className="grow rounded shadow px-4 py-2"
+                >
+                  {versionsList.map((v) => {
+                    return <option key={v.timestamp}>{v.timestamp}</option>;
+                  })}
+                </select>
+              )}
+            </div>
+            <span className="text-xs italic">
+              Copies are saved locally to your machine - no data is sent to any
+              server.
+            </span>
+          </div>
+
+          <div className="bg-gray-300 p-4">
+            <ConfigFormRenderer
+              handoutDefinitionKey={currentHandoutDefinitionKey}
+              config={currentHandoutConfig}
+              dataset={currentHandoutData}
+            />
+
+            <span className="block mt-6">
+              Made by{" "}
+              <a
+                className="text-blue-600 underline hover:text-blue-900"
+                target="_blank"
+                href="https://tomg.cool/"
+              >
+                Tom
+              </a>
+            </span>
+            <span className="italic text-sm">
+              This tool is in alpha and constant flux. Apologies for any bugs!
+            </span>
           </div>
         </div>
 
-        <div className="bg-gray-300 p-4">
-          {selectedPaperType === "NEWSPAPER" && (
-            <NewspaperForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-              setHighlighted={setHighlighted}
-            />
-          )}
+        {/* render area */}
+        <div
+          style={{
+            backgroundColor: "#2f3640",
+            height: "100vh",
+          }}
+          className="render-area-wrapper relative w-full h-screen z-10 overflow-clip"
+        >
+          <div
+            className="render-area-content w-full h-screen flex flex-col justify-around items-center"
+            style={{
+              transformOrigin: "center",
+              transform: `rotate(${rotationValue || 0}deg) scale(${
+                zoomValue || 1
+              })`,
+            }}
+          >
+            {currentHandoutDefinitionKey === eHandoutDefinitions.NEWSPAPER && (
+              <Newspaper
+                handout={
+                  currentHandoutData as unknown as (typeof NEWSPAPER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.CHARACTER_CARD && (
+              <CharacterCard
+                handout={
+                  currentHandoutData as unknown as (typeof CHARACTER_CARD)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.PLAIN_LETTER && (
+              <PlainLetter
+                handout={
+                  currentHandoutData as unknown as (typeof PLAIN_LETTER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey === eHandoutDefinitions.BOOK_COVER && (
+              <BookCover
+                handout={
+                  currentHandoutData as unknown as (typeof BOOK_COVER)["data"]
+                }
+              />
+            )}
+          </div>
+          {/* help text */}
 
-          {selectedPaperType === "NEWSPAPER_ALT" && (
-            <NewspaperFormAlt1
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-              setHighlighted={setHighlighted}
-            />
-          )}
-
-          {selectedPaperType === "NEWSPAPER_CLIPPING" && (
-            <NewspaperClippingForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "WANTED_POSTER" && (
-            <WantedPosterForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "HANDWRITTEN_LETTER" && (
-            <HandwrittenLetterForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "TICKET" && (
-            <TicketForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          {selectedPaperType === "BOOK_COVER" && (
-            <BookCoverForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-          {selectedPaperType === "NPC_CARD" && (
-            <NPCCardForm
-              dataset={{
-                ...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"]),
-              }}
-              handleDataChange={handleDataChange}
-            />
-          )}
-
-          <span className="block mt-6">
-            Made by{" "}
-            <a
-              className="text-blue-600 underline hover:text-blue-900"
-              target="_blank"
-              href="https://twitter.com/tmcgry"
-            >
-              Tom
-            </a>
-          </span>
-        </div>
-      </div>
-
-      {/* render area */}
-      <div
-        style={{
-          backgroundColor: "#2f3640",
-          height: "100vh",
-        }}
-        className="render-area relative w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around items-center"
-      >
-        {/* help text */}
-
-        {/* <button className="absolute top-0 left-0 stroke-black bg-white rounded-full">
+          {/* <button className="absolute top-0 left-0 stroke-black bg-white rounded-full">
           <svg
             className="w-10 h-10"
             viewBox="0 0 15 15"
@@ -351,48 +336,9 @@ function App() {
             ></path>
           </svg>
         </button> */}
-
-        {selectedPaperType === "NEWSPAPER" && (
-          <Newspaper
-            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "NEWSPAPER_ALT" && (
-          <NewspaperAlt1
-            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"])}
-          />
-        )}
-        {selectedPaperType === "NEWSPAPER_CLIPPING" && (
-          <NewspaperClipping
-            {...(paperData as (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"])}
-          />
-        )}
-        {selectedPaperType === "WANTED_POSTER" && (
-          <WantedPoster
-            {...(paperData as (typeof PAPER_TYPES)["WANTED_POSTER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "HANDWRITTEN_LETTER" && (
-          <HandwrittenLetter
-            {...(paperData as (typeof PAPER_TYPES)["HANDWRITTEN_LETTER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "TICKET" && (
-          <Ticket {...(paperData as (typeof PAPER_TYPES)["TICKET"]["data"])} />
-        )}
-
-        {selectedPaperType === "BOOK_COVER" && (
-          <BookCover
-            {...(paperData as (typeof PAPER_TYPES)["BOOK_COVER"]["data"])}
-          />
-        )}
-        {selectedPaperType === "NPC_CARD" && (
-          <NPCCard
-            {...(paperData as (typeof PAPER_TYPES)["NPC_CARD"]["data"])}
-          />
-        )}
+        </div>
       </div>
-    </div>
+    </StateContext.Provider>
   );
 }
 

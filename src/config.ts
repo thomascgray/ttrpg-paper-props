@@ -18,6 +18,9 @@ export const PAPER_TYPES = {
       title: "THE LOREM IPSUM",
       title_font: "font-sans",
       title_size: "34",
+      line_height: "1",
+      top_margin: "0",
+      bottom_margin: "0",
 
       banner_text_1: "Lorem ipsum",
       banner_text_2: "Lorem ipsum",
@@ -29,6 +32,10 @@ export const PAPER_TYPES = {
 
       headline: "MORBI TEMPUS MOLLIS IPSUM AT!",
       headline_font: "font-serif",
+      headline_font_size: "34",
+      headline_line_height: "1",
+      headline_top_margin: "0",
+      headline_bottom_margin: "0",
 
       quote:
         "Maecenas molestie ac, erat sed ultrices. Ut in vehicula est, ut malesuada eros! Nunc condimentum, aliquet ante nec venenatis.",
@@ -43,7 +50,7 @@ export const PAPER_TYPES = {
     },
   },
   NEWSPAPER_ALT: {
-    name: "Newspaper (ALT 1)",
+    name: "Newspaper (Grid)",
     data: {
       ...UNIVERSAL_DATA,
       gridData: {
