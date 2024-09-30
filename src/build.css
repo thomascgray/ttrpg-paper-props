@@ -2128,6 +2128,25 @@ select {
   border-collapse: collapse;
 }
 
+.origin-center {
+  transform-origin: center;
+}
+
+.translate-y-10 {
+  --tw-translate-y: 2.5rem;
+  transform: var(--tw-transform);
+}
+
+.translate-y-\[4rem\] {
+  --tw-translate-y: 4rem;
+  transform: var(--tw-transform);
+}
+
+.translate-y-20 {
+  --tw-translate-y: 5rem;
+  transform: var(--tw-transform);
+}
+
 .rotate-180 {
   --tw-rotate: 180deg;
   transform: var(--tw-transform);
@@ -2374,6 +2393,11 @@ select {
   background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#2f3640\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(47 54 64 / var(--tw-bg-opacity));
+}
+
 .stroke-black {
   stroke: #000;
 }
@@ -2438,13 +2462,20 @@ select {
   padding-bottom: 2rem;
 }
 
-.py-\[3em\] {
-  padding-top: 3em;
-  padding-bottom: 3em;
-}
-
 .pb-20 {
   padding-bottom: 5rem;
+}
+
+.pt-\[10\%\] {
+  padding-top: 10%;
+}
+
+.pt-\[5\%\] {
+  padding-top: 5%;
+}
+
+.pb-\[10\%\] {
+  padding-bottom: 10%;
 }
 
 .text-left {

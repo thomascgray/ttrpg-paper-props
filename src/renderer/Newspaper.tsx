@@ -13,7 +13,7 @@ export const Newspaper = ({
 
   return (
     <div
-      className="relative"
+      className="relative translate-y-20"
       style={{
         width: `${handout.page_width_percentage.value}%`,
         marginTop: `calc(-100px + ${handout.positioning.y_offset.value}%)`,
