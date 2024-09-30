@@ -138,7 +138,7 @@ const _rotationDegrees: iDataInputRange = {
 const _zoom: iDataInputRange = {
   name: "Zoom",
   type: "range",
-  value: 0.6,
+  value: 1,
   min: 0.1,
   max: 6,
   step: 0.05,
@@ -308,7 +308,7 @@ export const NEWSPAPER = {
       },
       headline_font_size: {
         ..._fontSizeRange,
-        value: 80,
+        value: 34,
       },
       headline_line_height: {
         name: "Line Height",
@@ -353,6 +353,7 @@ export const NEWSPAPER = {
       },
       quote_font_size: {
         ..._fontSizeRange,
+        value: 20,
       },
     },
 
@@ -360,7 +361,10 @@ export const NEWSPAPER = {
       main_copy_content: {
         name: "Main Copy",
         type: "textarea",
-        value: `Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. ![alt text](https://static.standard.co.uk/s3fs-public/thumbnails/image/2016/05/18/17/black_chronicles_exhibition_at_the_national_portrait_gallery.00_01_37_07.still001.jpg?width=1200) Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo.\n\n### Nam non gravida lectus.\n\n Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus  vitae tortor euismod elementum. Curabitur placerat sed lorem id gravida. Maecenas egestas eget dui id mollis. Fusce varius eleifend nunc et efficitur. Sed vel dui quis risus tempus euismod. Etiam ultrices, velit ac aliquet interdum, felis augue scelerisque magna, eget placerat nunc ante s. \n\n# Aenean faucibus at!\n\nProin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. ![alt text](http://images.summitmedia-digital.com/esquiremagph/images/2020/07/09/bearded-batman-1800s-MAIN.jpg) Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Sed euismod metus sed mauris accumsan. \n\n### Aenean faucibus placerat felis Nnec vulputate velit faucibus at.\n\n Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. ![alt text](https://static.stacker.com/s3fs-public/00007074_0.png) Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec nisl eu massa accumsan facilisis ut a lacus. Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. ![alt text](https://media.npr.org/assets/img/2015/09/15/oldsmobile-loc_custom-d4496485e41ba2476a7392c5252f3d0a5cdce3f9.jpg) Nam velit lorem, porta convallis dignissim ac, porta non quam. Quisque tincidunt nulla eu mi ornare, in vestibulum magna consequat. Sed euismod metus sed mauris accumsan, in pretium arcu euismod. Aenean at tristique nunc, nec ornare nibh. Nulla commodo suscipit tortor. Morbi eu urna feugiat, bibendum libero commodo, pharetra nulla. Suspendisse nec mauris aliquam, suscipit eros eget, imperdiet sapien. Sed bibendum molestie faucibus. Aenean faucibus placerat felis, nec vulputate velit faucibus at. Proin eget malesuada eros, et posuere leo. Nam non gravida lectus. Maecenas commodo, ex sed rhoncus dignissim, mauris purus mollis diam, nec tempus ex ligula sed diam. Duis tristique metus arcu, ac porttitor risus maximus at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.`,
+        value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in posuere mauris. Fusce non metus in ipsum egestas cursus ut id nulla. Praesent sed diam magna. Duis faucibus, tortor eget porttitor interdum, augue lectus posuere quam, in rhoncus nunc dui efficitur erat. Duis sollicitudin sagittis nisl, et faucibus arcu imperdiet vitae. Aliquam efficitur porttitor lacus, malesuada venenatis sapien faucibus eget. Curabitur accumsan, ex quis tempor convallis, risus nunc lobortis diam, in commodo purus nulla ut lorem. Nunc faucibus commodo nunc. Proin sollicitudin turpis eget odio semper placerat at quis tellus. Suspendisse quis risus lacus. Sed gravida mi nibh, et bibendum sem lobortis nec. Mauris ut hendrerit sapien. In sed orci elementum, euismod tellus nec, porttitor velit. Proin accumsan tincidunt ultricies.
+
+Nullam hendrerit in neque a posuere. In et dignissim ex. Ut auctor ipsum quis enim ullamcorper congue. Aenean scelerisque lacus non eros rhoncus, suscipit dignissim ex dapibus. Aenean eleifend lorem velit, in tempor justo auctor at. Nam rutrum imperdiet lectus a consequat. Nunc luctus mauris nec sapien feugiat, eu efficitur augue tincidunt. Nam et luctus ex, ut ultrices dui. Cras bibendum purus erat, id accumsan sapien finibus quis. Vestibulum sapien neque, fermentum vel vulputate in, mollis commodo enim. Mauris purus neque, auctor ut urna eu, interdum laoreet tortor. Fusce ac orci venenatis, volutpat elit quis, tristique metus. Pellentesque porta fermentum libero sed semper. Curabitur tempor orci lacus, in tristique augue volutpat vitae.
+`,
         isMarkdown: true,
       },
       main_copy_columns: {
@@ -606,7 +610,7 @@ export const BOOK_COVER = {
       name: "Font Size (Relative)",
       type: "range",
       min: 8,
-      value: 40,
+      value: 30,
       max: 100,
       step: 1,
       suffix: "px",

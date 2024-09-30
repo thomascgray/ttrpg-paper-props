@@ -24,9 +24,8 @@ import { BookCover } from "./renderer/BookCover";
 const localStorageKey = "tomg_rpg_handout_builder";
 
 function App() {
-  // the type of this useState should be a key of ALL_HANDOUT_DEFINITIONS
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.PLAIN_LETTER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -271,12 +270,11 @@ function App() {
         <div
           style={{
             backgroundColor: "#2f3640",
-            height: "100vh",
           }}
-          className="render-area-wrapper relative w-full h-screen z-10 overflow-clip"
+          className="render-area-wrapper relative w-full h-screen z-10 overflow-y-scroll "
         >
           <div
-            className="render-area-content w-full h-screen flex flex-col justify-around items-center"
+            className="render-area-content w-full flex flex-col justify-around items-center"
             style={{
               transformOrigin: "center",
               transform: `rotate(${rotationValue || 0}deg) scale(${

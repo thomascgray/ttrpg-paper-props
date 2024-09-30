@@ -46,6 +46,7 @@ export const Newspaper = ({
           boxShadow: `${
             handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
           }`,
+          marginBottom: "58px",
         }}
         className={`paper relative z-20 h-[calc(100%-57px)] paper-${handout.paper_texture.value} ${handout.ink_color.value} p-10 overflow-clip rounded-bl-[2rem]`}
       >

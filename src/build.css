@@ -2438,6 +2438,11 @@ select {
   padding-bottom: 2rem;
 }
 
+.py-\[3em\] {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
 .pb-20 {
   padding-bottom: 5rem;
 }
