@@ -75,7 +75,7 @@ function App() {
       value,
     });
 
-    setCurrentHandoutData(newHandoutData);
+    setCurrentHandoutData(newHandoutData as any);
     window.localStorage.setItem(
       `${localStorageKey}_${currentHandoutDefinitionKey}`,
       JSON.stringify(newHandoutData)
@@ -83,7 +83,6 @@ function App() {
   };
 
   const refreshData = (key: eHandoutDefinitions) => {
-    // const paperType = PAPER_TYPES[key];
     const config = ALL_HANDOUT_DEFINITIONS[key];
     const savedDataString = window.localStorage.getItem(
       `${localStorageKey}_${key}`
@@ -167,13 +166,10 @@ function App() {
           @keyframes blink { 
             50% { outline-style: dotted; } 
           }
-          @keyframes outlinepulse { 
-            50% { outline-offset: 1.5em; } 
-          }
 #${highlighted} {
     outline: 5px dashed #00FF00;
     outline-offset: 1em;
-    animation: blink .5s step-end infinite alternate, outlinepulse .5s step-end infinite alternate;
+    animation: blink .5s step-end infinite alternate;
 }
 `}
           </style>
@@ -251,7 +247,7 @@ function App() {
           <div className="bg-gray-300 p-4">
             <ConfigFormRenderer
               handoutDefinitionKey={currentHandoutDefinitionKey}
-              config={currentHandoutConfig}
+              config={currentHandoutConfig as any}
               dataset={currentHandoutData}
             />
 

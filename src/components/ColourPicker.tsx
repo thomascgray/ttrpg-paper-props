@@ -33,7 +33,7 @@ export const ColourPicker = (props: iStandardComponentProps) => {
           }}
         />
 
-        <div className="grid grid-cols-8 grid-rows-2 gap-2">
+        <div className="grid grid-cols-8 grid-rows-2 gap-2 mr-4">
           {colours.map((color) => {
             return (
               <button

@@ -1968,11 +1968,6 @@ select {
   margin-right: 2.5rem;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -2007,10 +2002,6 @@ select {
 
 .ml-2 {
   margin-left: 0.5rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 
 .block {
@@ -2115,10 +2106,6 @@ select {
 
 .w-14 {
   width: 3.5rem;
-}
-
-.w-4\/5 {
-  width: 80%;
 }
 
 .min-w-\[50px\] {
@@ -2236,22 +2223,16 @@ select {
   margin-bottom: calc(1.333em * var(--tw-space-y-reverse));
 }
 
-.space-y-6 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-}
-
 .space-y-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
-.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
-  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
 .overflow-hidden {
@@ -2328,14 +2309,6 @@ select {
 
 .border-b-0 {
   border-bottom-width: 0px;
-}
-
-.border-l-0 {
-  border-left-width: 0px;
-}
-
-.border-r-0 {
-  border-right-width: 0px;
 }
 
 .border-solid {
@@ -2521,11 +2494,6 @@ select {
   font-size: 2.2rem;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
-
 .font-bold {
   font-weight: 700;
 }
@@ -2580,11 +2548,6 @@ select {
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
 .underline {
   text-decoration: underline;
 }
@@ -2606,10 +2569,6 @@ select {
 
 .sepia {
   --tw-sepia: sepia(100%);
-  filter: var(--tw-filter);
-}
-
-.filter {
   filter: var(--tw-filter);
 }
 
@@ -2670,7 +2629,9 @@ select {
   margin-top: 0.6em;
 }
 
-/* .copy-markdown > :not([hidden]) ~ :not([hidden]) */
+.copy-markdown img {
+  width: 100%;
+}
 
 html,
 body {
@@ -2733,9 +2694,9 @@ body {
 .paper h4,
 .paper h5,
 .paper h6,
-.paper p, 
-.paper label, 
-.paper hr, 
+.paper p,
+.paper label,
+.paper hr,
 .paper img {
   mix-blend-mode: multiply;
 }

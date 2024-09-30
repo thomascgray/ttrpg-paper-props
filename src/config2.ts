@@ -197,7 +197,7 @@ export const NEWSPAPER = {
       type: "range",
       value: 80,
       min: 0,
-      max: 100,
+      max: 300,
       step: 1,
       suffix: "%",
     },

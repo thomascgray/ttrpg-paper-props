@@ -119,7 +119,7 @@ const renderHandoutData = (
       return (
         <TextArea
           label={config.name}
-          rows={10}
+          rows={20}
           value={val}
           onUpdate={(newValue) => {
             onChange(finalKey, newValue);
