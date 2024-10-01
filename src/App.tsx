@@ -65,14 +65,20 @@ function App() {
 
   const handleDataChange = (
     name: string,
-    value: any,
+    value: any | null,
     shouldSpread: boolean = false
   ) => {
-    const newHandoutData = {
+    let newHandoutData = {
       ...currentHandoutConfig.data, // so this is the base data
       ...currentHandoutData, // this is the current data
     };
-    if (shouldSpread) {
+
+    // if value is NULL, we need to delete the key
+    if (value === null) {
+      const [key, index] = name.split("::");
+      // @ts-ignore if value is null then newHandoutData[key] is an array
+      newHandoutData[key].splice(index, 1);
+    } else if (shouldSpread) {
       _.set(newHandoutData, name, {
         ..._.get(newHandoutData, name),
         ...value,
@@ -141,11 +147,6 @@ function App() {
     const selectedVersion = versionsList.find(
       (v) => v.timestamp.toString() === selectedTimeStamp.toString()
     );
-
-    console.log("versionsList", versionsList);
-    console.log("selectedTimeStamp", selectedTimeStamp);
-
-    console.log("selectedVersion", selectedVersion);
 
     setSelectedVersion(selectedTimeStamp);
     setCurrentHandoutData({

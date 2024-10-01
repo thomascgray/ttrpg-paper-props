@@ -525,8 +525,7 @@ export const PLAIN_LETTER = {
         main_copy: {
           name: "Main Copy",
           type: "textarea",
-          value: `
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+          value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 
 ## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci. 
 
