@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 type iDataInputRange = {
   name: string;
   type: "range";
@@ -106,9 +107,9 @@ export type iHandoutDefinition = {
   data: {
     [key: string]:
       | tHandoutData
-      | {
-          [key: string]: tHandoutData;
-        };
+      | tHandoutData[]
+      | { [key: string]: tHandoutData }
+      | { [key: string]: tHandoutData }[];
   };
 };
 
@@ -488,7 +489,6 @@ export const PLAIN_LETTER = {
         value: 1,
       },
     },
-
     page_width: {
       name: "Page Width",
       type: "range",
@@ -500,19 +500,16 @@ export const PLAIN_LETTER = {
     },
     is_paper_shadow: _isPaperShadow,
     paper_texture: _paperTexture,
-
     paper_tint: {
       name: "Paper Colour Tint",
       type: "color",
       value: "#FFFFFF",
     },
-
     ink_color: {
       name: "Ink Colour",
       type: "ink_color_picker",
       value: "ink-black",
     },
-
     padding: {
       name: "Padding",
       type: "range",
@@ -522,55 +519,61 @@ export const PLAIN_LETTER = {
       step: 1,
       suffix: "px",
     },
-    main_copy: {
-      name: "Main Copy",
-      type: "textarea",
-      value: `# Lorem ipsum dolor sit amet
+    paragraph: [
+      {
+        id: nanoid(),
+        main_copy: {
+          name: "Main Copy",
+          type: "textarea",
+          value: `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 
-consectetur adipiscing elit. Duis leo purus, porta eget imperdiet id, commodo quis ligula. Vivamus convallis tortor vel odio suscipit, vel faucibus erat bibendum. 
+## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci. 
 
-![](https://i.imgur.com/WZLUP8D.jpeg)
+Nullam cursus congue magna, pulvinar commodo massa ornare quis. Etiam eleifend fermentum mauris at aliquet. Aliquam ac augue nunc. 
 
-### Duis at magna porta, vestibulum lorem et
+Mauris mollis bibendum erat, et ultrices tortor pellentesque vitae. 
 
-lacinia ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer convallis id magna et porta. Curabitur at arcu in nibh volutpat consectetur. Phasellus sit amet porta tellus, id sagittis est. Donec et est id felis ullamcorper dictum quis vel mi. Aenean eget lacinia quam, eget placerat neque. Pellentesque 
+# Suspendisse sed accumsan augue.
 
-sed tincidunt leo, a suscipit enim. Morbi id mi ac felis molestie vulputate ut sit amet tortor. Curabitur non hendrerit dolor. Ut quis rutrum est, nec pulvinar neque. Fusce at posuere libero.
-
-# Cras fermentum consequat 
-
-faucibus. Phasellus hendrerit risus ut feugiat consectetur. Maecenas urna leo, congue sed sagittis ut, pulvinar vel erat. Pellentesque risus lectus, fringilla vel commodo ut, feugiat a est. Cras quam elit, placerat vel ante non, gravida sollicitudin libero. Suspendisse imperdiet porttitor ante nec finibus. Nullam non tempor sapien. Etiam vulputate at felis ut congue. Donec quis porttitor neque, at hendrerit mi. Etiam egestas leo hendrerit leo ullamcorper, id vehicula mauris tincidunt. 
-
-Nunc pretium non enim sed accumsan. Nullam et velit a sapien feugiat efficitur. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ultricies risus auctor, mollis arcu vitae, aliquet augue.
-
-Sed et erat at lorem pharetra dignissim. Vivamus in diam feugiat, feugiat urna ac, scelerisque nulla. Mauris lobortis ligula libero, et pretium erat pretium vel. Integer fermentum laoreet convallis. Fusce et libero vel mauris aliquet molestie. Integer non velit a felis mattis faucibus. Nunc eu viverra eros. Fusce sed rutrum lorem. Donec ac semper massa, ac aliquet lacus. Maecenas scelerisque ligula eget turpis fermentum ultrices. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat volutpat risus, fermentum sollicitudin risus posuere sed. Morbi iaculis 
-
-## dapibus quam, quis egestas urna sodales sit amet.`,
-      isMarkdown: true,
-    },
-    font: {
-      name: "Font",
-      type: "font_picker",
-      value: "font-serif",
-    },
-    font_size: {
-      name: "Font Size (Relative)",
+Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dignissim libero ut luctus. Ut mattis ut tellus quis aliquet. In hac habitasse platea dictumst.          
+`,
+          isMarkdown: true,
+        },
+        font: {
+          name: "Font",
+          type: "font_picker",
+          value: "font-serif",
+        },
+        font_size: {
+          name: "Font Size (Relative)",
+          type: "range",
+          min: 8,
+          value: 12,
+          max: 100,
+          step: 1,
+          suffix: "px",
+        },
+        font_weight: {
+          name: "Font Weight",
+          type: "font_weight_picker",
+          value: "font-normal",
+        },
+        text_align: {
+          name: "Text Align",
+          type: "text_align",
+          value: "text-left",
+        },
+      },
+    ],
+    paragraph_gap: {
+      name: "Paragraph Gap",
       type: "range",
-      min: 8,
-      value: 12,
+      min: 0,
+      value: 0,
       max: 100,
       step: 1,
       suffix: "px",
-    },
-    font_weight: {
-      name: "Font Weight",
-      type: "font_weight_picker",
-      value: "font-normal",
-    },
-    text_align: {
-      name: "Text Align",
-      type: "text_align",
-      value: "text-left",
     },
   },
 } as const;

@@ -24,7 +24,6 @@ export const NewspaperFormAlt1 = (props: iNewspaperFormProps) => {
         <GridBuilder
           gridData={props.dataset.gridData}
           onGridDataUpdate={(gridData) => {
-            console.log("gridData", gridData);
             props.handleDataChange("gridData", gridData);
           }}
         />

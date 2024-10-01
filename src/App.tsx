@@ -18,12 +18,13 @@ import { Newspaper } from "./renderer/Newspaper";
 import { CharacterCard } from "./renderer/CharacterCard";
 import { PlainLetter } from "./renderer/PlainLetter";
 import { BookCover } from "./renderer/BookCover";
+import { formatTimestampToText } from "./utils";
 
 const localStorageKey = "tomg_rpg_handout_builder";
 
 function App() {
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.PLAIN_LETTER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -62,15 +63,26 @@ function App() {
     }
   }, [versionsList]);
 
-  const handleDataChange = (name: string, value: any) => {
+  const handleDataChange = (
+    name: string,
+    value: any,
+    shouldSpread: boolean = false
+  ) => {
     const newHandoutData = {
       ...currentHandoutConfig.data, // so this is the base data
       ...currentHandoutData, // this is the current data
     };
-    _.set(newHandoutData, name, {
-      ..._.get(newHandoutData, name),
-      value,
-    });
+    if (shouldSpread) {
+      _.set(newHandoutData, name, {
+        ..._.get(newHandoutData, name),
+        ...value,
+      });
+    } else {
+      _.set(newHandoutData, name, {
+        ..._.get(newHandoutData, name),
+        value,
+      });
+    }
 
     setCurrentHandoutData(newHandoutData as any);
     window.localStorage.setItem(
@@ -129,6 +141,11 @@ function App() {
     const selectedVersion = versionsList.find(
       (v) => v.timestamp.toString() === selectedTimeStamp.toString()
     );
+
+    console.log("versionsList", versionsList);
+    console.log("selectedTimeStamp", selectedTimeStamp);
+
+    console.log("selectedVersion", selectedVersion);
 
     setSelectedVersion(selectedTimeStamp);
     setCurrentHandoutData({
@@ -216,9 +233,9 @@ function App() {
             <div className="flex items-center">
               <button
                 onClick={handleSave}
-                className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white font-bold"
+                className="bg-red-500 rounded shadow mr-4 px-4 py-2 text-white text-sm font-bold hover:scale-100 active:scale-90"
               >
-                Save
+                Save Snapshot
               </button>
               {versionsList.length <= 0 && (
                 <span className="italic">No copies saved yet</span>
@@ -230,7 +247,14 @@ function App() {
                   className="grow rounded shadow px-4 py-2"
                 >
                   {versionsList.map((v) => {
-                    return <option key={v.timestamp}>{v.timestamp}</option>;
+                    return (
+                      <option
+                        label={formatTimestampToText(v.timestamp)}
+                        key={v.timestamp}
+                      >
+                        {v.timestamp}
+                      </option>
+                    );
                   })}
                 </select>
               )}

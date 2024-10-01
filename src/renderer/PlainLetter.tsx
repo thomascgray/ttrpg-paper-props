@@ -23,23 +23,35 @@ export const PlainLetter = ({
         }`,
         marginTop: `${handout.positioning.y_offset.value}%`,
         marginLeft: `${handout.positioning.x_offset.value}%`,
+        padding: `${handout.padding.value}px`,
       }}
       className={`paper paper-${handout.paper_texture.value}`}
     >
       <div
-        id="main_copy"
-        className={`flex h-full items-center`}
+        className="flex flex-col"
         style={{
-          fontSize: `${handout.font_size.value}px`,
-          padding: `${handout.padding.value}px`,
+          gap: `${handout.paragraph_gap.value}px`,
         }}
       >
-        <Markdown
-          remarkPlugins={[remarkGfm, remarkBreaks]}
-          className={`block ${handout.text_align.value} ${handout.ink_color.value} ${handout.font.value} ${handout.font_weight.value} copy-markdown list-inside list-disc`}
-        >
-          {handout.main_copy.value}
-        </Markdown>
+        {handout.paragraph.map((p, idx) => {
+          return (
+            <div
+              key={p.id}
+              id="main_copy"
+              className="flex h-full items-center w-full"
+              style={{
+                fontSize: `${p.font_size.value}px`,
+              }}
+            >
+              <Markdown
+                remarkPlugins={[remarkGfm, remarkBreaks]}
+                className={`block ${p.text_align.value} ${handout.ink_color.value} ${p.font.value} ${p.font_weight.value} copy-markdown list-inside list-disc w-full`}
+              >
+                {p.main_copy.value}
+              </Markdown>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

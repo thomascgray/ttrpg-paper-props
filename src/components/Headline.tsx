@@ -7,7 +7,6 @@ export const Headline = (props: { text: string }) => {
 
   useEffect(() => {
     const adjustFontSize = () => {
-      console.log("adjustFontSize");
       if (!containerRef.current) return;
 
       const containerWidth = containerRef.current.offsetWidth;

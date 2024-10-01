@@ -19,7 +19,6 @@ export const Select = (props: iFontSizeSelector) => {
           value={props.value}
           className={`p-2 text-lg w-full`}
           onChange={(e) => {
-            console.log("e.target.value", e.target.value);
             props.onUpdate(e.target.value);
           }}
         >

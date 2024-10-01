@@ -37,6 +37,7 @@ export const ColourPicker = (props: iStandardComponentProps) => {
           {colours.map((color) => {
             return (
               <button
+                key={color}
                 style={{
                   backgroundColor: color,
                 }}

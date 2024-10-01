@@ -19,6 +19,8 @@ import { FontWeightSelector } from "./components/FontWeightSelector";
 import { Select } from "./components/Select";
 import { BlendModeSelector } from "./components/TextFilterSelector";
 import { ColourPicker } from "./components/ColourPicker";
+import { nanoid } from "nanoid";
+const localStorageKey = "tomg_rpg_handout_builder";
 
 interface iConfigFormRendererProps {
   handoutDefinitionKey: eHandoutDefinitions;
@@ -26,17 +28,24 @@ interface iConfigFormRendererProps {
   config: iHandoutDefinition;
 }
 
-const renderHandoutData = (
-  handoutDefinitionKey: eHandoutDefinitions,
-  compoundKey: string,
-  config: tHandoutData,
-  dataset: any,
-  onChange: (key: string, value: any) => void,
-  valueAccessKey: string
-) => {
+interface RenderHandoutDataArgs {
+  compoundKey: string;
+  config: tHandoutData;
+  dataset: any;
+  onChange: (key: string, value: any) => void;
+  valueAccessKey: string;
+  index?: number;
+}
+
+const renderHandoutData = (args: RenderHandoutDataArgs) => {
+  const { compoundKey, config, dataset, onChange, valueAccessKey } = args;
+
   const val = _.get(dataset, valueAccessKey);
   const finalKey = `${compoundKey}`;
 
+  if (typeof config === "string") {
+    return null;
+  }
   switch (config.type) {
     case "range":
       return (
@@ -192,28 +201,98 @@ const renderHandoutData = (
 export const ConfigFormRenderer = (props: iConfigFormRendererProps) => {
   const { config } = props;
 
-  const { name, data } = config;
+  let data = props.dataset;
 
   const stateContext = React.useContext(StateContext);
+
+  // console.log("data", data);
 
   return (
     <div className="space-y-4">
       {Object.keys(data).map((key) => {
-        if (isHandoutData(data[key])) {
+        let config = data[key];
+
+        console.log("key", key, "config", config);
+        if (key === "timestamp") {
+          return null;
+        }
+        if (Array.isArray(config)) {
+          return (
+            <div key={key + "-top-level"} className="space-y-4">
+              {config.map((configElement, index) => {
+                console.log("configElement", configElement);
+                if (isHandoutData(configElement)) {
+                  // TODO this doesnt exist yet, cover it when we get to it
+                } else {
+                  return (
+                    <details
+                      onMouseEnter={() => stateContext.setHighlighted(key)}
+                      onMouseLeave={() => stateContext.setHighlighted("")}
+                      key={configElement.id as unknown as string}
+                      className="bg-gray-400 space-y-4 p-2"
+                    >
+                      <summary className="cursor-pointer font-bold">
+                        {_.startCase(_.toLower(key))} {index + 1}
+                      </summary>
+                      <div className="flex flex-col space-y-4">
+                        {Object.keys(configElement).map((nestedKey) => {
+                          const nestedHandoutData = _.get(
+                            config,
+                            `[${index}].${nestedKey}`
+                          ) as tHandoutData;
+                          return (
+                            <div key={nestedKey}>
+                              {renderHandoutData({
+                                compoundKey: `${key}[${index}].${nestedKey}`,
+                                config: nestedHandoutData,
+                                dataset: configElement,
+                                onChange: stateContext.onChange,
+                                valueAccessKey: `${nestedKey}.value`,
+                                index,
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </details>
+                  );
+                }
+              })}
+
+              <button
+                onClick={() => {
+                  const initialConfigElement = {
+                    ...config[0],
+                    id: nanoid(),
+                  };
+                  stateContext.onChange(
+                    `${key}[${config.length}]`,
+                    JSON.parse(JSON.stringify(initialConfigElement)),
+                    true
+                  );
+                }}
+                className="bg-green-500 hover:scale-110 active:scale-90 p-2 rounded-sm text-white"
+              >
+                Add {_.startCase(_.toLower(key))}
+              </button>
+            </div>
+          );
+
+          // it could be an array of handout data or the nested one
+        } else if (isHandoutData(config)) {
           return (
             <div
               key={key}
               onMouseEnter={() => stateContext.setHighlighted(key)}
               onMouseLeave={() => stateContext.setHighlighted("")}
             >
-              {renderHandoutData(
-                props.handoutDefinitionKey,
-                key,
-                data[key] as tHandoutData,
-                _.get(props.dataset, key),
-                stateContext.onChange,
-                "value"
-              )}
+              {renderHandoutData({
+                compoundKey: key,
+                config: data[key] as tHandoutData,
+                dataset: _.get(props.dataset, key),
+                onChange: stateContext.onChange,
+                valueAccessKey: "value",
+              })}
             </div>
           );
         } else {
@@ -232,14 +311,13 @@ export const ConfigFormRenderer = (props: iConfigFormRendererProps) => {
                   const nestedHandoutData = (data[key] as any)[nestedKey];
                   return (
                     <div key={nestedKey}>
-                      {renderHandoutData(
-                        props.handoutDefinitionKey,
-                        `${key}.${nestedKey}`,
-                        nestedHandoutData,
-                        _.get(props.dataset, `${key}`),
-                        stateContext.onChange,
-                        `${nestedKey}.value`
-                      )}
+                      {renderHandoutData({
+                        compoundKey: `${key}.${nestedKey}`,
+                        config: nestedHandoutData,
+                        dataset: _.get(props.dataset, `${key}`),
+                        onChange: stateContext.onChange,
+                        valueAccessKey: `${nestedKey}.value`,
+                      })}
                     </div>
                   );
                 })}

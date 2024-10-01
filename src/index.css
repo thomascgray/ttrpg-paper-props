@@ -95,8 +95,9 @@ body {
 }
 
 .paper {
-  background-size: contain;
+  background-size: cover !important;
 }
+
 .paper h1,
 .paper h2,
 .paper h3,
