@@ -1,58 +1,61 @@
 import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { PAPER_TYPES } from "../../config";
+import { NEWSPAPER_CLIPPING } from "../config2";
 
-export const NewspaperClipping = (
-  props: (typeof PAPER_TYPES)["NEWSPAPER_CLIPPING"]["data"]
-) => {
+export const NewspaperClipping = ({
+  handout,
+}: {
+  handout: (typeof NEWSPAPER_CLIPPING)["data"];
+}) => {
   return (
     <div
       style={{
-        transform: `rotate(${props.rotation_degrees}deg) scale(${props.zoom})`,
-        width: `${props.page_width}px`,
-        height: `${props.page_height}px`,
+        width: `${handout.dimensions.page_width.value}px`,
+        height: `${handout.dimensions.page_height.value}px`,
         boxShadow: `${
-          props.is_paper_shadow ? "inset 0 0 25px #000000" : "none"
+          handout.paper.is_paper_shadow.value
+            ? "inset 0 0 25px #000000"
+            : "none"
         }`,
-        marginTop: `${props.y_offset}%`,
-        marginLeft: `${props.x_offset}%`,
       }}
-      className={classNames(`paper transition paper-${props.paper_texture}`)}
+      className={classNames(
+        `paper transition paper-${handout.paper.paper_texture.value}`
+      )}
     >
       <div
-        className={`flex h-full items-center border-2 border-t-0 border-b-0 mx-10 px-8 overflow-hidden ${props.ink_color}`}
+        className={`flex h-full items-center border-2 border-t-0 border-b-0 mx-10 px-8 overflow-hidden ${handout.ink_color.value}`}
       >
         <div className="space-y-8">
-          {props.prefix_copy && (
+          {handout.prefix_copy.value !== "" && (
             <Markdown
               className={classNames(
-                `block font-serif text-justify copy-markdown prose clipping-markdown ${props.font} ${props.ink_color} ${props.image_filter}`,
+                `block font-serif text-justify copy-markdown prose clipping-markdown ${handout.font.value} ${handout.ink_color.value} ${handout.image_filter.value}`,
                 {
-                  blurry: props.is_prefix_blurry,
+                  blurry: handout.is_prefix_blurry.value,
                 }
               )}
             >
-              {props.prefix_copy}
+              {handout.prefix_copy.value}
             </Markdown>
           )}
-          {props.main_copy && (
+          {handout.main_copy.value !== "" && (
             <Markdown
-              className={`block font-serif text-justify prose copy-markdown clipping-markdown ${props.font} ${props.ink_color} ${props.image_filter}`}
+              className={`block font-serif text-justify prose copy-markdown clipping-markdown ${handout.font.value} ${handout.ink_color.value} ${handout.image_filter.value}`}
             >
-              {props.main_copy}
+              {handout.main_copy.value}
             </Markdown>
           )}
-          {props.suffix_copy && (
+          {handout.suffix_copy.value !== "" && (
             <Markdown
               className={classNames(
-                `block font-serif text-justify copy-markdown prose clipping-markdown ${props.font} ${props.ink_color} ${props.image_filter}`,
+                `block font-serif text-justify copy-markdown prose clipping-markdown ${handout.font.value} ${handout.ink_color.value} ${handout.image_filter.value}`,
                 {
-                  blurry: props.is_suffix_blurry,
+                  blurry: handout.is_suffix_blurry.value,
                 }
               )}
             >
-              {props.suffix_copy}
+              {handout.suffix_copy.value}
             </Markdown>
           )}
         </div>

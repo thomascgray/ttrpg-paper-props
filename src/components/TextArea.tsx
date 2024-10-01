@@ -16,7 +16,7 @@ export const TextArea = (props: iTextAreaProps) => {
           You can use{" "}
           <a
             target="_blank"
-            className="text-blue-400 underline"
+            className="text-blue-500 underline"
             href="https://www.markdownguide.org/cheat-sheet/"
           >
             markdown

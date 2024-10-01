@@ -12,6 +12,7 @@ import {
   eHandoutDefinitions,
   iHandoutDefinition,
   NEWSPAPER,
+  NEWSPAPER_CLIPPING,
   PLAIN_LETTER,
 } from "./config2";
 import { Newspaper } from "./renderer/Newspaper";
@@ -19,12 +20,13 @@ import { CharacterCard } from "./renderer/CharacterCard";
 import { PlainLetter } from "./renderer/PlainLetter";
 import { BookCover } from "./renderer/BookCover";
 import { formatTimestampToText } from "./utils";
+import { NewspaperClipping } from "./renderer/NewspaperClipping";
 
 const localStorageKey = "tomg_rpg_handout_builder";
 
 function App() {
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.PLAIN_LETTER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -303,6 +305,14 @@ function App() {
               <Newspaper
                 handout={
                   currentHandoutData as unknown as (typeof NEWSPAPER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.NEWSPAPER_CLIPPING && (
+              <NewspaperClipping
+                handout={
+                  currentHandoutData as unknown as (typeof NEWSPAPER_CLIPPING)["data"]
                 }
               />
             )}

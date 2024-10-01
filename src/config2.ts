@@ -117,15 +117,25 @@ export const isHandoutData = (obj: any): obj is tHandoutData => {
   return obj.type !== undefined;
 };
 
-const _fontSizeRange: iDataInputRange = {
-  name: "Font Size",
+const fontSizeRange = (
+  name: string = "Font Size",
+  value: number = 34
+): iDataInputRange => ({
+  name,
   type: "range",
-  value: 34,
+  value,
   min: 26,
   max: 200,
   step: 1,
   suffix: "px",
-};
+});
+
+const fontPicker = (name: string = "Font"): iDataInputFontPicker => ({
+  name,
+  type: "font_picker",
+  value: "font-serif",
+});
+
 const _rotationDegrees: iDataInputRange = {
   name: "Rotation",
   type: "range",
@@ -135,7 +145,6 @@ const _rotationDegrees: iDataInputRange = {
   step: 1,
   suffix: "°",
 };
-// universal data
 const _zoom: iDataInputRange = {
   name: "Zoom",
   type: "range",
@@ -172,6 +181,19 @@ const _yOffset: iDataInputRange = {
   max: 100,
   step: 1,
   suffix: "%",
+};
+const textAreaWithMarkdown = (
+  name: string = "Text Area"
+): iDataInputTextArea => {
+  return {
+    name,
+    type: "textarea",
+    value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+
+## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci.`,
+
+    isMarkdown: true,
+  };
 };
 export const POSITIONING_DATA = {
   rotation_degrees: _rotationDegrees,
@@ -226,10 +248,7 @@ export const NEWSPAPER = {
         value: "font-sans",
         type: "font_picker",
       },
-      title_font_size: {
-        ..._fontSizeRange,
-        value: 50,
-      },
+      title_font_size: fontSizeRange("Font Size", 50),
       line_height: {
         name: "Line Height",
         type: "range",
@@ -274,16 +293,8 @@ export const NEWSPAPER = {
         type: "input",
         value: "Quisque imperdiet",
       },
-      banner_font: {
-        name: "Font",
-        value: "font-serif",
-        type: "font_picker",
-      },
-      banner_size: {
-        name: "Banner Text 1",
-        type: "input",
-        value: "Lorem Ipsum",
-      },
+      banner_font: fontPicker(),
+      banner_size: fontSizeRange("Banner Text Size", 16),
       hide_top_banner_border: {
         name: "Hide Top Banner Border",
         type: "boolean",
@@ -307,10 +318,7 @@ export const NEWSPAPER = {
         value: "font-serif",
         type: "font_picker",
       },
-      headline_font_size: {
-        ..._fontSizeRange,
-        value: 34,
-      },
+      headline_font_size: fontSizeRange("Font Size", 34),
       headline_line_height: {
         name: "Line Height",
         type: "range",
@@ -352,22 +360,11 @@ export const NEWSPAPER = {
         value: "font-serif",
         type: "font_picker",
       },
-      quote_font_size: {
-        ..._fontSizeRange,
-        value: 20,
-      },
+      quote_font_size: fontSizeRange("Font Size", 20),
     },
 
     main_copy: {
-      main_copy_content: {
-        name: "Main Copy",
-        type: "textarea",
-        value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in posuere mauris. Fusce non metus in ipsum egestas cursus ut id nulla. Praesent sed diam magna. Duis faucibus, tortor eget porttitor interdum, augue lectus posuere quam, in rhoncus nunc dui efficitur erat. Duis sollicitudin sagittis nisl, et faucibus arcu imperdiet vitae. Aliquam efficitur porttitor lacus, malesuada venenatis sapien faucibus eget. Curabitur accumsan, ex quis tempor convallis, risus nunc lobortis diam, in commodo purus nulla ut lorem. Nunc faucibus commodo nunc. Proin sollicitudin turpis eget odio semper placerat at quis tellus. Suspendisse quis risus lacus. Sed gravida mi nibh, et bibendum sem lobortis nec. Mauris ut hendrerit sapien. In sed orci elementum, euismod tellus nec, porttitor velit. Proin accumsan tincidunt ultricies.
-
-Nullam hendrerit in neque a posuere. In et dignissim ex. Ut auctor ipsum quis enim ullamcorper congue. Aenean scelerisque lacus non eros rhoncus, suscipit dignissim ex dapibus. Aenean eleifend lorem velit, in tempor justo auctor at. Nam rutrum imperdiet lectus a consequat. Nunc luctus mauris nec sapien feugiat, eu efficitur augue tincidunt. Nam et luctus ex, ut ultrices dui. Cras bibendum purus erat, id accumsan sapien finibus quis. Vestibulum sapien neque, fermentum vel vulputate in, mollis commodo enim. Mauris purus neque, auctor ut urna eu, interdum laoreet tortor. Fusce ac orci venenatis, volutpat elit quis, tristique metus. Pellentesque porta fermentum libero sed semper. Curabitur tempor orci lacus, in tristique augue volutpat vitae.
-`,
-        isMarkdown: true,
-      },
+      main_copy_content: textAreaWithMarkdown("Main Copy"),
       main_copy_columns: {
         name: "Main Copy Columns",
         type: "range",
@@ -392,6 +389,74 @@ Nullam hendrerit in neque a posuere. In et dignissim ex. Ut auctor ipsum quis en
         type: "text_align",
         value: "text-justify",
       },
+    },
+  },
+} as const;
+export const NEWSPAPER_CLIPPING = {
+  name: "Newspaper Clipping (Vertical)",
+  caption:
+    "A simplified version of a newspaper 'clipping' - a classic vertical slice.",
+  data: {
+    positioning: {
+      ...POSITIONING_DATA,
+      y_offset: {
+        ..._yOffset,
+        value: 0,
+      },
+    },
+    dimensions: {
+      page_width: {
+        name: "Page Width",
+        type: "range",
+        value: 400,
+        min: 100,
+        max: 1800,
+        step: 1,
+        suffix: "px",
+      },
+      page_height: {
+        name: "Page Height",
+        type: "range",
+        value: 700,
+        min: 100,
+        max: 1200,
+        step: 1,
+        suffix: "px",
+      },
+    },
+    paper: {
+      paper_texture: _paperTexture,
+      paper_tint: {
+        name: "Paper Colour Tint",
+        type: "color",
+        value: "#FFFFFF",
+      },
+      is_paper_shadow: _isPaperShadow,
+    },
+    prefix_copy: textAreaWithMarkdown("Prefix Copy"),
+    is_prefix_blurry: {
+      name: "Is Prefix Blurry?",
+      type: "boolean",
+      value: true,
+    },
+    main_copy: textAreaWithMarkdown("Main Copy"),
+    suffix_copy: textAreaWithMarkdown("Suffix Copy"),
+    is_suffix_blurry: {
+      name: "Is Suffix Blurry?",
+      type: "boolean",
+      value: true,
+    },
+
+    font: fontPicker(),
+    ink_color: {
+      name: "Ink Colour",
+      type: "ink_color_picker",
+      value: "ink-black",
+    },
+    image_filter: {
+      name: "Image Effect",
+      type: "image_filter",
+      value: "none",
     },
   },
 } as const;
@@ -456,15 +521,7 @@ export const CHARACTER_CARD = {
       type: "font_picker",
       value: "font-serif",
     },
-    font_size: {
-      name: "Font Size (Relative)",
-      type: "range",
-      min: 8,
-      value: 24,
-      max: 100,
-      step: 1,
-      suffix: "px",
-    },
+    font_size: fontSizeRange("Font Size (Relative)", 24),
     font_weight: {
       name: "Font Weight",
       type: "font_weight_picker",
@@ -544,15 +601,7 @@ Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dign
           type: "font_picker",
           value: "font-serif",
         },
-        font_size: {
-          name: "Font Size (Relative)",
-          type: "range",
-          min: 8,
-          value: 12,
-          max: 100,
-          step: 1,
-          suffix: "px",
-        },
+        font_size: fontSizeRange("Font Size (Relative)", 12),
         font_weight: {
           name: "Font Weight",
           type: "font_weight_picker",
@@ -608,15 +657,7 @@ export const BOOK_COVER = {
       type: "font_picker",
       value: "font-serif",
     },
-    font_size: {
-      name: "Font Size (Relative)",
-      type: "range",
-      min: 8,
-      value: 30,
-      max: 100,
-      step: 1,
-      suffix: "px",
-    },
+    font_size: fontSizeRange("Font Size (Relative)", 30),
     font_weight: {
       name: "Font Weight",
       type: "font_weight_picker",
@@ -656,6 +697,7 @@ export const BOOK_COVER = {
 
 export enum eHandoutDefinitions {
   NEWSPAPER = "NEWSPAPER",
+  NEWSPAPER_CLIPPING = "NEWSPAPER_CLIPPING",
   CHARACTER_CARD = "CHARACTER_CARD",
   PLAIN_LETTER = "PLAIN_LETTER",
   BOOK_COVER = "BOOK_COVER",
@@ -663,6 +705,7 @@ export enum eHandoutDefinitions {
 
 export const ALL_HANDOUT_DEFINITIONS = {
   NEWSPAPER,
+  NEWSPAPER_CLIPPING,
   CHARACTER_CARD,
   PLAIN_LETTER,
   BOOK_COVER,
