@@ -9,6 +9,16 @@
     status = 301
     force = true
 [[redirects]]
+    from = "https://ttrpg-paper-props.pages.dev/"
+    to = "https://handouts.tomg.cool"
+    status = 301
+    force = true
+[[redirects]]
+    from = "https://ttrpg-paper-props.pages.dev"
+    to = "https://handouts.tomg.cool"
+    status = 301
+    force = true
+[[redirects]]
     from = "https://www.ttrpg-paper-props.pages.dev/*"
     to = "https://handouts.tomg.cool"
     status = 301
