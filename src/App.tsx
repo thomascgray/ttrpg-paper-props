@@ -9,20 +9,33 @@ import {
   ALL_HANDOUT_DEFINITIONS,
   BOOK_COVER,
   CHARACTER_CARD,
+  DIGITAL_PAPER_DEFINITIONS,
   eHandoutDefinitions,
   iHandoutDefinition,
+  LABELLED_LIQUID,
   NEWSPAPER,
   NEWSPAPER_CLIPPING,
+  OBJECT_DEFINITIONS,
   PLAIN_LETTER,
-} from "./config2";
+} from "./config";
 import { Newspaper } from "./renderer/Newspaper";
 import { CharacterCard } from "./renderer/CharacterCard";
 import { PlainLetter } from "./renderer/PlainLetter";
 import { BookCover } from "./renderer/BookCover";
 import { formatTimestampToText } from "./utils";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
+import { LabelledLiquid } from "./renderer/LabelledLiquid";
 
-const localStorageKey = "tomg_rpg_handout_builder";
+const DEBUG = false;
+
+const VERSION = "0.3";
+
+const localStorageKey = `${VERSION}_tomg_rpg_handout_builder`;
+
+if (DEBUG) {
+  // clear out local storage on load
+  window.localStorage.clear();
+}
 
 function App() {
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
@@ -204,7 +217,7 @@ function App() {
             </h1>
 
             <label className="block mb-4">
-              <span className="block mb-1">Prop Type</span>
+              <span className="block mb-1">Handout Type</span>
               <select
                 value={currentHandoutDefinitionKey}
                 className="p-2 text-lg w-full"
@@ -216,9 +229,22 @@ function App() {
                 }}
               >
                 <optgroup label="'Pseudo' Paper / Print">
-                  {Object.keys(ALL_HANDOUT_DEFINITIONS).map((typeKey) => {
+                  {Object.keys(DIGITAL_PAPER_DEFINITIONS).map((typeKey) => {
                     const p =
-                      ALL_HANDOUT_DEFINITIONS[typeKey as eHandoutDefinitions];
+                      // @ts-ignore
+                      DIGITAL_PAPER_DEFINITIONS[typeKey as eHandoutDefinitions];
+                    return (
+                      <option key={typeKey} value={typeKey}>
+                        {p.name}
+                      </option>
+                    );
+                  })}
+                </optgroup>
+                <optgroup label="Objects w/ Superimposed Text">
+                  {Object.keys(OBJECT_DEFINITIONS).map((typeKey) => {
+                    const p =
+                      // @ts-ignore
+                      OBJECT_DEFINITIONS[typeKey as eHandoutDefinitions];
                     return (
                       <option key={typeKey} value={typeKey}>
                         {p.name}
@@ -336,6 +362,14 @@ function App() {
               <BookCover
                 handout={
                   currentHandoutData as unknown as (typeof BOOK_COVER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.LABELLED_LIQUID && (
+              <LabelledLiquid
+                handout={
+                  currentHandoutData as unknown as (typeof LABELLED_LIQUID)["data"]
                 }
               />
             )}

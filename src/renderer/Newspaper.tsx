@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { NEWSPAPER } from "../config2";
+import { NEWSPAPER } from "../config";
 import { hexToRgba } from "../utils";
 
 export const Newspaper = ({

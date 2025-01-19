@@ -2,7 +2,7 @@ import React from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
-import { PLAIN_LETTER } from "../config2";
+import { PLAIN_LETTER } from "../config";
 import { hexToRgba } from "../utils";
 
 export const PlainLetter = ({

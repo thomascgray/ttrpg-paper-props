@@ -36,6 +36,10 @@ export const formatTimestampToText = (timestamp: number) => {
   const ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12; // Convert 24-hour format to 12-hour format
 
+  // do the seconds too
+  const seconds = date.getSeconds().toString().padStart(2, "0");
   // Format string
-  return `${dayOfWeek} ${day}${suffix(day)}, ${hours}:${minutes}${ampm}`;
+  return `${dayOfWeek} ${day}${suffix(
+    day
+  )}, ${hours}:${minutes}:${seconds} ${ampm}`;
 };

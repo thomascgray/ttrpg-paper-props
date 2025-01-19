@@ -1,5 +1,5 @@
 import React from "react";
-import { CHARACTER_CARD } from "../config2";
+import { CHARACTER_CARD } from "../config";
 
 export const CharacterCard = ({
   handout,

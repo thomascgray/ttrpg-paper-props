@@ -1,11 +1,11 @@
 import React from "react";
 import Markdown from "react-markdown";
-import { BOOK_COVER } from "../config";
+import { LABELLED_LIQUID } from "../config";
 
-export const BookCover = ({
+export const LabelledLiquid = ({
   handout,
 }: {
-  handout: (typeof BOOK_COVER)["data"];
+  handout: (typeof LABELLED_LIQUID)["data"];
 }) => {
   return (
     <div
@@ -15,20 +15,24 @@ export const BookCover = ({
       }}
       className="relative"
     >
-      <div className={`image-wrapper`}>
-        <img
-          src={handout.book_cover_template.value}
-          alt="The book cover"
-          width={700}
-        />
-      </div>
+      <img
+        src={handout.image_template.value}
+        alt="The book cover"
+        style={{
+          width: `${handout.image_width.value}px`,
+          transform: `rotate(${handout.image_rotation.value}deg)`,
+          filter: `hue-rotate(${handout.image_hue_filter.value}deg)`,
+        }}
+      />
 
       <div
         id="main_copy"
         style={{
           fontSize: `${handout.font_size.value}px`,
           marginLeft: `${handout.text_left_margin.value}px`,
-          width: "80%",
+          marginTop: `${handout.text_top_margin.value}%`,
+          width: `${handout.text_width.value}%`,
+          transform: `rotate(${handout.text_rotation.value}deg)`,
         }}
         className={`absolute ${handout.text_effect.value} ${handout.font.value} ${handout.font_weight.value} top-[2em] left-[2em]`}
       >
