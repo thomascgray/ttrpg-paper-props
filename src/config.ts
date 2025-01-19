@@ -188,14 +188,25 @@ const _yOffset: iDataInputRange = {
   suffix: "%",
 };
 const textAreaWithMarkdown = (
-  name: string = "Text Area"
+  name: string = "Text Area",
+  value?: string
 ): iDataInputTextArea => {
   return {
     name,
     type: "textarea",
-    value: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+    value:
+      value ??
+      `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
 
-## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci.`,
+Vestibulum tempor venenatis enim et rutrum. Etiam ut magna a massa convallis luctus. In justo enim, feugiat non mi sed, viverra mollis nulla. Praesent lobortis suscipit leo at lacinia. Phasellus metus tellus, fringilla vel dictum vel, congue in est. In non commodo ante. Vivamus nec placerat libero, at interdum mi. Aliquam odio purus, fringilla eu scelerisque a, dignissim sed mi. Mauris sollicitudin et massa laoreet consequat. Duis et volutpat orci, non hendrerit turpis. Sed ut mi ac purus volutpat egestas sed ut enim.
+
+Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices nisl vel justo scelerisque, non ultricies diam tristique. Proin mattis at nibh in ornare. Phasellus suscipit tincidunt ante sit amet posuere. Aenean porta, arcu eu cursus aliquet, urna turpis rhoncus tellus, in pharetra erat lectus sit amet enim. Mauris ut ultricies tellus, vitae auctor magna. Cras dapibus bibendum ante, sit amet efficitur mi. Morbi sapien augue, hendrerit a condimentum sed, eleifend vel mi. Aenean molestie turpis eget mollis accumsan. Donec ut magna vel tortor porttitor feugiat. Donec consequat eros in tellus sollicitudin ullamcorper. Donec cursus, massa in aliquet congue, metus urna porttitor orci, vel ultrices libero lacus a nisi. Donec sit amet nunc mattis, lobortis lacus sit amet, auctor risus.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
+
+Vestibulum tempor venenatis enim et rutrum. Etiam ut magna a massa convallis luctus. In justo enim, feugiat non mi sed, viverra mollis nulla. Praesent lobortis suscipit leo at lacinia. Phasellus metus tellus, fringilla vel dictum vel, congue in est. In non commodo ante. Vivamus nec placerat libero, at interdum mi. Aliquam odio purus, fringilla eu scelerisque a, dignissim sed mi. Mauris sollicitudin et massa laoreet consequat. Duis et volutpat orci, non hendrerit turpis. Sed ut mi ac purus volutpat egestas sed ut enim.
+
+Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices nisl vel justo scelerisque, non ultricies diam tristique. Proin mattis at nibh in ornare. Phasellus suscipit tincidunt ante sit amet posuere. Aenean porta, arcu eu cursus aliquet, urna turpis rhoncus tellus, in pharetra erat lectus sit amet enim. Mauris ut ultricies tellus, vitae auctor magna. Cras dapibus bibendum ante, sit amet efficitur mi. Morbi sapien augue, hendrerit a condimentum sed, eleifend vel mi. Aenean molestie turpis eget mollis accumsan. Donec ut magna vel tortor porttitor feugiat. Donec consequat eros in tellus sollicitudin ullamcorper. Donec cursus, massa in aliquet congue, metus urna porttitor orci, vel ultrices libero lacus a nisi. Donec sit amet nunc mattis, lobortis lacus sit amet, auctor risus.`,
 
     isMarkdown: true,
   };
@@ -223,7 +234,7 @@ export const NEWSPAPER = {
     page_width_percentage: {
       name: "Page Width",
       type: "range",
-      value: 80,
+      value: 60,
       min: 0,
       max: 300,
       step: 1,
@@ -438,14 +449,23 @@ export const NEWSPAPER_CLIPPING = {
       },
       is_paper_shadow: _isPaperShadow,
     },
-    prefix_copy: textAreaWithMarkdown("Prefix Copy"),
+    prefix_copy: textAreaWithMarkdown(
+      "Prefix Copy",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius vestibulum porttitor. Donec egestas egestas commodo. Nullam tincidunt, felis ut rutrum rhoncus, nunc metus mattis arcu, sit amet vulputate velit nunc in metus. Nullam lacinia mauris id mauris semper malesuada."
+    ),
     is_prefix_blurry: {
       name: "Is Prefix Blurry?",
       type: "boolean",
       value: true,
     },
-    main_copy: textAreaWithMarkdown("Main Copy"),
-    suffix_copy: textAreaWithMarkdown("Suffix Copy"),
+    main_copy: textAreaWithMarkdown(
+      "Main Copy",
+      "Curabitur eu tellus et nibh ornare ornare non nec nibh. Etiam sapien enim, suscipit et fermentum id, aliquet iaculis ipsum. Mauris pharetra congue"
+    ),
+    suffix_copy: textAreaWithMarkdown(
+      "Suffix Copy",
+      "Phasellus aliquam arcu sed risus imperdiet, non tempus nisl egestas."
+    ),
     is_suffix_blurry: {
       name: "Is Suffix Blurry?",
       type: "boolean",
@@ -779,16 +799,16 @@ export const LABELLED_LIQUID = {
     text_top_margin: {
       name: "Text Top Margin",
       type: "range",
-      value: 60,
+      value: 90,
       min: -100,
-      max: 150,
+      max: 250,
       step: 1,
       suffix: "%",
     },
     text_left_margin: {
       name: "Text Left Margin",
       type: "range",
-      value: 13,
+      value: 65,
       min: -100,
       max: 100,
       step: 1,
@@ -797,7 +817,7 @@ export const LABELLED_LIQUID = {
     text_width: {
       name: "Text Width",
       type: "range",
-      value: 80,
+      value: 56,
       min: -100,
       max: 150,
       step: 1,
@@ -826,11 +846,9 @@ export const LABELLED_LIQUID = {
       name: "Main Copy",
       type: "textarea",
       isMarkdown: true,
-      value: `# MYSTICAL ARTIFACTS
-
-## A STUDY IN THE STRANGE AND WEIRD
-
-### A. COBALT ET.AL`,
+      value: `# LOVE POTION No. 9
+      
+### _Elixer Sue_`,
     },
   },
 } as const;
@@ -850,5 +868,17 @@ export const ALL_HANDOUT_DEFINITIONS = {
   CHARACTER_CARD,
   PLAIN_LETTER,
   BOOK_COVER,
-  LABELLED_LIQUID: LABELLED_LIQUID,
+  LABELLED_LIQUID,
+};
+
+export const DIGITAL_PAPER_DEFINITIONS = {
+  NEWSPAPER,
+  NEWSPAPER_CLIPPING,
+  CHARACTER_CARD,
+  PLAIN_LETTER,
+};
+
+export const OBJECT_DEFINITIONS = {
+  BOOK_COVER,
+  LABELLED_LIQUID,
 };

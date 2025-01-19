@@ -9,12 +9,13 @@ import {
   ALL_HANDOUT_DEFINITIONS,
   BOOK_COVER,
   CHARACTER_CARD,
-  Edge,
+  DIGITAL_PAPER_DEFINITIONS,
   eHandoutDefinitions,
   iHandoutDefinition,
   LABELLED_LIQUID,
   NEWSPAPER,
   NEWSPAPER_CLIPPING,
+  OBJECT_DEFINITIONS,
   PLAIN_LETTER,
 } from "./config";
 import { Newspaper } from "./renderer/Newspaper";
@@ -25,9 +26,9 @@ import { formatTimestampToText } from "./utils";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
 
-const DEBUG = true;
+const DEBUG = false;
 
-const VERSION = "0.2";
+const VERSION = "0.3";
 
 const localStorageKey = `${VERSION}_tomg_rpg_handout_builder`;
 
@@ -38,7 +39,7 @@ if (DEBUG) {
 
 function App() {
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.LABELLED_LIQUID);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -228,9 +229,22 @@ function App() {
                 }}
               >
                 <optgroup label="'Pseudo' Paper / Print">
-                  {Object.keys(ALL_HANDOUT_DEFINITIONS).map((typeKey) => {
+                  {Object.keys(DIGITAL_PAPER_DEFINITIONS).map((typeKey) => {
                     const p =
-                      ALL_HANDOUT_DEFINITIONS[typeKey as eHandoutDefinitions];
+                      // @ts-ignore
+                      DIGITAL_PAPER_DEFINITIONS[typeKey as eHandoutDefinitions];
+                    return (
+                      <option key={typeKey} value={typeKey}>
+                        {p.name}
+                      </option>
+                    );
+                  })}
+                </optgroup>
+                <optgroup label="Objects w/ Superimposed Text">
+                  {Object.keys(OBJECT_DEFINITIONS).map((typeKey) => {
+                    const p =
+                      // @ts-ignore
+                      OBJECT_DEFINITIONS[typeKey as eHandoutDefinitions];
                     return (
                       <option key={typeKey} value={typeKey}>
                         {p.name}
