@@ -4,7 +4,7 @@ import {
   iHandoutDefinition,
   isHandoutData,
   tHandoutData,
-} from "./config2";
+} from "./config";
 import { RangeInput } from "./components/RangeInput";
 import { StateContext } from "./context";
 import * as _ from "lodash";

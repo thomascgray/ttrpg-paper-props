@@ -9,24 +9,36 @@ import {
   ALL_HANDOUT_DEFINITIONS,
   BOOK_COVER,
   CHARACTER_CARD,
+  Edge,
   eHandoutDefinitions,
   iHandoutDefinition,
+  LABELLED_LIQUID,
   NEWSPAPER,
   NEWSPAPER_CLIPPING,
   PLAIN_LETTER,
-} from "./config2";
+} from "./config";
 import { Newspaper } from "./renderer/Newspaper";
 import { CharacterCard } from "./renderer/CharacterCard";
 import { PlainLetter } from "./renderer/PlainLetter";
 import { BookCover } from "./renderer/BookCover";
 import { formatTimestampToText } from "./utils";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
+import { LabelledLiquid } from "./renderer/LabelledLiquid";
 
-const localStorageKey = "tomg_rpg_handout_builder";
+const DEBUG = true;
+
+const VERSION = "0.2";
+
+const localStorageKey = `${VERSION}_tomg_rpg_handout_builder`;
+
+if (DEBUG) {
+  // clear out local storage on load
+  window.localStorage.clear();
+}
 
 function App() {
   const [currentHandoutDefinitionKey, setCurrentHandoutDefinitionKey] =
-    useState<eHandoutDefinitions>(eHandoutDefinitions.NEWSPAPER);
+    useState<eHandoutDefinitions>(eHandoutDefinitions.LABELLED_LIQUID);
 
   const currentHandoutConfig =
     ALL_HANDOUT_DEFINITIONS[currentHandoutDefinitionKey];
@@ -204,7 +216,7 @@ function App() {
             </h1>
 
             <label className="block mb-4">
-              <span className="block mb-1">Prop Type</span>
+              <span className="block mb-1">Handout Type</span>
               <select
                 value={currentHandoutDefinitionKey}
                 className="p-2 text-lg w-full"
@@ -336,6 +348,14 @@ function App() {
               <BookCover
                 handout={
                   currentHandoutData as unknown as (typeof BOOK_COVER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey ===
+              eHandoutDefinitions.LABELLED_LIQUID && (
+              <LabelledLiquid
+                handout={
+                  currentHandoutData as unknown as (typeof LABELLED_LIQUID)["data"]
                 }
               />
             )}

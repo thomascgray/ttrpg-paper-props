@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { NEWSPAPER_CLIPPING } from "../config2";
+import { NEWSPAPER_CLIPPING } from "../config";
 
 export const NewspaperClipping = ({
   handout,
