@@ -1,6 +1,7 @@
 {
   "name": "papers-generator",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"npx tailwindcss -i ./src/index.css -o ./src/build.css --watch\"",
     "build": "npx tailwindcss -i ./src/index.css -o ./src/build.css --minify && vite build",
