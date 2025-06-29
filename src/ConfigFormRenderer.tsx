@@ -19,6 +19,7 @@ import { FontWeightSelector } from "./components/FontWeightSelector";
 import { Select } from "./components/Select";
 import { BlendModeSelector } from "./components/TextFilterSelector";
 import { ColourPicker } from "./components/ColourPicker";
+import ImageInput from "./components/ImageInput";
 import { nanoid } from "nanoid";
 
 interface iConfigFormRendererProps {
@@ -191,6 +192,17 @@ const renderHandoutData = (args: RenderHandoutDataArgs) => {
       );
     case "raw_image_url":
       return null;
+
+    case "image":
+      return (
+        <ImageInput
+          label={config.name}
+          value={val}
+          onUpdate={(newValue) => {
+            onChange(finalKey, newValue);
+          }}
+        />
+      );
 
     default:
       return <div>unknown type</div>;

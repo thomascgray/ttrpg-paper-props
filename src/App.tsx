@@ -26,7 +26,7 @@ import { formatTimestampToText } from "./utils";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
 
-const DEBUG = false;
+const DEBUG = true;
 
 const VERSION = "0.3";
 
@@ -105,6 +105,7 @@ function App() {
       });
     }
 
+    console.log("newHandoutData", newHandoutData);
     setCurrentHandoutData(newHandoutData as any);
     window.localStorage.setItem(
       `${localStorageKey}_${currentHandoutDefinitionKey}`,

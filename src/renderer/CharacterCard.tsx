@@ -21,7 +21,6 @@ export const CharacterCard = ({
         className={`inline-block overflow-visible ${handout.font.value} ${handout.font_weight.value} ${handout.image_filter.value} paper-${handout.paper_texture.value}`}
       >
         <img
-          className=""
           src={handout.image_url.value}
           style={{
             mixBlendMode: "multiply",

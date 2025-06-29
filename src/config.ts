@@ -85,6 +85,12 @@ type iDataInputColor = {
   value: string;
 };
 
+type iDataInputImage = {
+  name: string;
+  type: "image";
+  value: string;
+};
+
 export type Edge = "top" | "right" | "bottom" | "left";
 
 export type tHandoutData =
@@ -101,7 +107,8 @@ export type tHandoutData =
   | iDataInputSelect
   | iDataInputRawImageUrl
   | iDataInputBlendMode
-  | iDataInputColor;
+  | iDataInputColor
+  | iDataInputImage;
 
 export type iHandoutDefinition = {
   name?: string;
@@ -511,8 +518,8 @@ export const CHARACTER_CARD = {
     },
     is_paper_shadow: _isPaperShadow,
     image_url: {
-      name: "Image URL",
-      type: "input",
+      name: "Image",
+      type: "image",
       value:
         "https://i.pinimg.com/564x/49/c1/4d/49c14d528399386e820dd116a25590b2.jpg",
     },
@@ -546,7 +553,7 @@ export const CHARACTER_CARD = {
       type: "font_picker",
       value: "font-serif",
     },
-    font_size: fontSizeRange("Font Size (Relative)", 24),
+    font_size: fontSizeRange("Font Size (Relative)", 24, 12),
     font_weight: {
       name: "Font Weight",
       type: "font_weight_picker",
