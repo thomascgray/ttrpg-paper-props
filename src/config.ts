@@ -720,6 +720,67 @@ export const BOOK_COVER = {
   },
 } as const;
 
+export const DOSSIER = {
+  name: "Dossier",
+  caption: "Table'd data",
+  data: {
+    positioning: {
+      ...POSITIONING_DATA,
+      zoom: {
+        ..._zoom,
+        value: 1,
+      },
+    },
+    paper_texture: _paperTexture,
+
+    //     ink_color: {
+    //       name: "Ink Colour",
+    //       type: "ink_color_picker",
+    //       value: "ink-white",
+    //     },
+    //     font: {
+    //       name: "Font",
+    //       type: "font_picker",
+    //       value: "font-serif",
+    //     },
+    //     font_size: fontSizeRange("Font Size (Relative)", 30),
+    //     font_weight: {
+    //       name: "Font Weight",
+    //       type: "font_weight_picker",
+    //       value: "font-normal",
+    //     },
+    //     text_left_margin: {
+    //       name: "Text Left Margin",
+    //       type: "range",
+    //       value: 13,
+    //       min: -100,
+    //       max: 100,
+    //       step: 1,
+    //       suffix: "px",
+    //     },
+    //     text_align: {
+    //       name: "Text Align",
+    //       type: "text_align",
+    //       value: "text-center",
+    //     },
+    //     text_effect: {
+    //       name: "Text Effect",
+    //       type: "blend_mode",
+    //       value: "blend-mode-normal",
+    //     },
+    //     main_copy: {
+    //       name: "Main Copy",
+    //       type: "textarea",
+    //       isMarkdown: true,
+    //       value: `# MYSTICAL ARTIFACTS
+
+    // ## A STUDY IN THE STRANGE AND WEIRD
+
+    // ### A. COBALT ET.AL`,
+    //     },
+  },
+} as const;
+
 export const LABELLED_LIQUID = {
   name: "Labelled Liquid",
   caption: "A bottle, vial, or other labelled liquid",
@@ -860,6 +921,7 @@ export enum eHandoutDefinitions {
   PLAIN_LETTER = "PLAIN_LETTER",
   BOOK_COVER = "BOOK_COVER",
   LABELLED_LIQUID = "LABELLED_LIQUID",
+  DOSSIER = "DOSSIER",
 }
 
 export const ALL_HANDOUT_DEFINITIONS = {
@@ -867,6 +929,7 @@ export const ALL_HANDOUT_DEFINITIONS = {
   NEWSPAPER_CLIPPING,
   CHARACTER_CARD,
   PLAIN_LETTER,
+  DOSSIER,
   BOOK_COVER,
   LABELLED_LIQUID,
 };
@@ -876,6 +939,7 @@ export const DIGITAL_PAPER_DEFINITIONS = {
   NEWSPAPER_CLIPPING,
   CHARACTER_CARD,
   PLAIN_LETTER,
+  DOSSIER,
 };
 
 export const OBJECT_DEFINITIONS = {

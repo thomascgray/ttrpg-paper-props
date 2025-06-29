@@ -10,6 +10,7 @@ import {
   BOOK_COVER,
   CHARACTER_CARD,
   DIGITAL_PAPER_DEFINITIONS,
+  DOSSIER,
   eHandoutDefinitions,
   iHandoutDefinition,
   LABELLED_LIQUID,
@@ -25,6 +26,8 @@ import { BookCover } from "./renderer/BookCover";
 import { formatTimestampToText } from "./utils";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
+import { Dossier } from "./renderer/Dossier";
+import { GridBuilder, iGridData } from "./components/GridBuilder";
 
 const DEBUG = false;
 
@@ -180,6 +183,11 @@ function App() {
     // @ts-ignore
     currentHandoutData.positioning.zoom.value;
 
+  const [gridData, setGridData] = useState<iGridData>({
+    totalColumns: 4,
+    elements: [],
+    gridGap: 2,
+  });
   return (
     <StateContext.Provider
       value={{
@@ -315,6 +323,13 @@ function App() {
               This tool is in alpha and constant flux. Apologies for any bugs!
             </span>
           </div>
+
+          {/* <GridBuilder
+            gridData={gridData}
+            onGridDataUpdate={(newGridData) => {
+              setGridData(newGridData);
+            }}
+          /> */}
         </div>
 
         {/* render area */}
@@ -355,6 +370,13 @@ function App() {
               <PlainLetter
                 handout={
                   currentHandoutData as unknown as (typeof PLAIN_LETTER)["data"]
+                }
+              />
+            )}
+            {currentHandoutDefinitionKey === eHandoutDefinitions.DOSSIER && (
+              <Dossier
+                handout={
+                  currentHandoutData as unknown as (typeof DOSSIER)["data"]
                 }
               />
             )}
