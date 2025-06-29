@@ -1,5 +1,5 @@
 import React from "react";
-import { PAPER_TYPES } from "../../config";
+// import { PAPER_TYPES } from "../../config"; // NEWSPAPER_ALT definition not found in config
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { ImageFilterSelector } from "../../components/ImageFilterSelector";
@@ -8,9 +8,9 @@ import { CheckboxInput } from "../../components/CheckboxInput";
 import { GridBuilder } from "../../components/GridBuilder";
 
 interface iNewspaperFormProps {
-  dataset: (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"];
+  dataset: any; // (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"] - NEWSPAPER_ALT definition not found in config
   handleDataChange: (
-    key: keyof (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"],
+    key: string, // keyof (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"] - NEWSPAPER_ALT definition not found in config
     value: any
   ) => void;
   setHighlighted: (section: string) => void;

@@ -1,5 +1,5 @@
 import React from "react";
-import { PAPER_TYPES } from "../../config";
+// import { PAPER_TYPES } from "../../config"; // TICKET definition not found in config
 import { PaperTextureSelect } from "../../components/PaperTextureSelect";
 import { FontSelector } from "../../components/FontSelector";
 import { FontSizeSelector } from "../../components/FontSizeSelector";
@@ -10,9 +10,9 @@ import { CheckboxInput } from "../../components/CheckboxInput";
 import { TextArea } from "../../components/TextArea";
 
 interface iTicketFormProps {
-  dataset: typeof PAPER_TYPES["TICKET"]["data"];
+  dataset: any; // typeof PAPER_TYPES["TICKET"]["data"] - TICKET definition not found in config
   handleDataChange: (
-    key: keyof typeof PAPER_TYPES["TICKET"]["data"],
+    key: string, // keyof typeof PAPER_TYPES["TICKET"]["data"] - TICKET definition not found in config
     value: any
   ) => void;
 }
