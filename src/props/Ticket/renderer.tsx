@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { PAPER_TYPES } from "../../config";
+// import { PAPER_TYPES } from "../../config"; // TICKET definition not found in config
 
-export const Ticket = (props: (typeof PAPER_TYPES)["TICKET"]["data"]) => {
+export const Ticket = (props: any /* (typeof PAPER_TYPES)["TICKET"]["data"] - TICKET definition not found in config */) => {
   return (
     <div
       className="relative"

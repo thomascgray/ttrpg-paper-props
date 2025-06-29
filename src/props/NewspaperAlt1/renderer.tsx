@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { PAPER_TYPES } from "../../config";
+// import { PAPER_TYPES } from "../../config"; // NEWSPAPER_ALT definition not found in config
 import { iGridElement } from "../../components/GridBuilder";
 
 // verison 1
@@ -65,7 +65,7 @@ import { iGridElement } from "../../components/GridBuilder";
          */
 }
 export const NewspaperAlt1 = (
-  props: (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"]
+  props: any /* (typeof PAPER_TYPES)["NEWSPAPER_ALT"]["data"] - NEWSPAPER_ALT definition not found in config */
 ) => {
   return (
     <React.Fragment>
