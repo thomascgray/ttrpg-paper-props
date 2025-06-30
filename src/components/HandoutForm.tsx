@@ -1,17 +1,17 @@
-import React from 'react';
-import { 
-  eHandoutDefinitions, 
-  iHandoutDefinition, 
-  DIGITAL_PAPER_DEFINITIONS, 
-  OBJECT_DEFINITIONS 
-} from '../config';
-import { ConfigFormRenderer } from '../ConfigFormRenderer';
-import { VersionSelector } from './VersionSelector';
+import React from "react";
+import {
+  eHandoutDefinitions,
+  iHandoutDefinition,
+  DIGITAL_PAPER_DEFINITIONS,
+  OBJECT_DEFINITIONS,
+} from "../config";
+import { ConfigFormRenderer } from "../ConfigFormRenderer";
+import { VersionSelector } from "./VersionSelector";
 
 interface HandoutFormProps {
   currentHandoutDefinitionKey: eHandoutDefinitions;
   currentHandoutConfig: any;
-  currentHandoutData: iHandoutDefinition['data'];
+  currentHandoutData: iHandoutDefinition["data"];
   versionsList: any[];
   selectedVersion: string | null;
   onHandoutTypeChange: (type: eHandoutDefinitions) => void;
@@ -31,11 +31,11 @@ export const HandoutForm: React.FC<HandoutFormProps> = ({
 }) => {
   return (
     <div
-      style={{
-        height: "100vh",
-        minWidth: "400px",
-      }}
-      className="form w-1/3 max-w-md bg-gray-300 z-20 overflow-y-scroll pb-20"
+      // style={{
+      //   height: "100vh",
+      //   minWidth: "400px",
+      // }}
+      className="form bg-gray-300 z-20 md:overflow-y-scroll pb-20 md:h-[100vh] md:w-1/3 md:min-w-[400px] md:max-w-md"
     >
       <div className="bg-gray-300 p-4">
         <h1 className="text-xl font-poppins font-bold mb-4">
@@ -78,7 +78,7 @@ export const HandoutForm: React.FC<HandoutFormProps> = ({
           </select>
         </label>
 
-        <span className="text-sm">{currentHandoutConfig.caption || ''}</span>
+        <span className="text-sm">{currentHandoutConfig.caption || ""}</span>
       </div>
 
       <VersionSelector

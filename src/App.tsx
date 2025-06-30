@@ -16,12 +16,12 @@ function App() {
     updateHandoutData,
   } = useHandoutState();
 
-  const {
-    versionsList,
-    selectedVersion,
-    handleSave,
-    handleVersionSelect,
-  } = useVersionManager(currentHandoutDefinitionKey, currentHandoutData, updateHandoutData);
+  const { versionsList, selectedVersion, handleSave, handleVersionSelect } =
+    useVersionManager(
+      currentHandoutDefinitionKey,
+      currentHandoutData,
+      updateHandoutData
+    );
 
   const [highlighted, setHighlighted] = useState("");
 
@@ -33,7 +33,7 @@ function App() {
         onChange: handleDataChange,
       }}
     >
-      <div className="flex min-h-full">
+      <div className="flex min-h-full flex-col md:flex-row">
         <Helmet>
           <style>
             {`
@@ -48,7 +48,7 @@ function App() {
 `}
           </style>
         </Helmet>
-        
+
         <HandoutForm
           currentHandoutDefinitionKey={currentHandoutDefinitionKey}
           currentHandoutConfig={currentHandoutConfig}
