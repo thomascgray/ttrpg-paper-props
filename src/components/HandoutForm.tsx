@@ -30,13 +30,7 @@ export const HandoutForm: React.FC<HandoutFormProps> = ({
   onVersionSelect,
 }) => {
   return (
-    <div
-      // style={{
-      //   height: "100vh",
-      //   minWidth: "400px",
-      // }}
-      className="form bg-gray-300 z-20 md:overflow-y-scroll pb-20 md:h-[100vh] md:w-1/3 md:min-w-[400px] md:max-w-md"
-    >
+    <div className="form bg-gray-300 z-20 md:overflow-y-scroll pb-20 md:h-[100vh] md:w-1/3 md:min-w-[400px] md:max-w-md">
       <div className="bg-gray-300 p-4">
         <h1 className="text-xl font-poppins font-bold mb-4">
           📜 Tom G's RPG Handout Builder

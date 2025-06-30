@@ -8,7 +8,7 @@ interface iPaperTextureSelect {
 export const PaperTextureSelect = (props: iPaperTextureSelect) => {
   return (
     <label className="block">
-      <span className="block mb-1">Paper Texture</span>
+      <span className="block mb-1">📜 Paper Texture</span>
       <div className="flex">
         <select
           value={props.value}

@@ -16,7 +16,7 @@ const colours = [
 export const InkColorSelector = (props: iStandardComponentProps) => {
   return (
     <label className="block">
-      <span className="block">{props.label}</span>
+      <span className="block">✒️ {props.label}</span>
       <div className="flex space-x-4">
         {colours.map((colourTuple) => {
           const [colourName, hexCode] = colourTuple;
