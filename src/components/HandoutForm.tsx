@@ -8,8 +8,10 @@ import {
 import { ConfigFormRenderer } from "../ConfigFormRenderer";
 import { VersionSelector } from "./VersionSelector";
 
+import { AllConfigNames, allConfigs } from "../db";
+
 interface HandoutFormProps {
-  currentHandoutDefinitionKey: eHandoutDefinitions;
+  currentHandoutDefinitionKey: AllConfigNames;
   currentHandoutConfig: any;
   currentHandoutData: iHandoutDefinition["data"];
   versionsList: any[];
@@ -29,6 +31,7 @@ export const HandoutForm: React.FC<HandoutFormProps> = ({
   onSave,
   onVersionSelect,
 }) => {
+  console.log("currentHandoutDefinitionKey", currentHandoutDefinitionKey);
   return (
     <div className="form bg-gray-300 z-20 md:overflow-y-scroll pb-20 md:h-[100vh] md:w-1/3 md:min-w-[400px] md:max-w-md">
       <div className="bg-gray-300 p-4">
@@ -46,29 +49,25 @@ export const HandoutForm: React.FC<HandoutFormProps> = ({
             }}
           >
             <optgroup label="'Pseudo' Paper / Print">
-              {Object.keys(DIGITAL_PAPER_DEFINITIONS).map((typeKey) => {
-                const p =
-                  // @ts-ignore
-                  DIGITAL_PAPER_DEFINITIONS[typeKey as eHandoutDefinitions];
+              {allConfigs
+                .filter((config) => config.type === "digital_paper")
+                .map((config) => {
+                  return (
+                    <option key={config.name} value={config.name}>
+                      {config.name}
+                    </option>
+                  );
+                })}
+            </optgroup>
+            {/* <optgroup label="Objects w/ Superimposed Text">
+              {allConfigs.filter(config => config.type === "object").map((config) => {
                 return (
-                  <option key={typeKey} value={typeKey}>
-                    {p.name}
+                  <option key={config.name} value={config.name}>
+                    {config.name}
                   </option>
                 );
               })}
-            </optgroup>
-            <optgroup label="Objects w/ Superimposed Text">
-              {Object.keys(OBJECT_DEFINITIONS).map((typeKey) => {
-                const p =
-                  // @ts-ignore
-                  OBJECT_DEFINITIONS[typeKey as eHandoutDefinitions];
-                return (
-                  <option key={typeKey} value={typeKey}>
-                    {p.name}
-                  </option>
-                );
-              })}
-            </optgroup>
+            </optgroup> */}
           </select>
         </label>
 
