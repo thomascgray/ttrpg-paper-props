@@ -1,5 +1,8 @@
 import Dexie, { type EntityTable } from "dexie";
+import { nanoid } from "nanoid";
 import { proxy } from "valtio";
+
+const APP_VERSION = 3;
 
 export enum FontFamily {
   // Serif fonts
@@ -382,12 +385,22 @@ type HandoutTable = {
   data: any;
 };
 
-export const db = new Dexie("handoutsdb") as Dexie & {
-  handouts: EntityTable<HandoutTable, "id">;
+type VersionTable = {
+  id: string;
+  handoutType: string;
+  data: any;
+  timestamp: number;
+  createdAt: Date;
 };
 
-db.version(1).stores({
+export const db = new Dexie("handoutsdb") as Dexie & {
+  handouts: EntityTable<HandoutTable, "id">;
+  versions: EntityTable<VersionTable, "id">;
+};
+
+db.version(APP_VERSION).stores({
   handouts: "++id, type, data",
+  versions: "++id, handoutType, timestamp, createdAt",
 });
 
 // for each handout, add a transient handout
@@ -399,10 +412,67 @@ allConfigs.forEach((config) => {
   });
 });
 
+export const getLatestVersion = async (handoutType: string) => {
+  const versions = await db.versions
+    .where("handoutType")
+    .equals(handoutType)
+    .reverse()
+    .toArray();
+
+  return versions[0];
+};
+
+const latestVersionOfFirstHandout = await getLatestVersion(allConfigs[0].name);
 /**
  * we then keep an app state that is transient for things that dont belong in the db, like
  * which handout type is selected
  */
-export const appState = proxy({
+export const appState = proxy<{
+  selectedHandoutType: AllConfigNames;
+  selectedVersionId: string | undefined;
+}>({
   selectedHandoutType: allConfigs[0].name,
+  selectedVersionId: latestVersionOfFirstHandout?.id ?? undefined,
 });
+
+export const saveVersion = async (handoutType: string, data: any) => {
+  const newVersion: VersionTable = {
+    id: nanoid(),
+    handoutType,
+    data: {
+      ...data,
+    },
+    timestamp: Date.now(),
+    createdAt: new Date(),
+  };
+
+  await db.versions.add(newVersion);
+
+  // update the app state to the latest version
+  appState.selectedVersionId = newVersion.id;
+};
+
+export const updateTransientRecordToVersion = async (versionId: string) => {
+  const version = await db.versions.get(versionId);
+  console.log("versionId", versionId);
+  console.log("version", version);
+  if (version) {
+    await updateTransientRecord(version.handoutType, version.data);
+    appState.selectedVersionId = versionId;
+  }
+};
+export const updateTransientRecord = async (handoutType: string, data: any) => {
+  // dont update the id tho
+  await db.handouts
+    .where("id")
+    .equals(`TRANSIENT_${handoutType}`)
+    .modify({
+      data: {
+        ...data,
+        id: `TRANSIENT_${handoutType}`,
+      },
+    });
+};
+
+// Export the version table type for use in other components
+export type { VersionTable };
