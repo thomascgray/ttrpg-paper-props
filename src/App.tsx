@@ -4,7 +4,6 @@ import { StateContext } from "./context";
 import { useHandoutState } from "./hooks/useHandoutState";
 import { useVersionManager } from "./hooks/useVersionManager";
 import { HandoutForm } from "./components/HandoutForm";
-import { RenderArea } from "./components/RenderArea";
 import {
   AllConfigNames,
   allConfigs,
@@ -18,6 +17,7 @@ import { snapshot, useSnapshot } from "valtio";
 import { appState as appStateProxy, db } from "./db";
 import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Newspaper } from "./renderer/Newspaper";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -52,10 +52,9 @@ function App() {
         },
       }}
     >
-      <div className="flex min-h-full flex-col md:flex-row">
-        <Helmet>
-          <style>
-            {`
+      <Helmet>
+        <style>
+          {`
           @keyframes blink { 
             50% { outline-style: dotted; } 
           }
@@ -65,10 +64,10 @@ function App() {
     animation: blink .5s step-end infinite alternate;
 }
 `}
-          </style>
-        </Helmet>
-
-        <div className="left-column bg-gray-300 overflow-y-scroll h-screen p-4">
+        </style>
+      </Helmet>
+      <div className="flex min-h-full flex-col md:flex-row">
+        <div className="left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4">
           <h1 className="text-xl font-poppins font-bold mb-4 md:min-w-[400px]">
             📜 Tom G's RPG Handout Builder
           </h1>
@@ -97,23 +96,21 @@ function App() {
           />
         </div>
 
-        <div className="render-area"></div>
-
-        {/* <HandoutForm
-          currentHandoutDefinitionKey={currentHandoutDefinitionKey}
-          currentHandoutConfig={currentHandoutConfig}
-          currentHandoutData={currentHandoutData}
-          versionsList={versionsList}
-          selectedVersion={selectedVersion}
-          onHandoutTypeChange={changeHandoutType}
-          onSave={handleSave}
-          onVersionSelect={handleVersionSelect}
-        /> */}
-
-        {/* <RenderArea
-          handoutType={currentHandoutDefinitionKey}
-          handoutData={currentHandoutData}
-        /> */}
+        <div className="right-column render-area md:w-3/4 relative w-full h-screen z-10 overflow-y-scroll bg-[#2f3640] pt-[5%] pb-[10%]">
+          <div
+            className="render-area-content w-full flex flex-col justify-around items-center origin-center"
+            style={{
+              transform: `rotate(${currentHandoutTransientRow.data.positioning?.rotationDegrees || 0}deg) scale(${
+                currentHandoutTransientRow.data.positioning?.zoom || 1
+              })`,
+              transition: 'transform 0.3s ease-out',
+            }}
+          >
+            {appState.selectedHandoutType === "Newspaper" && (
+              <Newspaper handout={currentHandoutTransientRow.data} />
+            )}
+          </div>
+        </div>
       </div>
     </StateContext.Provider>
   );

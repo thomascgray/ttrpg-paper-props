@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { FontFamily } from "./db";
 type iDataInputRange = {
   name: string;
   type: "range";

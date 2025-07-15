@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { iStandardComponentProps } from "./";
 
 export interface iRangeInputProps extends iStandardComponentProps {
@@ -10,6 +10,34 @@ export interface iRangeInputProps extends iStandardComponentProps {
 
 export const RangeInput = (props: iRangeInputProps) => {
   const [displayValue, setDisplayValue] = useState(props.value);
+  const timeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setDisplayValue(props.value);
+  }, [props.value]);
+
+  const handleChange = (value: string) => {
+    setDisplayValue(value);
+
+    // Clear existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Set new timeout for debounced update
+    timeoutRef.current = setTimeout(() => {
+      props.onUpdate(value);
+    }, 10);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <label className="block w-full">
@@ -25,13 +53,7 @@ export const RangeInput = (props: iRangeInputProps) => {
         type="range"
         value={displayValue}
         onChange={(e) => {
-          setDisplayValue(e.currentTarget.value);
-        }}
-        onMouseUp={(e) => {
-          props.onUpdate(e.currentTarget.value);
-        }}
-        onTouchEnd={(e) => {
-          props.onUpdate(e.currentTarget.value);
+          handleChange(e.currentTarget.value);
         }}
         step={props.step}
         min={props.min}

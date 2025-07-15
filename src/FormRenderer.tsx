@@ -182,6 +182,16 @@ const renderFormInput = (
         />
       );
 
+    case "ink_color":
+      return (
+        <InkColorSelector
+          key={path}
+          label={name}
+          value={value}
+          onUpdate={handleUpdate}
+        />
+      );
+
     default:
       console.warn(`Unknown input type: ${type}`);
       return null;
@@ -204,8 +214,8 @@ const renderFormSection = (
   if (typeof config === "object" && config !== null) {
     return (
       <details key={key} className="bg-gray-400 p-2 mb-4">
-        <summary>
-          <h3 className="font-semibold text-lg capitalize inline-block cursor-pointer">
+        <summary className="cursor-pointer">
+          <h3 className="font-semibold text-lg capitalize inline-block ">
             {key.replace(/([A-Z])/g, " $1").trim()}
           </h3>
         </summary>

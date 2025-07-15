@@ -1,6 +1,41 @@
 import Dexie, { type EntityTable } from "dexie";
 import { proxy } from "valtio";
 
+export enum FontFamily {
+  // Serif fonts
+  SERIF = "font-serif",
+  ALFA_SLAB_ONE = "font-alfa-slab-one",
+  NEWSREADER = "font-newsreader",
+  NOTICIA_TEXT = "font-noticia-text",
+  YUJI_SYUKU = "font-yuji-syuku",
+  CRETE_ROUND = "font-crete-round",
+  PLAYFAIR_DISPLAY_SC = "font-playfair-display-sc",
+  QUATTROCENTO = "font-quattrocento",
+  IM_FELL = "font-im-fell",
+  IM_FELL_DISPLAY = "font-im-fell-display",
+
+  // Sans serif fonts
+  SANS = "font-sans",
+
+  // Cursive/Handwriting fonts
+  CURSIVE = "font-cursive",
+  INDIE_FLOWER = "font-indie-flower",
+  DANCING_SCRIPT = "font-dancing-script",
+  ZEYADA = "font-zeyada",
+  MERIENDA = "font-merienda",
+  SHADOWS_INTO_LIGHT = "font-shadows-into-light",
+  CAVEAT = "font-caveat",
+
+  // Fantasy fonts
+  MEDIEVAL_SHARP = "font-medieval-sharp",
+  MACONDO_REGULAR = "font-macondo-regular",
+  MACONDO_SWASH_CAPS = "font-macondo-swash-caps",
+  UNIFRAKTURMAGUNTIA = "font-unifrakturmaguntia",
+  UNIFRAKTURCOOK = "font-unifrakturcook",
+  PIRATA_ONE = "font-pirata-one",
+  NEW_ROCKER = "font-new-rocker",
+}
+
 const range = (overrides?: {
   name?: string;
   value?: number;
@@ -22,7 +57,11 @@ const range = (overrides?: {
 };
 
 const fontSize = () =>
-  range({ name: "Font Size", min: 5, max: 200, suffix: "px" });
+  range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
+
+// again for line height
+const lineHeight = () =>
+  range({ name: "Line Height", min: 0, max: 4, step: 0.1, suffix: "em" });
 
 const paperTexture = (overrides?: { name?: string; value?: string }) => {
   return {
@@ -74,11 +113,20 @@ const textArea = (overrides?: {
   };
 };
 
-const fontPicker = (overrides?: { name?: string; value?: string }) => {
+const fontPicker = (overrides?: { name?: string; value?: FontFamily }) => {
   return {
     name: "Font Picker",
     type: "font_picker" as const,
-    value: "font-serif",
+    value: FontFamily.SERIF,
+    ...overrides,
+  };
+};
+
+const inkSelector = (overrides?: { name?: string; value?: string }) => {
+  return {
+    name: "Ink Color",
+    type: "ink_color" as const,
+    value: "ink-black",
     ...overrides,
   };
 };
@@ -124,6 +172,7 @@ type ConfigTuple = [
     | ReturnType<typeof textAlign>
     | ReturnType<typeof imageFilter>
     | ReturnType<typeof imageInput>
+    | ReturnType<typeof inkSelector>
   )
 ];
 
@@ -131,7 +180,13 @@ type HandoutConfig = {
   [key: string]: ConfigTuple | HandoutConfig;
 };
 
-const NewspaperConfig: HandoutConfig = {
+export type ExtractConfigValues<T> = T extends readonly [infer Value, any]
+  ? Value
+  : T extends object
+  ? { [K in keyof T]: ExtractConfigValues<T[K]> }
+  : never;
+
+export const NewspaperConfig = {
   positioning: {
     rotationDegrees: [
       0,
@@ -143,19 +198,17 @@ const NewspaperConfig: HandoutConfig = {
   },
   pageWidthPercentage: [
     60,
-    range({ name: "Page Width", min: 0, max: 300, suffix: "%" }),
+    range({ name: "Page Width", min: 10, max: 300, suffix: "%" }),
   ],
   paperTexture: ["grey", paperTexture()],
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
+  inkColor: ["#000000", inkSelector()],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   title: {
     title: ["THE LOREM IPSUM", text({ name: "Title" })],
-    titleFont: ["font-sans", fontPicker()],
+    titleFont: [FontFamily.SANS, fontPicker()],
     titleFontSize: [34, fontSize()],
-    lineHeight: [
-      80,
-      range({ name: "Line Height", min: 0, max: 100, step: 0.1, suffix: "em" }),
-    ],
+    lineHeight: [3, lineHeight()],
     topMargin: [
       0,
       range({ name: "Top Margin", min: -100, max: 100, suffix: "px" }),
@@ -169,7 +222,7 @@ const NewspaperConfig: HandoutConfig = {
     bannerText1: ["Integer a egestas", text({ name: "Text 1" })],
     bannerText2: ["Duis sodales", text({ name: "Text 2" })],
     bannerText3: ["Quisque imperdiet", text({ name: "Text 3" })],
-    bannerFont: ["font-sans", fontPicker()],
+    bannerFont: [FontFamily.SANS, fontPicker()],
     bannerSize: [16, fontSize()],
     hideTopBannerBorder: [false, boolean({ name: "Hide top border" })],
     hideBottomBannerBorder: [false, boolean({ name: "Hide bottom border" })],
@@ -179,27 +232,15 @@ const NewspaperConfig: HandoutConfig = {
       "ALIQUAM EROS AUGUE, COMMODO EGET RHONCUS NEC!",
       text({ name: "Headline" }),
     ],
-    headlineFont: ["font-sans", fontPicker()],
+    headlineFont: [FontFamily.SANS, fontPicker()],
     headlineFontSize: [34, fontSize()],
-    headlineLineHeight: [
-      80,
-      range({ name: "Line Height", min: 0, max: 100, suffix: "em" }),
-    ],
-    headlineTopMargin: [
-      80,
-      range({ name: "Top Margin", min: -150, max: 150, suffix: "px" }),
-    ],
-    headlineBottomMargin: [
-      80,
-      range({ name: "Bottom Margin", min: -150, max: 150, suffix: "px" }),
-    ],
   },
   quote: {
     quote: [
       "Maecenas molestie ac, erat sed ultrices. Ut in vehicula est, ut malesuada eros! Nunc condimentum, aliquet ante nec venenatis",
       text({ name: "Quote/Call-out" }),
     ],
-    quoteFont: ["font-sans", fontPicker()],
+    quoteFont: [FontFamily.SANS, fontPicker()],
     quoteFontSize: [20, fontSize()],
   },
   mainCopy: {
@@ -222,10 +263,9 @@ Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices 
     isMainCopyBlurry: [false, boolean({ name: "Blurry main copy" })],
     textAlign: ["text-justify", textAlign()],
   },
-  test_image_input: [undefined, imageInput()],
-};
+} satisfies HandoutConfig;
 
-const NewspaperClippingConfig: HandoutConfig = {
+export const NewspaperClippingConfig: HandoutConfig = {
   positioning: {
     rotationDegrees: [0, range()],
     zoom: [1, range()],
@@ -255,7 +295,7 @@ const NewspaperClippingConfig: HandoutConfig = {
     textArea(),
   ],
   isSuffixBlurry: [true, boolean()],
-  font: ["font-serif", fontPicker()],
+  font: [FontFamily.SERIF, fontPicker()],
   ink_color: ["#000000", colour()],
   image_filter: ["none", imageFilter()],
 };
