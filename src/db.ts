@@ -59,13 +59,6 @@ const range = (overrides?: {
   };
 };
 
-const fontSize = () =>
-  range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
-
-// again for line height
-const lineHeight = () =>
-  range({ name: "Line Height", min: 0, max: 4, step: 0.1, suffix: "em" });
-
 const paperTexture = (overrides?: { name?: string; value?: string }) => {
   return {
     name: "Paper Texture",
@@ -161,6 +154,14 @@ const imageInput = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+const fontSize = () =>
+  range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
+const lineHeight = () =>
+  range({ name: "Line Height", min: 0, max: 4, step: 0.1, suffix: "em" });
+const rotation = () =>
+  range({ name: "Rotation", min: -60, max: 60, suffix: "°" });
+const zoom = () => range({ name: "Zoom", min: -0.1, max: 6, step: 0.05 });
+
 type ConfigTuple = [
   any,
   (
@@ -205,7 +206,7 @@ export const NewspaperConfig = {
   ],
   paperTexture: ["grey", paperTexture()],
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
-  inkColor: ["#000000", inkSelector()],
+  inkColor: ["ink-black", inkSelector()],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   title: {
     title: ["THE LOREM IPSUM", text({ name: "Title" })],
@@ -268,51 +269,57 @@ Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices 
   },
 } satisfies HandoutConfig;
 
-export const NewspaperClippingConfig: HandoutConfig = {
+export const NewspaperClippingConfig = {
   positioning: {
-    rotationDegrees: [0, range()],
-    zoom: [1, range()],
-    xOffset: [0, range()],
-    yOffset: [0, range()],
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
   },
   dimensions: {
-    pageWidth: [400, range()],
-    pageHeight: [700, range()],
+    pageWidth: [
+      400,
+      range({ name: "Page Width", min: 100, max: 1800, suffix: "px" }),
+    ],
+    pageHeight: [
+      700,
+      range({ name: "Page Height", min: 100, max: 1200, suffix: "px" }),
+    ],
   },
   paper: {
     paperTexture: ["grey", paperTexture()],
-    paperTint: ["#FFFFFF", colour()],
-    isPaperShadow: [true, boolean()],
+    paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
+    isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   },
   prefix_copy: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius vestibulum porttitor. Donec egestas egestas commodo. Nullam tincidunt, felis ut rutrum rhoncus, nunc metus mattis arcu, sit amet vulputate velit nunc in metus. Nullam lacinia mauris id mauris semper malesuada.",
-    textArea(),
+    textArea({ name: "Prefix Copy" }),
   ],
-  isPrefixBlurry: [true, boolean()],
+  isPrefixBlurry: [true, boolean({ name: "Is Prefix Blurry?" })],
   mainCopy: [
     "Curabitur eu tellus et nibh ornare ornare non nec nibh. Etiam sapien enim, suscipit et fermentum id, aliquet iaculis ipsum. Mauris pharetra congue",
-    textArea(),
+    textArea({ name: "Main Copy" }),
   ],
   suffix_copy: [
     "Phasellus aliquam arcu sed risus imperdiet, non tempus nisl egestas.",
-    textArea(),
+    textArea({ name: "Suffix Copy" }),
   ],
-  isSuffixBlurry: [true, boolean()],
+  isSuffixBlurry: [true, boolean({ name: "Is Suffix Blurry?" })],
   font: [FontFamily.SERIF, fontPicker()],
-  ink_color: ["#000000", colour()],
-  image_filter: ["none", imageFilter()],
-};
+  inkColor: ["ink-black", inkSelector()],
+  imageFilter: ["none", imageFilter()],
+} satisfies HandoutConfig;
 
 export const allConfigs = [
   {
     name: "Newspaper",
+    displayName: "Newspaper",
     caption:
       "A newspaper, with markdown-configurable title, banners, headline, call-out and copy. Make the copy blurry for a more dramatic effect.",
     type: "digital_paper",
     config: NewspaperConfig,
   } as const,
   {
-    name: "Newspaper Clipping",
+    name: "NewspaperClipping",
+    displayName: "Newspaper Clipping",
     caption:
       "A simplified version of a newspaper 'clipping' - a classic vertical slice.",
     type: "digital_paper",
@@ -432,7 +439,8 @@ export const appState = proxy<{
   selectedVersionId: string | undefined;
 }>({
   selectedHandoutType: allConfigs[0].name,
-  selectedVersionId: latestVersionOfFirstHandout?.id ?? undefined,
+  // selectedVersionId: latestVersionOfFirstHandout?.id ?? undefined,
+  selectedVersionId: "TRANSIENT",
 });
 
 export const saveVersion = async (handoutType: string, data: any) => {
@@ -454,8 +462,6 @@ export const saveVersion = async (handoutType: string, data: any) => {
 
 export const updateTransientRecordToVersion = async (versionId: string) => {
   const version = await db.versions.get(versionId);
-  console.log("versionId", versionId);
-  console.log("version", version);
   if (version) {
     await updateTransientRecord(version.handoutType, version.data);
     appState.selectedVersionId = versionId;

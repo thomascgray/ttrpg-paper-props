@@ -182,16 +182,6 @@ const renderFormInput = (
         />
       );
 
-    case "ink_color":
-      return (
-        <InkColorSelector
-          key={path}
-          label={name}
-          value={value}
-          onUpdate={handleUpdate}
-        />
-      );
-
     default:
       console.warn(`Unknown input type: ${type}`);
       return null;

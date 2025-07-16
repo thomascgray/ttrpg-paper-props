@@ -15,7 +15,7 @@ import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { VersionSelector } from "./components/VersionSelector";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Newspaper } from "./renderer/Newspaper";
-import { performMigrationIfNeeded } from "./utils/versionMigration";
+import { NewspaperClipping } from "./renderer/NewspaperClipping";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -33,20 +33,22 @@ function App() {
       .where("id")
       .equals(`TRANSIENT_${appState.selectedHandoutType}`)
       .first();
-  });
+  }, [appState.selectedHandoutType]);
 
   const versionsForThisHandoutType = useLiveQuery(() => {
     return db.versions
       .where("handoutType")
-      .equals(appState.selectedHandoutType)
+      .equals(`${appState.selectedHandoutType}`)
       .reverse()
       .sortBy("timestamp");
-  });
+  }, [appState.selectedHandoutType]);
 
   if (!currentHandoutTransientRow) {
     console.log("no current handout transient row");
     return <div>Loading...</div>;
   }
+
+  console.log("currentHandoutTransientRow", currentHandoutTransientRow);
 
   return (
     <StateContext.Provider
@@ -80,33 +82,23 @@ function App() {
 
           <HandoutTypeSelector />
 
-          {/* <VersionSelector
-            versionsList={versionManager.versionsList}
-            selectedVersionId={versionManager.selectedVersionId}
-            isLoading={versionManager.isLoading}
-            error={versionManager.error}
-            onSave={versionManager.handleSave}
-            onVersionSelect={versionManager.handleVersionSelect}
-            onDeleteVersion={versionManager.handleDeleteVersion}
-            onRenameVersion={versionManager.handleRenameVersion}
-          /> */}
-
-          <div className="p-4 bg-red-100 mb-4">
+          <div className="p-4 bg-gray-400 mb-4 flex items-center justify-between">
             <button
+              className="bg-red-500 border-red-600 border-solid border-2 text-white p-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
+              title="Save the current configuration of the handout so that it can be reloaded later"
               onClick={() => {
                 saveVersion(
                   appState.selectedHandoutType,
                   currentHandoutTransientRow.data
                 );
               }}
-              className="bg-white"
             >
-              save version
+              Save Snapshot
             </button>
 
             <select
+              className="text-sm"
               onChange={(e) => updateTransientRecordToVersion(e.target.value)}
-              // onChange={(e) => {}}
               value={appState.selectedVersionId}
             >
               {(versionsForThisHandoutType || []).map((version) => (
@@ -115,6 +107,7 @@ function App() {
                   {version.createdAt.toLocaleTimeString()}
                 </option>
               ))}
+              <option value="TRANSIENT">Unsaved snapshot</option>
             </select>
           </div>
 
@@ -135,6 +128,7 @@ function App() {
                 .modify({
                   data: newDataPlain,
                 });
+              appStateProxy.selectedVersionId = "TRANSIENT";
             }}
           />
         </div>
@@ -152,9 +146,14 @@ function App() {
               transition: "transform 0.3s ease-out",
             }}
           >
-            {appState.selectedHandoutType === "Newspaper" && (
-              <Newspaper handout={currentHandoutTransientRow.data} />
-            )}
+            {currentHandoutTransientRow.type === "Newspaper" &&
+              appState.selectedHandoutType === "Newspaper" && (
+                <Newspaper handout={currentHandoutTransientRow.data} />
+              )}
+            {currentHandoutTransientRow.type === "NewspaperClipping" &&
+              appState.selectedHandoutType === "NewspaperClipping" && (
+                <NewspaperClipping handout={currentHandoutTransientRow.data} />
+              )}
           </div>
         </div>
       </div>
