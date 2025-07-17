@@ -86,7 +86,11 @@ const colour = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
-const text = (overrides?: { name?: string; value?: string }) => {
+const text = (overrides?: {
+  name?: string;
+  value?: string;
+  placeholder?: string;
+}) => {
   return {
     name: "Text",
     type: "text" as const,
@@ -154,6 +158,15 @@ const imageInput = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+const fontWeightPicker = (overrides?: { name?: string; value?: string }) => {
+  return {
+    name: "Font Weight",
+    type: "font_weight_picker" as const,
+    value: "font-normal",
+    ...overrides,
+  };
+};
+
 const fontSize = () =>
   range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
 const lineHeight = () =>
@@ -177,6 +190,7 @@ type ConfigTuple = [
     | ReturnType<typeof imageFilter>
     | ReturnType<typeof imageInput>
     | ReturnType<typeof inkSelector>
+    | ReturnType<typeof fontWeightPicker>
   )
 ];
 
@@ -308,10 +322,53 @@ export const NewspaperClippingConfig = {
   imageFilter: ["none", imageFilter()],
 } satisfies HandoutConfig;
 
+export const CharacterCardConfig = {
+  positioning: {
+    // rotationDegrees: [
+    //   0,
+    //   range({ name: "Rotation", min: -60, max: 60, suffix: "°" }),
+    // ],
+    zoom: [1, range({ name: "Zoom", min: -0.1, max: 6, step: 0.05 })],
+    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
+  },
+  pageWidth: [
+    700,
+    range({ name: "Page Width", min: 100, max: 1500, suffix: "px" }),
+  ],
+  paperTexture: ["beige-3", paperTexture()],
+  isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
+  imageUrl: [
+    "https://i.pinimg.com/564x/49/c1/4d/49c14d528399386e820dd116a25590b2.jpg",
+    imageInput(),
+  ],
+  inkColor: ["ink-black", inkSelector()],
+  imageFilter: ["none", imageFilter()],
+  textLineOne: [
+    "Lorem Ipsum",
+    text({ name: "Line 1", placeholder: "Lorem Ipsum" }),
+  ],
+  textLineTwo: [
+    "Lorem Ipsum",
+    text({ name: "Line 2", placeholder: "Lorem Ipsum" }),
+  ],
+  textLineThree: [
+    "Lorem Ipsum",
+    text({ name: "Line 3", placeholder: "Lorem Ipsum" }),
+  ],
+  font: [FontFamily.SERIF, fontPicker()],
+  fontSize: [
+    24,
+    range({ name: "Font Size (Relative)", min: 16, max: 100, suffix: "%" }),
+  ],
+  fontWeight: ["font-normal", fontWeightPicker()],
+  textAlign: ["text-left", textAlign()],
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
-    displayName: "Newspaper",
+    displayName: "Newspaper (Front Page)",
     caption:
       "A newspaper, with markdown-configurable title, banners, headline, call-out and copy. Make the copy blurry for a more dramatic effect.",
     type: "digital_paper",
@@ -319,11 +376,18 @@ export const allConfigs = [
   } as const,
   {
     name: "NewspaperClipping",
-    displayName: "Newspaper Clipping",
+    displayName: "Newspaper Clipping (Vertical)",
     caption:
       "A simplified version of a newspaper 'clipping' - a classic vertical slice.",
     type: "digital_paper",
     config: NewspaperClippingConfig,
+  } as const,
+  {
+    name: "CharacterCard",
+    displayName: "Character Card",
+    caption: "An easy-to-use character card. A picture with 3 lines of text.",
+    type: "digital_paper",
+    config: CharacterCardConfig,
   } as const,
 ];
 

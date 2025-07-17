@@ -181,6 +181,15 @@ const renderFormInput = (
           onUpdate={handleUpdate}
         />
       );
+    case "font_weight_picker":
+      return (
+        <FontWeightSelector
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          onUpdate={handleUpdate}
+        />
+      );
 
     default:
       console.warn(`Unknown input type: ${type}`);

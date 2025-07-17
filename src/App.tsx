@@ -16,6 +16,7 @@ import { VersionSelector } from "./components/VersionSelector";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Newspaper } from "./renderer/Newspaper";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
+import { CharacterCard } from "./renderer/CharacterCard";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -82,33 +83,39 @@ function App() {
 
           <HandoutTypeSelector />
 
-          <div className="p-4 bg-gray-400 mb-4 flex items-center justify-between">
-            <button
-              className="bg-red-500 border-red-600 border-solid border-2 text-white p-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
-              title="Save the current configuration of the handout so that it can be reloaded later"
-              onClick={() => {
-                saveVersion(
-                  appState.selectedHandoutType,
-                  currentHandoutTransientRow.data
-                );
-              }}
-            >
-              Save Snapshot
-            </button>
+          <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
+                title="Save the current configuration of the handout so that it can be reloaded later"
+                onClick={() => {
+                  saveVersion(
+                    appState.selectedHandoutType,
+                    currentHandoutTransientRow.data
+                  );
+                }}
+              >
+                Save Snapshot
+              </button>
 
-            <select
-              className="text-sm"
-              onChange={(e) => updateTransientRecordToVersion(e.target.value)}
-              value={appState.selectedVersionId}
-            >
-              {(versionsForThisHandoutType || []).map((version) => (
-                <option value={version.id} key={version.id}>
-                  {version.createdAt.toLocaleDateString()} at{" "}
-                  {version.createdAt.toLocaleTimeString()}
-                </option>
-              ))}
-              <option value="TRANSIENT">Unsaved snapshot</option>
-            </select>
+              <select
+                className="text-sm"
+                onChange={(e) => updateTransientRecordToVersion(e.target.value)}
+                value={appState.selectedVersionId}
+              >
+                {(versionsForThisHandoutType || []).map((version) => (
+                  <option value={version.id} key={version.id}>
+                    {version.createdAt.toLocaleDateString()} at{" "}
+                    {version.createdAt.toLocaleTimeString()}
+                  </option>
+                ))}
+                <option value="TRANSIENT">Unsaved snapshot</option>
+              </select>
+            </div>
+            <p className="text-sm italic mt-3">
+              Snapshots are saved locally to your machine - no data is sent to
+              any server.
+            </p>
           </div>
 
           <FormRenderer
@@ -153,6 +160,10 @@ function App() {
             {currentHandoutTransientRow.type === "NewspaperClipping" &&
               appState.selectedHandoutType === "NewspaperClipping" && (
                 <NewspaperClipping handout={currentHandoutTransientRow.data} />
+              )}
+            {currentHandoutTransientRow.type === "CharacterCard" &&
+              appState.selectedHandoutType === "CharacterCard" && (
+                <CharacterCard handout={currentHandoutTransientRow.data} />
               )}
           </div>
         </div>
