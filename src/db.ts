@@ -191,7 +191,7 @@ type ConfigTuple = [
     | ReturnType<typeof imageInput>
     | ReturnType<typeof inkSelector>
     | ReturnType<typeof fontWeightPicker>
-  )
+  ),
 ];
 
 type HandoutConfig = {
@@ -201,8 +201,8 @@ type HandoutConfig = {
 export type ExtractConfigValues<T> = T extends readonly [infer Value, any]
   ? Value
   : T extends object
-  ? { [K in keyof T]: ExtractConfigValues<T[K]> }
-  : never;
+    ? { [K in keyof T]: ExtractConfigValues<T[K]> }
+    : never;
 
 export const NewspaperConfig = {
   positioning: {
@@ -395,7 +395,7 @@ export const allConfigs = [
 export type AllConfigNames = (typeof allConfigs)[number]["name"];
 
 export function extractConfigAsData(
-  config: HandoutConfig
+  config: HandoutConfig,
 ): Record<string, any> {
   const result: Record<string, any> = {};
 
@@ -418,7 +418,7 @@ export function extractConfigAsData(
 
 export function extractConfigAsFormConfig(
   config: HandoutConfig,
-  parentPath: string = ""
+  parentPath: string = "",
 ): Record<string, any> {
   const result: Record<string, any> = {};
 
@@ -439,7 +439,7 @@ export function extractConfigAsFormConfig(
       // It's a nested HandoutConfig, recurse
       result[key] = extractConfigAsFormConfig(
         value as HandoutConfig,
-        currentPath
+        currentPath,
       );
     }
   }

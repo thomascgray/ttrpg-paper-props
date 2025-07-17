@@ -1,9 +1,7 @@
-import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { NEWSPAPER } from "../config";
-import { hexToRgba } from "../utils";
 import { ExtractConfigValues, NewspaperConfig } from "../db";
+import { hexToRgba } from "../utils";
 
 type NewspaperData = ExtractConfigValues<typeof NewspaperConfig>;
 
@@ -129,7 +127,7 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
               `${handout.mainCopy.textAlign} font-serif copy-markdown column-count-${handout.mainCopy.mainCopyColumns} ${handout.mainCopy.imageFilter}`,
               {
                 blurry: handout.mainCopy.isMainCopyBlurry,
-              }
+              },
             )}
           >
             {handout.mainCopy.mainCopyContent}
