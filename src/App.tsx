@@ -17,6 +17,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { Newspaper } from "./renderer/Newspaper";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { CharacterCard } from "./renderer/CharacterCard";
+import { PlainLetter } from "./renderer/PlainLetter";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -164,6 +165,10 @@ function App() {
             {currentHandoutTransientRow.type === "CharacterCard" &&
               appState.selectedHandoutType === "CharacterCard" && (
                 <CharacterCard handout={currentHandoutTransientRow.data} />
+              )}
+            {currentHandoutTransientRow.type === "PlainLetter" &&
+              appState.selectedHandoutType === "PlainLetter" && (
+                <PlainLetter handout={currentHandoutTransientRow.data} />
               )}
           </div>
         </div>

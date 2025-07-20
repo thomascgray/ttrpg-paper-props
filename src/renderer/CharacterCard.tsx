@@ -1,5 +1,3 @@
-import React from "react";
-import { CHARACTER_CARD } from "../config";
 import { CharacterCardConfig, ExtractConfigValues } from "../db";
 
 type CharacterCardData = ExtractConfigValues<typeof CharacterCardConfig>;
@@ -17,7 +15,7 @@ export const CharacterCard = ({ handout }: { handout: CharacterCardData }) => {
           marginTop: `${handout.positioning.yOffset}%`,
           marginLeft: `${handout.positioning.xOffset}%`,
         }}
-        className={`inline-block overflow-visible ${handout.font} ${handout.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
+        className={`inline-block overflow-visible transition-all ${handout.font} ${handout.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
       >
         <img
           className=""

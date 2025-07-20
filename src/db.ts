@@ -39,6 +39,13 @@ export enum FontFamily {
   NEW_ROCKER = "font-new-rocker",
 }
 
+export enum FontWeight {
+  LIGHT = "font-light",
+  NORMAL = "font-normal",
+  SEMI_BOLD = "font-semibold",
+  BOLD = "font-bold",
+}
+
 const range = (overrides?: {
   name?: string;
   value?: number;
@@ -167,6 +174,37 @@ const fontWeightPicker = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+const paragraphArray = (overrides?: { name?: string }) => {
+  return {
+    name: "Paragraph Array",
+    type: "paragraph_array" as const,
+    ...overrides,
+  };
+};
+
+const select = (overrides?: {
+  name?: string;
+  value?: string;
+  options?: Array<{ label: string; value: string }>;
+}) => {
+  return {
+    name: "Select",
+    type: "select" as const,
+    value: "",
+    options: [],
+    ...overrides,
+  };
+};
+
+const blendMode = (overrides?: { name?: string; value?: string }) => {
+  return {
+    name: "Blend Mode",
+    type: "blend_mode" as const,
+    value: "blend-mode-normal",
+    ...overrides,
+  };
+};
+
 const fontSize = () =>
   range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
 const lineHeight = () =>
@@ -191,7 +229,10 @@ type ConfigTuple = [
     | ReturnType<typeof imageInput>
     | ReturnType<typeof inkSelector>
     | ReturnType<typeof fontWeightPicker>
-  ),
+    | ReturnType<typeof paragraphArray>
+    | ReturnType<typeof select>
+    | ReturnType<typeof blendMode>
+  )
 ];
 
 type HandoutConfig = {
@@ -201,8 +242,8 @@ type HandoutConfig = {
 export type ExtractConfigValues<T> = T extends readonly [infer Value, any]
   ? Value
   : T extends object
-    ? { [K in keyof T]: ExtractConfigValues<T[K]> }
-    : never;
+  ? { [K in keyof T]: ExtractConfigValues<T[K]> }
+  : never;
 
 export const NewspaperConfig = {
   positioning: {
@@ -361,8 +402,54 @@ export const CharacterCardConfig = {
     24,
     range({ name: "Font Size (Relative)", min: 16, max: 100, suffix: "%" }),
   ],
-  fontWeight: ["font-normal", fontWeightPicker()],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-left", textAlign()],
+} satisfies HandoutConfig;
+
+export const PlainLetterConfig = {
+  positioning: {
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
+    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
+  },
+  pageWidth: [
+    850,
+    range({ name: "Page Width", min: 100, max: 1500, suffix: "px" }),
+  ],
+  isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
+  paperTexture: ["grey", paperTexture()],
+  paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
+  inkColor: ["ink-black", inkSelector()],
+  padding: [50, range({ name: "Padding", min: 0, max: 100, suffix: "px" })],
+  paragraph: [
+    [
+      {
+        id: nanoid(),
+        mainCopy: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+
+## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci. 
+
+Nullam cursus congue magna, pulvinar commodo massa ornare quis. Etiam eleifend fermentum mauris at aliquet. Aliquam ac augue nunc. 
+
+Mauris mollis bibendum erat, et ultrices tortor pellentesque vitae. 
+
+# Suspendisse sed accumsan augue.
+
+Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dignissim libero ut luctus. Ut mattis ut tellus quis aliquet. In hac habitasse platea dictumst.          
+`,
+        font: FontFamily.SERIF,
+        fontSize: 12,
+        fontWeight: FontWeight.NORMAL,
+        textAlign: "text-left",
+      },
+    ],
+    paragraphArray({ name: "Paragraphs" }),
+  ],
+  paragraphGap: [
+    0,
+    range({ name: "Paragraph Gap", min: 0, max: 100, suffix: "px" }),
+  ],
 } satisfies HandoutConfig;
 
 export const allConfigs = [
@@ -389,13 +476,21 @@ export const allConfigs = [
     type: "digital_paper",
     config: CharacterCardConfig,
   } as const,
+  {
+    name: "PlainLetter",
+    displayName: "Plain Letter",
+    caption:
+      "A simple plain sheet of paper. Completely configurable via markdown.",
+    type: "digital_paper",
+    config: PlainLetterConfig,
+  } as const,
 ];
 
 // make a type of the all config > type
 export type AllConfigNames = (typeof allConfigs)[number]["name"];
 
 export function extractConfigAsData(
-  config: HandoutConfig,
+  config: HandoutConfig
 ): Record<string, any> {
   const result: Record<string, any> = {};
 
@@ -418,7 +513,7 @@ export function extractConfigAsData(
 
 export function extractConfigAsFormConfig(
   config: HandoutConfig,
-  parentPath: string = "",
+  parentPath: string = ""
 ): Record<string, any> {
   const result: Record<string, any> = {};
 
@@ -439,7 +534,7 @@ export function extractConfigAsFormConfig(
       // It's a nested HandoutConfig, recurse
       result[key] = extractConfigAsFormConfig(
         value as HandoutConfig,
-        currentPath,
+        currentPath
       );
     }
   }
