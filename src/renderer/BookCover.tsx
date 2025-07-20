@@ -1,23 +1,25 @@
 import React from "react";
 import Markdown from "react-markdown";
-import { BOOK_COVER } from "../config";
+import { BookCoverConfig, ExtractConfigValues } from "../db";
+
+type BookCoverData = ExtractConfigValues<typeof BookCoverConfig>;
 
 export const BookCover = ({
   handout,
 }: {
-  handout: (typeof BOOK_COVER)["data"];
+  handout: BookCoverData;
 }) => {
   return (
     <div
       style={{
-        marginTop: `${handout.positioning.y_offset.value}%`,
-        marginLeft: `${handout.positioning.x_offset.value}%`,
+        marginTop: `${handout.positioning.yOffset}%`,
+        marginLeft: `${handout.positioning.xOffset}%`,
       }}
       className="relative"
     >
       <div className={`image-wrapper`}>
         <img
-          src={handout.book_cover_template.value}
+          src={handout.bookCoverTemplate}
           alt="The book cover"
           width={700}
         />
@@ -26,16 +28,16 @@ export const BookCover = ({
       <div
         id="main_copy"
         style={{
-          fontSize: `${handout.font_size.value}px`,
-          marginLeft: `${handout.text_left_margin.value}px`,
+          fontSize: `${handout.fontSize}px`,
+          marginLeft: `${handout.textLeftMargin}px`,
           width: "80%",
         }}
-        className={`absolute ${handout.text_effect.value} ${handout.font.value} ${handout.font_weight.value} top-[2em] left-[2em]`}
+        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em]`}
       >
         <Markdown
-          className={`block copy-markdown ${handout.ink_color.value} ${handout.text_align.value}`}
+          className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
         >
-          {handout.main_copy.value}
+          {handout.mainCopy}
         </Markdown>
       </div>
     </div>

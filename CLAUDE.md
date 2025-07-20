@@ -58,6 +58,11 @@ The project is migrating from an old config structure (in `src/config.ts`) to a 
 | `handout.ink_color.value` | `handout.inkColor` |
 | `handout.paper_texture.value` | `handout.paperTexture` |
 | `handout.paragraph_gap.value` | `handout.paragraphGap` |
+| `handout.book_cover_template.value` | `handout.bookCoverTemplate` |
+| `handout.text_left_margin.value` | `handout.textLeftMargin` |
+| `handout.text_align.value` | `handout.textAlign` |
+| `handout.text_effect.value` | `handout.textEffect` |
+| `handout.main_copy.value` | `handout.mainCopy` |
 
 ### Array Properties (e.g., paragraphs)
 For array properties like paragraphs:
@@ -68,8 +73,17 @@ For array properties like paragraphs:
 - `CharacterCard` - src/renderer/CharacterCard.tsx
 - `PlainLetter` - src/renderer/PlainLetter.tsx
 
+### Configs Added to db.ts
+- `CharacterCardConfig` - already existed in db.ts
+- `PlainLetterConfig` - already existed in db.ts  
+- `BookCoverConfig` - added in db.ts with helper functions for select and blendMode
+
+### New Helper Functions Added
+When converting BookCover, these helper functions were added to db.ts:
+- `select()` - for dropdown select inputs with options
+- `blendMode()` - for text effect blend modes
+
 ### Remaining Components to Convert
 - Newspaper
 - NewspaperClipping
-- BookCover
 - LabelledLiquid

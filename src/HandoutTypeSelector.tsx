@@ -38,15 +38,28 @@ export const HandoutTypeSelector = () => {
                 );
               })}
           </optgroup>
-          {/* <optgroup label="Objects w/ Superimposed Text">
-                          {allConfigs.filter(config => config.type === "object").map((config) => {
-                            return (
-                              <option key={config.name} value={config.name}>
-                                {config.name}
-                              </option>
-                            );
-                          })}
-                        </optgroup> */}
+          <optgroup label="Objects w/ Superimposed Text">
+            {allConfigs
+              .filter((config) => config.type === "object")
+              .map((config) => {
+                return (
+                  <option key={config.name} value={config.name}>
+                    {config.displayName}
+                  </option>
+                );
+              })}
+          </optgroup>
+          <optgroup label="Wooden Signs">
+            {allConfigs
+              .filter((config) => config.type === "wooden_signs")
+              .map((config) => {
+                return (
+                  <option key={config.name} value={config.name}>
+                    {config.displayName}
+                  </option>
+                );
+              })}
+          </optgroup>
         </select>
       </label>
       <p className="text-sm mb-4">{selectedConfig?.caption}</p>

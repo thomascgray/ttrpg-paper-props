@@ -452,6 +452,71 @@ Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dign
   ],
 } satisfies HandoutConfig;
 
+export const BookCoverConfig = {
+  bookCoverTemplate: [
+    "/images/book-cover-1.avif",
+    select({
+      name: "Book Cover Template",
+      value: "/images/book-cover-1.avif",
+      options: [
+        { label: "Book Cover 1", value: "/images/book-cover-1.avif" },
+        { label: "Book Cover 2", value: "/images/book-cover-2.avif" },
+        { label: "Book Cover 3", value: "/images/book-cover-3.png" },
+        { label: "Book Cover 4", value: "/images/book-cover-4.png" },
+      ],
+    }),
+  ],
+  positioning: {
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
+    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
+  },
+  inkColor: ["ink-white", inkSelector({ value: "ink-white" })],
+  font: [FontFamily.SERIF, fontPicker()],
+  fontSize: [
+    30,
+    range({ name: "Font Size (Relative)", min: 1, max: 100, suffix: "px" }),
+  ],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  textLeftMargin: [
+    13,
+    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
+  ],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
+  mainCopy: [
+    `# MYSTICAL ARTIFACTS
+
+## A STUDY IN THE STRANGE AND WEIRD
+
+### A. COBALT ET.AL`,
+    textArea({
+      name: "Main Copy",
+      value: `# MYSTICAL ARTIFACTS
+
+## A STUDY IN THE STRANGE AND WEIRD
+
+### A. COBALT ET.AL`,
+      rows: 8,
+    }),
+  ],
+} satisfies HandoutConfig;
+
+export const HangingWoodenSignConfig = {
+  positioning: {
+    xOffset: [
+      0,
+      range({ name: "X-Offset", min: -200, max: 200, suffix: "px" }),
+    ],
+    yOffset: [
+      0,
+      range({ name: "Y-Offset", min: -200, max: 200, suffix: "px" }),
+    ],
+  },
+  text: ["hello world", text({ name: "Text" })],
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -484,6 +549,20 @@ export const allConfigs = [
     type: "digital_paper",
     config: PlainLetterConfig,
   } as const,
+  {
+    name: "BookCover",
+    displayName: "Book Cover",
+    caption: "A book cover, with markdown-configurable cover text",
+    type: "object",
+    config: BookCoverConfig,
+  } as const,
+  {
+    name: "HangingWoodenSign",
+    displayName: "Hanging Wooden Sign",
+    caption: "A hanging wooden sign, with markdown-configurable text",
+    type: "wooden_signs",
+    config: HangingWoodenSignConfig,
+  },
 ];
 
 // make a type of the all config > type
@@ -588,7 +667,6 @@ export const getLatestVersion = async (handoutType: string) => {
   return versions[0];
 };
 
-const latestVersionOfFirstHandout = await getLatestVersion(allConfigs[0].name);
 /**
  * we then keep an app state that is transient for things that dont belong in the db, like
  * which handout type is selected

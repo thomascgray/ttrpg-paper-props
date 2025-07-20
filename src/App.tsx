@@ -18,6 +18,8 @@ import { Newspaper } from "./renderer/Newspaper";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { CharacterCard } from "./renderer/CharacterCard";
 import { PlainLetter } from "./renderer/PlainLetter";
+import { BookCover } from "./renderer/BookCover";
+import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -49,8 +51,6 @@ function App() {
     console.log("no current handout transient row");
     return <div>Loading...</div>;
   }
-
-  console.log("currentHandoutTransientRow", currentHandoutTransientRow);
 
   return (
     <StateContext.Provider
@@ -169,6 +169,16 @@ function App() {
             {currentHandoutTransientRow.type === "PlainLetter" &&
               appState.selectedHandoutType === "PlainLetter" && (
                 <PlainLetter handout={currentHandoutTransientRow.data} />
+              )}
+
+            {currentHandoutTransientRow.type === "BookCover" &&
+              appState.selectedHandoutType === "BookCover" && (
+                <BookCover handout={currentHandoutTransientRow.data} />
+              )}
+
+            {currentHandoutTransientRow.type === "HangingWoodenSign" &&
+              appState.selectedHandoutType === "HangingWoodenSign" && (
+                <HangingWoodenSign handout={currentHandoutTransientRow.data} />
               )}
           </div>
         </div>
