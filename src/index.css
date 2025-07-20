@@ -370,3 +370,38 @@ body {
   background-size: 12px 12px;
   background-repeat: repeat-y;
 }
+
+.engraved-text {
+  position: absolute;
+  font-size: 48px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.4);
+  text-shadow: 
+    /* Highlight on bottom (simulates light catching carved edge) */ 0
+      1px 0 rgba(255, 255, 255, 0.6),
+    0 2px 1px rgba(255, 255, 255, 0.3),
+    /* Shadow on top (simulates depth) */ 0 -1px 1px rgba(0, 0, 0, 0.8),
+    /* Overall depth shadow */ 1px 1px 3px rgba(0, 0, 0, 0.5);
+  /* Optional: slight transparency to show wood grain through */
+  opacity: 0.9;
+
+  /* Optional: blend with the wood texture */
+  mix-blend-mode: multiply;
+}
+
+.rough-edges {
+  filter: url(#roughEdges);
+}
+
+.font-light {
+  font-weight: 300;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}

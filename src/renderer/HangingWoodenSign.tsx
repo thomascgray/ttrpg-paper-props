@@ -5,6 +5,7 @@ import {
   ExtractConfigValues,
   HangingWoodenSignConfig,
 } from "../db";
+import classNames from "classnames";
 
 type HangingWoodenSignData = ExtractConfigValues<
   typeof HangingWoodenSignConfig
@@ -15,14 +16,11 @@ export const HangingWoodenSign = ({
 }: {
   handout: HangingWoodenSignData;
 }) => {
+  const top = 200 + parseInt(handout.positioning.yOffset as unknown as string);
+  const left = 200 + parseInt(handout.positioning.xOffset as unknown as string);
+
   return (
-    <div
-      //   style={{
-      //     marginTop: `${handout.positioning.yOffset}%`,
-      //     marginLeft: `${handout.positioning.xOffset}%`,
-      //   }}
-      className="relative"
-    >
+    <div className="relative transition-all">
       <div className={`image-wrapper`}>
         <img
           src={"/images/wooden_signs/hanging.webp"}
@@ -34,30 +32,18 @@ export const HangingWoodenSign = ({
       <div
         id="main_copy"
         style={{
-          position: "absolute",
-          top: "250px",
-          left: "200px",
-          fontSize: "80px",
-          color: "#aaa",
-          textShadow: "1px 1px 0px #555, -1px -1px 1px #222",
-          //   textShadow:
-          //     "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.6);",
-
-          mixBlendMode: "multiply",
-          fontWeight: "700",
+          top: `${top}px`,
+          left: `${left}px`,
+          fontSize: `${handout.fontSize}px`,
         }}
-        // style={{
-        //   fontSize: `${handout.fontSize}px`,
-        //   marginLeft: `${handout.textLeftMargin}px`,
-        //   width: "80%",
-        // }}
-        // className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em]`}
+        className={classNames(
+          `absolute transition-all engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight}`,
+          {
+            "rough-edges": handout.gnarledText,
+          }
+        )}
       >
-        <Markdown
-        //   className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
-        >
-          {handout.text}
-        </Markdown>
+        <Markdown>{handout.text}</Markdown>
       </div>
     </div>
   );

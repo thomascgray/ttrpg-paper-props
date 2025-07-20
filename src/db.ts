@@ -1,6 +1,6 @@
 import Dexie, { type EntityTable } from "dexie";
 import { nanoid } from "nanoid";
-import { proxy } from "valtio";
+import { proxy, subscribe } from "valtio";
 
 const APP_VERSION = 3;
 
@@ -507,14 +507,19 @@ export const HangingWoodenSignConfig = {
   positioning: {
     xOffset: [
       0,
-      range({ name: "X-Offset", min: -200, max: 200, suffix: "px" }),
+      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
     ],
     yOffset: [
       0,
-      range({ name: "Y-Offset", min: -200, max: 200, suffix: "px" }),
+      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
     ],
   },
   text: ["hello world", text({ name: "Text" })],
+  font: [FontFamily.SERIF, fontPicker()],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  fontSize: [36, range({ name: "Font Size", min: 16, max: 200, suffix: "px" })],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  gnarledText: [true, boolean({ name: "Gnarled Text" })],
 } satisfies HandoutConfig;
 
 export const allConfigs = [
@@ -638,24 +643,106 @@ type VersionTable = {
   createdAt: Date;
 };
 
+type AppConfigTable = {
+  id: string;
+  appVersion: number;
+  selectedHandoutType: AllConfigNames;
+  selectedVersionId: string | undefined;
+  updatedAt: Date;
+};
+
 export const db = new Dexie("handoutsdb") as Dexie & {
   handouts: EntityTable<HandoutTable, "id">;
   versions: EntityTable<VersionTable, "id">;
+  appConfig: EntityTable<AppConfigTable, "id">;
 };
 
 db.version(APP_VERSION).stores({
   handouts: "++id, type, data",
   versions: "++id, handoutType, timestamp, createdAt",
+  appConfig:
+    "id, appVersion, selectedHandoutType, selectedVersionId, updatedAt",
 });
 
-// for each handout, add a transient handout
-allConfigs.forEach((config) => {
-  db.handouts.add({
-    id: `TRANSIENT_${config.name}`,
-    type: config.name,
-    data: extractConfigAsData(config.config),
-  });
-});
+// Check version and reset database if needed
+async function checkAndResetDatabase() {
+  try {
+    const config = await db.appConfig.get("APP_CONFIG");
+    if (config && config.appVersion !== APP_VERSION) {
+      console.log(
+        `Database version mismatch. Current: ${config.appVersion}, Expected: ${APP_VERSION}. Resetting database.`
+      );
+      await db.delete();
+      await db.open();
+    }
+  } catch (error) {
+    // If there's any error accessing the config, just continue
+    console.log(
+      "Error checking database version, continuing with existing database:",
+      error
+    );
+  }
+}
+
+// Initialize app state from database
+async function initializeAppState() {
+  await checkAndResetDatabase();
+
+  try {
+    const config = await db.appConfig.get("APP_CONFIG");
+    if (config) {
+      appState.selectedHandoutType = config.selectedHandoutType;
+      appState.selectedVersionId = config.selectedVersionId;
+    } else {
+      // Create default config
+      await saveAppConfig();
+    }
+  } catch (error) {
+    console.log("Error loading app config, using defaults:", error);
+    await saveAppConfig();
+  }
+}
+
+// Save current app state to database
+export async function saveAppConfig() {
+  try {
+    await db.appConfig.put({
+      id: "APP_CONFIG",
+      appVersion: APP_VERSION,
+      selectedHandoutType: appState.selectedHandoutType,
+      selectedVersionId: appState.selectedVersionId,
+      updatedAt: new Date(),
+    });
+  } catch (error) {
+    console.log("Error saving app config:", error);
+  }
+}
+
+// Initialize database with transient handouts
+async function initializeDatabase() {
+  await initializeAppState();
+
+  // for each handout, add a transient handout
+  for (const config of allConfigs) {
+    try {
+      await db.handouts.add({
+        id: `TRANSIENT_${config.name}`,
+        type: config.name,
+        data: extractConfigAsData(config.config),
+      });
+    } catch (error) {
+      // Ignore errors for already existing transient records
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      if (!errorMessage.includes("already exists")) {
+        console.log(`Error adding transient handout ${config.name}:`, error);
+      }
+    }
+  }
+}
+
+// Start database initialization
+initializeDatabase();
 
 export const getLatestVersion = async (handoutType: string) => {
   const versions = await db.versions
@@ -678,6 +765,11 @@ export const appState = proxy<{
   selectedHandoutType: allConfigs[0].name,
   // selectedVersionId: latestVersionOfFirstHandout?.id ?? undefined,
   selectedVersionId: "TRANSIENT",
+});
+
+// Auto-save app state changes to database
+subscribe(appState, () => {
+  saveAppConfig();
 });
 
 export const saveVersion = async (handoutType: string, data: any) => {
