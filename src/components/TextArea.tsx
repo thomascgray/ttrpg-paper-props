@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useLayoutEffect } from "react";
 
 interface iTextAreaProps {
   label: string;
@@ -8,6 +8,17 @@ interface iTextAreaProps {
 }
 
 export const TextArea = (props: iTextAreaProps) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const cursorPositionRef = useRef<{ start: number; end: number } | null>(null);
+
+  useLayoutEffect(() => {
+    if (textareaRef.current && cursorPositionRef.current) {
+      const { start, end } = cursorPositionRef.current;
+      textareaRef.current.setSelectionRange(start, end);
+      cursorPositionRef.current = null;
+    }
+  }, [props.value]);
+
   return (
     <label className="block">
       <span className="block mb-1">
@@ -26,10 +37,14 @@ export const TextArea = (props: iTextAreaProps) => {
       </span>
 
       <textarea
+        ref={textareaRef}
         value={props.value}
         className="w-full p-2 text-sm"
         rows={props.rows}
         onChange={(e) => {
+          const start = e.target.selectionStart;
+          const end = e.target.selectionEnd;
+          cursorPositionRef.current = { start, end };
           props.onUpdate(e.target.value);
         }}
       />

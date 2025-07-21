@@ -2,7 +2,7 @@ import Dexie, { type EntityTable } from "dexie";
 import { nanoid } from "nanoid";
 import { proxy, subscribe } from "valtio";
 
-const APP_VERSION = 3;
+const APP_VERSION = 5;
 
 export enum FontFamily {
   // Serif fonts
@@ -44,6 +44,17 @@ export enum FontWeight {
   NORMAL = "font-normal",
   SEMI_BOLD = "font-semibold",
   BOLD = "font-bold",
+}
+
+export enum InkColor {
+  BLACK = "ink-black",
+  RED = "ink-red",
+  GREEN = "ink-green",
+  BLUE = "ink-blue",
+  PURPLE = "ink-purple",
+  SILVER = "ink-silver",
+  TRUE_BLACK = "ink-true-black",
+  TRUE_WHITE = "ink-true-white",
 }
 
 const range = (overrides?: {
@@ -244,6 +255,25 @@ export type ExtractConfigValues<T> = T extends readonly [infer Value, any]
   : T extends object
   ? { [K in keyof T]: ExtractConfigValues<T[K]> }
   : never;
+
+const imageOpts = {
+  image: {
+    saturation: [
+      100,
+      range({ name: "Saturation", min: 0, max: 1000, suffix: "%", step: 5 }),
+    ],
+    hue_rotation: [
+      0,
+      range({ name: "Hue Rotation", min: 0, max: 360, suffix: "°", step: 2 }),
+    ],
+    brightness: [
+      100,
+      range({ name: "Brightness", min: 0, max: 1000, suffix: "%", step: 5 }),
+    ],
+    scaleX: [1, range({ name: "Scale X", min: 0.1, max: 10, step: 0.1 })],
+    scaleY: [1, range({ name: "Scale Y", min: 0.1, max: 10, step: 0.1 })],
+  },
+} satisfies HandoutConfig;
 
 export const NewspaperConfig = {
   positioning: {
@@ -472,7 +502,7 @@ export const BookCoverConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  inkColor: ["ink-white", inkSelector({ value: "ink-white" })],
+  inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
     30,
@@ -503,8 +533,123 @@ export const BookCoverConfig = {
   ],
 } satisfies HandoutConfig;
 
-export const HangingWoodenSignConfig = {
+export const LabelledLiquidConfig = {
+  imageTemplate: [
+    "/images/labelled-container-1.avif",
+    select({
+      name: "Image Template",
+      value: "/images/labelled-container-1.avif",
+      options: [
+        {
+          label: "Round Bottle w/ Stopper",
+          value: "/images/labelled-container-1.avif",
+        },
+        { label: "Potion 2", value: "/images/labelled-container-2.avif" },
+        {
+          label: "Jar w/ Green Stuff",
+          value: "/images/labelled-container-3.avif",
+        },
+        { label: "Blue Bottle", value: "/images/labelled-container-4.avif" },
+        {
+          label: "Blue Bottle Alt",
+          value: "/images/labelled-container-5.avif",
+        },
+        { label: "Potion 6", value: "/images/labelled-container-6.avif" },
+      ],
+    }),
+  ],
+  imageHueFilter: [
+    0,
+    range({ name: "Image Hue Filter (Rotate)", min: 0, max: 90, suffix: "°" }),
+  ],
+  imageWidth: [
+    400,
+    range({ name: "Image Width", min: 100, max: 1000, step: 2, suffix: "px" }),
+  ],
+  imageRotation: [
+    0,
+    range({ name: "Image Rotation", min: -90, max: 90, suffix: "°" }),
+  ],
   positioning: {
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
+    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
+  },
+  inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
+  font: [FontFamily.SERIF, fontPicker()],
+  fontSize: [
+    12,
+    range({
+      name: "Font Size (Relative)",
+      min: 1,
+      max: 100,
+      step: 0.1,
+      suffix: "px",
+    }),
+  ],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  textTopMargin: [
+    90,
+    range({ name: "Text Top Margin", min: -100, max: 250, suffix: "%" }),
+  ],
+  textLeftMargin: [
+    65,
+    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
+  ],
+  textWidth: [
+    56,
+    range({ name: "Text Width", min: -100, max: 150, suffix: "%" }),
+  ],
+  textRotation: [
+    0,
+    range({ name: "Text Rotation", min: -90, max: 90, suffix: "°" }),
+  ],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
+  mainCopy: [
+    `# LOVE POTION No. 9
+      
+### _Elixer Sue_`,
+    textArea({
+      name: "Main Copy",
+      value: `# LOVE POTION No. 9
+      
+### _Elixer Sue_`,
+      rows: 4,
+    }),
+  ],
+} satisfies HandoutConfig;
+
+export const HangingWoodenSignConfig = {
+  text: [
+    `# GO AWAY
+_We don't want any!_`,
+    textArea({ name: "Text" }),
+  ],
+  yOffset: [50, range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" })],
+  textWidth: [
+    600,
+    range({ name: "Text Width", min: 100, max: 1500, suffix: "px" }),
+  ],
+  font: [FontFamily.SERIF, fontPicker()],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  fontSize: [36, range({ name: "Font Size", min: 16, max: 200, suffix: "px" })],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  gnarledText: [false, boolean({ name: "Gnarled Text" })],
+  ...imageOpts,
+} satisfies HandoutConfig;
+
+export const ThreePanelDirectionalSignConfig = {
+  panel1: {
+    text: ["Baldur's Gate", text({ name: "Text" })],
+    font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
+    fontWeight: [FontWeight.BOLD, fontWeightPicker()],
+    fontSize: [
+      58,
+      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
+    ],
+    gnarledText: [true, boolean({ name: "Gnarled Text" })],
     xOffset: [
       0,
       range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
@@ -514,12 +659,43 @@ export const HangingWoodenSignConfig = {
       range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
     ],
   },
-  text: ["hello world", text({ name: "Text" })],
-  font: [FontFamily.SERIF, fontPicker()],
-  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  fontSize: [36, range({ name: "Font Size", min: 16, max: 200, suffix: "px" })],
-  textAlign: ["text-center", textAlign({ value: "text-center" })],
-  gnarledText: [true, boolean({ name: "Gnarled Text" })],
+  panel2: {
+    text: ["Waterdeep", text({ name: "Text" })],
+    font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
+    fontWeight: [FontWeight.BOLD, fontWeightPicker()],
+    fontSize: [
+      48,
+      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
+    ],
+    gnarledText: [true, boolean({ name: "Gnarled Text" })],
+    xOffset: [
+      0,
+      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
+    ],
+    yOffset: [
+      0,
+      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
+    ],
+  },
+  panel3: {
+    text: ["Neverwinter", text({ name: "Text" })],
+    font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
+    fontWeight: [FontWeight.BOLD, fontWeightPicker()],
+    fontSize: [
+      48,
+      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
+    ],
+    gnarledText: [true, boolean({ name: "Gnarled Text" })],
+    xOffset: [
+      0,
+      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
+    ],
+    yOffset: [
+      0,
+      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
+    ],
+  },
+  ...imageOpts,
 } satisfies HandoutConfig;
 
 export const allConfigs = [
@@ -562,11 +738,26 @@ export const allConfigs = [
     config: BookCoverConfig,
   } as const,
   {
+    name: "LabelledLiquid",
+    displayName: "Labelled Liquid",
+    caption: "A bottle, vial, or other labelled liquid",
+    type: "object",
+    config: LabelledLiquidConfig,
+  } as const,
+  {
     name: "HangingWoodenSign",
     displayName: "Hanging Wooden Sign",
     caption: "A hanging wooden sign, with markdown-configurable text",
     type: "wooden_signs",
     config: HangingWoodenSignConfig,
+  },
+  {
+    name: "ThreePanelDirectionalSign",
+    displayName: "3 Panel Directional Wooden Sign",
+    caption:
+      "A three-panel directional wooden sign with customizable text on each panel",
+    type: "wooden_signs",
+    config: ThreePanelDirectionalSignConfig,
   },
 ];
 

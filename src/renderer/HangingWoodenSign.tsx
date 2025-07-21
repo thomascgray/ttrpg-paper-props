@@ -11,33 +11,43 @@ type HangingWoodenSignData = ExtractConfigValues<
   typeof HangingWoodenSignConfig
 >;
 
+const imageOriginalWidth = 700;
+
 export const HangingWoodenSign = ({
   handout,
 }: {
   handout: HangingWoodenSignData;
 }) => {
-  const top = 200 + parseInt(handout.positioning.yOffset as unknown as string);
-  const left = 200 + parseInt(handout.positioning.xOffset as unknown as string);
-
   return (
-    <div className="relative transition-all">
+    <div
+      className="relative transition-all flex justify-around"
+      style={{
+        width: `calc(${imageOriginalWidth}px * ${handout.image.scaleX})`,
+      }}
+    >
       <div className={`image-wrapper`}>
         <img
           src={"/images/wooden_signs/hanging.webp"}
           alt="The book cover"
-          width={700}
+          width={`${imageOriginalWidth}px`}
+          style={{
+            filter: `hue-rotate(${handout.image.hue_rotation}deg) saturate(${handout.image.saturation}%) brightness(${handout.image.brightness}%)`,
+            transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,
+          }}
         />
       </div>
 
       <div
         id="main_copy"
         style={{
-          top: `${top}px`,
-          left: `${left}px`,
+          marginTop: `${handout.yOffset}px`,
+          width: "90%",
+          top: `${170}px`,
           fontSize: `${handout.fontSize}px`,
+          lineHeight: `${handout.fontSize}px`,
         }}
         className={classNames(
-          `absolute transition-all engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight}`,
+          `absolute transition-all engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
           {
             "rough-edges": handout.gnarledText,
           }

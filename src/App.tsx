@@ -19,7 +19,9 @@ import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { CharacterCard } from "./renderer/CharacterCard";
 import { PlainLetter } from "./renderer/PlainLetter";
 import { BookCover } from "./renderer/BookCover";
+import { LabelledLiquid } from "./renderer/LabelledLiquid";
 import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
+import { ThreePanelDirectionalSign } from "./renderer/ThreePanelDirectionalSign";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -176,9 +178,19 @@ function App() {
                 <BookCover handout={currentHandoutTransientRow.data} />
               )}
 
+            {currentHandoutTransientRow.type === "LabelledLiquid" &&
+              appState.selectedHandoutType === "LabelledLiquid" && (
+                <LabelledLiquid handout={currentHandoutTransientRow.data} />
+              )}
+
             {currentHandoutTransientRow.type === "HangingWoodenSign" &&
               appState.selectedHandoutType === "HangingWoodenSign" && (
                 <HangingWoodenSign handout={currentHandoutTransientRow.data} />
+              )}
+
+            {currentHandoutTransientRow.type === "ThreePanelDirectionalSign" &&
+              appState.selectedHandoutType === "ThreePanelDirectionalSign" && (
+                <ThreePanelDirectionalSign handout={currentHandoutTransientRow.data} />
               )}
           </div>
         </div>
