@@ -1,45 +1,48 @@
 import React from "react";
 import Markdown from "react-markdown";
-import { LABELLED_LIQUID } from "../config";
+import { LabelledLiquidConfig, ExtractConfigValues } from "../db";
+
+type LabelledLiquidData = ExtractConfigValues<typeof LabelledLiquidConfig>;
 
 export const LabelledLiquid = ({
   handout,
 }: {
-  handout: (typeof LABELLED_LIQUID)["data"];
+  handout: LabelledLiquidData;
 }) => {
   return (
     <div
       style={{
-        marginTop: `${handout.positioning.y_offset.value}%`,
-        marginLeft: `${handout.positioning.x_offset.value}%`,
+        marginTop: `${handout.positioning.yOffset}%`,
+        marginLeft: `${handout.positioning.xOffset}%`,
       }}
-      className="relative"
+      className="relative transition-all"
     >
       <img
-        src={handout.image_template.value}
-        alt="The book cover"
+        className="transition-all"
+        src={handout.imageTemplate}
+        alt="The labelled liquid container"
         style={{
-          width: `${handout.image_width.value}px`,
-          transform: `rotate(${handout.image_rotation.value}deg)`,
-          filter: `hue-rotate(${handout.image_hue_filter.value}deg)`,
+          width: `${handout.imageWidth}px`,
+          transform: `rotate(${handout.imageRotation}deg)`,
+          filter: `hue-rotate(${handout.imageHueFilter}deg)`,
         }}
       />
 
       <div
         id="main_copy"
         style={{
-          fontSize: `${handout.font_size.value}px`,
-          marginLeft: `${handout.text_left_margin.value}px`,
-          marginTop: `${handout.text_top_margin.value}%`,
-          width: `${handout.text_width.value}%`,
-          transform: `rotate(${handout.text_rotation.value}deg)`,
+          fontSize: `${handout.fontSize}px`,
+          marginLeft: `${handout.textLeftMargin}px`,
+          marginTop: `${handout.textTopMargin}%`,
+          width: `${handout.textWidth}%`,
+          transform: `rotate(${handout.textRotation}deg)`,
         }}
-        className={`absolute ${handout.text_effect.value} ${handout.font.value} ${handout.font_weight.value} top-[2em] left-[2em]`}
+        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em] transition-all`}
       >
         <Markdown
-          className={`block copy-markdown ${handout.ink_color.value} ${handout.text_align.value}`}
+          className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
         >
-          {handout.main_copy.value}
+          {handout.mainCopy}
         </Markdown>
       </div>
     </div>

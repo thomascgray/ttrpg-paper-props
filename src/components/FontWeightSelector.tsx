@@ -1,4 +1,5 @@
 import React from "react";
+import { FontWeight } from "../db";
 
 interface iFontWeightSelector {
   label: string;
@@ -18,10 +19,10 @@ export const FontWeightSelector = (props: iFontWeightSelector) => {
             props.onUpdate(e.target.value);
           }}
         >
-          <option value="font-light">Light</option>
-          <option value="font-normal">Normal</option>
-          <option value="font-semibold">Semi-Bold</option>
-          <option value="font-bold">Bold</option>
+          <option value={FontWeight.LIGHT}>Light</option>
+          <option value={FontWeight.NORMAL}>Normal</option>
+          <option value={FontWeight.SEMI_BOLD}>Semi-Bold</option>
+          <option value={FontWeight.BOLD}>Bold</option>
         </select>
       </div>
     </label>

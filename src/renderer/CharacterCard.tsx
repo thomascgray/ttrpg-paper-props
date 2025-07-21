@@ -1,28 +1,25 @@
-import React from "react";
-import { CHARACTER_CARD } from "../config";
+import { CharacterCardConfig, ExtractConfigValues } from "../db";
 
-export const CharacterCard = ({
-  handout,
-}: {
-  handout: (typeof CHARACTER_CARD)["data"];
-}) => {
+type CharacterCardData = ExtractConfigValues<typeof CharacterCardConfig>;
+
+export const CharacterCard = ({ handout }: { handout: CharacterCardData }) => {
   return (
     <>
       {/* the whole thing */}
       <div
         style={{
-          width: `${handout.page_width.value}px`,
+          width: `${handout.pageWidth}px`,
           boxShadow: `${
-            handout.is_paper_shadow.value ? "inset 0 0 25px #000000" : "none"
+            handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
           }`,
-          marginTop: `${handout.positioning.y_offset.value}%`,
-          marginLeft: `${handout.positioning.x_offset.value}%`,
+          marginTop: `${handout.positioning.yOffset}%`,
+          marginLeft: `${handout.positioning.xOffset}%`,
         }}
-        className={`inline-block overflow-visible ${handout.font.value} ${handout.font_weight.value} ${handout.image_filter.value} paper-${handout.paper_texture.value}`}
+        className={`inline-block overflow-visible transition-all ${handout.font} ${handout.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
       >
         <img
           className=""
-          src={handout.image_url.value}
+          src={handout.imageUrl}
           style={{
             mixBlendMode: "multiply",
             margin: "10%",
@@ -32,12 +29,12 @@ export const CharacterCard = ({
         />
 
         <div
-          className={`${handout.text_align.value} ${handout.ink_color.value} space-y-2`}
+          className={`${handout.textAlign} ${handout.inkColor} space-y-2`}
           style={{
             marginBottom: "6%",
           }}
         >
-          {(handout.text_line_one.value as string) !== "" && (
+          {handout.textLineOne !== "" && (
             <span
               id="text_line_one"
               className={`font-black`}
@@ -45,26 +42,26 @@ export const CharacterCard = ({
                 display: "block",
                 marginLeft: "10%",
                 marginRight: "10%",
-                fontSize: `${handout.font_size.value * 2.5}px`,
+                fontSize: `${handout.fontSize * 2.5}px`,
               }}
             >
-              {handout.text_line_one.value}
+              {handout.textLineOne}
             </span>
           )}
-          {(handout.text_line_two.value as string) !== "" && (
+          {(handout.textLineTwo as string) !== "" && (
             <span
               id="text_line_two"
               style={{
                 display: "block",
                 marginLeft: "10%",
                 marginRight: "10%",
-                fontSize: `${handout.font_size.value * 1.5}px`,
+                fontSize: `${handout.fontSize * 1.5}px`,
               }}
             >
-              {handout.text_line_two.value}
+              {handout.textLineTwo}
             </span>
           )}
-          {(handout.text_line_three.value as string) !== "" && (
+          {(handout.textLineThree as string) !== "" && (
             <span
               id="text_line_three"
               className={`italic text-gray-700 `}
@@ -72,10 +69,10 @@ export const CharacterCard = ({
                 display: "block",
                 marginLeft: "10%",
                 marginRight: "10%",
-                fontSize: `${handout.font_size.value}px`,
+                fontSize: `${handout.fontSize}px`,
               }}
             >
-              {handout.text_line_three.value}
+              {handout.textLineThree}
             </span>
           )}
         </div>

@@ -20,3 +20,7 @@ _Very W.I.P, apologies for any bugs!_
 ## Build
 
 `bun run build`
+
+# todo
+
+- we've got a good little thing going with the ..imageOpts stuff in db; we should aim for more consistency across all of it

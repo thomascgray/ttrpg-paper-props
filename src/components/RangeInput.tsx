@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { iStandardComponentProps } from "./";
 
 export interface iRangeInputProps extends iStandardComponentProps {
@@ -9,21 +9,51 @@ export interface iRangeInputProps extends iStandardComponentProps {
 }
 
 export const RangeInput = (props: iRangeInputProps) => {
+  const [displayValue, setDisplayValue] = useState(props.value);
+  const timeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setDisplayValue(props.value);
+  }, [props.value]);
+
+  const handleChange = (value: string) => {
+    setDisplayValue(value);
+
+    // Clear existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Set new timeout for debounced update
+    timeoutRef.current = setTimeout(() => {
+      props.onUpdate(value);
+    }, 10);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <label className="block w-full">
       <span className="block">
         {props.label}:{" "}
         <span className="font-bold">
-          {props.value}
+          {displayValue}
           {props.suffix}
         </span>
       </span>
       <input
         className="w-full cursor-pointer"
         type="range"
-        value={props.value}
+        value={displayValue}
         onChange={(e) => {
-          props.onUpdate(e.target.value);
+          handleChange(e.currentTarget.value);
         }}
         step={props.step}
         min={props.min}
