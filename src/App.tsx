@@ -84,6 +84,28 @@ function App() {
             📜 Tom G's RPG Handout Builder
           </h1>
 
+          <p className="my-4 text-xs text-gray-700">
+            Made by{" "}
+            <a
+              target="_blank"
+              className="text-blue-500 underline"
+              href="https://tomg.cool/"
+            >
+              Tom
+            </a>
+            <br />
+            This tool is in early and active development. Sorry if it explodes!
+            <br />
+            Bugs? Feature requests? Please message me on Bluesky{" "}
+            <a
+              target="_blank"
+              className="text-blue-500 underline"
+              href="https://bsky.app/profile/tombola.bsky.social"
+            >
+              bsky.app/profile/tombola.bsky.social
+            </a>
+          </p>
+
           <HandoutTypeSelector />
 
           <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
@@ -190,7 +212,9 @@ function App() {
 
             {currentHandoutTransientRow.type === "ThreePanelDirectionalSign" &&
               appState.selectedHandoutType === "ThreePanelDirectionalSign" && (
-                <ThreePanelDirectionalSign handout={currentHandoutTransientRow.data} />
+                <ThreePanelDirectionalSign
+                  handout={currentHandoutTransientRow.data}
+                />
               )}
           </div>
         </div>
