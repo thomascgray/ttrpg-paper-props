@@ -51,3 +51,8 @@
   mix-blend-mode: normal !important;
 }
 
+.crt-screen-green,
+.crt-screen-green * {
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+}

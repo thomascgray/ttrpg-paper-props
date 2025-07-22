@@ -57,6 +57,12 @@ export enum InkColor {
   TRUE_WHITE = "ink-true-white",
 }
 
+export enum CrtScreenTextColor {
+  GREEN = "#00FF00",
+  RED = "#FF0000",
+  WHITE = "#FFFFFF",
+}
+
 const range = (overrides?: {
   name?: string;
   value?: number;
@@ -752,9 +758,17 @@ commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
 porta`,
     textArea({ name: "Text", rows: 20 }),
   ],
-  inkColor: [
-    InkColor.GREEN,
-    inkSelector({ name: "Text Colour", value: InkColor.BLACK }),
+  crtPixelColor: [
+    CrtScreenTextColor.GREEN,
+    select({
+      name: "CRT Screen Text Colour",
+      value: CrtScreenTextColor.GREEN,
+      options: [
+        { label: "Green", value: CrtScreenTextColor.GREEN },
+        { label: "Red", value: CrtScreenTextColor.RED },
+        { label: "White", value: CrtScreenTextColor.WHITE },
+      ],
+    }),
   ],
   fontSize: [24, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],

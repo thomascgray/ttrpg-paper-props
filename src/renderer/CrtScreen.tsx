@@ -36,8 +36,7 @@ translateZ(00px)`;
       break;
   }
 
-  const rawInkColour = getRawColourForInkColor(handout.inkColor);
-  const moreSaturedInkColour = saturateHexColor(rawInkColour, 0.5);
+  const moreSaturedInkColour = saturateHexColor(handout.crtPixelColor, 0.5);
 
   return (
     <div className="relative">
@@ -80,14 +79,15 @@ translateZ(00px)`;
         <div
           className="w-full h-[95%] overflow-y-clip"
           style={{
+            color: handout.crtPixelColor,
             textShadow: handout.textGlow
-              ? `0px 0px 3px ${moreSaturedInkColour}, 0px 0px 7px ${rawInkColour}`
+              ? `0px 0px 3px ${moreSaturedInkColour}, 0px 0px 7px ${handout.crtPixelColor}`
               : "",
             fontSize: `${handout.fontSize}px`,
           }}
         >
           <Markdown
-            className={`block copy-markdown ${handout.inkColor} ${handout.textAlign} ${handout.fontWeight} `}
+            className={`block copy-markdown ${handout.textAlign} ${handout.fontWeight} `}
           >
             {handout.text}
           </Markdown>
