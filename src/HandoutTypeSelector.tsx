@@ -38,6 +38,17 @@ export const HandoutTypeSelector = () => {
                 );
               })}
           </optgroup>
+          <optgroup label="Sci-fi Screens">
+            {allConfigs
+              .filter((config) => config.type === "scifi_screens")
+              .map((config) => {
+                return (
+                  <option key={config.name} value={config.name}>
+                    {config.displayName}
+                  </option>
+                );
+              })}
+          </optgroup>
           <optgroup label="Objects w/ Superimposed Text">
             {allConfigs
               .filter((config) => config.type === "object")

@@ -275,6 +275,23 @@ const imageOpts = {
   },
 } satisfies HandoutConfig;
 
+const imageOptsWithoutScaling = {
+  image: {
+    saturation: [
+      100,
+      range({ name: "Saturation", min: 0, max: 1000, suffix: "%", step: 5 }),
+    ],
+    hue_rotation: [
+      0,
+      range({ name: "Hue Rotation", min: 0, max: 360, suffix: "°", step: 2 }),
+    ],
+    brightness: [
+      100,
+      range({ name: "Brightness", min: 0, max: 1000, suffix: "%", step: 5 }),
+    ],
+  },
+} satisfies HandoutConfig;
+
 export const NewspaperConfig = {
   positioning: {
     rotationDegrees: [
@@ -698,6 +715,66 @@ export const ThreePanelDirectionalSignConfig = {
   ...imageOpts,
 } satisfies HandoutConfig;
 
+export const CrtScreenConfig = {
+  text: [
+    `Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus
+
+Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
+et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
+commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
+porta
+
+quis maximus orci mollis nec. Nulla gravida nisl sed elementum mollis.
+Nam efficitur lacus tellus. Nam faucibus efficitur sem quis pulvinar.
+Donec elit augue, feugiat quis ornare aliquet, facilisis vel lacus.
+Mauris porta metus in velit lobortis ornare. Vestibulum ante ipsum
+primis in faucibus orci lu
+
+Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
+et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
+commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
+porta
+
+Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
+et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
+commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
+porta
+
+Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
+et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
+commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
+porta
+
+Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
+et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
+commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
+porta`,
+    textArea({ name: "Text", rows: 20 }),
+  ],
+  inkColor: [
+    InkColor.GREEN,
+    inkSelector({ name: "Text Colour", value: InkColor.BLACK }),
+  ],
+  fontSize: [24, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  textAlign: ["text-left", textAlign()],
+  textGlow: [true, boolean({ name: "Text Glow" })],
+  crtScreen: [
+    "/images/crts/c.webp",
+    select({
+      name: "CRT Screen Style/Model",
+      value: "/images/crts/c.webp",
+      options: [
+        // { label: "HP", value: "/images/crts/a.webp" },
+        { label: "Commodore PET", value: "/images/crts/c.webp" },
+        { label: "Apple Macintosh", value: "/images/crts/b.webp" },
+      ],
+    }),
+  ],
+  ...imageOptsWithoutScaling,
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -758,6 +835,13 @@ export const allConfigs = [
       "A three-panel directional wooden sign with customizable text on each panel",
     type: "wooden_signs",
     config: ThreePanelDirectionalSignConfig,
+  },
+  {
+    name: "CrtScreen",
+    displayName: "CRT Screen",
+    caption: "A CRT screen, with markdown-configurable text",
+    type: "scifi_screens",
+    config: CrtScreenConfig,
   },
 ];
 

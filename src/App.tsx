@@ -22,6 +22,7 @@ import { BookCover } from "./renderer/BookCover";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
 import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
 import { ThreePanelDirectionalSign } from "./renderer/ThreePanelDirectionalSign";
+import { CrtScreen } from "./renderer/CrtScreen";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -215,6 +216,11 @@ function App() {
                 <ThreePanelDirectionalSign
                   handout={currentHandoutTransientRow.data}
                 />
+              )}
+
+            {currentHandoutTransientRow.type === "CrtScreen" &&
+              appState.selectedHandoutType === "CrtScreen" && (
+                <CrtScreen handout={currentHandoutTransientRow.data} />
               )}
           </div>
         </div>

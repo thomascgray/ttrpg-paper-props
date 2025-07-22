@@ -1,0 +1,98 @@
+import { CrtScreenConfig, ExtractConfigValues } from "../db";
+import Markdown from "react-markdown";
+import { getRawColourForInkColor, saturateHexColor } from "../utils";
+import classNames from "classnames";
+type PlainLetterData = ExtractConfigValues<typeof CrtScreenConfig>;
+
+export const CrtScreen = ({ handout }: { handout: PlainLetterData }) => {
+  // the text needs different "base" offsets depending on the image
+  let textRenderOpts = {
+    top: 160,
+    left: 135,
+    transformString: ``,
+  };
+
+  let blackSquareOpts = {
+    top: 110,
+    left: 100,
+    width: 650,
+    height: 450,
+  };
+
+  switch (handout.crtScreen) {
+    case "/images/crts/a.webp": // the hp
+      break;
+    case "/images/crts/b.webp": // the mac
+      break;
+    case "/images/crts/c.webp": // the commodore pet
+      textRenderOpts.transformString = `scaleX(0.6)
+scaleY(0.6)
+rotateX(-8deg)
+rotateY(-16deg)
+rotateZ(1deg)
+translateX(230px)
+translateY(-240px)
+translateZ(00px)`;
+      break;
+  }
+
+  const rawInkColour = getRawColourForInkColor(handout.inkColor);
+  const moreSaturedInkColour = saturateHexColor(rawInkColour, 0.5);
+
+  return (
+    <div className="relative">
+      {/* the black box that covers up the gaps between the text render and the image */}
+      <div
+        style={{
+          top: `${blackSquareOpts.top}px`,
+          left: `${blackSquareOpts.left}px`,
+          width: `${blackSquareOpts.width}px`,
+          height: `${blackSquareOpts.height}px`,
+        }}
+        className={classNames("black-screen absolute bg-[#191919]", {
+          hidden: handout.crtScreen === "/images/crts/c.webp",
+        })}
+      ></div>
+
+      {/* the actual image */}
+      <div className="image-wrapper">
+        <img
+          style={{
+            transformOrigin: "top left",
+            transform: "scaleX(1.1)",
+            filter: `hue-rotate(${handout.image.hue_rotation}deg) saturate(${handout.image.saturation}%) brightness(${handout.image.brightness}%)`,
+          }}
+          src={handout.crtScreen}
+          alt="CRT Screen"
+        />
+      </div>
+
+      {/* the text render */}
+      <div
+        style={{
+          top: `${textRenderOpts.top}px`,
+          left: `${textRenderOpts.left}px`,
+          transform: `${textRenderOpts.transformString}`,
+          transformOrigin: "center",
+        }}
+        className="absolute top-0 left-0 crt w-[550px] h-[350px] bulge-filter overflow-y-clip"
+      >
+        <div
+          className="w-full h-[95%] overflow-y-clip"
+          style={{
+            textShadow: handout.textGlow
+              ? `0px 0px 3px ${moreSaturedInkColour}, 0px 0px 7px ${rawInkColour}`
+              : "",
+            fontSize: `${handout.fontSize}px`,
+          }}
+        >
+          <Markdown
+            className={`block copy-markdown ${handout.inkColor} ${handout.textAlign} ${handout.fontWeight} `}
+          >
+            {handout.text}
+          </Markdown>
+        </div>
+      </div>
+    </div>
+  );
+};
