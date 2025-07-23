@@ -34,9 +34,32 @@ translateX(230px)
 translateY(-240px)
 translateZ(00px)`;
       break;
+    case "/images/crts/d.webp": // the commodore pet
+      blackSquareOpts.top = 50;
+      blackSquareOpts.left = 100;
+      blackSquareOpts.width = 500;
+      blackSquareOpts.height = 250;
+      textRenderOpts.transformString = `scaleX(0.63) scaleY(0.61)
+translateX(-148px)
+translateY(-245px)
+translateZ(00px)`;
+      break;
+    case "/images/crts/e.webp": // micral microcomputer
+      blackSquareOpts.top = 100;
+      blackSquareOpts.left = 300;
+      blackSquareOpts.width = 500;
+      blackSquareOpts.height = 500;
+      textRenderOpts.transformString = `scaleX(0.65)
+scaleY(0.7)
+rotateX(-10deg)
+rotateY(-21deg)
+rotateZ(-8deg)
+translateX(283px)
+translateY(-74px)
+translateZ(0px)
+skewY(-1deg)`;
+      break;
   }
-
-  const moreSaturedInkColour = saturateHexColor(handout.crtPixelColor, 0.5);
 
   return (
     <div className="relative">
@@ -80,6 +103,7 @@ translateZ(00px)`;
           className="w-full h-[95%] overflow-y-clip"
           style={{
             color: handout.crtPixelColor,
+            borderColor: handout.crtPixelColor,
             textShadow: handout.textGlow
               ? `0px 0px 15px ${handout.crtPixelColor}`
               : "",

@@ -110,6 +110,8 @@ const renderFormInput = (
           label={name}
           value={value ?? restConfig.value}
           rows={restConfig.rows ?? 4}
+          minRows={restConfig.minRows}
+          autoResize={restConfig.autoResize}
           onUpdate={handleUpdate}
         />
       );

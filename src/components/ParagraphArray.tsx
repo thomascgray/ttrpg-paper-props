@@ -85,7 +85,7 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
           <TextArea
             label="Main Copy"
             value={paragraph.mainCopy}
-            rows={20}
+            autoResize={true}
             onUpdate={(val) => updateParagraph(paragraph.id, "mainCopy", val)}
           />
 

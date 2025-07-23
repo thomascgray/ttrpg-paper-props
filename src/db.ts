@@ -1,4 +1,5 @@
 import Dexie, { type EntityTable } from "dexie";
+import { min } from "lodash";
 import { nanoid } from "nanoid";
 import { proxy, subscribe } from "valtio";
 
@@ -129,12 +130,15 @@ const textArea = (overrides?: {
   name?: string;
   value?: string;
   rows?: number;
+  minRows?: number;
+  autoResize?: boolean;
 }) => {
   return {
     name: "Textarea",
     type: "textarea" as const,
     value: "Lorem ipsum",
-    rows: 4,
+    minRows: 4,
+    autoResize: true,
     ...overrides,
   };
 };
@@ -735,49 +739,21 @@ export const ThreePanelDirectionalSignConfig = {
 
 export const CrtScreenConfig = {
   text: [
-    `Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus
+    `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
 
-Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
-et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
-commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
-porta
+### GET TO THE ESCAPE PODS!
 
-quis maximus orci mollis nec. Nulla gravida nisl sed elementum mollis.
-Nam efficitur lacus tellus. Nam faucibus efficitur sem quis pulvinar.
-Donec elit augue, feugiat quis ornare aliquet, facilisis vel lacus.
-Mauris porta metus in velit lobortis ornare. Vestibulum ante ipsum
-primis in faucibus orci lu
-
-Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
-et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
-commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
-porta
-
-Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
-et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
-commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
-porta
-
-Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
-et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
-commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
-porta
-
-Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc. Nullam
-et quam vel urna mollis fermentum sit amet vehicula nisi. Donec ut
-commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet
-porta`,
-    textArea({ name: "Text", rows: 20 }),
+_Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet porta`,
+    textArea({ name: "Text" }),
   ],
   crtPixelColor: [
     CrtScreenTextColor.GREEN,
     crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
   textGlow: [true, boolean({ name: "Text Glow" })],
-  fontSize: [24, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
+  fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textAlign: ["text-left", textAlign()],
+  textAlign: ["text-center", textAlign()],
 
   crtScreen: [
     "/images/crts/c.webp",
@@ -788,6 +764,8 @@ porta`,
         // { label: "HP", value: "/images/crts/a.webp" },
         { label: "Commodore PET", value: "/images/crts/c.webp" },
         { label: "Apple Macintosh", value: "/images/crts/b.webp" },
+        { label: "Apple Lisa 2", value: "/images/crts/d.webp" },
+        { label: "Micral Microcomputer", value: "/images/crts/e.webp" },
       ],
     }),
   ],
