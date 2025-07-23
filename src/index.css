@@ -405,3 +405,21 @@ body {
 .font-bold {
   font-weight: 700;
 }
+
+.bulge-filter {
+  filter: url(#SphereMapTest);
+}
+
+.crt {
+  background: linear-gradient(to top, #000000, #000000, #333333, #333333);
+  background-size: cover;
+  background-size: 100% 1px;
+  font-family: "Courier New", monospace;
+}
+
+.rhelper {
+  border-top: 5px solid red;
+  border-bottom: 5px solid blue;
+  border-left: 5px solid yellow;
+  border-right: 5px solid green;
+}

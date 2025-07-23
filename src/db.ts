@@ -1,4 +1,5 @@
 import Dexie, { type EntityTable } from "dexie";
+import { min } from "lodash";
 import { nanoid } from "nanoid";
 import { proxy, subscribe } from "valtio";
 
@@ -55,6 +56,14 @@ export enum InkColor {
   SILVER = "ink-silver",
   TRUE_BLACK = "ink-true-black",
   TRUE_WHITE = "ink-true-white",
+}
+
+export enum CrtScreenTextColor {
+  RED = "#FF0000",
+  GREEN = "#00FF00",
+  BLUE = "#0080FF",
+  WHITE = "#FFFFFF",
+  PINK = "#FF00FF",
 }
 
 const range = (overrides?: {
@@ -121,12 +130,15 @@ const textArea = (overrides?: {
   name?: string;
   value?: string;
   rows?: number;
+  minRows?: number;
+  autoResize?: boolean;
 }) => {
   return {
     name: "Textarea",
     type: "textarea" as const,
     value: "Lorem ipsum",
-    rows: 4,
+    minRows: 4,
+    autoResize: true,
     ...overrides,
   };
 };
@@ -216,6 +228,15 @@ const blendMode = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+const crtPixelColours = (overrides?: { name?: string; value?: string }) => {
+  return {
+    name: "CRT Pixel Colour",
+    type: "crt_pixel_colours" as const,
+    value: CrtScreenTextColor.GREEN,
+    ...overrides,
+  };
+};
+
 const fontSize = () =>
   range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
 const lineHeight = () =>
@@ -243,6 +264,7 @@ type ConfigTuple = [
     | ReturnType<typeof paragraphArray>
     | ReturnType<typeof select>
     | ReturnType<typeof blendMode>
+    | ReturnType<typeof crtPixelColours>
   )
 ];
 
@@ -272,6 +294,23 @@ const imageOpts = {
     ],
     scaleX: [1, range({ name: "Scale X", min: 0.1, max: 10, step: 0.1 })],
     scaleY: [1, range({ name: "Scale Y", min: 0.1, max: 10, step: 0.1 })],
+  },
+} satisfies HandoutConfig;
+
+const imageOptsWithoutScaling = {
+  image: {
+    saturation: [
+      100,
+      range({ name: "Saturation", min: 0, max: 1000, suffix: "%", step: 5 }),
+    ],
+    hue_rotation: [
+      0,
+      range({ name: "Hue Rotation", min: 0, max: 360, suffix: "°", step: 2 }),
+    ],
+    brightness: [
+      100,
+      range({ name: "Brightness", min: 0, max: 1000, suffix: "%", step: 5 }),
+    ],
   },
 } satisfies HandoutConfig;
 
@@ -698,6 +737,41 @@ export const ThreePanelDirectionalSignConfig = {
   ...imageOpts,
 } satisfies HandoutConfig;
 
+export const CrtScreenConfig = {
+  text: [
+    `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
+
+### GET TO THE ESCAPE PODS!
+
+_Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut commodo sem. Nulla facilisi. Nulla facilisi. In aliquam imperdiet porta`,
+    textArea({ name: "Text" }),
+  ],
+  crtPixelColor: [
+    CrtScreenTextColor.GREEN,
+    crtPixelColours({ name: "CRT Screen Text Colour" }),
+  ],
+  textGlow: [true, boolean({ name: "Text Glow" })],
+  fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  textAlign: ["text-center", textAlign()],
+
+  crtScreen: [
+    "/images/crts/c.webp",
+    select({
+      name: "CRT Screen Style/Model",
+      value: "/images/crts/c.webp",
+      options: [
+        // { label: "HP", value: "/images/crts/a.webp" },
+        { label: "Commodore PET", value: "/images/crts/c.webp" },
+        { label: "Apple Macintosh", value: "/images/crts/b.webp" },
+        { label: "Apple Lisa 2", value: "/images/crts/d.webp" },
+        { label: "Micral Microcomputer", value: "/images/crts/e.webp" },
+      ],
+    }),
+  ],
+  ...imageOptsWithoutScaling,
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -758,6 +832,13 @@ export const allConfigs = [
       "A three-panel directional wooden sign with customizable text on each panel",
     type: "wooden_signs",
     config: ThreePanelDirectionalSignConfig,
+  },
+  {
+    name: "CrtScreen",
+    displayName: "CRT Screen",
+    caption: "A CRT screen, with markdown-configurable text",
+    type: "scifi_screens",
+    config: CrtScreenConfig,
   },
 ];
 

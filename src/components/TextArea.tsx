@@ -1,9 +1,12 @@
-import React, { useRef, useLayoutEffect } from "react";
+import classNames from "classnames";
+import React, { useRef, useLayoutEffect, useEffect } from "react";
 
 interface iTextAreaProps {
   label: string;
   value: string;
-  rows: number;
+  rows?: number;
+  minRows?: number;
+  autoResize?: boolean;
   onUpdate: (value: any) => void;
 }
 
@@ -18,6 +21,39 @@ export const TextArea = (props: iTextAreaProps) => {
       cursorPositionRef.current = null;
     }
   }, [props.value]);
+
+  // Auto-resize effect
+  useEffect(() => {
+    if (props.autoResize && textareaRef.current) {
+      const textarea = textareaRef.current;
+
+      // First, set rows to minimum to allow shrinking
+      const minRows = props.minRows || 1;
+      textarea.rows = minRows;
+
+      // Reset height to auto to get the correct scrollHeight
+      textarea.style.height = "auto";
+
+      // Get computed styles
+      const computedStyle = window.getComputedStyle(textarea);
+      const lineHeight = parseInt(computedStyle.lineHeight);
+      const paddingTop = parseInt(computedStyle.paddingTop);
+      const paddingBottom = parseInt(computedStyle.paddingBottom);
+
+      // Calculate the number of rows needed
+      const contentHeight = textarea.scrollHeight - paddingTop - paddingBottom;
+      const calculatedRows = Math.ceil(contentHeight / lineHeight);
+
+      // Apply minRows constraint
+      const finalRows = Math.max(calculatedRows, minRows);
+
+      // Set the rows attribute
+      textarea.rows = finalRows;
+
+      // Also set the height explicitly to prevent jumping
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [props.value, props.autoResize, props.minRows]);
 
   return (
     <label className="block">
@@ -39,8 +75,10 @@ export const TextArea = (props: iTextAreaProps) => {
       <textarea
         ref={textareaRef}
         value={props.value}
-        className="w-full p-2 text-sm"
-        rows={props.rows}
+        className={classNames("w-full p-2 text-sm", {
+          "overflow-y-clip": props.autoResize,
+        })}
+        rows={props.rows || props.minRows || 4}
         onChange={(e) => {
           const start = e.target.selectionStart;
           const end = e.target.selectionEnd;

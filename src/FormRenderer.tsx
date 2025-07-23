@@ -2,6 +2,7 @@ import React from "react";
 import { RangeInput } from "./components/RangeInput";
 import { ColourPicker } from "./components/ColourPicker";
 import { InkColorSelector } from "./components/InkColorSelector";
+import { CrtPixelColourSelector } from "./components/CrtPixelColourSelector";
 import { CheckboxInput } from "./components/CheckboxInput";
 import { TextInput } from "./components/TextInput";
 import { TextArea } from "./components/TextArea";
@@ -109,6 +110,8 @@ const renderFormInput = (
           label={name}
           value={value ?? restConfig.value}
           rows={restConfig.rows ?? 4}
+          minRows={restConfig.minRows}
+          autoResize={restConfig.autoResize}
           onUpdate={handleUpdate}
         />
       );
@@ -195,6 +198,16 @@ const renderFormInput = (
     case "paragraph_array":
       return (
         <ParagraphArray
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          onUpdate={handleUpdate}
+        />
+      );
+
+    case "crt_pixel_colours":
+      return (
+        <CrtPixelColourSelector
           key={path}
           label={name}
           value={value ?? restConfig.value}
