@@ -58,9 +58,11 @@ export enum InkColor {
 }
 
 export enum CrtScreenTextColor {
-  GREEN = "#00FF00",
   RED = "#FF0000",
+  GREEN = "#00FF00",
+  BLUE = "#0080FF",
   WHITE = "#FFFFFF",
+  PINK = "#FF00FF",
 }
 
 const range = (overrides?: {
@@ -222,6 +224,15 @@ const blendMode = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+const crtPixelColours = (overrides?: { name?: string; value?: string }) => {
+  return {
+    name: "CRT Pixel Colour",
+    type: "crt_pixel_colours" as const,
+    value: CrtScreenTextColor.GREEN,
+    ...overrides,
+  };
+};
+
 const fontSize = () =>
   range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
 const lineHeight = () =>
@@ -249,6 +260,7 @@ type ConfigTuple = [
     | ReturnType<typeof paragraphArray>
     | ReturnType<typeof select>
     | ReturnType<typeof blendMode>
+    | ReturnType<typeof crtPixelColours>
   )
 ];
 
@@ -760,20 +772,13 @@ porta`,
   ],
   crtPixelColor: [
     CrtScreenTextColor.GREEN,
-    select({
-      name: "CRT Screen Text Colour",
-      value: CrtScreenTextColor.GREEN,
-      options: [
-        { label: "Green", value: CrtScreenTextColor.GREEN },
-        { label: "Red", value: CrtScreenTextColor.RED },
-        { label: "White", value: CrtScreenTextColor.WHITE },
-      ],
-    }),
+    crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
+  textGlow: [true, boolean({ name: "Text Glow" })],
   fontSize: [24, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-left", textAlign()],
-  textGlow: [true, boolean({ name: "Text Glow" })],
+
   crtScreen: [
     "/images/crts/c.webp",
     select({

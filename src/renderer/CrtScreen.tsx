@@ -81,7 +81,7 @@ translateZ(00px)`;
           style={{
             color: handout.crtPixelColor,
             textShadow: handout.textGlow
-              ? `0px 0px 3px ${moreSaturedInkColour}, 0px 0px 7px ${handout.crtPixelColor}`
+              ? `0px 0px 15px ${handout.crtPixelColor}`
               : "",
             fontSize: `${handout.fontSize}px`,
           }}
