@@ -14,6 +14,8 @@ import { FontWeightSelector } from "./components/FontWeightSelector";
 import { Select } from "./components/Select";
 import { ImageInput } from "./components/ImageInput";
 import { ParagraphArray } from "./components/ParagraphArray";
+import { BlendModeSelector } from "./components/TextFilterSelector";
+import { LegendItems } from "./components/LegendItems";
 
 interface FormRendererProps {
   formConfig: Record<string, any>;
@@ -208,6 +210,24 @@ const renderFormInput = (
     case "crt_pixel_colours":
       return (
         <CrtPixelColourSelector
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          onUpdate={handleUpdate}
+        />
+      );
+    case "blend_mode":
+      return (
+        <BlendModeSelector
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          onUpdate={handleUpdate}
+        />
+      );
+    case "legend_items":
+      return (
+        <LegendItems
           key={path}
           label={name}
           value={value ?? restConfig.value}

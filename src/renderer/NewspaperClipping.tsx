@@ -2,7 +2,8 @@ import React from "react";
 import classNames from "classnames";
 import Markdown from "react-markdown";
 import { NEWSPAPER_CLIPPING } from "../config";
-import { ExtractConfigValues, NewspaperClippingConfig } from "../db";
+import { NewspaperClippingConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import { hexToRgba } from "../utils";
 
 type NewspaperClippingData = ExtractConfigValues<

@@ -18,24 +18,24 @@ export const BlendModeSelector = (props: iTextFilterSelector) => {
             props.onUpdate(e.target.value);
           }}
         >
-          <option value="blend-mode-normal">normal</option>
-          <option value="blend-mode-multiply">multiply</option>
-          <option value="blend-mode-screen">screen</option>
-          <option value="blend-mode-overlay">overlay</option>
-          <option value="blend-mode-darken">darken</option>
-          <option value="blend-mode-lighten">lighten</option>
-          <option value="blend-mode-color-dodge">color-dodge</option>
-          <option value="blend-mode-color-burn">color-burn</option>
-          <option value="blend-mode-hard-light">hard-light</option>
-          <option value="blend-mode-soft-light">soft-light</option>
-          <option value="blend-mode-difference">difference</option>
-          <option value="blend-mode-exclusion">exclusion</option>
-          <option value="blend-mode-hue">hue</option>
-          <option value="blend-mode-saturation">saturation</option>
-          <option value="blend-mode-color">color</option>
-          <option value="blend-mode-luminosity">luminosity</option>
-          <option value="blend-mode-plus-darker">plus-darker</option>
-          <option value="blend-mode-plus-lighter">plus-lighter</option>
+          <option value="blend-mode-normal">Normal</option>
+          <option value="blend-mode-multiply">Multiply</option>
+          <option value="blend-mode-screen">Screen</option>
+          <option value="blend-mode-overlay">Overlay</option>
+          <option value="blend-mode-darken">Darken</option>
+          <option value="blend-mode-lighten">Lighten</option>
+          <option value="blend-mode-color-dodge">Color-dodge</option>
+          <option value="blend-mode-color-burn">Color-burn</option>
+          <option value="blend-mode-hard-light">Hard-light</option>
+          <option value="blend-mode-soft-light">Soft-light</option>
+          <option value="blend-mode-difference">Difference</option>
+          <option value="blend-mode-exclusion">Exclusion</option>
+          <option value="blend-mode-hue">Hue</option>
+          <option value="blend-mode-saturation">Saturation</option>
+          <option value="blend-mode-color">Color</option>
+          <option value="blend-mode-luminosity">Luminosity</option>
+          <option value="blend-mode-plus-darker">Plus-darker</option>
+          <option value="blend-mode-plus-lighter">Plus-lighter</option>
         </select>
       </div>
     </label>

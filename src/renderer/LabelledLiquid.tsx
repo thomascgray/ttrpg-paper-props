@@ -1,6 +1,7 @@
 import React from "react";
 import Markdown from "react-markdown";
-import { LabelledLiquidConfig, ExtractConfigValues } from "../db";
+import { LabelledLiquidConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 
 type LabelledLiquidData = ExtractConfigValues<typeof LabelledLiquidConfig>;
 

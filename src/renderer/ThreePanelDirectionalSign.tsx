@@ -1,6 +1,7 @@
 import React from "react";
 import Markdown from "react-markdown";
-import { ThreePanelDirectionalSignConfig, ExtractConfigValues } from "../db";
+import { ThreePanelDirectionalSignConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import classNames from "classnames";
 
 type ThreePanelDirectionalSignData = ExtractConfigValues<

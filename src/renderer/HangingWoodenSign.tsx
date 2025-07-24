@@ -1,10 +1,7 @@
 import React from "react";
 import Markdown from "react-markdown";
-import {
-  BookCoverConfig,
-  ExtractConfigValues,
-  HangingWoodenSignConfig,
-} from "../db";
+import { HangingWoodenSignConfig, BookCoverConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import classNames from "classnames";
 
 type HangingWoodenSignData = ExtractConfigValues<

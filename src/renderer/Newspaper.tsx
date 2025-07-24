@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import Markdown from "react-markdown";
-import { ExtractConfigValues, NewspaperConfig } from "../db";
+import { NewspaperConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import { hexToRgba } from "../utils";
 
 type NewspaperData = ExtractConfigValues<typeof NewspaperConfig>;

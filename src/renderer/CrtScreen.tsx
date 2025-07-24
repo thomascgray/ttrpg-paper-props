@@ -1,4 +1,5 @@
-import { CrtScreenConfig, ExtractConfigValues } from "../db";
+import { CrtScreenConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import Markdown from "react-markdown";
 import { getRawColourForInkColor, saturateHexColor } from "../utils";
 import classNames from "classnames";

@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { iStandardComponentProps } from "./";
-import { CrtScreenTextColor } from "../db";
+import { CrtScreenTextColor } from "../enums";
 
 const colours = [
   ["red", CrtScreenTextColor.RED],

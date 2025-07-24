@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react"; //
 import { Helmet } from "react-helmet-async";
-import { StateContext } from "./context";
-import { allConfigs, extractConfigAsFormConfig } from "./db";
 import { FormRenderer } from "./FormRenderer";
 import * as _ from "lodash";
 import { snapshot, useSnapshot } from "valtio";
-import {
-  appState as appStateProxy,
-  db,
-  saveVersion,
-  updateTransientRecordToVersion,
-} from "./db";
+
 import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { VersionSelector } from "./components/VersionSelector";
 import { useLiveQuery } from "dexie-react-hooks";
@@ -23,6 +16,11 @@ import { LabelledLiquid } from "./renderer/LabelledLiquid";
 import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
 import { ThreePanelDirectionalSign } from "./renderer/ThreePanelDirectionalSign";
 import { CrtScreen } from "./renderer/CrtScreen";
+import { appState as appStateProxy } from "./appState";
+import { allConfigs } from "./handoutConfigs";
+import { extractConfigAsFormConfig } from "./configUtils";
+import { db, saveVersion, updateTransientRecordToVersion } from "./database";
+import { PaperMap } from "./renderer/PaperMap";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -56,15 +54,7 @@ function App() {
   }
 
   return (
-    <StateContext.Provider
-      value={{
-        highlighted,
-        setHighlighted,
-        onChange: () => {
-          console.log("context data changed");
-        },
-      }}
-    >
+    <>
       <Helmet>
         <style>
           {`
@@ -222,10 +212,15 @@ function App() {
               appState.selectedHandoutType === "CrtScreen" && (
                 <CrtScreen handout={currentHandoutTransientRow.data} />
               )}
+
+            {currentHandoutTransientRow.type === "PaperMap" &&
+              appState.selectedHandoutType === "PaperMap" && (
+                <PaperMap handout={currentHandoutTransientRow.data} />
+              )}
           </div>
         </div>
       </div>
-    </StateContext.Provider>
+    </>
   );
 }
 
