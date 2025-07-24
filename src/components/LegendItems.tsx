@@ -4,15 +4,20 @@ import { TextInput } from "./TextInput";
 import { RangeInput } from "./RangeInput";
 import { CheckboxInput } from "./CheckboxInput";
 import { Select } from "./Select";
+import { IconPicker } from "./IconPicker";
+import { IconName, IconSize } from "../Icon";
+import { ColourPicker } from "./ColourPicker";
 
 export interface LegendItem {
   id: string;
   text: string;
-  icon: string;
+  icon: IconName;
+  iconSize: IconSize;
   position: {
     x: number;
     y: number;
   };
+  iconColor: string;
   showText: boolean;
   textPosition: "above" | "below" | "left" | "right";
 }
@@ -32,12 +37,14 @@ export const LegendItems: React.FC<LegendItemsProps> = ({
     const newItem: LegendItem = {
       id: nanoid(),
       text: "",
-      icon: "",
+      icon: "square",
+      iconSize: "md",
       position: {
         x: 50,
         y: 50,
       },
       showText: false,
+      iconColor: "#FFFFFF",
       textPosition: "right",
     };
     onUpdate([...value, newItem]);
@@ -59,6 +66,10 @@ export const LegendItems: React.FC<LegendItemsProps> = ({
             return { ...item, showText: newValue };
           } else if (field === "textPosition") {
             return { ...item, textPosition: newValue };
+          } else if (field === "iconColor") {
+            return { ...item, iconColor: newValue };
+          } else if (field === "iconSize") {
+            return { ...item, iconSize: newValue };
           } else if (field === "x" || field === "y") {
             return {
               ...item,
@@ -111,10 +122,29 @@ export const LegendItems: React.FC<LegendItemsProps> = ({
             onUpdate={(val) => updateLegendItem(item.id, "text", val)}
           />
 
-          <TextInput
+          <IconPicker
             label="Icon"
             value={item.icon}
             onUpdate={(val) => updateLegendItem(item.id, "icon", val)}
+          />
+
+          <ColourPicker
+            label="Icon Colour"
+            value={item.iconColor}
+            onUpdate={(val) => updateLegendItem(item.id, "iconColor", val)}
+          />
+
+          <Select
+            label="Icon Size"
+            value={item.iconSize}
+            onUpdate={(val) => updateLegendItem(item.id, "iconSize", val)}
+            options={[
+              { value: "xs", label: "X-Small" },
+              { value: "sm", label: "Small" },
+              { value: "md", label: "Medium" },
+              { value: "lg", label: "Large" },
+              { value: "xl", label: "X-Large" },
+            ]}
           />
 
           <RangeInput

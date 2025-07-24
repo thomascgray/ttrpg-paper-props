@@ -1,4 +1,5 @@
 import { PaperMapConfig } from "../handoutConfigs";
+import { Icon } from "../Icon";
 import { ExtractConfigValues } from "../types";
 
 type PaperMapData = ExtractConfigValues<typeof PaperMapConfig>;
@@ -34,7 +35,7 @@ export const PaperMap = ({ handout }: { handout: PaperMapData }) => {
         style={{
           width: "80%",
         }}
-        className={`paper relative p-12 inline-block overflow-visible transition-all ${handout.font} ${handout.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
+        className={`paper relative p-12 inline-block overflow-visible transition-all ${handout.legend.font} ${handout.legend.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
       >
         <div className="relative">
           <img
@@ -48,7 +49,7 @@ export const PaperMap = ({ handout }: { handout: PaperMapData }) => {
           />
 
           {/* the legend items on the map */}
-          {handout.legendItems.map((item, index) => {
+          {handout.legend.legendItems.map((item, index) => {
             const flexDirection = {
               above: "flex-col-reverse",
               below: "flex-col",
@@ -59,19 +60,30 @@ export const PaperMap = ({ handout }: { handout: PaperMapData }) => {
             return (
               <div
                 key={item.id}
-                className={`absolute ${handout.inkColor} transition-all`}
+                className={`absolute transition-all`}
                 style={{
                   left: `${item.position.x}%`,
                   top: `${item.position.y}%`,
                   transform: "translate(-50%, -50%)",
                 }}
               >
-                <div className={`flex items-center gap-1 ${flexDirection}`}>
-                  <span className="bg-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
-                    {item.icon}
-                  </span>
+                <div
+                  className={`flex drop-shadow-md items-center gap-1 ${flexDirection}`}
+                >
+                  <div className="flex items-center justify-center shadow-sm">
+                    <Icon
+                      name={item.icon}
+                      size={item.iconSize}
+                      colour={item.iconColor}
+                    />
+                  </div>
                   {item.showText && (
-                    <span className="text-xs font-medium whitespace-nowrap bg-white p-1">
+                    <span
+                      style={{
+                        fontSize: `${handout.legend.fontSize}px`,
+                      }}
+                      className="text-xs font-medium whitespace-nowrap rounded shadow-sm"
+                    >
                       {item.text}
                     </span>
                   )}
@@ -81,17 +93,17 @@ export const PaperMap = ({ handout }: { handout: PaperMapData }) => {
           })}
 
           {/* the legend itself */}
-          {handout.legendItems.length > 0 && (
+          {handout.legend.legendItems.length > 0 && (
             <div
-              className="legend absolute bg-white p-4 rounded shadow-lg"
-              style={getLegendPositionStyles(handout.legendPosition)}
+              className="legend absolute bg-white p-4 rounded shadow-lg grid grid-cols-1 gap-4"
+              style={getLegendPositionStyles(handout.legend.legendPosition)}
             >
-              {handout.legendItems.map((item, index) => (
+              {handout.legend.legendItems.map((item, index) => (
                 <div key={item.id}>
                   <div className="flex items-center gap-4">
-                    <span className="bg-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold border border-gray-300">
-                      {item.icon}
-                    </span>
+                    <div className="bg-white rounded-full flex items-center justify-center border border-gray-300 p-1">
+                      <Icon name={item.icon} colour={item.iconColor} />
+                    </div>
                     <span>{item.text}</span>
                   </div>
                 </div>

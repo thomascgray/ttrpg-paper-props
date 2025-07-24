@@ -489,32 +489,32 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
 export const PaperMapConfig = {
   paperTexture: ["beige-3", paperTexture()],
   image: ["https://i.imgur.com/w1DaJ2q.jpeg", imageInput()],
-  legendItems: [[] as LegendItem[], legendItems({ name: "Legend Items" })],
-  legendPosition: [
-    "top-left",
-    select({
-      name: "Legend Position",
-      options: [
-        { label: "Top Left", value: "top-left" },
-        { label: "Top Center", value: "top-center" },
-        { label: "Top Right", value: "top-right" },
-        { label: "Middle Left", value: "middle-left" },
-        { label: "Middle Right", value: "middle-right" },
-        { label: "Bottom Left", value: "bottom-left" },
-        { label: "Bottom Center", value: "bottom-center" },
-        { label: "Bottom Right", value: "bottom-right" },
-      ],
-    }),
-  ],
-  inkColor: ["ink-black", inkSelector()],
+  legend: {
+    legendItems: [[] as LegendItem[], legendItems({ name: "Legend Items" })],
+    legendPosition: [
+      "top-left",
+      select({
+        name: "Legend Position",
+        options: [
+          { label: "Top Left", value: "top-left" },
+          { label: "Top Center", value: "top-center" },
+          { label: "Top Right", value: "top-right" },
+          { label: "Middle Left", value: "middle-left" },
+          { label: "Middle Right", value: "middle-right" },
+          { label: "Bottom Left", value: "bottom-left" },
+          { label: "Bottom Center", value: "bottom-center" },
+          { label: "Bottom Right", value: "bottom-right" },
+        ],
+      }),
+    ],
+    font: [FontFamily.SERIF, fontPicker()],
+    fontSize: [
+      24,
+      range({ name: "Font Size", min: 16, max: 100, suffix: "px" }),
+    ],
+    fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  },
   imageFilter: ["none", imageFilter()],
-  font: [FontFamily.SERIF, fontPicker()],
-  fontSize: [
-    24,
-    range({ name: "Font Size (Relative)", min: 16, max: 100, suffix: "%" }),
-  ],
-  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textAlign: ["text-left", textAlign()],
 } satisfies HandoutConfig;
 
 export const allConfigs = [
