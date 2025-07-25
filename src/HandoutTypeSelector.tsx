@@ -1,13 +1,8 @@
-import { FormRenderer } from "./FormRenderer";
 import * as _ from "lodash";
 import { useSnapshot } from "valtio";
-import { appState as appStateProxy } from "./db";
-import {
-  AllConfigNames,
-  allConfigs,
-  extractConfigAsData,
-  extractConfigAsFormConfig,
-} from "./db";
+import { appState as appStateProxy } from "./appState";
+import { AllConfigNames, allConfigs } from "./handoutConfigs";
+
 export const HandoutTypeSelector = () => {
   const appState = useSnapshot(appStateProxy);
 

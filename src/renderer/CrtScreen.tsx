@@ -1,4 +1,5 @@
-import { CrtScreenConfig, ExtractConfigValues } from "../db";
+import { CrtScreenConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import Markdown from "react-markdown";
 import { getRawColourForInkColor, saturateHexColor } from "../utils";
 import classNames from "classnames";
@@ -97,7 +98,7 @@ skewY(-1deg)`;
           transform: `${textRenderOpts.transformString}`,
           transformOrigin: "center",
         }}
-        className="absolute top-0 left-0 crt w-[550px] h-[350px] bulge-filter overflow-y-clip"
+        className="absolute top-0 left-0 font-mono bg-[#232323] crt w-[550px] h-[350px] bulge-filter overflow-y-clip"
       >
         <div
           className="w-full h-[95%] overflow-y-clip"
@@ -117,6 +118,17 @@ skewY(-1deg)`;
           </Markdown>
         </div>
       </div>
+
+      {/* the scan lines */}
+      <div
+        style={{
+          top: `${textRenderOpts.top}px`,
+          left: `${textRenderOpts.left}px`,
+          transform: `${textRenderOpts.transformString}`,
+          transformOrigin: "center",
+        }}
+        className="absolute opacity-20 top-0 left-0 horizontal-lines w-[550px] h-[350px] bulge-filter overflow-y-clip"
+      ></div>
     </div>
   );
 };

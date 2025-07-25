@@ -48,6 +48,40 @@ export const ImageInput: React.FC<iStandardComponentProps> = (props) => {
     }
   };
 
+  const convertClipboardToBase64 = async (): Promise<string> => {
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.read) {
+        throw new Error("Clipboard API not supported");
+      }
+
+      const clipboardItems = await navigator.clipboard.read();
+      
+      for (const clipboardItem of clipboardItems) {
+        for (const type of clipboardItem.types) {
+          if (type.startsWith('image/')) {
+            const blob = await clipboardItem.getType(type);
+            
+            // Convert to WebP
+            const webpBlob = await blobToWebP(blob, {
+              quality: 0.8,
+            });
+
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result as string);
+              reader.onerror = reject;
+              reader.readAsDataURL(webpBlob);
+            });
+          }
+        }
+      }
+      
+      throw new Error("No image found in clipboard");
+    } catch (err) {
+      throw new Error("Failed to read image from clipboard");
+    }
+  };
+
   const handleUrlSubmit = async () => {
     if (!urlValue.trim()) return;
 
@@ -81,6 +115,26 @@ export const ImageInput: React.FC<iStandardComponentProps> = (props) => {
     } catch (err) {
       console.log("err", err);
       setError("Failed to read file. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleClipboardPaste = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const base64 = await convertClipboardToBase64();
+      props.onUpdate(base64);
+      setError(null); // Clear any previous errors on success
+    } catch (err) {
+      console.log("err", err);
+      if (err instanceof Error && err.message.includes("No image found")) {
+        alert("No image found in clipboard. Please copy an image and try again.");
+      } else {
+        setError("Failed to read image from clipboard. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -127,6 +181,18 @@ export const ImageInput: React.FC<iStandardComponentProps> = (props) => {
           }`}
         >
           File
+        </button>
+        <button
+          type="button"
+          onClick={handleClipboardPaste}
+          disabled={isLoading}
+          className={`px-3 py-1 rounded ${
+            isLoading
+              ? "bg-gray-300 text-gray-500"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          {isLoading ? "Reading..." : "Copy from Clipboard"}
         </button>
       </div>
 

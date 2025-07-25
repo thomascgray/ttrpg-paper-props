@@ -1,7 +1,8 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
-import { PlainLetterConfig, ExtractConfigValues } from "../db";
+import { PlainLetterConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 import { hexToRgba } from "../utils";
 
 type PlainLetterData = ExtractConfigValues<typeof PlainLetterConfig>;

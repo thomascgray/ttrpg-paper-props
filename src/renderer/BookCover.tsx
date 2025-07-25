@@ -1,6 +1,7 @@
 import React from "react";
 import Markdown from "react-markdown";
-import { BookCoverConfig, ExtractConfigValues } from "../db";
+import { BookCoverConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 
 type BookCoverData = ExtractConfigValues<typeof BookCoverConfig>;
 

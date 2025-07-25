@@ -6,6 +6,7 @@ interface iTextAreaProps {
   value: string;
   rows?: number;
   minRows?: number;
+  maxRows?: number;
   autoResize?: boolean;
   onUpdate: (value: any) => void;
 }
@@ -44,22 +45,34 @@ export const TextArea = (props: iTextAreaProps) => {
       const contentHeight = textarea.scrollHeight - paddingTop - paddingBottom;
       const calculatedRows = Math.ceil(contentHeight / lineHeight);
 
-      // Apply minRows constraint
-      const finalRows = Math.max(calculatedRows, minRows);
+      // Apply minRows and maxRows constraints
+      let finalRows = Math.max(calculatedRows, minRows);
+      if (props.maxRows) {
+        finalRows = Math.min(finalRows, props.maxRows);
+      }
 
       // Set the rows attribute
       textarea.rows = finalRows;
 
-      // Also set the height explicitly to prevent jumping
-      textarea.style.height = `${textarea.scrollHeight}px`;
+      // Set the height and overflow based on whether we've hit maxRows
+      if (props.maxRows && calculatedRows > props.maxRows) {
+        // If content exceeds maxRows, set fixed height and enable scrolling
+        const maxHeight = (props.maxRows * lineHeight) + paddingTop + paddingBottom;
+        textarea.style.height = `${maxHeight}px`;
+        textarea.style.overflowY = 'auto';
+      } else {
+        // Otherwise, set height to content and hide overflow
+        textarea.style.height = `${textarea.scrollHeight}px`;
+        textarea.style.overflowY = 'hidden';
+      }
     }
-  }, [props.value, props.autoResize, props.minRows]);
+  }, [props.value, props.autoResize, props.minRows, props.maxRows]);
 
   return (
     <label className="block">
-      <span className="block mb-1">
+      <span className="block mb-1 text-sm">
         {props.label}{" "}
-        <span className="italic">
+        <span className="italic text-gray-600">
           You can use{" "}
           <a
             target="_blank"

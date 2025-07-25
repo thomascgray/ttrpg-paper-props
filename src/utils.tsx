@@ -1,4 +1,4 @@
-import { InkColor } from "./db";
+import { InkColor } from "./enums";
 
 export const hexToRgba = (hex: string, alpha: number) => {
   const [r, g, b] = hex
@@ -62,8 +62,6 @@ export const getRawColourForInkColor = (inkColor: InkColor): string => {
       return "#bdc3c7";
     case "ink-true-black":
       return "#000";
-    case "ink-true-white":
-      return "#eee";
     case "ink-true-white":
     default:
       return "#eee";

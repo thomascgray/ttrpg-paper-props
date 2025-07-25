@@ -1,5 +1,4 @@
-import React from "react";
-import { FontWeight } from "../db";
+import { FontWeight } from "../enums";
 
 interface iFontWeightSelector {
   label: string;

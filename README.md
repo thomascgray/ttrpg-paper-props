@@ -24,3 +24,10 @@ _Very W.I.P, apologies for any bugs!_
 # todo
 
 - we've got a good little thing going with the ..imageOpts stuff in db; we should aim for more consistency across all of it
+
+## resources
+
+### book covers
+
+https://unsplash.com/photos/brown-leather-bifold-wallet-on-brown-wooden-table-e47gwnA7KGk
+https://unsplash.com/photos/black-leather-case-on-white-table-r2G-GOqj4f4

@@ -5,7 +5,7 @@ import { FontSelector } from "./FontSelector";
 import { RangeInput } from "./RangeInput";
 import { FontWeightSelector } from "./FontWeightSelector";
 import { TextAlignmentSelector } from "./TextAlignmentSelector";
-import { FontFamily } from "../db";
+import { FontFamily } from "../enums";
 
 interface Paragraph {
   id: string;
@@ -58,7 +58,7 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
           className="bg-gray-100 p-4 rounded-lg space-y-3"
         >
           <div className="flex justify-between items-center">
-            <h4 className="font-medium">Paragraph {index + 1}</h4>
+            <h4 className="font-medium text-md">Paragraph {index + 1}</h4>
             <button
               onClick={() => deleteParagraph(paragraph.id)}
               className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"

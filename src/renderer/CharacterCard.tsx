@@ -1,4 +1,5 @@
-import { CharacterCardConfig, ExtractConfigValues } from "../db";
+import { CharacterCardConfig } from "../handoutConfigs";
+import { ExtractConfigValues } from "../types";
 
 type CharacterCardData = ExtractConfigValues<typeof CharacterCardConfig>;
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VersionTable } from '../db';
+import { VersionTable } from '../types';
 
 interface VersionSelectorProps {
   versionsList: VersionTable[];
