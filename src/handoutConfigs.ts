@@ -461,7 +461,7 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
     textArea({ name: "Text" }),
   ],
   crtPixelColor: [
-    CrtScreenTextColor.GREEN,
+    CrtScreenTextColor["1"],
     crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
   textGlow: [true, boolean({ name: "Text Glow" })],
@@ -589,7 +589,7 @@ export const allConfigs = [
     name: "PaperMap",
     displayName: "Paper Map",
     caption: "A map, with markdown-configurable text",
-    type: "digital_paper",
+    // type: "digital_paper", unhide when its done
     config: PaperMapConfig,
   } as const,
 ];

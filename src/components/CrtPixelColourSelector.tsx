@@ -2,25 +2,15 @@ import classnames from "classnames";
 import { iStandardComponentProps } from "./";
 import { CrtScreenTextColor } from "../enums";
 
-const colours = [
-  ["red", CrtScreenTextColor.RED],
-  ["green", CrtScreenTextColor.GREEN],
-  ["blue", CrtScreenTextColor.BLUE],
-  ["white", CrtScreenTextColor.WHITE],
-  ["pink", CrtScreenTextColor.PINK],
-] as const;
-
 export const CrtPixelColourSelector = (props: iStandardComponentProps) => {
   return (
     <label className="block">
       <span className="block">🖥️ {props.label}</span>
       <div className="flex space-x-4">
-        {colours.map((colourTuple) => {
-          const [colourName, hexCode] = colourTuple;
-
+        {CrtScreenTextColor.map((hexCode) => {
           return (
             <button
-              key={colourName}
+              key={hexCode}
               style={{
                 backgroundColor: hexCode,
               }}

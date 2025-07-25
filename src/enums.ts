@@ -51,10 +51,12 @@ export enum InkColor {
   TRUE_WHITE = "ink-true-white",
 }
 
-export enum CrtScreenTextColor {
-  RED = "#FF0000",
-  GREEN = "#00FF00",
-  BLUE = "#0080FF",
-  WHITE = "#FFFFFF",
-  PINK = "#FF00FF",
-}
+export const CrtScreenTextColor = [
+  "#FF0000", // red
+  "#00FF00", // green
+  "#0080FF", // blue
+  "#00FFFF", // cyan
+  "#FFFF00", // yellow
+  "#FFFFFF", // white
+  "#FF00FF", // pink
+] as const;
