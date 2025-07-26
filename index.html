@@ -32,6 +32,7 @@
     <div style="height: 100%" id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
+    <!-- the rough edges filter -->
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="0" width="0">
       <defs>
         <filter id="roughEdges">
@@ -52,6 +53,7 @@
       </defs>
     </svg>
 
+    <!-- the bulge filter -->
     <svg width="0" height="0">
       <filter id="bulge-filter">
         <!-- Create a radial gradient displacement map -->
@@ -78,6 +80,7 @@
       </filter>
     </svg>
 
+    <!-- a different bulge thing? -->
     <svg
       style="display: none"
       xmlns="http://www.w3.org/2000/svg"
@@ -109,6 +112,25 @@
             xChannelSelector="R"
             yChannelSelector="G"
           ></feDisplacementMap>
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- the noise filter -->
+    <svg class="noise-svg">
+      <defs>
+        <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence
+            baseFrequency="0.2"
+            numOctaves="4"
+            result="noise"
+            type="fractalNoise"
+          />
+          <feColorMatrix in="noise" type="saturate" values="0" />
+          <feComponentTransfer>
+            <feFuncA type="discrete" tableValues="0.5 0.7 0.9 1" />
+          </feComponentTransfer>
+          <feBlend in2="SourceGraphic" mode="overlay" />
         </filter>
       </defs>
     </svg>

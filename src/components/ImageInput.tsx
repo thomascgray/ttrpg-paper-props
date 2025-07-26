@@ -89,8 +89,8 @@ export const ImageInput: React.FC<iStandardComponentProps> = (props) => {
     setError(null);
 
     try {
-      const base64 = await convertUrlToBase64(urlValue);
-      props.onUpdate(base64);
+      // For URL input, just pass the URL string directly without conversion
+      props.onUpdate(urlValue);
       setError(null); // Clear any previous errors on success
     } catch (err) {
       setError(

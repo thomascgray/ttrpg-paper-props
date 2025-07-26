@@ -517,6 +517,39 @@ export const PaperMapConfig = {
   imageFilter: ["none", imageFilter()],
 } satisfies HandoutConfig;
 
+export const SciFiHologramConfig = {
+  positioning: {
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
+    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
+  },
+  image: ["https://i.imgur.com/GKTWuW2.png", imageInput()],
+  overlayColor: ["#456099", colour({ name: "Overlay Color" })],
+  scanlines: {
+    opacity: [
+      0.8,
+      range({ name: "Scanline Opacity", min: 0, max: 1, step: 0.1 }),
+    ],
+    size: [2, range({ name: "Scanline Size", min: 0, max: 10, step: 1 })],
+  },
+  // blendEffect: ["blend-mode-normal", blendMode({ name: "Blend Effect" })],
+  blendEffect: [
+    "blend-mode-darken",
+    select({
+      name: "Blend Effect",
+      value: "blend-mode-darken",
+      options: [
+        { label: "Darkest", value: "blend-mode-color-burn" },
+        { label: "Darker", value: "blend-mode-darken" },
+        { label: "Normal", value: "blend-mode-overlay" },
+        { label: "Lighter", value: "blend-mode-soft-light" },
+        { label: "Lightest", value: "blend-mode-color-dodge" },
+      ],
+    }),
+  ],
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -591,6 +624,13 @@ export const allConfigs = [
     caption: "A map, with markdown-configurable text",
     // type: "digital_paper", unhide when its done
     config: PaperMapConfig,
+  } as const,
+  {
+    name: "SciFiHologram",
+    displayName: "Sci-fi Hologram",
+    caption: "A holographic display with customizable image and overlay color",
+    type: "scifi_screens",
+    config: SciFiHologramConfig,
   } as const,
 ];
 
