@@ -427,3 +427,17 @@ body {
       /* then the diff between the previous and this one is how thick the lines are */
   );
 }
+
+.hologram-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 4px,
+    #000 4px,
+    #000 5px
+  );
+}
+
+.noise-filter {
+  filter: url(#noise);
+}

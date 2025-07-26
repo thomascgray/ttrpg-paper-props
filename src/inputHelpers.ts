@@ -177,7 +177,7 @@ export const crtPixelColours = (overrides?: {
   return {
     name: "CRT Pixel Colour",
     type: "crt_pixel_colours" as const,
-    value: CrtScreenTextColor.GREEN,
+    value: CrtScreenTextColor["1"],
     ...overrides,
   };
 };

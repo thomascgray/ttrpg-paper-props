@@ -21,6 +21,7 @@ import { allConfigs } from "./handoutConfigs";
 import { extractConfigAsFormConfig } from "./configUtils";
 import { db, saveVersion, updateTransientRecordToVersion } from "./database";
 import { PaperMap } from "./renderer/PaperMap";
+import { SciFiHologram } from "./renderer/SciFiHologram";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -216,6 +217,11 @@ function App() {
             {currentHandoutTransientRow.type === "PaperMap" &&
               appState.selectedHandoutType === "PaperMap" && (
                 <PaperMap handout={currentHandoutTransientRow.data} />
+              )}
+
+            {currentHandoutTransientRow.type === "SciFiHologram" &&
+              appState.selectedHandoutType === "SciFiHologram" && (
+                <SciFiHologram data={currentHandoutTransientRow.data} />
               )}
           </div>
         </div>

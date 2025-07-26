@@ -19,6 +19,7 @@ export const ColourPicker = (props: iStandardComponentProps) => {
     "#8e44ad",
     "#27ae60",
     "#16a085",
+    "#456099",
   ];
   return (
     <div className="block">
