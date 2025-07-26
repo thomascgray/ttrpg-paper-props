@@ -526,14 +526,7 @@ export const SciFiHologramConfig = {
   },
   image: ["https://i.imgur.com/GKTWuW2.png", imageInput()],
   overlayColor: ["#456099", colour({ name: "Overlay Color" })],
-  scanlines: {
-    opacity: [
-      0.8,
-      range({ name: "Scanline Opacity", min: 0, max: 1, step: 0.1 }),
-    ],
-    size: [2, range({ name: "Scanline Size", min: 0, max: 10, step: 1 })],
-  },
-  // blendEffect: ["blend-mode-normal", blendMode({ name: "Blend Effect" })],
+  warbleEffect: [true, boolean({ name: "Warble Effect" })],
   blendEffect: [
     "blend-mode-darken",
     select({
@@ -548,6 +541,13 @@ export const SciFiHologramConfig = {
       ],
     }),
   ],
+  scanlines: {
+    opacity: [
+      0.8,
+      range({ name: "Scanline Opacity", min: 0, max: 1, step: 0.1 }),
+    ],
+    size: [2, range({ name: "Scanline Size", min: 0, max: 10, step: 1 })],
+  },
 } satisfies HandoutConfig;
 
 export const allConfigs = [

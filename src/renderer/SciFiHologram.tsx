@@ -16,7 +16,7 @@ interface SciFiHologramProps {
  */
 
 export function SciFiHologram({ data }: SciFiHologramProps) {
-  const { positioning, image, overlayColor } = data;
+  const { image, overlayColor } = data;
   const scanlineSize = data.scanlines.size as unknown as string;
 
   const [imageDimensions, setImageDimensions] = useState({
@@ -38,6 +38,15 @@ export function SciFiHologram({ data }: SciFiHologramProps) {
     img.src = image;
   }, [image]);
 
+  let baseFilter = `
+drop-shadow(0px 0px 3px ${hexToRgba("#FFFFFF", 0.2)})
+drop-shadow(0px 0px 6px ${overlayColor})
+drop-shadow(0px 0px 15px ${overlayColor})
+  `;
+  if (data.warbleEffect) {
+    baseFilter += ` url(#roughEdges)`;
+  }
+
   const scanlinesCss = `
 to bottom,
 transparent 0px,
@@ -48,8 +57,6 @@ ${hexToRgba("#000000", data.scanlines.opacity)} ${
   }px
 `;
 
-  console.log("scanlinesCss", scanlinesCss);
-
   return (
     <div
       style={{
@@ -59,12 +66,10 @@ ${hexToRgba("#000000", data.scanlines.opacity)} ${
       className="relative h-[80vh]"
     >
       <img
-        className="h-full"
+        className="h-full rough-edges"
         src={data.image}
         style={{
-          filter: `drop-shadow(0px 0px 3px ${hexToRgba("#FFFFFF", 0.2)})
-drop-shadow(0px 0px 6px ${overlayColor})
-drop-shadow(0px 0px 15px ${overlayColor})`,
+          filter: baseFilter,
         }}
       />
 
@@ -94,7 +99,6 @@ other effects */}
           backgroundColor: "#ccc",
           maskImage: `url(${data.image})`,
           maskRepeat: "no-repeat",
-          // mixBlendMode: "darken",
           backgroundImage:
             (data.scanlines.size >= 1 &&
               `repeating-linear-gradient(
