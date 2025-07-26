@@ -22,6 +22,7 @@ import { extractConfigAsFormConfig } from "./configUtils";
 import { db, saveVersion, updateTransientRecordToVersion } from "./database";
 import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
+import { Icon } from "./Icon";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -157,7 +158,7 @@ function App() {
           />
         </div>
 
-        <div className="right-column render-area md:w-3/4 relative w-full h-screen z-10 overflow-y-scroll bg-[#2f3640] pt-[5%] pb-[10%]">
+        <div className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll bg-[#2f3640] pt-[5%] pb-[10%]">
           <div
             className="render-area-content w-full flex flex-col justify-around items-center origin-center"
             style={{
@@ -224,6 +225,12 @@ function App() {
                 <SciFiHologram data={currentHandoutTransientRow.data} />
               )}
           </div>
+          <button
+            onClick={() => {}}
+            className="background-selector absolute bottom-4 left-4 bg-white rounded-full hover:-translate-y-1 active:scale-95 transition-transform"
+          >
+            <Icon name="photo" colour="#2f3640" className="p-2" size="xl" />
+          </button>
         </div>
       </div>
     </>

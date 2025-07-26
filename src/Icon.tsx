@@ -2,7 +2,7 @@ import classNames from "classnames";
 
 export const iconNames = [
   "square",
-  "circle", 
+  "circle",
   "triangle",
   "triangle-inverted",
   "pentagon",
@@ -12,19 +12,22 @@ export const iconNames = [
   "pinned",
   "flag",
   "flag-2",
-  "flag-3"
+  "flag-3",
+  "photo",
 ] as const;
 
-export type IconName = typeof iconNames[number];
+export const iconsThatUserStrokeInsteadOfFill: IconName[] = ["photo"];
+
+export type IconName = (typeof iconNames)[number];
 
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const iconSizeClasses: Record<IconSize, string> = {
   xs: "w-3 h-3",
-  sm: "w-4 h-4", 
+  sm: "w-4 h-4",
   md: "w-6 h-6",
   lg: "w-8 h-8",
-  xl: "w-12 h-12"
+  xl: "w-12 h-12",
 };
 
 export interface IconProps {
@@ -37,14 +40,42 @@ export interface IconProps {
 export const Icon = (props: IconProps) => {
   const size = props.size || "md";
   const sizeClasses = iconSizeClasses[size];
-  
+
+  if (iconsThatUserStrokeInsteadOfFill.includes(props.name)) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        style={{
+          stroke: props.colour,
+        }}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        className={classNames(
+          "icon icon-tabler icons-tabler-outline",
+          sizeClasses,
+          props.className
+        )}
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M15 8h.01" />
+        <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+        <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+        <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+      </svg>
+    );
+  }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
       className={classNames(
-        "icon icon-tabler icons-tabler-filled icon-tabler-square",
+        "icon icon-tabler icons-tabler-filled",
         sizeClasses,
         props.className
       )}
@@ -122,6 +153,15 @@ export const Icon = (props: IconProps) => {
         <>
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M19 4c.852 0 1.297 .986 .783 1.623l-.076 .084l-3.792 3.793l3.792 3.793c.603 .602 .22 1.614 -.593 1.701l-.114 .006h-13v6a1 1 0 0 1 -.883 .993l-.117 .007a1 1 0 0 1 -.993 -.883l-.007 -.117v-16a1 1 0 0 1 .883 -.993l.117 -.007h14z" />
+        </>
+      )}
+      {props.name === "photo" && (
+        <>
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 8h.01" />
+          <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+          <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+          <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
         </>
       )}
     </svg>
