@@ -548,6 +548,8 @@ export const SciFiHologramConfig = {
     ],
     size: [2, range({ name: "Scanline Size", min: 0, max: 10, step: 1 })],
   },
+  isTransparent: [false, boolean({ name: "Is Transparent" })],
+  isFadeOut: [false, boolean({ name: "Is Fade Out" })],
 } satisfies HandoutConfig;
 
 export const allConfigs = [

@@ -59,58 +59,72 @@ ${hexToRgba("#000000", data.scanlines.opacity)} ${
 
   return (
     <div
-      style={{
-        width: `${imageDimensions.width}px`,
-        height: `${imageDimensions.height}px`,
-      }}
-      className="relative h-[80vh]"
+      className={classNames(
+        "flex w-full justify-center",
+        data.isFadeOut && "fade-bottom",
+        data.isTransparent && "opacity-80"
+      )}
     >
-      <img
-        className="h-full rough-edges"
-        src={data.image}
-        style={{
-          filter: baseFilter,
-        }}
-      />
-
-      {/* this is the colour effect layer: it makes the image go the right colour */}
       <div
         style={{
           width: `${imageDimensions.width}px`,
-          backgroundColor: overlayColor,
-          maskImage: `url(${data.image})`,
-          maskRepeat: "no-repeat",
-          mixBlendMode: "color",
-          backgroundImage:
-            (data.scanlines.size >= 1 &&
-              `repeating-linear-gradient(
-            ${scanlinesCss}
-          )`) ||
-            "",
-        }}
-        className="absolute top-0 left-0 h-full w-full noise-filter"
-      ></div>
-
-      {/* this is the "effect" layer: it modifies the colour layer to make it look like it's been "burned in" or 
-other effects */}
-      <div
-        style={{
-          width: `${imageDimensions.width}px`,
-          backgroundColor: "#ccc",
-          maskImage: `url(${data.image})`,
-          maskRepeat: "no-repeat",
-          backgroundImage:
-            (data.scanlines.size >= 1 &&
-              `repeating-linear-gradient(
-            ${scanlinesCss}
-          )`) ||
-            "",
+          height: `${imageDimensions.height}px`,
+          marginTop: `${data.positioning.yOffset}%`,
+          marginLeft: `${data.positioning.xOffset}%`,
         }}
         className={classNames(
-          "absolute top-0 left-0 h-full w-full noise-filter",
-          data.blendEffect
+          "main-wrapper relative h-[80vh]"
+          // data.isFadeOut && "fade-bottom",
+          // data.isTransparent && "opacity-80"
         )}
-      ></div>
+      >
+        <img
+          className="h-full"
+          src={data.image}
+          style={{
+            filter: baseFilter,
+          }}
+        />
+
+        {/* this is the colour effect layer: it makes the image go the right colour */}
+        <div
+          style={{
+            width: `${imageDimensions.width}px`,
+            backgroundColor: overlayColor,
+            maskImage: `url(${data.image})`,
+            maskRepeat: "no-repeat",
+            mixBlendMode: "color",
+            backgroundImage:
+              (data.scanlines.size >= 1 &&
+                `repeating-linear-gradient(
+            ${scanlinesCss}
+          )`) ||
+              "",
+          }}
+          className="absolute top-0 left-0 h-full w-full noise-filter"
+        ></div>
+
+        {/* this is the "effect" layer: it modifies the colour layer to make it look like it's been "burned in" or 
+other effects */}
+        <div
+          style={{
+            width: `${imageDimensions.width}px`,
+            backgroundColor: "#ccc",
+            maskImage: `url(${data.image})`,
+            maskRepeat: "no-repeat",
+            backgroundImage:
+              (data.scanlines.size >= 1 &&
+                `repeating-linear-gradient(
+            ${scanlinesCss}
+          )`) ||
+              "",
+          }}
+          className={classNames(
+            "absolute top-0 left-0 h-full w-full noise-filter",
+            data.blendEffect
+          )}
+        ></div>
+      </div>
     </div>
   );
 }
