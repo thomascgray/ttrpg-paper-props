@@ -22,6 +22,8 @@ import { extractConfigAsFormConfig } from "./configUtils";
 import { db, saveVersion, updateTransientRecordToVersion } from "./database";
 import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
+import { Icon } from "./Icon";
+import { BackgroundSelector } from "./BackgroundSelector";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -157,73 +159,113 @@ function App() {
           />
         </div>
 
-        <div className="right-column render-area md:w-3/4 relative w-full h-screen z-10 overflow-y-scroll bg-[#2f3640] pt-[5%] pb-[10%]">
+        <div className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll">
+          {/* Background layer */}
           <div
-            className="render-area-content w-full flex flex-col justify-around items-center origin-center"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              transform: `rotate(${
-                currentHandoutTransientRow.data.positioning?.rotationDegrees ||
-                0
-              }deg) scale(${
-                currentHandoutTransientRow.data.positioning?.zoom || 1
-              })`,
-              transition: "transform 0.3s ease-out",
+              ...(appState.backgroundType === "color"
+                ? { backgroundColor: appState.backgroundColor }
+                : appState.backgroundType === "gradient"
+                ? {
+                    background:
+                      appState.backgroundGradientType === "linear"
+                        ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                        : appState.backgroundGradientType === "radial"
+                        ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                        : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                  }
+                : appState.backgroundType === "custom" &&
+                  appState.backgroundCustomImage
+                ? {
+                    backgroundImage: `url(${appState.backgroundCustomImage})`,
+                    backgroundSize: `${
+                      appState.backgroundImageZoom * 100
+                    }% auto`,
+                    backgroundPosition: "center center",
+                    backgroundRepeat: "no-repeat",
+                    filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+                  }
+                : { backgroundColor: "#2f3640" }),
             }}
-          >
-            {currentHandoutTransientRow.type === "Newspaper" &&
-              appState.selectedHandoutType === "Newspaper" && (
-                <Newspaper handout={currentHandoutTransientRow.data} />
-              )}
-            {currentHandoutTransientRow.type === "NewspaperClipping" &&
-              appState.selectedHandoutType === "NewspaperClipping" && (
-                <NewspaperClipping handout={currentHandoutTransientRow.data} />
-              )}
-            {currentHandoutTransientRow.type === "CharacterCard" &&
-              appState.selectedHandoutType === "CharacterCard" && (
-                <CharacterCard handout={currentHandoutTransientRow.data} />
-              )}
-            {currentHandoutTransientRow.type === "PlainLetter" &&
-              appState.selectedHandoutType === "PlainLetter" && (
-                <PlainLetter handout={currentHandoutTransientRow.data} />
-              )}
+          />
 
-            {currentHandoutTransientRow.type === "BookCover" &&
-              appState.selectedHandoutType === "BookCover" && (
-                <BookCover handout={currentHandoutTransientRow.data} />
-              )}
+          {/* Content layer */}
+          <div className="relative z-10 pt-[5%] pb-[10%]">
+            <div
+              className="render-area-content w-full flex flex-col justify-around items-center origin-center"
+              style={{
+                transform: `rotate(${
+                  currentHandoutTransientRow.data.positioning
+                    ?.rotationDegrees || 0
+                }deg) scale(${
+                  currentHandoutTransientRow.data.positioning?.zoom || 1
+                })`,
+                transition: "transform 0.3s ease-out",
+              }}
+            >
+              {currentHandoutTransientRow.type === "Newspaper" &&
+                appState.selectedHandoutType === "Newspaper" && (
+                  <Newspaper handout={currentHandoutTransientRow.data} />
+                )}
+              {currentHandoutTransientRow.type === "NewspaperClipping" &&
+                appState.selectedHandoutType === "NewspaperClipping" && (
+                  <NewspaperClipping
+                    handout={currentHandoutTransientRow.data}
+                  />
+                )}
+              {currentHandoutTransientRow.type === "CharacterCard" &&
+                appState.selectedHandoutType === "CharacterCard" && (
+                  <CharacterCard handout={currentHandoutTransientRow.data} />
+                )}
+              {currentHandoutTransientRow.type === "PlainLetter" &&
+                appState.selectedHandoutType === "PlainLetter" && (
+                  <PlainLetter handout={currentHandoutTransientRow.data} />
+                )}
 
-            {currentHandoutTransientRow.type === "LabelledLiquid" &&
-              appState.selectedHandoutType === "LabelledLiquid" && (
-                <LabelledLiquid handout={currentHandoutTransientRow.data} />
-              )}
+              {currentHandoutTransientRow.type === "BookCover" &&
+                appState.selectedHandoutType === "BookCover" && (
+                  <BookCover handout={currentHandoutTransientRow.data} />
+                )}
 
-            {currentHandoutTransientRow.type === "HangingWoodenSign" &&
-              appState.selectedHandoutType === "HangingWoodenSign" && (
-                <HangingWoodenSign handout={currentHandoutTransientRow.data} />
-              )}
+              {currentHandoutTransientRow.type === "LabelledLiquid" &&
+                appState.selectedHandoutType === "LabelledLiquid" && (
+                  <LabelledLiquid handout={currentHandoutTransientRow.data} />
+                )}
 
-            {currentHandoutTransientRow.type === "ThreePanelDirectionalSign" &&
-              appState.selectedHandoutType === "ThreePanelDirectionalSign" && (
-                <ThreePanelDirectionalSign
-                  handout={currentHandoutTransientRow.data}
-                />
-              )}
+              {currentHandoutTransientRow.type === "HangingWoodenSign" &&
+                appState.selectedHandoutType === "HangingWoodenSign" && (
+                  <HangingWoodenSign
+                    handout={currentHandoutTransientRow.data}
+                  />
+                )}
 
-            {currentHandoutTransientRow.type === "CrtScreen" &&
-              appState.selectedHandoutType === "CrtScreen" && (
-                <CrtScreen handout={currentHandoutTransientRow.data} />
-              )}
+              {currentHandoutTransientRow.type ===
+                "ThreePanelDirectionalSign" &&
+                appState.selectedHandoutType ===
+                  "ThreePanelDirectionalSign" && (
+                  <ThreePanelDirectionalSign
+                    handout={currentHandoutTransientRow.data}
+                  />
+                )}
 
-            {currentHandoutTransientRow.type === "PaperMap" &&
-              appState.selectedHandoutType === "PaperMap" && (
-                <PaperMap handout={currentHandoutTransientRow.data} />
-              )}
+              {currentHandoutTransientRow.type === "CrtScreen" &&
+                appState.selectedHandoutType === "CrtScreen" && (
+                  <CrtScreen handout={currentHandoutTransientRow.data} />
+                )}
 
-            {currentHandoutTransientRow.type === "SciFiHologram" &&
-              appState.selectedHandoutType === "SciFiHologram" && (
-                <SciFiHologram data={currentHandoutTransientRow.data} />
-              )}
+              {currentHandoutTransientRow.type === "PaperMap" &&
+                appState.selectedHandoutType === "PaperMap" && (
+                  <PaperMap handout={currentHandoutTransientRow.data} />
+                )}
+
+              {currentHandoutTransientRow.type === "SciFiHologram" &&
+                appState.selectedHandoutType === "SciFiHologram" && (
+                  <SciFiHologram data={currentHandoutTransientRow.data} />
+                )}
+            </div>
           </div>
+          <BackgroundSelector />
         </div>
       </div>
     </>

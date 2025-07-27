@@ -1,89 +1,163 @@
-# Claude Memory - TTRPG Paper Props
+# CLAUDE.md
 
-## Converting Old-Style Configs to New-Style Configs
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-### Overview
-The project is migrating from an old config structure (in `src/config.ts`) to a new database-backed structure (in `src/db.ts`). Here's how to convert components from the old style to the new style.
+# important development notes
 
-### Key Differences
+- never try to run `bun dev` to start the development server - i'm almost always running the server anyway.
 
-#### Old Style (config.ts)
+## Commands
+
+### Development
+
+- `npm run dev` - Start the development server (default port 5173)
+- `bun install` - Install dependencies (uses Bun package manager)
+
+### Build
+
+- `bun run build` - Build for production
+
+### Linting
+
+- `bun x tsx` - Run TypeScript compiler for type checking
+
+## Architecture Overview
+
+### Core Technology Stack
+
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **Database**: Dexie (IndexedDB wrapper) for local storage
+- **State Management**: Valtio for global app state
+- **Package Manager**: Bun
+
+### Project Structure
+
+#### Database Layer (`src/database.ts`, `src/db.ts`)
+
+- Uses Dexie for local IndexedDB storage
+- Stores handout configurations as "versions" (snapshots)
+- Each handout type has a transient record for current edits
+- App state persists selected handout type and version
+
+#### Configuration System
+
+The project is migrating from old-style configs to new database-backed configs:
+
+**Old Style (config.ts)**:
+
 - Properties are nested objects with `value` fields
 - Uses snake_case naming (e.g., `paper_tint`, `font_size`)
 - Access pattern: `handout.paper_tint.value`
-- Type: `(typeof CONFIG_NAME)["data"]`
 
-#### New Style (db.ts)
+**New Style (db.ts)**:
+
 - Uses tuple format: `[defaultValue, configObject]`
 - Uses camelCase naming (e.g., `paperTint`, `fontSize`)
 - After `ExtractConfigValues`, access properties directly without `.value`
 - Type: `ExtractConfigValues<typeof ConfigName>`
 
-### Conversion Steps
+#### Handout Types (`src/handoutConfigs.ts`)
 
-1. **Update imports**:
-   ```typescript
-   // Old
-   import { CONFIG_NAME } from "../config";
-   
-   // New
-   import { ConfigName, ExtractConfigValues } from "../db";
-   ```
+All handout configurations are defined here. Each config uses the tuple pattern with default values and input helper functions. Available types:
 
-2. **Create type alias**:
-   ```typescript
-   // Old
-   handout: (typeof CONFIG_NAME)["data"];
-   
-   // New
-   type ComponentData = ExtractConfigValues<typeof ConfigName>;
-   handout: ComponentData;
-   ```
+- Newspaper
+- NewspaperClipping
+- CharacterCard
+- PlainLetter
+- BookCover
+- LabelledLiquid
+- HangingWoodenSign
+- ThreePanelDirectionalSign
+- CrtScreen
+- PaperMap
 
-3. **Update property access**:
-   - Remove all `.value` suffixes
-   - Convert snake_case to camelCase
-   - Update nested properties (especially positioning)
+#### Renderer Components (`src/renderer/`)
 
-### Common Property Mappings
+Each handout type has a corresponding renderer component that takes handout data and renders the visual output. Components should be pure and only depend on the data prop.
 
-| Old Style | New Style |
-|-----------|-----------|
-| `handout.paper_tint.value` | `handout.paperTint` |
-| `handout.page_width.value` | `handout.pageWidth` |
-| `handout.is_paper_shadow.value` | `handout.isPaperShadow` |
-| `handout.positioning.x_offset.value` | `handout.positioning.xOffset` |
-| `handout.positioning.y_offset.value` | `handout.positioning.yOffset` |
-| `handout.positioning.rotation_degrees.value` | `handout.positioning.rotationDegrees` |
-| `handout.ink_color.value` | `handout.inkColor` |
-| `handout.paper_texture.value` | `handout.paperTexture` |
-| `handout.paragraph_gap.value` | `handout.paragraphGap` |
-| `handout.book_cover_template.value` | `handout.bookCoverTemplate` |
-| `handout.text_left_margin.value` | `handout.textLeftMargin` |
-| `handout.text_align.value` | `handout.textAlign` |
-| `handout.text_effect.value` | `handout.textEffect` |
-| `handout.main_copy.value` | `handout.mainCopy` |
+#### Form System (`src/FormRenderer.tsx`, `src/components/`)
 
-### Array Properties (e.g., paragraphs)
-For array properties like paragraphs:
-- Old: `p.font_size.value`, `p.text_align.value`, `p.main_copy.value`
-- New: `p.fontSize`, `p.textAlign`, `p.mainCopy`
+- Dynamic form generation based on handout configs
+- Input components map to helper functions in `inputHelpers.ts`
+- Form changes update the transient database record
+- Real-time preview updates as users modify values
 
-### Example Components Already Converted
-- `CharacterCard` - src/renderer/CharacterCard.tsx
-- `PlainLetter` - src/renderer/PlainLetter.tsx
+### Key Patterns
 
-### Configs Added to db.ts
-- `CharacterCardConfig` - already existed in db.ts
-- `PlainLetterConfig` - already existed in db.ts  
-- `BookCoverConfig` - added in db.ts with helper functions for select and blendMode
+#### Config to Form Flow
 
-### New Helper Functions Added
-When converting BookCover, these helper functions were added to db.ts:
-- `select()` - for dropdown select inputs with options
-- `blendMode()` - for text effect blend modes
+1. Handout config defines structure with tuples: `[defaultValue, inputHelper()]`
+2. `extractConfigAsFormConfig()` transforms config into form structure
+3. `FormRenderer` generates UI from form config
+4. Changes update transient database record
+5. Renderer components read from database and display results
 
-### Remaining Components to Convert
+#### State Management
+
+- Global app state in `appState.ts` using Valtio
+- Tracks selected handout type and version ID
+- Database queries use `useLiveQuery` for reactive updates
+- Form changes immediately update transient records
+
+### Migration Notes
+
+When converting components from old to new style:
+
+1. Update imports from `config.ts` to use `db.ts`
+2. Create type alias: `type ComponentData = ExtractConfigValues<typeof ConfigName>`
+3. Remove all `.value` suffixes from property access
+4. Convert snake_case to camelCase
+5. Update positioning properties (e.g., `x_offset` → `xOffset`)
+
+### Components Already Converted
+
+- CharacterCard
+- PlainLetter
+- BookCover (added `select()` and `blendMode()` helpers)
+
+### Components Pending Conversion
+
 - Newspaper
 - NewspaperClipping
 - LabelledLiquid
+
+## Important Conventions
+
+### TypeScript
+
+- Strict mode enabled
+- Use type imports: `import type { ... }`
+- Configs must satisfy `HandoutConfig` type
+
+### Styling
+
+- Tailwind CSS for styling
+- Custom CSS in `index.css` and `ink.css`
+- Paper textures and effects use CSS classes
+
+### Database Versioning
+
+- APP_VERSION in `database.ts` controls schema
+- Database resets on version mismatch
+- Versions stored with timestamp for history
+
+### Form Inputs
+
+All form inputs use helper functions from `inputHelpers.ts`:
+
+- `range()` - Numeric sliders
+- `text()` / `textArea()` - Text inputs
+- `fontPicker()` - Font selection
+- `colour()` - Color picker
+- `imageInput()` - Image upload/URL
+- `paragraphArray()` - Dynamic paragraph lists
+- `select()` - Dropdown selections
+
+### Component Guidelines
+
+- Renderer components should be pure functions
+- Use markdown processing for text content
+- Support positioning (rotation, zoom, offset) where applicable
+- Implement proper TypeScript types for handout data

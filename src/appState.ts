@@ -10,10 +10,33 @@ import { AllConfigNames } from "./handoutConfigs";
 export const appState = proxy<{
   selectedHandoutType: AllConfigNames;
   selectedVersionId: string | undefined;
+  backgroundSelectorState: "open" | "closed";
+  backgroundType: "color" | "gradient" | "predefined" | "custom";
+  backgroundColor: string;
+  backgroundGradientStart: string;
+  backgroundGradientEnd: string;
+  backgroundGradientType: "linear" | "radial" | "conic";
+  backgroundGradientAngle: number;
+  backgroundGradientPosition: string;
+  backgroundPredefinedId: string;
+  backgroundCustomImage: string;
+  backgroundImageBlur: boolean;
+  backgroundImageZoom: number;
 }>({
   selectedHandoutType: allConfigs[0].name,
-  // selectedVersionId: latestVersionOfFirstHandout?.id ?? undefined,
   selectedVersionId: "TRANSIENT",
+  backgroundSelectorState: "closed",
+  backgroundType: "color",
+  backgroundColor: "#2f3640",
+  backgroundGradientStart: "#2f3640",
+  backgroundGradientEnd: "#000000",
+  backgroundGradientType: "linear",
+  backgroundGradientAngle: 180,
+  backgroundGradientPosition: "center",
+  backgroundPredefinedId: "",
+  backgroundCustomImage: "",
+  backgroundImageBlur: false,
+  backgroundImageZoom: 1,
 });
 
 // Auto-save app state changes to database
