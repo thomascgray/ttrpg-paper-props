@@ -4,6 +4,7 @@ import { AppConfigTable, HandoutTable, VersionTable } from "./types";
 import { allConfigs, AllConfigNames } from "./handoutConfigs";
 import { extractConfigAsData } from "./configUtils";
 import { appState } from "./appState";
+import { getHandoutFromPath } from "./routes";
 
 const APP_VERSION = 5;
 
@@ -59,9 +60,17 @@ export async function saveAppConfig() {
 async function initializeAppState() {
   await checkAndResetDatabase();
 
+  // Check if URL has a route first
+  const handoutFromUrl = getHandoutFromPath();
+  
   try {
     const config = await db.appConfig.get("APP_CONFIG");
-    if (config) {
+    if (handoutFromUrl) {
+      // URL route takes precedence
+      appState.selectedHandoutType = handoutFromUrl;
+      appState.selectedVersionId = "TRANSIENT";
+    } else if (config) {
+      // Use saved config if no URL route
       appState.selectedHandoutType = config.selectedHandoutType as AllConfigNames;
       appState.selectedVersionId = config.selectedVersionId;
     } else {
@@ -70,6 +79,10 @@ async function initializeAppState() {
     }
   } catch (error) {
     console.log("Error loading app config, using defaults:", error);
+    if (handoutFromUrl) {
+      appState.selectedHandoutType = handoutFromUrl;
+      appState.selectedVersionId = "TRANSIENT";
+    }
     await saveAppConfig();
   }
 }

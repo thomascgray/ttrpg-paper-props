@@ -1,4 +1,4 @@
-import { useState } from "react"; //
+import { useState, useEffect } from "react"; //
 import { Helmet } from "react-helmet-async";
 import { FormRenderer } from "./FormRenderer";
 import * as _ from "lodash";
@@ -24,11 +24,43 @@ import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
 import { Icon } from "./Icon";
 import { BackgroundSelector } from "./BackgroundSelector";
+import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
 
   const [highlighted, setHighlighted] = useState("");
+
+  // Initialize from URL on mount
+  useEffect(() => {
+    const handoutFromUrl = getHandoutFromPath();
+    if (handoutFromUrl && handoutFromUrl !== appState.selectedHandoutType) {
+      appStateProxy.selectedHandoutType = handoutFromUrl;
+      appStateProxy.selectedVersionId = "TRANSIENT";
+    } else {
+      // Update URL to match current selection if no route in URL
+      updateUrlForHandout(appState.selectedHandoutType);
+    }
+  }, []);
+
+  // Update URL when handout type changes
+  useEffect(() => {
+    updateUrlForHandout(appState.selectedHandoutType);
+  }, [appState.selectedHandoutType]);
+
+  // Handle browser back/forward
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const handoutFromUrl = getHandoutFromPath();
+      if (handoutFromUrl && handoutFromUrl !== appState.selectedHandoutType) {
+        appStateProxy.selectedHandoutType = handoutFromUrl;
+        appStateProxy.selectedVersionId = "TRANSIENT";
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [appState.selectedHandoutType]);
 
   const selectedConfig = allConfigs.find(
     (config) => config.name === appState.selectedHandoutType
