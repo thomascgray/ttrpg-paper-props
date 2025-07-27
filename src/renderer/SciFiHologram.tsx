@@ -64,13 +64,15 @@ ${hexToRgba("#000000", data.scanlines.opacity)} ${
         data.isFadeOut && "fade-bottom",
         data.isTransparent && "opacity-80"
       )}
+      style={{
+        marginTop: `${data.positioning.yOffset}%`,
+        marginLeft: `${data.positioning.xOffset}%`,
+      }}
     >
       <div
         style={{
           width: `${imageDimensions.width}px`,
           height: `${imageDimensions.height}px`,
-          marginTop: `${data.positioning.yOffset}%`,
-          marginLeft: `${data.positioning.xOffset}%`,
         }}
         className={classNames(
           "main-wrapper relative h-[80vh]"

@@ -107,7 +107,7 @@ function App() {
       <div className="flex min-h-full flex-col md:flex-row">
         <div className="left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4 md:min-w-[400px]">
           <h1 className="text-xl font-poppins font-bold mb-4 md:min-w-[400px]">
-            📜 Tom G's RPG Handout Builder
+            📜 Tombola's RPG Handout Builder
           </h1>
 
           <p className="my-4 text-xs text-gray-700">

@@ -21,12 +21,14 @@ export const BackgroundSelector = () => {
             appStateProxy.backgroundSelectorState =
               appState.backgroundSelectorState === "closed" ? "open" : "closed";
           }}
-          className="background-selector bg-red-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-2"
+          className="background-selector bg-green-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-2"
         >
           <Icon name="photo" colour="white" size="md" />
         </button>
         {isOpen && (
-          <span className="text-white text-xl">Background Selector</span>
+          <span className="text-white text-xl font-bold">
+            Background Selector
+          </span>
         )}
       </span>
       {isOpen && (
@@ -234,6 +236,18 @@ export const BackgroundSelector = () => {
             </div>
           )}
         </div>
+      )}
+
+      {isOpen && (
+        <button
+          onClick={() => {
+            appStateProxy.backgroundSelectorState =
+              appState.backgroundSelectorState === "closed" ? "open" : "closed";
+          }}
+          className="absolute top-2 right-2 bg-red-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-1"
+        >
+          <Icon name="x" colour="white" size="md" />
+        </button>
       )}
     </div>
   );
