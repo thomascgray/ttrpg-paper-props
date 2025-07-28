@@ -1,7 +1,11 @@
 import { CrtScreenConfig } from "../handoutConfigs";
 import { ExtractConfigValues } from "../types";
 import Markdown from "react-markdown";
-import { getRawColourForInkColor, saturateHexColor } from "../utils";
+import {
+  getImageProcessingStyles,
+  getRawColourForInkColor,
+  saturateHexColor,
+} from "../utils";
 import classNames from "classnames";
 type PlainLetterData = ExtractConfigValues<typeof CrtScreenConfig>;
 
@@ -83,7 +87,7 @@ skewY(-1deg)`;
           style={{
             transformOrigin: "top left",
             transform: "scaleX(1.1)",
-            filter: `hue-rotate(${handout.image.hue_rotation}deg) saturate(${handout.image.saturation}%) brightness(${handout.image.brightness}%)`,
+            ...getImageProcessingStyles(handout.imagePostProcessing),
           }}
           src={handout.crtScreen}
           alt="CRT Screen"
