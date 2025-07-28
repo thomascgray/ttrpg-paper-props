@@ -41,23 +41,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Each handout type has a transient record for current edits
 - App state persists selected handout type and version
 
-#### Configuration System
-
-The project is migrating from old-style configs to new database-backed configs:
-
-**Old Style (config.ts)**:
-
-- Properties are nested objects with `value` fields
-- Uses snake_case naming (e.g., `paper_tint`, `font_size`)
-- Access pattern: `handout.paper_tint.value`
-
-**New Style (db.ts)**:
-
-- Uses tuple format: `[defaultValue, configObject]`
-- Uses camelCase naming (e.g., `paperTint`, `fontSize`)
-- After `ExtractConfigValues`, access properties directly without `.value`
-- Type: `ExtractConfigValues<typeof ConfigName>`
-
 #### Handout Types (`src/handoutConfigs.ts`)
 
 All handout configurations are defined here. Each config uses the tuple pattern with default values and input helper functions. Available types:
@@ -100,28 +83,6 @@ Each handout type has a corresponding renderer component that takes handout data
 - Tracks selected handout type and version ID
 - Database queries use `useLiveQuery` for reactive updates
 - Form changes immediately update transient records
-
-### Migration Notes
-
-When converting components from old to new style:
-
-1. Update imports from `config.ts` to use `db.ts`
-2. Create type alias: `type ComponentData = ExtractConfigValues<typeof ConfigName>`
-3. Remove all `.value` suffixes from property access
-4. Convert snake_case to camelCase
-5. Update positioning properties (e.g., `x_offset` → `xOffset`)
-
-### Components Already Converted
-
-- CharacterCard
-- PlainLetter
-- BookCover (added `select()` and `blendMode()` helpers)
-
-### Components Pending Conversion
-
-- Newspaper
-- NewspaperClipping
-- LabelledLiquid
 
 ## Important Conventions
 

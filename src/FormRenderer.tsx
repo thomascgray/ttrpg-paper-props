@@ -16,6 +16,7 @@ import { ImageInput } from "./components/ImageInput";
 import { ParagraphArray } from "./components/ParagraphArray";
 import { BlendModeSelector } from "./components/TextFilterSelector";
 import { LegendItems } from "./components/LegendItems";
+import { TextStyleSelector } from "./components/TextStyleSelector";
 
 interface FormRendererProps {
   formConfig: Record<string, any>;
@@ -235,6 +236,16 @@ const renderFormInput = (
         />
       );
 
+    case "text_style":
+      return (
+        <TextStyleSelector
+          key={path}
+          label={name}
+          value={value ?? restConfig.value ?? ""}
+          onUpdate={handleUpdate}
+        />
+      );
+
     default:
       console.warn(`Unknown input type: ${type}`);
       return null;
@@ -256,7 +267,7 @@ const renderFormSection = (
   // Otherwise, it's a container with nested items
   if (typeof config === "object" && config !== null) {
     return (
-      <details key={key} className="bg-gray-400 p-2 mb-4">
+      <details key={key} className="transition-all bg-gray-400 p-2 mb-4 ">
         <summary className="cursor-pointer">
           <h3 className="font-semibold text-lg capitalize inline-block ">
             {key.replace(/([A-Z])/g, " $1").trim()}

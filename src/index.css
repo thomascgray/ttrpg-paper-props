@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Text style classes */
+.text-bold {
+  font-weight: bold;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-strikethrough {
+  text-decoration: line-through;
+}
+
 /*markdown styles*/
 .copy-markdown {
   @apply max-w-none;
@@ -446,4 +467,17 @@ body {
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   mask-mode: alpha;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.clickable:hover {
+  transform: translateY(-2px);
+}
+
+.clickable:active {
+  transform: scale(0.99);
 }

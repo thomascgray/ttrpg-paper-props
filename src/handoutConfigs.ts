@@ -23,21 +23,15 @@ import {
   rotation,
   zoom,
   imageOpts,
-  imageOptsWithoutScaling,
   legendItems,
+  positioning,
+  textFull,
+  imagePostProcessing,
 } from "./inputHelpers";
 import { LegendItem } from "./components/LegendItems";
 
 export const NewspaperConfig = {
-  positioning: {
-    rotationDegrees: [
-      0,
-      range({ name: "Rotation", min: -60, max: 60, suffix: "°" }),
-    ],
-    zoom: [1, range({ name: "Zoom", min: -0.1, max: 6, step: 0.05 })],
-    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
-  },
+  ...positioning,
   pageWidthPercentage: [
     60,
     range({ name: "Page Width", min: 10, max: 300, suffix: "%" }),
@@ -483,7 +477,7 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
       ],
     }),
   ],
-  ...imageOptsWithoutScaling,
+  ...imagePostProcessing,
 } satisfies HandoutConfig;
 
 export const PaperMapConfig = {
@@ -550,6 +544,32 @@ export const SciFiHologramConfig = {
   },
   isTransparent: [false, boolean({ name: "Is Transparent" })],
   isFadeOut: [false, boolean({ name: "Is Fade Out" })],
+} satisfies HandoutConfig;
+
+export const PolaroidConfig = {
+  ...positioning,
+  paperTexture: ["none", paperTexture()],
+  imageUrl: [
+    "https://static.wikia.nocookie.net/chrisnolan/images/3/3c/Leonard.jpg",
+    imageInput(),
+  ],
+  ...imagePostProcessing,
+  captionText: {
+    ...textFull({
+      text: {
+        default: "DON'T BELIEVE HIS LIES",
+        name: "Caption Text",
+        placeholder: "Enter caption...",
+      },
+      font: { default: FontFamily.CAVEAT },
+      fontSize: { default: 32 },
+      textAlign: { default: "text-center" },
+      textStyle: { default: "", name: "Caption Style" },
+    }),
+  },
+  showPin: [false, boolean({ name: "Show Pin" })],
+  showPaperclip: [true, boolean({ name: "Show Paperclip" })],
+  showStack: [false, boolean({ name: "Show Stack" })],
 } satisfies HandoutConfig;
 
 export const allConfigs = [
@@ -633,6 +653,13 @@ export const allConfigs = [
     caption: "A holographic display with customizable image and overlay color",
     type: "scifi_screens",
     config: SciFiHologramConfig,
+  } as const,
+  {
+    name: "Polaroid",
+    displayName: "Polaroid",
+    caption: "A simple polaroid photo with text caption and optional pin",
+    type: "object",
+    config: PolaroidConfig,
   } as const,
 ];
 

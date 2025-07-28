@@ -3,9 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { FormRenderer } from "./FormRenderer";
 import * as _ from "lodash";
 import { snapshot, useSnapshot } from "valtio";
-
 import { HandoutTypeSelector } from "./HandoutTypeSelector";
-import { VersionSelector } from "./components/VersionSelector";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Newspaper } from "./renderer/Newspaper";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
@@ -19,9 +17,15 @@ import { CrtScreen } from "./renderer/CrtScreen";
 import { appState as appStateProxy } from "./appState";
 import { allConfigs } from "./handoutConfigs";
 import { extractConfigAsFormConfig } from "./configUtils";
-import { db, saveVersion, updateTransientRecordToVersion } from "./database";
+import {
+  APP_VERSION,
+  db,
+  saveVersion,
+  updateTransientRecordToVersion,
+} from "./database";
 import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
+import { Polaroid } from "./renderer/Polaroid";
 import { Icon } from "./Icon";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
@@ -105,32 +109,73 @@ function App() {
         </style>
       </Helmet>
       <div className="flex min-h-full flex-col md:flex-row">
-        <div className="left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4 md:min-w-[400px]">
-          <h1 className="text-xl font-poppins font-bold mb-4 md:min-w-[400px]">
+        <div className="left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4 md:min-w-[500px]">
+          <h1 className="text-2xl font-poppins font-bold mb-4 md:min-w-[400px]">
             📜 Tombola's RPG Handout Builder
           </h1>
 
-          <p className="my-4 text-xs text-gray-700">
-            Made by{" "}
-            <a
-              target="_blank"
-              className="text-blue-500 underline"
-              href="https://tomg.cool/"
-            >
-              Tom
-            </a>
-            <br />
-            This tool is in early and active development. Sorry if it explodes!
-            <br />
-            Bugs? Feature requests? Please message me on Bluesky{" "}
-            <a
-              target="_blank"
-              className="text-blue-500 underline"
-              href="https://bsky.app/profile/tombola.bsky.social"
-            >
-              bsky.app/profile/tombola.bsky.social
-            </a>
+          <p className="text-xs text-gray-700 italic my-4">
+            This tool is in early and active development. I'm often releasing
+            improvements, but that means unfortunately its common for things to
+            explode, snapshots to be lost, etc. Sorry about that!
           </p>
+
+          <details className="text-xs text-gray-700 mb-4">
+            <summary className="text-xs text-gray-700 cursor-pointer">
+              What is this tool? What am I looking at?
+            </summary>
+            <br />
+            <p className="font-bold text-sm">
+              Welcome to Tombola's RPG Handout Builder!
+            </p>
+            <p>
+              This tool is designed to help you create handouts for roleplaying
+              games.
+            </p>
+            <br />
+            <ul className="list-decimal list-inside">
+              <li>Select different handout types from the dropdown below</li>
+              <li>Then use the form below to change options</li>
+              <li>The handouts render on the right in real-time</li>
+              <li>
+                If you want to hold onto a particular configuration, save it
+                with the "Save Snapshot"
+              </li>
+              <li>To share the handouts, simply take a screenshot</li>
+              <ul className="list-disc list-inside ml-2">
+                <li>On Windows: Windows + Shift + S</li>
+                <li>On Mac: Command + Shift + 4</li>
+                <li>On Linux: Shift + Print Screen (probably)</li>
+              </ul>
+              <li>
+                Paste the image into your group chat, reddit post, email, etc.
+              </li>
+              <li>Bask in the praise of your playing group</li>
+            </ul>
+            <p className="mt-2 text-xs text-gray-700">
+              Made by{" "}
+              <a
+                target="_blank"
+                className="text-blue-500 underline"
+                href="https://tomg.cool/"
+              >
+                me, Tom
+              </a>
+              <br />
+              <br />
+              APP VERSION v0.{APP_VERSION}
+              <br />
+              <br />
+              Bugs? Feature requests? Love it? Hate it?{" "}
+              <a
+                target="_blank"
+                className="text-blue-500 underline"
+                href="https://bsky.app/profile/tombola.bsky.social"
+              >
+                Tell me on Bluesky!
+              </a>
+            </p>
+          </details>
 
           <HandoutTypeSelector />
 
@@ -294,6 +339,11 @@ function App() {
               {currentHandoutTransientRow.type === "SciFiHologram" &&
                 appState.selectedHandoutType === "SciFiHologram" && (
                   <SciFiHologram data={currentHandoutTransientRow.data} />
+                )}
+
+              {currentHandoutTransientRow.type === "Polaroid" &&
+                appState.selectedHandoutType === "Polaroid" && (
+                  <Polaroid handout={currentHandoutTransientRow.data} />
                 )}
             </div>
           </div>

@@ -6,7 +6,7 @@ import { extractConfigAsData } from "./configUtils";
 import { appState } from "./appState";
 import { getHandoutFromPath } from "./routes";
 
-const APP_VERSION = 5;
+export const APP_VERSION = 6;
 
 export const db = new Dexie("handoutsdb") as Dexie & {
   handouts: EntityTable<HandoutTable, "id">;
@@ -62,7 +62,7 @@ async function initializeAppState() {
 
   // Check if URL has a route first
   const handoutFromUrl = getHandoutFromPath();
-  
+
   try {
     const config = await db.appConfig.get("APP_CONFIG");
     if (handoutFromUrl) {
@@ -71,7 +71,8 @@ async function initializeAppState() {
       appState.selectedVersionId = "TRANSIENT";
     } else if (config) {
       // Use saved config if no URL route
-      appState.selectedHandoutType = config.selectedHandoutType as AllConfigNames;
+      appState.selectedHandoutType =
+        config.selectedHandoutType as AllConfigNames;
       appState.selectedVersionId = config.selectedVersionId;
     } else {
       // Create default config

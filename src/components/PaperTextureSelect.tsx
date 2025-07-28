@@ -17,6 +17,7 @@ export const PaperTextureSelect = (props: iPaperTextureSelect) => {
             props.onUpdate(e.target.value);
           }}
         >
+          <option value="none">None</option>
           <option value="grey">Grey</option>
           <option value="white">White, Zoomed, Rough</option>
           <option value="beige">Beige</option>

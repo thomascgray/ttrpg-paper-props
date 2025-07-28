@@ -135,3 +135,57 @@ export function saturateHexColor(hex: string, amount: number = 0.2): string {
 
   return "#" + toHex(r2) + toHex(g2) + toHex(b2);
 }
+
+export const getImageProcessingStyles = (imageData?: {
+  blur?: number;
+  brightness?: number;
+  contrast?: number;
+  grayscale?: number;
+  hue_rotation?: number;
+  invert?: number;
+  opacity?: number;
+  saturation?: number;
+  sepia?: number;
+}): React.CSSProperties => {
+  const filters: string[] = [];
+  if (imageData === undefined) {
+    return {};
+  }
+
+  if (imageData.blur !== undefined && imageData.blur > 0) {
+    filters.push(`blur(${imageData.blur}px)`);
+  }
+  if (imageData.brightness !== undefined && imageData.brightness !== 100) {
+    filters.push(`brightness(${imageData.brightness}%)`);
+  }
+  if (imageData.contrast !== undefined && imageData.contrast !== 100) {
+    filters.push(`contrast(${imageData.contrast}%)`);
+  }
+  if (imageData.grayscale !== undefined && imageData.grayscale > 0) {
+    filters.push(`grayscale(${imageData.grayscale}%)`);
+  }
+  if (imageData.hue_rotation !== undefined && imageData.hue_rotation !== 0) {
+    filters.push(`hue-rotate(${imageData.hue_rotation}deg)`);
+  }
+  if (imageData.invert !== undefined && imageData.invert > 0) {
+    filters.push(`invert(${imageData.invert}%)`);
+  }
+  if (imageData.saturation !== undefined && imageData.saturation !== 100) {
+    filters.push(`saturate(${imageData.saturation}%)`);
+  }
+  if (imageData.sepia !== undefined && imageData.sepia > 0) {
+    filters.push(`sepia(${imageData.sepia}%)`);
+  }
+
+  const styles: React.CSSProperties = {};
+
+  if (filters.length > 0) {
+    styles.filter = filters.join(" ");
+  }
+
+  if (imageData.opacity !== undefined && imageData.opacity !== 100) {
+    styles.opacity = imageData.opacity / 100;
+  }
+
+  return styles;
+};

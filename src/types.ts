@@ -16,6 +16,7 @@ import type {
   blendMode,
   crtPixelColours,
   legendItems,
+  textStyle,
 } from "./inputHelpers";
 
 export type ConfigTuple = [
@@ -39,6 +40,7 @@ export type ConfigTuple = [
     | ReturnType<typeof blendMode>
     | ReturnType<typeof crtPixelColours>
     | ReturnType<typeof legendItems>
+    | ReturnType<typeof textStyle>
   )
 ];
 
