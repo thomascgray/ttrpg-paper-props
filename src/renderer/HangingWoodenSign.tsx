@@ -1,8 +1,8 @@
-import React from "react";
 import Markdown from "react-markdown";
-import { HangingWoodenSignConfig, BookCoverConfig } from "../handoutConfigs";
+import { HangingWoodenSignConfig } from "../handoutConfigs";
 import { ExtractConfigValues } from "../types";
 import classNames from "classnames";
+import { getImageProcessingStyles } from "../utils";
 
 type HangingWoodenSignData = ExtractConfigValues<
   typeof HangingWoodenSignConfig
@@ -28,8 +28,8 @@ export const HangingWoodenSign = ({
           alt="The book cover"
           width={`${imageOriginalWidth}px`}
           style={{
-            filter: `hue-rotate(${handout.image.hue_rotation}deg) saturate(${handout.image.saturation}%) brightness(${handout.image.brightness}%)`,
             transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,
+            ...getImageProcessingStyles(handout.image),
           }}
         />
       </div>
