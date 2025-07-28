@@ -12,7 +12,7 @@ export const HandoutTypeSelector = () => {
   return (
     <>
       <label className="block mb-4">
-        <span className="block mb-1">Handout Type</span>
+        <span className="block mb-1 font-bold">Handout Type</span>
         <select
           value={appState.selectedHandoutType}
           className="p-2 text-lg w-full"

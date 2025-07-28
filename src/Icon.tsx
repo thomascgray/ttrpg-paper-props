@@ -53,9 +53,9 @@ export const Icon = (props: IconProps) => {
         style={{
           stroke: props.colour,
         }}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         className={classNames(
           "icon icon-tabler icons-tabler-outline",
           sizeClasses,
