@@ -88,7 +88,6 @@ function App() {
   }, [appState.selectedHandoutType]);
 
   if (!currentHandoutTransientRow) {
-    console.log("no current handout transient row");
     return <div>Loading...</div>;
   }
 
