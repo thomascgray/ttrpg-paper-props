@@ -18,6 +18,7 @@ export const routes: Record<string, AllConfigNames> = {
   "/hologram": "SciFiHologram",
   "/sci-fi-hologram": "SciFiHologram",
   "/polaroid": "Polaroid",
+  "/crystal-ball": "CrystalBall",
 };
 
 // Reverse mapping: handout type to URL path
@@ -34,6 +35,7 @@ export const handoutToRoute: Record<AllConfigNames, string> = {
   PaperMap: "/paper-map",
   SciFiHologram: "/hologram",
   Polaroid: "/polaroid",
+  CrystalBall: "/crystal-ball",
 };
 
 // Get handout type from current URL

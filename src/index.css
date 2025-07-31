@@ -431,6 +431,29 @@ body {
   filter: url(#SphereMapTest);
 }
 
+/* Apply different strength bulge effects */
+.bulge-weak {
+  filter: url(#bulge-weak);
+  /* transform: translateX(-10%); */
+}
+
+.bulge-medium {
+  filter: url(#bulge-medium);
+}
+
+.bulge-strong {
+  filter: url(#bulge-strong);
+}
+
+.bulge-extreme {
+  filter: url(#bulge-extreme);
+}
+
+/* Hover effect */
+.hover-bulge:hover {
+  filter: url(#bulge-medium);
+}
+
 .rhelper {
   border-top: 5px solid red;
   border-bottom: 5px solid blue;

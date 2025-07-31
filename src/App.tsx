@@ -26,6 +26,7 @@ import {
 import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
 import { Polaroid } from "./renderer/Polaroid";
+import { CrystalBall } from "./renderer/CrystalBall";
 import { Icon } from "./Icon";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
@@ -343,6 +344,10 @@ function App() {
               {currentHandoutTransientRow.type === "Polaroid" &&
                 appState.selectedHandoutType === "Polaroid" && (
                   <Polaroid handout={currentHandoutTransientRow.data} />
+                )}
+              {currentHandoutTransientRow.type === "CrystalBall" &&
+                appState.selectedHandoutType === "CrystalBall" && (
+                  <CrystalBall handout={currentHandoutTransientRow.data} />
                 )}
             </div>
           </div>

@@ -572,6 +572,13 @@ export const PolaroidConfig = {
   showStack: [false, boolean({ name: "Show Stack" })],
 } satisfies HandoutConfig;
 
+export const CrystalBallConfig = {
+  image: [
+    "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
+    imageInput(),
+  ],
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -660,6 +667,13 @@ export const allConfigs = [
     caption: "A simple polaroid photo with text caption and optional pin",
     type: "object",
     config: PolaroidConfig,
+  } as const,
+  {
+    name: "CrystalBall",
+    displayName: "Crystal Ball",
+    caption: "A mystical crystal ball with a single image",
+    type: "object",
+    config: CrystalBallConfig,
   } as const,
 ];
 
