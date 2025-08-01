@@ -462,7 +462,7 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
   fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-center", textAlign()],
-
+  bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
   crtScreen: [
     "/images/crts/c.webp",
     select({
@@ -577,6 +577,7 @@ export const CrystalBallConfig = {
     "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
     imageInput(),
   ],
+  bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
 } satisfies HandoutConfig;
 
 export const allConfigs = [

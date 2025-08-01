@@ -504,3 +504,11 @@ body {
 .clickable:active {
   transform: scale(0.99);
 }
+
+.bulge-inner-circle {
+  filter: url(#bulge-inner-circle);
+}
+
+.bulge-whole-element {
+  filter: url(#bulge-whole-element);
+}

@@ -7,6 +7,7 @@ import {
   saturateHexColor,
 } from "../utils";
 import classNames from "classnames";
+import { Bulges } from "../svg_effects/Bulge";
 type PlainLetterData = ExtractConfigValues<typeof CrtScreenConfig>;
 
 export const CrtScreen = ({ handout }: { handout: PlainLetterData }) => {
@@ -39,12 +40,12 @@ translateX(230px)
 translateY(-240px)
 translateZ(00px)`;
       break;
-    case "/images/crts/d.webp": // the commodore pet
+    case "/images/crts/d.webp": // the apple lisa 2
       blackSquareOpts.top = 50;
       blackSquareOpts.left = 100;
       blackSquareOpts.width = 500;
       blackSquareOpts.height = 250;
-      textRenderOpts.transformString = `scaleX(0.63) scaleY(0.61)
+      textRenderOpts.transformString = `scaleX(0.63) scaleY(0.63)
 translateX(-148px)
 translateY(-245px)
 translateZ(00px)`;
@@ -67,72 +68,75 @@ skewY(-1deg)`;
   }
 
   return (
-    <div className="relative">
-      {/* the black box that covers up the gaps between the text render and the image */}
-      <div
-        style={{
-          top: `${blackSquareOpts.top}px`,
-          left: `${blackSquareOpts.left}px`,
-          width: `${blackSquareOpts.width}px`,
-          height: `${blackSquareOpts.height}px`,
-        }}
-        className={classNames("black-screen absolute bg-[#191919]", {
-          hidden: handout.crtScreen === "/images/crts/c.webp",
-        })}
-      ></div>
-
-      {/* the actual image */}
-      <div className="image-wrapper">
-        <img
-          style={{
-            transformOrigin: "top left",
-            transform: "scaleX(1.1)",
-            ...getImageProcessingStyles(handout.imagePostProcessing),
-          }}
-          src={handout.crtScreen}
-          alt="CRT Screen"
-        />
-      </div>
-
-      {/* the text render */}
-      <div
-        style={{
-          top: `${textRenderOpts.top}px`,
-          left: `${textRenderOpts.left}px`,
-          transform: `${textRenderOpts.transformString}`,
-          transformOrigin: "center",
-        }}
-        className="absolute top-0 left-0 font-mono bg-[#232323] crt w-[550px] h-[350px] bulge-filter overflow-y-clip"
-      >
+    <>
+      <Bulges scale={handout.bulgeScale} />
+      <div className="relative">
+        {/* the black box that covers up the gaps between the text render and the image */}
         <div
-          className="w-full h-[95%] overflow-y-clip"
           style={{
-            color: handout.crtPixelColor,
-            borderColor: handout.crtPixelColor,
-            textShadow: handout.textGlow
-              ? `0px 0px 15px ${handout.crtPixelColor}`
-              : "",
-            fontSize: `${handout.fontSize}px`,
+            top: `${blackSquareOpts.top}px`,
+            left: `${blackSquareOpts.left}px`,
+            width: `${blackSquareOpts.width}px`,
+            height: `${blackSquareOpts.height}px`,
+          }}
+          className={classNames("black-screen absolute bg-[#191919]", {
+            hidden: handout.crtScreen === "/images/crts/c.webp",
+          })}
+        ></div>
+
+        {/* the actual image */}
+        <div className="image-wrapper">
+          <img
+            style={{
+              transformOrigin: "top left",
+              transform: "scaleX(1.1)",
+              ...getImageProcessingStyles(handout.imagePostProcessing),
+            }}
+            src={handout.crtScreen}
+            alt="CRT Screen"
+          />
+        </div>
+
+        {/* the text render */}
+        <div
+          className="aspect-square text-main-wrapper absolute top-0 left-0 font-mono bg-[#232323] crt overflow-y-clip bulge-inner-circle"
+          style={{
+            top: `${textRenderOpts.top}px`,
+            left: `${textRenderOpts.left}px`,
+            transform: `${textRenderOpts.transformString}`,
+            transformOrigin: "center",
           }}
         >
-          <Markdown
-            className={`block copy-markdown ${handout.textAlign} ${handout.fontWeight} `}
+          <div
+            className="w-full h-[100%] overflow-y-clip aspect-square"
+            style={{
+              color: handout.crtPixelColor,
+              borderColor: handout.crtPixelColor,
+              textShadow: handout.textGlow
+                ? `0px 0px 15px ${handout.crtPixelColor}`
+                : "",
+              fontSize: `${handout.fontSize}px`,
+            }}
           >
-            {handout.text}
-          </Markdown>
+            <Markdown
+              className={`block copy-markdown ${handout.textAlign} ${handout.fontWeight} `}
+            >
+              {handout.text}
+            </Markdown>
+          </div>
         </div>
-      </div>
 
-      {/* the scan lines */}
-      <div
-        style={{
-          top: `${textRenderOpts.top}px`,
-          left: `${textRenderOpts.left}px`,
-          transform: `${textRenderOpts.transformString}`,
-          transformOrigin: "center",
-        }}
-        className="absolute opacity-20 top-0 left-0 horizontal-lines w-[550px] h-[350px] bulge-filter overflow-y-clip"
-      ></div>
-    </div>
+        {/* the scan lines */}
+        {/* <div
+          style={{
+            top: `${textRenderOpts.top}px`,
+            left: `${textRenderOpts.left}px`,
+            transform: `${textRenderOpts.transformString}`,
+            transformOrigin: "center",
+          }}
+          className="absolute opacity-20 top-0 left-0 horizontal-lines w-[550px] h-[350px] bulge-filter overflow-y-clip"
+        ></div> */}
+      </div>
+    </>
   );
 };

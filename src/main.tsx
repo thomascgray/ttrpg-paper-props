@@ -64,14 +64,14 @@ const ComplexBulgeFilterDeclaration = () => {
     >
       <filter
         id="bulge-weak"
-        // x="0%"
-        // y="0%"
-        // width="100%"
-        // height="100%"
-        x="-75%"
-        y="-75%"
-        width="250%"
-        height="250%"
+        x="-5%"
+        y="-5%"
+        width="110%"
+        height="110%"
+        // x="-75%"
+        // y="-75%"
+        // width="250%"
+        // height="250%"
         // filterUnits="userSpaceOnUse"
       >
         {/* Define the first displacement map image */}
@@ -98,7 +98,7 @@ const ComplexBulgeFilterDeclaration = () => {
         <feDisplacementMap
           in="SourceGraphic"
           in2="combinedDisplacementMap"
-          scale="100"
+          scale="40"
           xChannelSelector="R"
           yChannelSelector="G"
           result="displacedGraphic"
@@ -159,8 +159,8 @@ if (container) {
   root.render(
     <StrictMode>
       <HelmetProvider>
-        <BulgeFilter />
-        <ComplexBulgeFilterDeclaration />
+        {/* <BulgeFilter /> */}
+        {/* <ComplexBulgeFilterDeclaration /> */}
         <NoiseFilterDeclaration />
         <RoughEdgesFilterDeclaration />
         <App />

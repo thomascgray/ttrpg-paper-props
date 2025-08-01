@@ -189,3 +189,17 @@ export const getImageProcessingStyles = (imageData?: {
 
   return styles;
 };
+
+export function detectBrowser(): "chrome" | "firefox" | undefined {
+  const isChrome =
+    /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  const isFirefox = /Firefox/.test(navigator.userAgent);
+
+  if (isChrome) {
+    document.body.classList.add("chrome");
+    return "chrome";
+  } else if (isFirefox) {
+    document.body.classList.add("firefox");
+    return "firefox";
+  }
+}
