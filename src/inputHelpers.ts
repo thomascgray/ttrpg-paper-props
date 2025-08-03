@@ -295,7 +295,10 @@ export const imageOpts = {
 
 export const positioning = {
   positioning: {
-    rotation: [0, range({ name: "Rotation", min: -60, max: 60, suffix: "°" })],
+    rotation: [
+      0,
+      range({ name: "Rotation", min: -180, max: 180, suffix: "°" }),
+    ],
     zoom: [1, range({ name: "Zoom", min: -0.1, max: 6, step: 0.05 })],
     xOffset: [0, range({ name: "X Offset", min: -200, max: 200, suffix: "%" })],
     yOffset: [0, range({ name: "Y Offset", min: -200, max: 200, suffix: "%" })],

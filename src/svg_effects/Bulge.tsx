@@ -22,23 +22,6 @@ export const Bulges = ({ scale }: { scale: number }) => {
         ></feDisplacementMap>
       </filter>
 
-      <filter id="bulge-inner-circle-16-9" filterUnits="objectBoundingBox">
-        {/* Define the first displacement map image */}
-        <feImage
-          result="displacementMap1"
-          xlinkHref={dpmaporiginal169}
-        ></feImage>
-
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="combinedDisplacementMap"
-          scale={scale}
-          xChannelSelector="R"
-          yChannelSelector="G"
-          result="displacedGraphic"
-        ></feDisplacementMap>
-      </filter>
-
       <filter
         id="bulge-whole-element"
         x="-50%"
@@ -49,12 +32,14 @@ export const Bulges = ({ scale }: { scale: number }) => {
       >
         {/* Define the first displacement map image */}
         <feImage
+          // rotate="45deg"
           result="displacementMap1"
           preserveAspectRatio="none"
           xlinkHref={dpmaporiginal}
         ></feImage>
 
         <feDisplacementMap
+          // rotate="45deg"
           in="SourceGraphic"
           in2="combinedDisplacementMap"
           scale={scale}

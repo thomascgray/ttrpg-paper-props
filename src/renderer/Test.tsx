@@ -11,7 +11,7 @@ interface TestProps {
 }
 
 export function Test({ data }: TestProps) {
-  const { positioning, testText, testNumber } = data;
+  const { positioning } = data;
   const { rotation, zoom, xOffset, yOffset } = positioning;
 
   const browser = detectBrowser();
@@ -19,7 +19,7 @@ export function Test({ data }: TestProps) {
   return (
     <>
       <Bulges scale={data.scale} />
-      <div className="flex gap-[100px]">
+      {/* <div className="flex gap-[100px]">
         <div
           className="bulge-inner-circle"
           style={{
@@ -113,43 +113,24 @@ export function Test({ data }: TestProps) {
             backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Checkerboard_pattern.svg/2048px-Checkerboard_pattern.svg.png)`,
           }}
         ></div>
-      </div>
+      </div> */}
 
-      <div className="relative mt-[200px] flex gap-[100px]">
+      <div className="mt-[200px] flex gap-[100px]">
         <div
-          className={classNames(" bulge-whole-element", {
-            "": browser === "chrome",
-          })}
           style={{
             transform: "rotateX(20deg)",
-            width: "200px",
-            height: "200px",
-            backgroundSize: "cover",
-            backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Checkerboard_pattern.svg/2048px-Checkerboard_pattern.svg.png)`,
           }}
-        ></div>
-        <div
-          className={classNames("bulge-whole-element", {
-            "-skew-x-[2deg]": browser === "chrome",
-          })}
-          style={{
-            width: "300px",
-            height: "200px",
-            backgroundSize: "cover",
-            backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Checkerboard_pattern.svg/2048px-Checkerboard_pattern.svg.png)`,
-          }}
-        ></div>
-        <div
-          className={classNames("bulge-whole-element", {
-            "-skew-x-[2deg]": browser === "chrome",
-          })}
-          style={{
-            width: "200px",
-            height: "300px",
-            backgroundSize: "cover",
-            backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Checkerboard_pattern.svg/2048px-Checkerboard_pattern.svg.png)`,
-          }}
-        ></div>
+        >
+          <div
+            className={classNames("bulge-whole-element", {})}
+            style={{
+              width: "200px",
+              height: "200px",
+              backgroundSize: "cover",
+              backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Checkerboard_pattern.svg/2048px-Checkerboard_pattern.svg.png)`,
+            }}
+          ></div>
+        </div>
       </div>
     </>
   );

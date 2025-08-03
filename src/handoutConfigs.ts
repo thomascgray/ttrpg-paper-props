@@ -446,6 +446,7 @@ export const ThreePanelDirectionalSignConfig = {
 } satisfies HandoutConfig;
 
 export const CrtScreenConfig = {
+  ...positioning,
   text: [
     `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
 
@@ -462,7 +463,7 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
   fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-center", textAlign()],
-  bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
+  // bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
   crtScreen: [
     "/images/crts/c.webp",
     select({
@@ -470,10 +471,13 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
       value: "/images/crts/c.webp",
       options: [
         // { label: "HP", value: "/images/crts/a.webp" },
-        { label: "Commodore PET", value: "/images/crts/c.webp" },
-        { label: "Apple Macintosh", value: "/images/crts/b.webp" },
-        { label: "Apple Lisa 2", value: "/images/crts/d.webp" },
-        { label: "Micral Microcomputer", value: "/images/crts/e.webp" },
+        { label: "Commodore PET (c.webp)", value: "/images/crts/c.webp" },
+        { label: "Apple Macintosh (b.webp)", value: "/images/crts/b.webp" },
+        { label: "Apple Lisa 2 (d.webp)", value: "/images/crts/d.webp" },
+        {
+          label: "Micral Microcomputer (e.webp)",
+          value: "/images/crts/e.webp",
+        },
       ],
     }),
   ],
@@ -583,8 +587,9 @@ export const CrystalBallConfig = {
 export const TestConfig = {
   ...positioning,
   scale: [1, range({ name: "Scale", min: 0, max: 500, step: 5 })],
-  testText: ["Test content", text({ name: "Test Text" })],
-  testNumber: [50, range({ name: "Test Number", min: 0, max: 100 })],
+  xRotate: [1, range({ name: "X Rotation", min: -360, max: 360 })],
+  yRotate: [1, range({ name: "Y Rotation", min: -360, max: 360 })],
+  zRotate: [1, range({ name: "Z Rotation", min: -360, max: 360 })],
 } satisfies HandoutConfig;
 
 export const allConfigs = [
