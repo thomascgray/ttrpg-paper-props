@@ -48,6 +48,8 @@ Then add to the `allConfigs` array:
 } as const,
 ```
 
+**IMPORTANT**: You MUST add the handout to the `allConfigs` array! This is what makes the handout type available in the TypeScript type system. Without this step, you'll get TypeScript errors like "This comparison appears to be unintentional because the types have no overlap" when trying to render the handout.
+
 ### 3. Add Routes
 **File:** `src/routes.ts`
 
@@ -85,6 +87,7 @@ import { [HandoutName] } from "./renderer/[HandoutName]";
    - `"digital_paper"` - 'Pseudo' Paper / Print
    - `"scifi_screens"` - Sci-fi Screens
    - `"wooden_signs"` - Wooden Signs
+   - Or use a custom type (like `"test"`) to hide it from the selector
 4. **Input Helpers**: Use helpers from `inputHelpers.ts`:
    - `imageInput()` - Image upload/URL
    - `text()` / `textArea()` - Text inputs
@@ -124,3 +127,20 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({ handout })
   return <div>{image && <img src={image} alt="Crystal ball vision" />}</div>;
 };
 ```
+
+## Hidden Handout Example: Test
+
+To create a handout accessible only via URL (not in the selector):
+
+1. Use a custom type in the config:
+```typescript
+{
+  name: "Test",
+  displayName: "Test",
+  caption: "A test handout for development",
+  type: "test",  // Custom type not used in HandoutTypeSelector
+  config: TestConfig,
+} as const,
+```
+
+2. The handout will be accessible at `/test` but won't appear in the dropdown since HandoutTypeSelector only shows specific types.

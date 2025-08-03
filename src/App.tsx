@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"; //
 import { Helmet } from "react-helmet-async";
 import { FormRenderer } from "./FormRenderer";
 import * as _ from "lodash";
-import { snapshot, useSnapshot } from "valtio";
+import { useSnapshot } from "valtio";
 import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Newspaper } from "./renderer/Newspaper";
@@ -27,7 +27,7 @@ import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
 import { Polaroid } from "./renderer/Polaroid";
 import { CrystalBall } from "./renderer/CrystalBall";
-import { Icon } from "./Icon";
+import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 
@@ -236,7 +236,7 @@ function App() {
           />
         </div>
 
-        <div 
+        <div
           className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll"
           style={{
             ...(appState.backgroundType === "color"
@@ -254,9 +254,7 @@ function App() {
                 appState.backgroundCustomImage
               ? {
                   backgroundImage: `url(${appState.backgroundCustomImage})`,
-                  backgroundSize: `${
-                    appState.backgroundImageZoom * 100
-                  }% auto`,
+                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
                   backgroundPosition: "center center",
                   backgroundRepeat: "no-repeat",
                   filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
@@ -344,6 +342,10 @@ function App() {
               {currentHandoutTransientRow.type === "CrystalBall" &&
                 appState.selectedHandoutType === "CrystalBall" && (
                   <CrystalBall handout={currentHandoutTransientRow.data} />
+                )}
+              {currentHandoutTransientRow.type === "Test" &&
+                appState.selectedHandoutType === "Test" && (
+                  <Test data={currentHandoutTransientRow.data} />
                 )}
             </div>
           </div>

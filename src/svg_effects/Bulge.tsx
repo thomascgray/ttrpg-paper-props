@@ -1,4 +1,4 @@
-import { dpmaporiginal } from "../dpmap2";
+import { dpmaporiginal, dpmaporiginal169 } from "../dpmap2";
 
 export const Bulges = ({ scale }: { scale: number }) => {
   return (
@@ -8,16 +8,26 @@ export const Bulges = ({ scale }: { scale: number }) => {
         visibility: "hidden",
       }}
     >
-      <filter
-        id="bulge-inner-circle"
-        x="0%"
-        y="0%"
-        width="100%"
-        height="100%"
-        filterUnits="userSpaceOnUse"
-      >
+      <filter id="bulge-inner-circle" filterUnits="objectBoundingBox">
         {/* Define the first displacement map image */}
         <feImage result="displacementMap1" xlinkHref={dpmaporiginal}></feImage>
+
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="combinedDisplacementMap"
+          scale={scale}
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="displacedGraphic"
+        ></feDisplacementMap>
+      </filter>
+
+      <filter id="bulge-inner-circle-16-9" filterUnits="objectBoundingBox">
+        {/* Define the first displacement map image */}
+        <feImage
+          result="displacementMap1"
+          xlinkHref={dpmaporiginal169}
+        ></feImage>
 
         <feDisplacementMap
           in="SourceGraphic"

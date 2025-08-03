@@ -580,6 +580,13 @@ export const CrystalBallConfig = {
   bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
 } satisfies HandoutConfig;
 
+export const TestConfig = {
+  ...positioning,
+  scale: [1, range({ name: "Scale", min: 0, max: 500, step: 5 })],
+  testText: ["Test content", text({ name: "Test Text" })],
+  testNumber: [50, range({ name: "Test Number", min: 0, max: 100 })],
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -675,6 +682,13 @@ export const allConfigs = [
     caption: "A mystical crystal ball with a single image",
     type: "object",
     config: CrystalBallConfig,
+  } as const,
+  {
+    name: "Test",
+    displayName: "Test",
+    caption: "A test handout for development purposes",
+    type: "test",
+    config: TestConfig,
   } as const,
 ];
 

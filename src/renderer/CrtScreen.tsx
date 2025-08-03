@@ -43,12 +43,9 @@ translateZ(00px)`;
     case "/images/crts/d.webp": // the apple lisa 2
       blackSquareOpts.top = 50;
       blackSquareOpts.left = 100;
-      blackSquareOpts.width = 500;
-      blackSquareOpts.height = 250;
-      textRenderOpts.transformString = `scaleX(0.63) scaleY(0.63)
-translateX(-148px)
-translateY(-245px)
-translateZ(00px)`;
+      textRenderOpts.transformString = `
+      
+translateZ(0px)`;
       break;
     case "/images/crts/e.webp": // micral microcomputer
       blackSquareOpts.top = 100;
@@ -99,13 +96,15 @@ skewY(-1deg)`;
 
         {/* the text render */}
         <div
-          className="aspect-square text-main-wrapper absolute top-0 left-0 font-mono bg-[#232323] crt overflow-y-clip bulge-inner-circle"
-          style={{
-            top: `${textRenderOpts.top}px`,
-            left: `${textRenderOpts.left}px`,
-            transform: `${textRenderOpts.transformString}`,
-            transformOrigin: "center",
-          }}
+          className="text-main-wrapper absolute top-0 left-0 font-mono bg-[#232323] crt overflow-y-clip bulge-whole-element"
+          style={
+            {
+              // top: `${textRenderOpts.top}px`,
+              // left: `${textRenderOpts.left}px`,
+              // transform: `${textRenderOpts.transformString}`,
+              // transformOrigin: "center",
+            }
+          }
         >
           <div
             className="w-full h-[100%] overflow-y-clip aspect-square"

@@ -512,3 +512,7 @@ body {
 .bulge-whole-element {
   filter: url(#bulge-whole-element);
 }
+
+.bulge-inner-circle-16-9 {
+  filter: url(#bulge-inner-circle-16-9);
+}
