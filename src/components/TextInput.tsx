@@ -22,8 +22,8 @@ export const TextInput = (props: iStandardComponentProps) => {
           value={props.value}
           className="p-2 text-lg w-full"
           onChange={(e) => {
-            const start = e.target.selectionStart;
-            const end = e.target.selectionEnd;
+            const start = e.target.selectionStart || 0;
+            const end = e.target.selectionEnd || 0;
             cursorPositionRef.current = { start, end };
             props.onUpdate(e.target.value);
           }}

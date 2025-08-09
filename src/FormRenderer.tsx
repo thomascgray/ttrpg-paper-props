@@ -17,6 +17,7 @@ import { ParagraphArray } from "./components/ParagraphArray";
 import { BlendModeSelector } from "./components/TextFilterSelector";
 import { LegendItems } from "./components/LegendItems";
 import { TextStyleSelector } from "./components/TextStyleSelector";
+import XYPicker from "./components/XYPicker";
 
 interface FormRendererProps {
   formConfig: Record<string, any>;
@@ -243,6 +244,16 @@ const renderFormInput = (
           label={name}
           value={value ?? restConfig.value ?? ""}
           onUpdate={handleUpdate}
+        />
+      );
+
+    case "x_y_position":
+      return (
+        <XYPicker
+          key={path}
+          // label={name}
+          initialValue={value ?? restConfig.value}
+          onChange={handleUpdate}
         />
       );
 

@@ -146,6 +146,7 @@ export const getImageProcessingStyles = (imageData?: {
   opacity?: number;
   saturation?: number;
   sepia?: number;
+  filterUrl?: string;
 }): React.CSSProperties => {
   const filters: string[] = [];
   if (imageData === undefined) {
@@ -175,6 +176,9 @@ export const getImageProcessingStyles = (imageData?: {
   }
   if (imageData.sepia !== undefined && imageData.sepia > 0) {
     filters.push(`sepia(${imageData.sepia}%)`);
+  }
+  if (imageData.filterUrl) {
+    filters.push(`url(#${imageData.filterUrl})`);
   }
 
   const styles: React.CSSProperties = {};

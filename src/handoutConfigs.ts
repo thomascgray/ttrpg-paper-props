@@ -25,8 +25,10 @@ import {
   imageOpts,
   legendItems,
   positioning,
+  positioningNamed,
   textFull,
   imagePostProcessing,
+  x_y_position,
 } from "./inputHelpers";
 import { LegendItem } from "./components/LegendItems";
 
@@ -485,6 +487,17 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
 } satisfies HandoutConfig;
 
 export const PaperMapConfig = {
+  ...positioningNamed({ key: "mapPositioning", name: "Map" }),
+  ...positioningNamed({
+    key: "legendPositioning",
+    name: "Legend",
+    defaults: { zoom: 1.2, xOffset: -50, yOffset: -30 },
+    ranges: {
+      zoom: { min: 0.5, max: 3, step: 0.05 },
+      xOffset: { min: -100, max: 100 },
+      yOffset: { min: -100, max: 100 },
+    },
+  }),
   paperTexture: ["beige-3", paperTexture()],
   image: ["https://i.imgur.com/w1DaJ2q.jpeg", imageInput()],
   legend: {
@@ -577,11 +590,15 @@ export const PolaroidConfig = {
 } satisfies HandoutConfig;
 
 export const CrystalBallConfig = {
+  ...positioning,
   image: [
     "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
     imageInput(),
   ],
-  bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
+  ...imagePostProcessing,
+  showGlare: [true, boolean({ name: "Show Glare" })],
+  showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
+  pos: [{ x: 0, y: 0 }, x_y_position()],
 } satisfies HandoutConfig;
 
 export const TestConfig = {
@@ -678,7 +695,7 @@ export const allConfigs = [
     name: "Polaroid",
     displayName: "Polaroid",
     caption: "A simple polaroid photo with text caption and optional pin",
-    type: "object",
+    type: "digital_paper",
     config: PolaroidConfig,
   } as const,
   {

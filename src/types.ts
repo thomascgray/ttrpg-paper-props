@@ -17,6 +17,7 @@ import type {
   crtPixelColours,
   legendItems,
   textStyle,
+  x_y_position,
 } from "./inputHelpers";
 
 export type ConfigTuple = [
@@ -41,6 +42,7 @@ export type ConfigTuple = [
     | ReturnType<typeof crtPixelColours>
     | ReturnType<typeof legendItems>
     | ReturnType<typeof textStyle>
+    | ReturnType<typeof x_y_position>
   )
 ];
 

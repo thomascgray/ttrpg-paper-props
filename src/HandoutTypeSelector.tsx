@@ -44,7 +44,7 @@ export const HandoutTypeSelector = () => {
                 );
               })}
           </optgroup>
-          <optgroup label="Objects w/ Superimposed Text">
+          <optgroup label="Objects">
             {allConfigs
               .filter((config) => config.type === "object")
               .map((config) => {

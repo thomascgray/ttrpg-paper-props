@@ -6,18 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - never try to run `bun dev` to start the development server - i'm almost always running the server anyway.
 
-## Commands
+If the user has asked you to do some work, and it involves modifying a renderer component (like the components in `src/renderer/`), then refer to ./CLAUDE/rendering-components.md document.
 
-### Development
+If the user has asked you to do some work, and it involves modifying a handout config (like the configs in `src/handoutConfigs.ts`), then refer to ./CLAUDE/handout-configs.md document.
 
-- `npm run dev` - Start the development server (default port 5173)
+### CLI Development
+
+- `bun dev` - Start the development server (default port 5173)
 - `bun install` - Install dependencies (uses Bun package manager)
 
-### Build
+### CLI Build
 
 - `bun run build` - Build for production
 
-### Linting
+### CLI Linting
 
 - `bun x tsx` - Run TypeScript compiler for type checking
 
@@ -55,6 +57,7 @@ All handout configurations are defined here. Each config uses the tuple pattern 
 - ThreePanelDirectionalSign
 - CrtScreen
 - PaperMap
+- CrystalBall
 
 #### Renderer Components (`src/renderer/`)
 

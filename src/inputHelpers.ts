@@ -305,6 +305,79 @@ export const positioning = {
   },
 } satisfies HandoutConfig;
 
+export const positioningNamed = (overrides?: {
+  key?: string;
+  name?: string;
+  defaults?: {
+    rotation?: number;
+    zoom?: number;
+    xOffset?: number;
+    yOffset?: number;
+  };
+  ranges?: {
+    rotation?: { min?: number; max?: number; suffix?: string };
+    zoom?: { min?: number; max?: number; step?: number };
+    xOffset?: { min?: number; max?: number; suffix?: string };
+    yOffset?: { min?: number; max?: number; suffix?: string };
+  };
+}) => {
+  const key = overrides?.key || "positioning";
+  const namePrefix = overrides?.name ? `${overrides.name} ` : "";
+
+  return {
+    [key]: {
+      rotation: [
+        overrides?.defaults?.rotation ?? 0,
+        range({
+          name: `${namePrefix}Rotation`,
+          min: overrides?.ranges?.rotation?.min ?? -180,
+          max: overrides?.ranges?.rotation?.max ?? 180,
+          suffix: overrides?.ranges?.rotation?.suffix ?? "°",
+        }),
+      ],
+      zoom: [
+        overrides?.defaults?.zoom ?? 1,
+        range({
+          name: `${namePrefix}Zoom`,
+          min: overrides?.ranges?.zoom?.min ?? -0.1,
+          max: overrides?.ranges?.zoom?.max ?? 6,
+          step: overrides?.ranges?.zoom?.step ?? 0.05,
+        }),
+      ],
+      xOffset: [
+        overrides?.defaults?.xOffset ?? 0,
+        range({
+          name: `${namePrefix}X Offset`,
+          min: overrides?.ranges?.xOffset?.min ?? -200,
+          max: overrides?.ranges?.xOffset?.max ?? 200,
+          suffix: overrides?.ranges?.xOffset?.suffix ?? "%",
+        }),
+      ],
+      yOffset: [
+        overrides?.defaults?.yOffset ?? 0,
+        range({
+          name: `${namePrefix}Y Offset`,
+          min: overrides?.ranges?.yOffset?.min ?? -200,
+          max: overrides?.ranges?.yOffset?.max ?? 200,
+          suffix: overrides?.ranges?.yOffset?.suffix ?? "%",
+        }),
+      ],
+    },
+  } satisfies HandoutConfig;
+};
+
+export const x_y_position = (overrides?: {
+  name?: string;
+  value?: { x: number; y: number };
+}) => {
+  return {
+    name: "X/Y Position",
+    type: "x_y_position" as const,
+    value: { x: 0, y: 0 },
+    ...overrides,
+  };
+};
+
 export const textFull = (overrides?: {
   text?: { default?: string; name?: string; placeholder?: string };
   font?: { default?: FontFamily; name?: string };
