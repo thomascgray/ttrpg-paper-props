@@ -9,13 +9,17 @@ type CrystalBallData = ExtractConfigValues<typeof CrystalBallConfig>;
 export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
   handout,
 }) => {
-  const { image, positioning, showGlare, showDirectionalLight } = handout;
+  const { image, positioning, showGlare, showDirectionalLight, showShadowOnStand } = handout;
 
   return (
     <div
-      className="relative"
+      className="relative mt-[200px]"
       style={{
-        transform: `rotate(${positioning?.rotation ?? 0}deg) scale(${positioning?.zoom ?? 1}) translate(${positioning?.xOffset ?? 0}%, ${positioning?.yOffset ?? 0}%)`,
+        transform: `rotate(${positioning?.rotation ?? 0}deg) scale(${
+          positioning?.zoom ?? 1
+        }) translate(${positioning?.xOffset ?? 0}%, ${
+          positioning?.yOffset ?? 0
+        }%)`,
       }}
     >
       <Bulges scale={120} />
@@ -52,7 +56,9 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
               <span className="glare absolute top-[150px] right-[50px] w-[15px] h-[100px] bg-[#eeeeee] opacity-60 blur-[2px]"></span>
               <span className="glare absolute top-[150px] right-[70px] w-[15px] h-[100px] bg-[#eeeeee] opacity-60 blur-[2px]"></span>
 
-              <span className="glare absolute bottom-[50px] left-[120px] w-[250px] h-[40px] bg-[#eeeeee] opacity-60 blur-[2px]"></span>
+              <span className="glare absolute bottom-[90px] left-[120px] w-[250px] h-[10px] bg-[#eeeeee] opacity-60 blur-[2px]"></span>
+              <span className="glare absolute bottom-[105px] left-[110px] w-[250px] h-[10px] bg-[#eeeeee] opacity-60 blur-[2px]"></span>
+              <span className="glare absolute bottom-[120px] left-[100px] w-[250px] h-[10px] bg-[#eeeeee] opacity-60 blur-[2px]"></span>
             </div>
           )}
 
@@ -71,12 +77,13 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
       )}
 
       <img
+        className="crystal-ball-stand absolute"
         style={{
           transform: `translate(50px, -30px) scale(${1.3})`,
+          ...(showShadowOnStand && { filter: "drop-shadow(5px 5px 13px #000000)" }),
         }}
-        className="absolute"
         src="/images/crystal_ball/stand1.webp"
-        alt="Crystal ball"
+        alt="Crystal ball stand"
       />
     </div>
   );

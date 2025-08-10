@@ -598,6 +598,7 @@ export const CrystalBallConfig = {
   ...imagePostProcessing,
   showGlare: [true, boolean({ name: "Show Glare" })],
   showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
+  showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
   pos: [{ x: 0, y: 0 }, x_y_position()],
 } satisfies HandoutConfig;
 
