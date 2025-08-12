@@ -11,6 +11,7 @@ export const appState = proxy<{
   selectedHandoutType: AllConfigNames;
   selectedVersionId: string | undefined;
   backgroundSelectorState: "open" | "closed";
+  waitlistSelectorState: "open" | "closed";
   backgroundType: "color" | "gradient" | "predefined" | "custom";
   backgroundColor: string;
   backgroundGradientStart: string;
@@ -26,6 +27,7 @@ export const appState = proxy<{
   selectedHandoutType: allConfigs[0].name,
   selectedVersionId: "TRANSIENT",
   backgroundSelectorState: "closed",
+  waitlistSelectorState: "closed",
   backgroundType: "color",
   backgroundColor: "#2f3640",
   backgroundGradientStart: "#2f3640",
