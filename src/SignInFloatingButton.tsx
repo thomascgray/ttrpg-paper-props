@@ -61,9 +61,9 @@ export const SignInFloatingButton = () => {
               <Waitlist
                 appearance={{
                   elements: {
-                    headerTitle: "hidden",
-                    headerSubtitle: "hidden",
-                    footerAction: "hidden",
+                    // headerTitle: "hidden",
+                    // headerSubtitle: "hidden",
+                    // footerAction: "hidden",
                   },
                 }}
               />
