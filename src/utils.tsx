@@ -146,6 +146,7 @@ export const getImageProcessingStyles = (imageData?: {
   opacity?: number;
   saturation?: number;
   sepia?: number;
+  filterUrl?: string;
 }): React.CSSProperties => {
   const filters: string[] = [];
   if (imageData === undefined) {
@@ -176,6 +177,9 @@ export const getImageProcessingStyles = (imageData?: {
   if (imageData.sepia !== undefined && imageData.sepia > 0) {
     filters.push(`sepia(${imageData.sepia}%)`);
   }
+  if (imageData.filterUrl) {
+    filters.push(`url(#${imageData.filterUrl})`);
+  }
 
   const styles: React.CSSProperties = {};
 
@@ -189,3 +193,17 @@ export const getImageProcessingStyles = (imageData?: {
 
   return styles;
 };
+
+export function detectBrowser(): "chrome" | "firefox" | undefined {
+  const isChrome =
+    /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  const isFirefox = /Firefox/.test(navigator.userAgent);
+
+  if (isChrome) {
+    document.body.classList.add("chrome");
+    return "chrome";
+  } else if (isFirefox) {
+    document.body.classList.add("firefox");
+    return "firefox";
+  }
+}

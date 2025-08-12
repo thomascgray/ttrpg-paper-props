@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"; //
 import { Helmet } from "react-helmet-async";
 import { FormRenderer } from "./FormRenderer";
 import * as _ from "lodash";
-import { snapshot, useSnapshot } from "valtio";
+import { useSnapshot } from "valtio";
 import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Newspaper } from "./renderer/Newspaper";
@@ -26,7 +26,8 @@ import {
 import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
 import { Polaroid } from "./renderer/Polaroid";
-import { Icon } from "./Icon";
+import { CrystalBall } from "./renderer/CrystalBall";
+import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 
@@ -235,38 +236,32 @@ function App() {
           />
         </div>
 
-        <div className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll">
-          {/* Background layer */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              ...(appState.backgroundType === "color"
-                ? { backgroundColor: appState.backgroundColor }
-                : appState.backgroundType === "gradient"
-                ? {
-                    background:
-                      appState.backgroundGradientType === "linear"
-                        ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                        : appState.backgroundGradientType === "radial"
-                        ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                        : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
-                  }
-                : appState.backgroundType === "custom" &&
-                  appState.backgroundCustomImage
-                ? {
-                    backgroundImage: `url(${appState.backgroundCustomImage})`,
-                    backgroundSize: `${
-                      appState.backgroundImageZoom * 100
-                    }% auto`,
-                    backgroundPosition: "center center",
-                    backgroundRepeat: "no-repeat",
-                    filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
-                  }
-                : { backgroundColor: "#2f3640" }),
-            }}
-          />
-
-          {/* Content layer */}
+        <div
+          className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll"
+          style={{
+            ...(appState.backgroundType === "color"
+              ? { backgroundColor: appState.backgroundColor }
+              : appState.backgroundType === "gradient"
+              ? {
+                  background:
+                    appState.backgroundGradientType === "linear"
+                      ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : appState.backgroundGradientType === "radial"
+                      ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                }
+              : appState.backgroundType === "custom" &&
+                appState.backgroundCustomImage
+              ? {
+                  backgroundImage: `url(${appState.backgroundCustomImage})`,
+                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
+                  backgroundPosition: "center center",
+                  backgroundRepeat: "no-repeat",
+                  filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+                }
+              : { backgroundColor: "#2f3640" }),
+          }}
+        >
           <div className="relative z-10 pt-[5%] pb-[10%]">
             <div
               className="render-area-content w-full flex flex-col justify-around items-center origin-center"
@@ -343,6 +338,14 @@ function App() {
               {currentHandoutTransientRow.type === "Polaroid" &&
                 appState.selectedHandoutType === "Polaroid" && (
                   <Polaroid handout={currentHandoutTransientRow.data} />
+                )}
+              {currentHandoutTransientRow.type === "CrystalBall" &&
+                appState.selectedHandoutType === "CrystalBall" && (
+                  <CrystalBall handout={currentHandoutTransientRow.data} />
+                )}
+              {currentHandoutTransientRow.type === "Test" &&
+                appState.selectedHandoutType === "Test" && (
+                  <Test data={currentHandoutTransientRow.data} />
                 )}
             </div>
           </div>

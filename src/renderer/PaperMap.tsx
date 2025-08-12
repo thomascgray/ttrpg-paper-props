@@ -2,7 +2,20 @@ import { PaperMapConfig } from "../handoutConfigs";
 import { Icon } from "../Icon";
 import { ExtractConfigValues } from "../types";
 
-type PaperMapData = ExtractConfigValues<typeof PaperMapConfig>;
+type PaperMapData = ExtractConfigValues<typeof PaperMapConfig> & {
+  mapPositioning?: {
+    rotation: number;
+    zoom: number;
+    xOffset: number;
+    yOffset: number;
+  };
+  legendPositioning?: {
+    rotation: number;
+    zoom: number;
+    xOffset: number;
+    yOffset: number;
+  };
+};
 
 const getLegendPositionStyles = (position: string): React.CSSProperties => {
   switch (position) {
@@ -28,12 +41,17 @@ const getLegendPositionStyles = (position: string): React.CSSProperties => {
 };
 
 export const PaperMap = ({ handout }: { handout: PaperMapData }) => {
+  const mapPos = handout.mapPositioning || { rotation: 0, zoom: 1, xOffset: 0, yOffset: 0 };
+  const legendPos = handout.legendPositioning || { rotation: 0, zoom: 1, xOffset: 0, yOffset: 0 };
+  
   return (
     <>
       {/* the paper */}
       <div
         style={{
           width: "80%",
+          transform: `rotate(${mapPos.rotation}deg) scale(${mapPos.zoom}) translate(${mapPos.xOffset}%, ${mapPos.yOffset}%)`,
+          transformOrigin: "center",
         }}
         className={`paper relative p-12 inline-block overflow-visible transition-all ${handout.legend.font} ${handout.legend.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
       >
@@ -96,7 +114,11 @@ export const PaperMap = ({ handout }: { handout: PaperMapData }) => {
           {handout.legend.legendItems.length > 0 && (
             <div
               className="legend absolute bg-white p-4 rounded shadow-lg grid grid-cols-1 gap-4"
-              style={getLegendPositionStyles(handout.legend.legendPosition)}
+              style={{
+                ...getLegendPositionStyles(handout.legend.legendPosition),
+                transform: `rotate(${legendPos.rotation}deg) scale(${legendPos.zoom}) translate(${legendPos.xOffset}%, ${legendPos.yOffset}%)`,
+                transformOrigin: "center",
+              }}
             >
               {handout.legend.legendItems.map((item, index) => (
                 <div key={item.id}>

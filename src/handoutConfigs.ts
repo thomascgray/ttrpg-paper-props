@@ -25,8 +25,10 @@ import {
   imageOpts,
   legendItems,
   positioning,
+  positioningNamed,
   textFull,
   imagePostProcessing,
+  x_y_position,
 } from "./inputHelpers";
 import { LegendItem } from "./components/LegendItems";
 
@@ -446,6 +448,7 @@ export const ThreePanelDirectionalSignConfig = {
 } satisfies HandoutConfig;
 
 export const CrtScreenConfig = {
+  ...positioning,
   text: [
     `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
 
@@ -462,7 +465,7 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
   fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-center", textAlign()],
-
+  // bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
   crtScreen: [
     "/images/crts/c.webp",
     select({
@@ -470,10 +473,13 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
       value: "/images/crts/c.webp",
       options: [
         // { label: "HP", value: "/images/crts/a.webp" },
-        { label: "Commodore PET", value: "/images/crts/c.webp" },
-        { label: "Apple Macintosh", value: "/images/crts/b.webp" },
-        { label: "Apple Lisa 2", value: "/images/crts/d.webp" },
-        { label: "Micral Microcomputer", value: "/images/crts/e.webp" },
+        { label: "Commodore PET (c.webp)", value: "/images/crts/c.webp" },
+        { label: "Apple Macintosh (b.webp)", value: "/images/crts/b.webp" },
+        { label: "Apple Lisa 2 (d.webp)", value: "/images/crts/d.webp" },
+        {
+          label: "Micral Microcomputer (e.webp)",
+          value: "/images/crts/e.webp",
+        },
       ],
     }),
   ],
@@ -481,6 +487,17 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
 } satisfies HandoutConfig;
 
 export const PaperMapConfig = {
+  ...positioningNamed({ key: "mapPositioning", name: "Map" }),
+  ...positioningNamed({
+    key: "legendPositioning",
+    name: "Legend",
+    defaults: { zoom: 1.2, xOffset: -50, yOffset: -30 },
+    ranges: {
+      zoom: { min: 0.5, max: 3, step: 0.05 },
+      xOffset: { min: -100, max: 100 },
+      yOffset: { min: -100, max: 100 },
+    },
+  }),
   paperTexture: ["beige-3", paperTexture()],
   image: ["https://i.imgur.com/w1DaJ2q.jpeg", imageInput()],
   legend: {
@@ -572,6 +589,27 @@ export const PolaroidConfig = {
   showStack: [false, boolean({ name: "Show Stack" })],
 } satisfies HandoutConfig;
 
+export const CrystalBallConfig = {
+  ...positioning,
+  image: [
+    "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
+    imageInput(),
+  ],
+  ...imagePostProcessing,
+  showGlare: [true, boolean({ name: "Show Glare" })],
+  showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
+  showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
+  // pos: [{ x: 0, y: 0 }, x_y_position()],
+} satisfies HandoutConfig;
+
+export const TestConfig = {
+  ...positioning,
+  scale: [1, range({ name: "Scale", min: 0, max: 500, step: 5 })],
+  xRotate: [1, range({ name: "X Rotation", min: -360, max: 360 })],
+  yRotate: [1, range({ name: "Y Rotation", min: -360, max: 360 })],
+  zRotate: [1, range({ name: "Z Rotation", min: -360, max: 360 })],
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -658,8 +696,22 @@ export const allConfigs = [
     name: "Polaroid",
     displayName: "Polaroid",
     caption: "A simple polaroid photo with text caption and optional pin",
-    type: "object",
+    type: "digital_paper",
     config: PolaroidConfig,
+  } as const,
+  {
+    name: "CrystalBall",
+    displayName: "Crystal Ball",
+    caption: "A mystical crystal ball with a single image",
+    type: "object",
+    config: CrystalBallConfig,
+  } as const,
+  {
+    name: "Test",
+    displayName: "Test",
+    caption: "A test handout for development purposes",
+    type: "test",
+    config: TestConfig,
   } as const,
 ];
 

@@ -427,10 +427,6 @@ body {
   font-weight: 700;
 }
 
-.bulge-filter {
-  filter: url(#SphereMapTest);
-}
-
 .rhelper {
   border-top: 5px solid red;
   border-bottom: 5px solid blue;
