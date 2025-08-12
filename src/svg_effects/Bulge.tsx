@@ -1,6 +1,9 @@
 import { dpmaporiginal, dpmaporiginal169 } from "../dpmap2";
 
-export const Bulges = ({ scale }: { scale: number }) => {
+export const Bulges = ({ scale, id }: { scale: number; id?: string }) => {
+  const innerCircleId = id ? `${id}-bulge-inner-circle` : "bulge-inner-circle";
+  const wholeElementId = id ? `${id}-bulge-whole-element` : "bulge-whole-element";
+
   return (
     <svg
       style={{
@@ -8,7 +11,7 @@ export const Bulges = ({ scale }: { scale: number }) => {
         visibility: "hidden",
       }}
     >
-      <filter id="bulge-inner-circle" filterUnits="objectBoundingBox">
+      <filter id={innerCircleId} filterUnits="objectBoundingBox">
         {/* Define the first displacement map image */}
         <feImage result="displacementMap1" xlinkHref={dpmaporiginal}></feImage>
 
@@ -23,7 +26,7 @@ export const Bulges = ({ scale }: { scale: number }) => {
       </filter>
 
       <filter
-        id="bulge-whole-element"
+        id={wholeElementId}
         x="-50%"
         y="-50%"
         width="200%"

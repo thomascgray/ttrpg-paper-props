@@ -427,33 +427,6 @@ body {
   font-weight: 700;
 }
 
-.bulge-filter {
-  filter: url(#SphereMapTest);
-}
-
-/* Apply different strength bulge effects */
-.bulge-weak {
-  filter: url(#bulge-weak);
-  /* transform: translateX(-10%); */
-}
-
-.bulge-medium {
-  filter: url(#bulge-medium);
-}
-
-.bulge-strong {
-  filter: url(#bulge-strong);
-}
-
-.bulge-extreme {
-  filter: url(#bulge-extreme);
-}
-
-/* Hover effect */
-.hover-bulge:hover {
-  filter: url(#bulge-medium);
-}
-
 .rhelper {
   border-top: 5px solid red;
   border-bottom: 5px solid blue;
@@ -503,16 +476,4 @@ body {
 
 .clickable:active {
   transform: scale(0.99);
-}
-
-.bulge-inner-circle {
-  filter: url(#bulge-inner-circle);
-}
-
-.bulge-whole-element {
-  filter: url(#bulge-whole-element);
-}
-
-.bulge-inner-circle-16-9 {
-  filter: url(#bulge-inner-circle-16-9);
 }
