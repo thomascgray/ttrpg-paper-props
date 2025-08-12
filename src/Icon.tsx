@@ -15,9 +15,15 @@ export const iconNames = [
   "flag-3",
   "photo",
   "x",
+  "user",
+  "check",
 ] as const;
 
-export const iconsThatUserStrokeInsteadOfFill: IconName[] = ["photo", "x"];
+export const iconsThatUserStrokeInsteadOfFill: IconName[] = [
+  "photo",
+  "x",
+  "check",
+];
 
 export type IconName = (typeof iconNames)[number];
 
@@ -77,6 +83,13 @@ export const Icon = (props: IconProps) => {
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M18 6l-12 12" />
             <path d="M6 6l12 12" />
+          </>
+        )}
+
+        {props.name === "check" && (
+          <>
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 12l5 5l10 -10" />
           </>
         )}
       </svg>
@@ -175,6 +188,14 @@ export const Icon = (props: IconProps) => {
           <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
           <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
           <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+        </>
+      )}
+
+      {props.name === "user" && (
+        <>
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+          <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
         </>
       )}
     </svg>

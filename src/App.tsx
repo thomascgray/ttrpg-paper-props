@@ -30,6 +30,7 @@ import { CrystalBall } from "./renderer/CrystalBall";
 import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
+import { SignInFloatingButton } from "./SignInFloatingButton";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -350,6 +351,7 @@ function App() {
             </div>
           </div>
           <BackgroundSelector />
+          <SignInFloatingButton />
         </div>
       </div>
     </>
