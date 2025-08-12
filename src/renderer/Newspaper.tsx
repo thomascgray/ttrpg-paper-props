@@ -14,8 +14,9 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
       className="relative translate-y-20"
       style={{
         width: `${handout.pageWidthPercentage}%`,
-        marginTop: `calc(-100px + ${handout.positioning.yOffset}%)`,
-        marginLeft: `${handout.positioning.xOffset}%`,
+
+        // marginTop: `calc(-100px + ${handout.positioning.yOffset}%)`,
+        // marginLeft: `${handout.positioning.xOffset}%`,
         transformOrigin: "center",
       }}
     >
@@ -128,7 +129,7 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
               `${handout.mainCopy.textAlign} font-serif copy-markdown column-count-${handout.mainCopy.mainCopyColumns} ${handout.mainCopy.imageFilter}`,
               {
                 blurry: handout.mainCopy.isMainCopyBlurry,
-              },
+              }
             )}
           >
             {handout.mainCopy.mainCopyContent}

@@ -19,7 +19,7 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
 
   return (
     <div
-      className="relative mt-[200px]"
+      className="relative -mt-[50%]"
       style={{
         transform: `rotate(${positioning?.rotation ?? 0}deg) scale(${
           positioning?.zoom ?? 1

@@ -6,15 +6,14 @@ import "./ink.css";
 import App from "./App";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter, Routes, Route } from "react-router";
-
+import { createTheme, MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
@@ -73,22 +72,13 @@ if (container) {
     <StrictMode>
       <BrowserRouter>
         <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-          {/* <Routes>
-            <Route path="/" element={<App />} />
-          </Routes> */}
-          <HelmetProvider>
-            <NoiseFilterDeclaration />
-            <RoughEdgesFilterDeclaration />
-            {/* <header>
-              <SignedOut>
-                <SignInButton />
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-            </header> */}
-            <App />
-          </HelmetProvider>
+          <MantineProvider theme={theme}>
+            <HelmetProvider>
+              <NoiseFilterDeclaration />
+              <RoughEdgesFilterDeclaration />
+              <App />
+            </HelmetProvider>
+          </MantineProvider>
         </ClerkProvider>
       </BrowserRouter>
     </StrictMode>

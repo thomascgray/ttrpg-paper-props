@@ -7,7 +7,7 @@ interface XYPickerProps {
 }
 
 const XYPicker: React.FC<XYPickerProps> = ({
-  size = 200,
+  size = 100,
   onChange,
   initialValue = { x: 0, y: 0 },
 }) => {
@@ -26,8 +26,13 @@ const XYPicker: React.FC<XYPickerProps> = ({
     const centeredX = Math.round(relativeX - rect.width / 2);
     const centeredY = Math.round(relativeY - rect.height / 2);
 
-    setCoords({ x: centeredX, y: centeredY });
-    onChange?.({ x: centeredX, y: centeredY });
+    // Clamp coords to stay within bounds
+    const halfSize = size / 2;
+    const clampedX = Math.max(-halfSize, Math.min(halfSize, centeredX));
+    const clampedY = Math.max(-halfSize, Math.min(halfSize, centeredY));
+
+    setCoords({ x: clampedX, y: clampedY });
+    onChange?.({ x: clampedX, y: clampedY });
   };
 
   // Click or drag to move

@@ -1,3 +1,7 @@
+# TODO this branch
+
+finish the positioning controls, should work on desktop and mobile, make it so they power the position stuff, remove position controls from the form
+
 # TTRPG Paper Props
 
 A webtool for making "props" for roleplaying games: handouts that you can give your players.

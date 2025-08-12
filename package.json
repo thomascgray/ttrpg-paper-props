@@ -9,6 +9,8 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.41.0",
     "@clerk/react-router": "^1.8.12",
+    "@mantine/core": "^7.15.0",
+    "@mantine/hooks": "^7.15.0",
     "classnames": "2.3.1",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",

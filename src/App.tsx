@@ -5,6 +5,8 @@ import * as _ from "lodash";
 import { useSnapshot } from "valtio";
 import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Drawer } from "@mantine/core";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Newspaper } from "./renderer/Newspaper";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { CharacterCard } from "./renderer/CharacterCard";
@@ -31,11 +33,15 @@ import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
+import { PositioningControls } from "./PositioningControls";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
 
   const [highlighted, setHighlighted] = useState("");
+  const [drawerOpened, { open: openDrawer, close: closeDrawer }] =
+    useDisclosure(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   // Initialize from URL on mount
   useEffect(() => {
@@ -110,7 +116,8 @@ function App() {
         </style>
       </Helmet>
       <div className="flex min-h-full flex-col md:flex-row">
-        <div className="left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4 md:min-w-[500px]">
+        {/* Desktop Layout - Left Column */}
+        <div className="hidden md:block left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4 md:min-w-[500px]">
           <h1 className="text-2xl font-poppins font-bold mb-4 md:min-w-[400px]">
             📜 Tombola's RPG Handout Builder
           </h1>
@@ -237,8 +244,109 @@ function App() {
           />
         </div>
 
+        {/* Mobile Drawer */}
+        <Drawer
+          opened={drawerOpened}
+          onClose={closeDrawer}
+          position="bottom"
+          size="80%"
+          styles={{
+            body: { padding: 0 },
+            header: { padding: "1rem" },
+            close: { marginRight: "0.5rem" },
+          }}
+          className="md:hidden"
+        >
+          <div className="bg-gray-300 p-4 h-full overflow-y-auto">
+            <HandoutTypeSelector />
+
+            <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
+              <div className="flex items-center justify-between">
+                <button
+                  className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
+                  title="Save the current configuration of the handout so that it can be reloaded later"
+                  onClick={() => {
+                    saveVersion(
+                      appState.selectedHandoutType,
+                      currentHandoutTransientRow.data
+                    );
+                  }}
+                >
+                  Save Snapshot
+                </button>
+
+                <select
+                  className="text-sm"
+                  onChange={(e) =>
+                    updateTransientRecordToVersion(e.target.value)
+                  }
+                  value={appState.selectedVersionId}
+                >
+                  {(versionsForThisHandoutType || []).map((version) => (
+                    <option value={version.id} key={version.id}>
+                      {version.createdAt.toLocaleDateString()} at{" "}
+                      {version.createdAt.toLocaleTimeString()}
+                    </option>
+                  ))}
+                  <option value="TRANSIENT">Unsaved snapshot</option>
+                </select>
+              </div>
+              <p className="text-sm italic mt-3">
+                Snapshots are saved locally to your machine - no data is sent to
+                any server.
+              </p>
+            </div>
+
+            <FormRenderer
+              data={currentHandoutTransientRow.data}
+              formConfig={formConfig}
+              onChange={(path: string, value: any) => {
+                // when the user changes ANY form input...
+                // ...update the data in app state
+                const newData = _.cloneDeep(currentHandoutTransientRow.data);
+                _.set(newData, path, value);
+
+                // ...and then update the transient record in the db for this handout type
+                const newDataPlain = JSON.parse(JSON.stringify(newData));
+                db.handouts
+                  .where("id")
+                  .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+                  .modify({
+                    data: newDataPlain,
+                  });
+                appStateProxy.selectedVersionId = "TRANSIENT";
+              }}
+            />
+          </div>
+        </Drawer>
+
+        {/* Mobile Drawer Toggle Button */}
+        {isMobile && !drawerOpened && (
+          <button
+            onClick={openDrawer}
+            className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white px-6 py-3 rounded-t-lg shadow-lg hover:bg-gray-600 transition-colors z-50 md:hidden flex items-center gap-2"
+            aria-label="Open settings drawer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
+            </svg>
+            <span>Settings</span>
+          </button>
+        )}
+
         <div
-          className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll"
+          className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around"
           style={{
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
@@ -263,7 +371,7 @@ function App() {
               : { backgroundColor: "#2f3640" }),
           }}
         >
-          <div className="relative z-10 pt-[5%] pb-[10%]">
+          <div className="relative z-10">
             <div
               className="render-area-content w-full flex flex-col justify-around items-center origin-center"
               style={{
@@ -352,6 +460,7 @@ function App() {
           </div>
           <BackgroundSelector />
           <SignInFloatingButton />
+          <PositioningControls />
         </div>
       </div>
     </>
