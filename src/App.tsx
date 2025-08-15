@@ -345,8 +345,9 @@ function App() {
           </button>
         )}
 
+        {/* Right Column Container - holds background and floating controls */}
         <div
-          className="right-column overflow-y-scroll relative render-area md:w-3/4 w-full h-screen z-10 flex flex-col justify-around"
+          className="right-column relative md:w-3/4 w-full h-screen"
           style={{
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
@@ -371,25 +372,27 @@ function App() {
               : { backgroundColor: "#2f3640" }),
           }}
         >
-          <div className="relative z-10">
+          {/* Scrollable Render Area */}
+          <div className="render-area w-full h-full overflow-y-auto overflow-x-hidden flex items-center justify-center">
             <div
-              className="render-area-content flex flex-col justify-around items-center origin-center"
+              className="render-area-content min-h-full w-full flex flex-col justify-around items-center origin-center py-8"
               style={{
-                transform: `
-                  translate(${
-                    currentHandoutTransientRow.data.positioning?.xOffset || 0
-                  }%, ${
-                  currentHandoutTransientRow.data.positioning?.yOffset || 0
-                }%)
-                  rotate(${
-                    currentHandoutTransientRow.data.positioning?.rotation || 0
-                  }deg) 
-                  scale(${
-                    currentHandoutTransientRow.data.positioning?.zoom || 1
-                  })
-                `,
-              }}
-            >
+                  transform: `
+                    translate(${
+                      currentHandoutTransientRow.data.positioning?.xOffset || 0
+                    }%, ${
+                    currentHandoutTransientRow.data.positioning?.yOffset || 0
+                  }%)
+                    rotate(${
+                      currentHandoutTransientRow.data.positioning?.rotation || 0
+                    }deg) 
+                    scale(${
+                      currentHandoutTransientRow.data.positioning?.zoom || 1
+                    })
+                  `,
+                  transition: "transform 0.3s ease-out",
+                }}
+              >
               {currentHandoutTransientRow.type === "Newspaper" &&
                 appState.selectedHandoutType === "Newspaper" && (
                   <Newspaper handout={currentHandoutTransientRow.data} />
@@ -464,6 +467,8 @@ function App() {
                 )}
             </div>
           </div>
+          
+          {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
           <SignInFloatingButton />
           <PositioningControls

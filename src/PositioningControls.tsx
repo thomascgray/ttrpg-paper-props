@@ -34,7 +34,7 @@ export const PositioningControls = ({
   return (
     <div
       className={classNames(
-        "fixed top-4 left-[50%] -translate-x-[50%] transition-all z-50",
+        "absolute top-4 left-[50%] -translate-x-[50%] transition-all z-50",
         {
           "bg-slate-500 p-4 rounded-md": isOpen,
         }
