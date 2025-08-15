@@ -303,9 +303,11 @@ export const FormRenderer: React.FC<FormRendererProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      {Object.entries(formConfig).map(([key, config]) =>
-        renderFormSection(key, config, data, onChange)
-      )}
+      {Object.entries(formConfig)
+        .filter(([key]) => key !== "positioning") // Skip positioning - handled by floating controls
+        .map(([key, config]) =>
+          renderFormSection(key, config, data, onChange)
+        )}
     </div>
   );
 };

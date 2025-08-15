@@ -346,7 +346,7 @@ function App() {
         )}
 
         <div
-          className="right-column relative render-area md:w-3/4 w-full h-screen z-10 overflow-y-scroll flex flex-col justify-around"
+          className="right-column overflow-y-scroll relative render-area md:w-3/4 w-full h-screen z-10 flex flex-col justify-around"
           style={{
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
@@ -373,15 +373,21 @@ function App() {
         >
           <div className="relative z-10">
             <div
-              className="render-area-content w-full flex flex-col justify-around items-center origin-center"
+              className="render-area-content flex flex-col justify-around items-center origin-center"
               style={{
-                transform: `rotate(${
-                  currentHandoutTransientRow.data.positioning
-                    ?.rotationDegrees || 0
-                }deg) scale(${
-                  currentHandoutTransientRow.data.positioning?.zoom || 1
-                })`,
-                transition: "transform 0.3s ease-out",
+                transform: `
+                  translate(${
+                    currentHandoutTransientRow.data.positioning?.xOffset || 0
+                  }%, ${
+                  currentHandoutTransientRow.data.positioning?.yOffset || 0
+                }%)
+                  rotate(${
+                    currentHandoutTransientRow.data.positioning?.rotation || 0
+                  }deg) 
+                  scale(${
+                    currentHandoutTransientRow.data.positioning?.zoom || 1
+                  })
+                `,
               }}
             >
               {currentHandoutTransientRow.type === "Newspaper" &&
@@ -460,7 +466,51 @@ function App() {
           </div>
           <BackgroundSelector />
           <SignInFloatingButton />
-          <PositioningControls />
+          <PositioningControls
+            data={currentHandoutTransientRow.data}
+            onChange={(path: string, value: any) => {
+              const newData = _.cloneDeep(currentHandoutTransientRow.data);
+              _.set(newData, path, value);
+              const newDataPlain = JSON.parse(JSON.stringify(newData));
+              db.handouts
+                .where("id")
+                .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+                .modify({
+                  data: newDataPlain,
+                });
+              appStateProxy.selectedVersionId = "TRANSIENT";
+            }}
+            onUpdateOffsets={(xOffset: number, yOffset: number) => {
+              const newData = _.cloneDeep(currentHandoutTransientRow.data);
+              newData.positioning.xOffset = xOffset;
+              newData.positioning.yOffset = yOffset;
+              const newDataPlain = JSON.parse(JSON.stringify(newData));
+              db.handouts
+                .where("id")
+                .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+                .modify({
+                  data: newDataPlain,
+                });
+              appStateProxy.selectedVersionId = "TRANSIENT";
+            }}
+            onResetData={() => {
+              const newData = _.cloneDeep(currentHandoutTransientRow.data);
+              newData.positioning = {
+                rotation: 0,
+                zoom: 1,
+                xOffset: 0,
+                yOffset: 0,
+              };
+              const newDataPlain = JSON.parse(JSON.stringify(newData));
+              db.handouts
+                .where("id")
+                .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+                .modify({
+                  data: newDataPlain,
+                });
+              appStateProxy.selectedVersionId = "TRANSIENT";
+            }}
+          />
         </div>
       </div>
     </>
