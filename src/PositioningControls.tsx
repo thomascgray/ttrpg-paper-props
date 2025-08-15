@@ -117,7 +117,7 @@ export const PositioningControls = ({
             onClick={() => {
               appStateProxy.positioningControls = "closed";
             }}
-            className="absolute top-2 right-2 bg-red-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-1"
+            className="absolute top-2 right-2 bg-red-500 rounded-full active:scale-90 transition-transform p-1"
           >
             <Icon name="x" colour="white" size="sm" />
           </button>
