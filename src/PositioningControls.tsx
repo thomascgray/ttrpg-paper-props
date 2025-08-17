@@ -58,51 +58,65 @@ export const PositioningControls = ({
 
       {isOpen && (
         <>
-          <div className="min-w-[300px] max-w-[400px]">
+          <div className="w-[70vw] md:w-[30vw] xl:w-[20vw]">
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-white text-md font-bold">
                   Positioning Controls
                 </h3>
               </div>
-              <div className="controls flex gap-4">
-                <div className="zoom">
-                  <RangeInput
-                    label={"Zoom"}
-                    value={zoom}
-                    onUpdate={(value) => onChange("positioning.zoom", value)}
-                    min={0.1}
-                    max={6}
-                    step={0.1}
-                    suffix={""}
-                  />
+              <div className="flex flex-row gap-4 justify-between">
+                {/* zoom and rotate */}
+                <div className="flex flex-col gap-4">
+                  <div className="zoom">
+                    <label className="text-white font-bold">Zoom: {zoom}</label>
+                    <RangeInput
+                      value={zoom}
+                      onUpdate={(value) => onChange("positioning.zoom", value)}
+                      min={0.1}
+                      max={6}
+                      step={0.1}
+                      suffix={""}
+                    />
+                  </div>
+                  <div className="rotate">
+                    <label className="text-white font-bold">
+                      Rotation: {rotation}°
+                    </label>
+                    <AngleSlider
+                      aria-label="Angle slider"
+                      size={60}
+                      thumbSize={8}
+                      value={rotation}
+                      formatLabel={(value) => `${value}°`}
+                      onChange={(value) =>
+                        onChange("positioning.rotation", value)
+                      }
+                    />
+                  </div>
                 </div>
-                <div className="rotate">
-                  <AngleSlider
-                    aria-label="Angle slider"
-                    size={60}
-                    thumbSize={8}
-                    value={rotation}
-                    onChange={(value) =>
-                      onChange("positioning.rotation", value)
-                    }
-                  />
-                </div>
-                <div>
+
+                {/* position */}
+                <div className="">
+                  <label className="text-white font-bold">
+                    X/Y Offset:
+                    <br />
+                    {xOffset}, {yOffset}
+                  </label>
+
                   <XYPicker
                     initialValue={{ x: xOffset, y: yOffset }}
                     onChange={(value) => {
                       onUpdateOffsets(value.x, value.y);
                     }}
                   />
-                  <p className="text-white">
-                    (x: {xOffset}, y: {yOffset})
-                  </p>
+                  <p className="text-white"></p>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* reset button */}
           <button
             onClick={() => {
               onResetData();
@@ -113,6 +127,7 @@ export const PositioningControls = ({
             Reset
           </button>
 
+          {/* close button */}
           <button
             onClick={() => {
               appStateProxy.positioningControls = "closed";

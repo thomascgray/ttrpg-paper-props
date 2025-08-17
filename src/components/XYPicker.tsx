@@ -35,7 +35,7 @@ const XYPicker: React.FC<XYPickerProps> = ({
     onChange?.({ x: clampedX, y: clampedY });
   };
 
-  // Click or drag to move
+  // Mouse events
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragging(true);
     updateCoords(e.clientX, e.clientY);
@@ -50,22 +50,44 @@ const XYPicker: React.FC<XYPickerProps> = ({
     setDragging(false);
   };
 
+  // Touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent scrolling
+    setDragging(true);
+    const touch = e.touches[0];
+    updateCoords(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!dragging) return;
+    e.preventDefault(); // Prevent scrolling
+    const touch = e.touches[0];
+    updateCoords(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchEnd = () => {
+    setDragging(false);
+  };
+
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [dragging]);
 
   return (
     <label className="block">
-      <span className="block mb-1">X y picker</span>
-
       <div
         ref={pickerRef}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         style={{
           width: size,
           height: size,

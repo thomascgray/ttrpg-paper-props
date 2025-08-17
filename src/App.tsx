@@ -250,77 +250,101 @@ function App() {
           onClose={closeDrawer}
           position="bottom"
           size="80%"
+          withCloseButton={false}
           styles={{
             body: { padding: 0 },
-            header: { padding: "1rem" },
-            close: { marginRight: "0.5rem" },
           }}
           className="md:hidden"
         >
-          <div className="bg-gray-300 p-4 h-full overflow-y-auto">
-            <HandoutTypeSelector />
+          <div className="bg-gray-300 h-full overflow-y-auto">
+            {/* Settings button inside drawer */}
+            <button
+              onClick={closeDrawer}
+              className="w-full bg-gray-700 text-white px-6 py-3 hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"
+              aria-label="Close settings drawer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 rotate-180 transition-transform duration-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 15l7-7 7 7"
+                />
+              </svg>
+              <span>Settings</span>
+            </button>
 
-            <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
-              <div className="flex items-center justify-between">
-                <button
-                  className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
-                  title="Save the current configuration of the handout so that it can be reloaded later"
-                  onClick={() => {
-                    saveVersion(
-                      appState.selectedHandoutType,
-                      currentHandoutTransientRow.data
-                    );
-                  }}
-                >
-                  Save Snapshot
-                </button>
+            <div className="p-4">
+              <HandoutTypeSelector onSelect={closeDrawer} />
 
-                <select
-                  className="text-sm"
-                  onChange={(e) =>
-                    updateTransientRecordToVersion(e.target.value)
-                  }
-                  value={appState.selectedVersionId}
-                >
-                  {(versionsForThisHandoutType || []).map((version) => (
-                    <option value={version.id} key={version.id}>
-                      {version.createdAt.toLocaleDateString()} at{" "}
-                      {version.createdAt.toLocaleTimeString()}
-                    </option>
-                  ))}
-                  <option value="TRANSIENT">Unsaved snapshot</option>
-                </select>
+              <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
+                <div className="flex items-center justify-between">
+                  <button
+                    className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
+                    title="Save the current configuration of the handout so that it can be reloaded later"
+                    onClick={() => {
+                      saveVersion(
+                        appState.selectedHandoutType,
+                        currentHandoutTransientRow.data
+                      );
+                    }}
+                  >
+                    Save Snapshot
+                  </button>
+
+                  <select
+                    className="text-sm"
+                    onChange={(e) =>
+                      updateTransientRecordToVersion(e.target.value)
+                    }
+                    value={appState.selectedVersionId}
+                  >
+                    {(versionsForThisHandoutType || []).map((version) => (
+                      <option value={version.id} key={version.id}>
+                        {version.createdAt.toLocaleDateString()} at{" "}
+                        {version.createdAt.toLocaleTimeString()}
+                      </option>
+                    ))}
+                    <option value="TRANSIENT">Unsaved snapshot</option>
+                  </select>
+                </div>
+                <p className="text-sm italic mt-3">
+                  Snapshots are saved locally to your machine - no data is sent
+                  to any server.
+                </p>
               </div>
-              <p className="text-sm italic mt-3">
-                Snapshots are saved locally to your machine - no data is sent to
-                any server.
-              </p>
+
+              <FormRenderer
+                data={currentHandoutTransientRow.data}
+                formConfig={formConfig}
+                onChange={(path: string, value: any) => {
+                  // when the user changes ANY form input...
+                  // ...update the data in app state
+                  const newData = _.cloneDeep(currentHandoutTransientRow.data);
+                  _.set(newData, path, value);
+
+                  // ...and then update the transient record in the db for this handout type
+                  const newDataPlain = JSON.parse(JSON.stringify(newData));
+                  db.handouts
+                    .where("id")
+                    .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+                    .modify({
+                      data: newDataPlain,
+                    });
+                  appStateProxy.selectedVersionId = "TRANSIENT";
+                }}
+              />
             </div>
-
-            <FormRenderer
-              data={currentHandoutTransientRow.data}
-              formConfig={formConfig}
-              onChange={(path: string, value: any) => {
-                // when the user changes ANY form input...
-                // ...update the data in app state
-                const newData = _.cloneDeep(currentHandoutTransientRow.data);
-                _.set(newData, path, value);
-
-                // ...and then update the transient record in the db for this handout type
-                const newDataPlain = JSON.parse(JSON.stringify(newData));
-                db.handouts
-                  .where("id")
-                  .equals(`TRANSIENT_${appState.selectedHandoutType}`)
-                  .modify({
-                    data: newDataPlain,
-                  });
-                appStateProxy.selectedVersionId = "TRANSIENT";
-              }}
-            />
           </div>
         </Drawer>
 
-        {/* Mobile Drawer Toggle Button */}
+        {/* Mobile Drawer Toggle Button - Only show when closed */}
         {isMobile && !drawerOpened && (
           <button
             onClick={openDrawer}
@@ -377,12 +401,12 @@ function App() {
             <div
               className="render-area-content min-h-full w-full flex flex-col justify-around items-center origin-center py-8"
               style={{
-                  transform: `
+                transform: `
                     translate(${
                       currentHandoutTransientRow.data.positioning?.xOffset || 0
                     }%, ${
-                    currentHandoutTransientRow.data.positioning?.yOffset || 0
-                  }%)
+                  currentHandoutTransientRow.data.positioning?.yOffset || 0
+                }%)
                     rotate(${
                       currentHandoutTransientRow.data.positioning?.rotation || 0
                     }deg) 
@@ -390,9 +414,8 @@ function App() {
                       currentHandoutTransientRow.data.positioning?.zoom || 1
                     })
                   `,
-                  transition: "transform 0.3s ease-out",
-                }}
-              >
+              }}
+            >
               {currentHandoutTransientRow.type === "Newspaper" &&
                 appState.selectedHandoutType === "Newspaper" && (
                   <Newspaper handout={currentHandoutTransientRow.data} />
@@ -467,10 +490,10 @@ function App() {
                 )}
             </div>
           </div>
-          
+
           {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
-          <SignInFloatingButton />
+          {/* <SignInFloatingButton /> */}
           <PositioningControls
             data={currentHandoutTransientRow.data}
             onChange={(path: string, value: any) => {
