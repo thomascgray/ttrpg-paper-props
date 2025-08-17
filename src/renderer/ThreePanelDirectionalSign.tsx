@@ -13,11 +13,6 @@ export const ThreePanelDirectionalSign = ({
 }: {
   handout: ThreePanelDirectionalSignData;
 }) => {
-  // const baseTop =
-  //   200 + parseInt(handout.positioning.yOffset as unknown as string);
-  // const baseLeft =
-  //   200 + parseInt(handout.positioning.xOffset as unknown as string);
-
   const panel1TranslateX =
     14 + parseInt(handout.panel1.xOffset as unknown as string);
   const panel2TranslateX =

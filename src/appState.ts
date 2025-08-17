@@ -12,6 +12,7 @@ export const appState = proxy<{
   selectedVersionId: string | undefined;
   backgroundSelectorState: "open" | "closed";
   waitlistSelectorState: "open" | "closed";
+  positioningControls: "open" | "closed";
   backgroundType: "color" | "gradient" | "predefined" | "custom";
   backgroundColor: string;
   backgroundGradientStart: string;
@@ -24,10 +25,11 @@ export const appState = proxy<{
   backgroundImageBlur: boolean;
   backgroundImageZoom: number;
 }>({
-  selectedHandoutType: allConfigs[0].name,
+  selectedHandoutType: "NewspaperClipping",
   selectedVersionId: "TRANSIENT",
   backgroundSelectorState: "closed",
   waitlistSelectorState: "closed",
+  positioningControls: "closed",
   backgroundType: "color",
   backgroundColor: "#2f3640",
   backgroundGradientStart: "#2f3640",

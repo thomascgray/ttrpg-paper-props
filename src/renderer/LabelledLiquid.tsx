@@ -11,13 +11,7 @@ export const LabelledLiquid = ({
   handout: LabelledLiquidData;
 }) => {
   return (
-    <div
-      style={{
-        marginTop: `${handout.positioning.yOffset}%`,
-        marginLeft: `${handout.positioning.xOffset}%`,
-      }}
-      className="relative transition-all"
-    >
+    <div className="relative">
       <img
         className="transition-all"
         src={handout.imageTemplate}

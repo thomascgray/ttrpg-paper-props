@@ -3,12 +3,40 @@ import { useSnapshot } from "valtio";
 import { appState as appStateProxy } from "./appState";
 import { AllConfigNames, allConfigs } from "./handoutConfigs";
 
-export const HandoutTypeSelector = () => {
+interface HandoutTypeSelectorProps {
+  onSelect?: () => void;
+}
+
+export const HandoutTypeSelector = ({ onSelect }: HandoutTypeSelectorProps = {}) => {
   const appState = useSnapshot(appStateProxy);
 
   const selectedConfig = allConfigs.find(
     (config) => config.name === appState.selectedHandoutType
   );
+  
+  const handleHandoutTypeChange = async (newType: AllConfigNames) => {
+    appStateProxy.selectedHandoutType = newType;
+    appStateProxy.selectedVersionId = "TRANSIENT";
+    
+    // Reset positioning controls when changing handout type
+    const { db } = await import('./database');
+    db.handouts
+      .where("id")
+      .equals(`TRANSIENT_${newType}`)
+      .modify((handout: any) => {
+        if (!handout.data.positioning) {
+          handout.data.positioning = {};
+        }
+        handout.data.positioning.rotation = 0;
+        handout.data.positioning.zoom = 1;
+        handout.data.positioning.xOffset = 0;
+        handout.data.positioning.yOffset = 0;
+      });
+    
+    // Call onSelect callback if provided (for mobile drawer closing)
+    onSelect?.();
+  };
+  
   return (
     <>
       <label className="block mb-4">
@@ -17,9 +45,7 @@ export const HandoutTypeSelector = () => {
           value={appState.selectedHandoutType}
           className="p-2 text-lg w-full"
           onChange={(e) => {
-            appStateProxy.selectedHandoutType = e.target
-              .value as AllConfigNames;
-            appStateProxy.selectedVersionId = "TRANSIENT";
+            handleHandoutTypeChange(e.target.value as AllConfigNames);
           }}
         >
           <optgroup label="'Pseudo' Paper / Print">

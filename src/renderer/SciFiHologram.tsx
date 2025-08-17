@@ -64,10 +64,6 @@ ${hexToRgba("#000000", data.scanlines.opacity)} ${
         data.isFadeOut && "fade-bottom",
         data.isTransparent && "opacity-80"
       )}
-      style={{
-        marginTop: `${data.positioning.yOffset}%`,
-        marginLeft: `${data.positioning.xOffset}%`,
-      }}
     >
       <div
         style={{

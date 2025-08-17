@@ -11,9 +11,12 @@ export const BackgroundSelector = () => {
   const isOpen = appState.backgroundSelectorState === "open";
   return (
     <div
-      className={classNames("absolute bottom-4 left-4 transition-all z-50", {
-        "bg-gray-400 p-4 rounded-md": isOpen,
-      })}
+      className={classNames(
+        "fixed md:absolute bottom-4 left-4 transition-all z-50",
+        {
+          "bg-gray-400 p-4 rounded-md": isOpen,
+        }
+      )}
     >
       <span className="flex items-center gap-4 mb-4">
         <button

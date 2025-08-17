@@ -19,8 +19,6 @@ export const PlainLetter = ({ handout }: { handout: PlainLetterData }) => {
         boxShadow: `${
           handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
         }`,
-        marginTop: `${handout.positioning.yOffset}%`,
-        marginLeft: `${handout.positioning.xOffset}%`,
         padding: `${handout.padding}px`,
       }}
       className={`paper paper-${handout.paperTexture} transition-all`}

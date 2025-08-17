@@ -7,7 +7,7 @@ interface XYPickerProps {
 }
 
 const XYPicker: React.FC<XYPickerProps> = ({
-  size = 200,
+  size = 100,
   onChange,
   initialValue = { x: 0, y: 0 },
 }) => {
@@ -26,11 +26,16 @@ const XYPicker: React.FC<XYPickerProps> = ({
     const centeredX = Math.round(relativeX - rect.width / 2);
     const centeredY = Math.round(relativeY - rect.height / 2);
 
-    setCoords({ x: centeredX, y: centeredY });
-    onChange?.({ x: centeredX, y: centeredY });
+    // Clamp coords to stay within bounds
+    const halfSize = size / 2;
+    const clampedX = Math.max(-halfSize, Math.min(halfSize, centeredX));
+    const clampedY = Math.max(-halfSize, Math.min(halfSize, centeredY));
+
+    setCoords({ x: clampedX, y: clampedY });
+    onChange?.({ x: clampedX, y: clampedY });
   };
 
-  // Click or drag to move
+  // Mouse events
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragging(true);
     updateCoords(e.clientX, e.clientY);
@@ -45,22 +50,44 @@ const XYPicker: React.FC<XYPickerProps> = ({
     setDragging(false);
   };
 
+  // Touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent scrolling
+    setDragging(true);
+    const touch = e.touches[0];
+    updateCoords(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!dragging) return;
+    e.preventDefault(); // Prevent scrolling
+    const touch = e.touches[0];
+    updateCoords(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchEnd = () => {
+    setDragging(false);
+  };
+
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [dragging]);
 
   return (
     <label className="block">
-      <span className="block mb-1">X y picker</span>
-
       <div
         ref={pickerRef}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         style={{
           width: size,
           height: size,

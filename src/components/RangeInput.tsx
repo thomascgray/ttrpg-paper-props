@@ -42,11 +42,15 @@ export const RangeInput = (props: iRangeInputProps) => {
   return (
     <label className="block w-full">
       <span className="block">
-        {props.label}:{" "}
-        <span className="font-bold">
-          {displayValue}
-          {props.suffix}
-        </span>
+        {props.label && (
+          <>
+            {props.label}:{" "}
+            <span className="font-bold">
+              {displayValue}
+              {props.suffix}
+            </span>
+          </>
+        )}
       </span>
       <input
         className="w-full cursor-pointer"

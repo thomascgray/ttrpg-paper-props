@@ -41,8 +41,8 @@ scale(0.6)
 rotateX(-8deg)
 rotateY(-16deg)
 rotateZ(1deg)
-translateX(240px)
-translateY(-230px)
+translateX(43%)
+translateY(-70%)
 translateZ(00px)`;
       textRenderOpts.width = "58%";
       textRenderOpts.height = "42%";
@@ -82,11 +82,10 @@ translateZ(0px)`;
 
   return (
     <>
-      <Bulges scale={textRenderOpts.bulgeScale} />
+      <Bulges id="crt" scale={textRenderOpts.bulgeScale} />
       <div
         className="relative"
         style={{
-          transform: `rotate(${handout.positioning.rotation}deg)`,
           perspective: textRenderOpts.perspective,
         }}
       >
@@ -129,8 +128,9 @@ translateZ(0px)`;
           }}
         >
           <div
-            className="w-[100%] h-full bulge-whole-element font-mono bg-[#232323] overflow-y-clip"
+            className="w-[100%] h-full font-mono bg-[#232323] overflow-y-clip"
             style={{
+              filter: `url(#crt-bulge-whole-element)`,
               color: handout.crtPixelColor,
               borderColor: handout.crtPixelColor,
               textShadow: handout.textGlow

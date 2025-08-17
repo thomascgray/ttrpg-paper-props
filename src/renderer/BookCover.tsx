@@ -5,25 +5,11 @@ import { ExtractConfigValues } from "../types";
 
 type BookCoverData = ExtractConfigValues<typeof BookCoverConfig>;
 
-export const BookCover = ({
-  handout,
-}: {
-  handout: BookCoverData;
-}) => {
+export const BookCover = ({ handout }: { handout: BookCoverData }) => {
   return (
-    <div
-      style={{
-        marginTop: `${handout.positioning.yOffset}%`,
-        marginLeft: `${handout.positioning.xOffset}%`,
-      }}
-      className="relative"
-    >
+    <div className="relative">
       <div className={`image-wrapper`}>
-        <img
-          src={handout.bookCoverTemplate}
-          alt="The book cover"
-          width={700}
-        />
+        <img src={handout.bookCoverTemplate} alt="The book cover" width={700} />
       </div>
 
       <div
