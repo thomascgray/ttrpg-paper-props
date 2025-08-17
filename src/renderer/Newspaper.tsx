@@ -14,9 +14,6 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
       className="relative translate-y-20"
       style={{
         width: `${handout.pageWidthPercentage}%`,
-
-        // marginTop: `calc(-100px + ${handout.positioning.yOffset}%)`,
-        // marginLeft: `${handout.positioning.xOffset}%`,
         transformOrigin: "center",
       }}
     >

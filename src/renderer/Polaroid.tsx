@@ -7,16 +7,7 @@ type PolaroidData = ExtractConfigValues<typeof PolaroidConfig>;
 
 export const Polaroid = ({ handout }: { handout: PolaroidData }) => {
   return (
-    <div
-      className="relative inline-block transition-all"
-      style={{
-        transform: `translate(${handout.positioning?.xOffset || 0}%, ${
-          handout.positioning?.yOffset || 0
-        }%) rotate(${handout.positioning.rotation || 0}deg) scale(${
-          handout.positioning?.zoom || 1
-        })`,
-      }}
-    >
+    <div className="relative inline-block transition-all">
       {handout.showStack && (
         <>
           <div

@@ -25,7 +25,7 @@ export const appState = proxy<{
   backgroundImageBlur: boolean;
   backgroundImageZoom: number;
 }>({
-  selectedHandoutType: allConfigs[0].name,
+  selectedHandoutType: "NewspaperClipping",
   selectedVersionId: "TRANSIENT",
   backgroundSelectorState: "closed",
   waitlistSelectorState: "closed",

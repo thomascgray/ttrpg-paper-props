@@ -13,8 +13,6 @@ export const CharacterCard = ({ handout }: { handout: CharacterCardData }) => {
           boxShadow: `${
             handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
           }`,
-          marginTop: `${handout.positioning.yOffset}%`,
-          marginLeft: `${handout.positioning.xOffset}%`,
         }}
         className={`inline-block overflow-visible transition-all ${handout.font} ${handout.fontWeight} ${handout.imageFilter} paper-${handout.paperTexture}`}
       >
