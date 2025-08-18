@@ -10,6 +10,8 @@ If the user has asked you to do some work, and it involves modifying a renderer 
 
 If the user has asked you to do some work, and it involves modifying a handout config (like the configs in `src/handoutConfigs.ts`), then refer to ./CLAUDE/handout-configs.md document.
 
+If the user has asked you to do some work related to mobile UI, drawer behavior, or touch interactions, then refer to ./CLAUDE/mobile-ui.md document.
+
 ### CLI Development
 
 - `bun dev` - Start the development server (default port 5173)
