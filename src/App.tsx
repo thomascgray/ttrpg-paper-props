@@ -31,7 +31,6 @@ import { Polaroid } from "./renderer/Polaroid";
 import { CrystalBall } from "./renderer/CrystalBall";
 import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
-import { ExportButton } from "./ExportButton";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
 import { PositioningControls } from "./PositioningControls";
