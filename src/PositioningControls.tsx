@@ -73,8 +73,8 @@ export const PositioningControls = ({
                     <RangeInput
                       value={zoom}
                       onUpdate={(value) => onChange("positioning.zoom", value)}
-                      min={0.1}
-                      max={6}
+                      min={-3}
+                      max={3}
                       step={0.1}
                       suffix={""}
                     />
