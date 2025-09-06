@@ -31,6 +31,7 @@ import { Polaroid } from "./renderer/Polaroid";
 import { CrystalBall } from "./renderer/CrystalBall";
 import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
+import { ExportButton } from "./ExportButton";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
 import { PositioningControls } from "./PositioningControls";
@@ -493,6 +494,7 @@ function App() {
 
           {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
+          <ExportButton />
           {/* <SignInFloatingButton /> */}
           <PositioningControls
             data={currentHandoutTransientRow.data}

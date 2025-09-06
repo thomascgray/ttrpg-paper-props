@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(bun x tsx:*)",
-      "Bash(bun x tsc:*)"
+      "Bash(bun x tsc:*)",
+      "WebSearch"
     ],
     "deny": []
   }
