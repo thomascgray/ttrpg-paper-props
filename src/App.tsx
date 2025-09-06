@@ -494,7 +494,6 @@ function App() {
 
           {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
-          <ExportButton />
           {/* <SignInFloatingButton /> */}
           <PositioningControls
             data={currentHandoutTransientRow.data}
