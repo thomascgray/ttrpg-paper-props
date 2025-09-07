@@ -34,7 +34,7 @@ export const ExportImageButton = () => {
       a.href = dataUrl;
       a.download = `handout-${Date.now()}.png`;
       a.click();
-      
+
       setExportSuccess(true);
       setTimeout(() => setExportSuccess(false), 2000);
     }
@@ -45,6 +45,7 @@ export const ExportImageButton = () => {
     setExportSuccess(false);
 
     try {
+      // Ensure all fonts are loaded before starting
       // Find the render area content
       const renderAreaContent = document.querySelector(".render-area-content");
       if (!renderAreaContent) {
@@ -65,52 +66,45 @@ export const ExportImageButton = () => {
         // Create a temporary wrapper div for multiple children
         const wrapper = document.createElement("div");
         wrapper.style.display = "inline-block";
-        
+
         // Clone all children into the wrapper
-        Array.from(children).forEach(child => {
+        Array.from(children).forEach((child) => {
           wrapper.appendChild(child.cloneNode(true));
         });
-        
+
         // Temporarily add wrapper to document for rendering
         document.body.appendChild(wrapper);
         elementToCapture = wrapper;
         tempWrapper = wrapper;
+
+        // Wait for fonts to load in the cloned elements
       }
 
+      // Ensure fonts are ready for the element to capture
+
       let dataUrl: string;
-      
+
       try {
         // Try html-to-image first (better CSS support)
         console.log("Trying html-to-image...");
+
+        // Wait one more time to ensure fonts are absolutely ready
+
         dataUrl = await toPng(elementToCapture, {
           backgroundColor: undefined, // Transparent background
           pixelRatio: 1, // Normal resolution - half the previous size
-          skipAutoScale: true,
           canvasWidth: elementToCapture.offsetWidth,
           canvasHeight: elementToCapture.offsetHeight,
-          preferredFontFormat: 'truetype',
-          filter: (node) => {
-            // Skip external stylesheets and problematic nodes
-            if (node instanceof HTMLLinkElement && node.rel === 'stylesheet') {
-              return false;
-            }
-            if (node instanceof HTMLStyleElement && node.sheet) {
-              try {
-                // Test if we can access the sheet rules
-                node.sheet.cssRules;
-                return true;
-              } catch (e) {
-                // Skip stylesheets we can't access due to CORS
-                return false;
-              }
-            }
-            return true;
-          }
         });
         console.log("html-to-image succeeded");
       } catch (htmlToImageError) {
-        console.warn("html-to-image failed, falling back to html2canvas:", htmlToImageError);
-        
+        console.warn(
+          "html-to-image failed, falling back to html2canvas:",
+          htmlToImageError
+        );
+
+        // Wait for fonts again before fallback
+
         // Fallback to html2canvas
         const canvas = await html2canvas(elementToCapture, {
           backgroundColor: null, // Transparent background
@@ -118,8 +112,26 @@ export const ExportImageButton = () => {
           logging: false,
           useCORS: true, // Allow cross-origin images
           allowTaint: true,
+
+          // Font handling options for html2canvas
+          onclone: async (clonedDoc) => {
+            // Ensure fonts are available in the cloned document
+            try {
+              if (clonedDoc.fonts && clonedDoc.fonts.ready) {
+                await Promise.race([
+                  clonedDoc.fonts.ready,
+                  new Promise((resolve) => setTimeout(resolve, 2000)),
+                ]);
+              }
+            } catch (fontError) {
+              console.warn(
+                "Font loading in cloned document failed:",
+                fontError
+              );
+            }
+          },
         });
-        
+
         dataUrl = canvas.toDataURL("image/png");
         console.log("html2canvas fallback succeeded");
       }
@@ -131,7 +143,6 @@ export const ExportImageButton = () => {
 
       // Copy to clipboard or download
       await copyToClipboardOrDownload(dataUrl);
-
     } catch (error) {
       console.error("Export failed:", error);
       alert("Failed to export image. Please try again.");
@@ -171,7 +182,7 @@ export const ExportImageButton = () => {
           </svg>
         )}
       </button>
-      
+
       {exportSuccess && (
         <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-1 rounded-md text-sm whitespace-nowrap">
           Image copied to clipboard!

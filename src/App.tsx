@@ -404,7 +404,7 @@ function App() {
           {/* Scrollable Render Area */}
           <div className="render-area w-full h-full overflow-y-auto overflow-x-hidden flex items-center justify-center">
             <div
-              className="render-area-content min-h-full w-full flex flex-col justify-around items-center origin-center py-8"
+              className="render-area-content relative min-h-full w-full flex flex-col justify-around items-center origin-center py-8"
               style={{
                 transform: `
                     translate(${
@@ -421,78 +421,80 @@ function App() {
                   `,
               }}
             >
-              {currentHandoutTransientRow.type === "Newspaper" &&
-                appState.selectedHandoutType === "Newspaper" && (
-                  <Newspaper handout={currentHandoutTransientRow.data} />
-                )}
-              {currentHandoutTransientRow.type === "NewspaperClipping" &&
-                appState.selectedHandoutType === "NewspaperClipping" && (
-                  <NewspaperClipping
-                    handout={currentHandoutTransientRow.data}
-                  />
-                )}
-              {currentHandoutTransientRow.type === "CharacterCard" &&
-                appState.selectedHandoutType === "CharacterCard" && (
-                  <CharacterCard handout={currentHandoutTransientRow.data} />
-                )}
-              {currentHandoutTransientRow.type === "PlainLetter" &&
-                appState.selectedHandoutType === "PlainLetter" && (
-                  <PlainLetter handout={currentHandoutTransientRow.data} />
-                )}
+              <div id="area-to-export" className="p-8">
+                {currentHandoutTransientRow.type === "Newspaper" &&
+                  appState.selectedHandoutType === "Newspaper" && (
+                    <Newspaper handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "NewspaperClipping" &&
+                  appState.selectedHandoutType === "NewspaperClipping" && (
+                    <NewspaperClipping
+                      handout={currentHandoutTransientRow.data}
+                    />
+                  )}
+                {currentHandoutTransientRow.type === "CharacterCard" &&
+                  appState.selectedHandoutType === "CharacterCard" && (
+                    <CharacterCard handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "PlainLetter" &&
+                  appState.selectedHandoutType === "PlainLetter" && (
+                    <PlainLetter handout={currentHandoutTransientRow.data} />
+                  )}
 
-              {currentHandoutTransientRow.type === "BookCover" &&
-                appState.selectedHandoutType === "BookCover" && (
-                  <BookCover handout={currentHandoutTransientRow.data} />
-                )}
+                {currentHandoutTransientRow.type === "BookCover" &&
+                  appState.selectedHandoutType === "BookCover" && (
+                    <BookCover handout={currentHandoutTransientRow.data} />
+                  )}
 
-              {currentHandoutTransientRow.type === "LabelledLiquid" &&
-                appState.selectedHandoutType === "LabelledLiquid" && (
-                  <LabelledLiquid handout={currentHandoutTransientRow.data} />
-                )}
+                {currentHandoutTransientRow.type === "LabelledLiquid" &&
+                  appState.selectedHandoutType === "LabelledLiquid" && (
+                    <LabelledLiquid handout={currentHandoutTransientRow.data} />
+                  )}
 
-              {currentHandoutTransientRow.type === "HangingWoodenSign" &&
-                appState.selectedHandoutType === "HangingWoodenSign" && (
-                  <HangingWoodenSign
-                    handout={currentHandoutTransientRow.data}
-                  />
-                )}
+                {currentHandoutTransientRow.type === "HangingWoodenSign" &&
+                  appState.selectedHandoutType === "HangingWoodenSign" && (
+                    <HangingWoodenSign
+                      handout={currentHandoutTransientRow.data}
+                    />
+                  )}
 
-              {currentHandoutTransientRow.type ===
-                "ThreePanelDirectionalSign" &&
-                appState.selectedHandoutType ===
-                  "ThreePanelDirectionalSign" && (
-                  <ThreePanelDirectionalSign
-                    handout={currentHandoutTransientRow.data}
-                  />
-                )}
+                {currentHandoutTransientRow.type ===
+                  "ThreePanelDirectionalSign" &&
+                  appState.selectedHandoutType ===
+                    "ThreePanelDirectionalSign" && (
+                    <ThreePanelDirectionalSign
+                      handout={currentHandoutTransientRow.data}
+                    />
+                  )}
 
-              {currentHandoutTransientRow.type === "CrtScreen" &&
-                appState.selectedHandoutType === "CrtScreen" && (
-                  <CrtScreen handout={currentHandoutTransientRow.data} />
-                )}
+                {currentHandoutTransientRow.type === "CrtScreen" &&
+                  appState.selectedHandoutType === "CrtScreen" && (
+                    <CrtScreen handout={currentHandoutTransientRow.data} />
+                  )}
 
-              {currentHandoutTransientRow.type === "PaperMap" &&
-                appState.selectedHandoutType === "PaperMap" && (
-                  <PaperMap handout={currentHandoutTransientRow.data} />
-                )}
+                {currentHandoutTransientRow.type === "PaperMap" &&
+                  appState.selectedHandoutType === "PaperMap" && (
+                    <PaperMap handout={currentHandoutTransientRow.data} />
+                  )}
 
-              {currentHandoutTransientRow.type === "SciFiHologram" &&
-                appState.selectedHandoutType === "SciFiHologram" && (
-                  <SciFiHologram data={currentHandoutTransientRow.data} />
-                )}
+                {currentHandoutTransientRow.type === "SciFiHologram" &&
+                  appState.selectedHandoutType === "SciFiHologram" && (
+                    <SciFiHologram data={currentHandoutTransientRow.data} />
+                  )}
 
-              {currentHandoutTransientRow.type === "Polaroid" &&
-                appState.selectedHandoutType === "Polaroid" && (
-                  <Polaroid handout={currentHandoutTransientRow.data} />
-                )}
-              {currentHandoutTransientRow.type === "CrystalBall" &&
-                appState.selectedHandoutType === "CrystalBall" && (
-                  <CrystalBall handout={currentHandoutTransientRow.data} />
-                )}
-              {currentHandoutTransientRow.type === "Test" &&
-                appState.selectedHandoutType === "Test" && (
-                  <Test data={currentHandoutTransientRow.data} />
-                )}
+                {currentHandoutTransientRow.type === "Polaroid" &&
+                  appState.selectedHandoutType === "Polaroid" && (
+                    <Polaroid handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "CrystalBall" &&
+                  appState.selectedHandoutType === "CrystalBall" && (
+                    <CrystalBall handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "Test" &&
+                  appState.selectedHandoutType === "Test" && (
+                    <Test data={currentHandoutTransientRow.data} />
+                  )}
+              </div>
             </div>
           </div>
 
