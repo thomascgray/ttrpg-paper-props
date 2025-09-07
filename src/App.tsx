@@ -7,6 +7,7 @@ import { HandoutTypeSelector } from "./HandoutTypeSelector";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Drawer } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useImageConverter } from "./hooks/useImageConverter";
 import { Newspaper } from "./renderer/Newspaper";
 import { NewspaperClipping } from "./renderer/NewspaperClipping";
 import { CharacterCard } from "./renderer/CharacterCard";
@@ -43,6 +44,9 @@ function App() {
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
+
+  // Initialize image conversion to prevent CORS issues during export
+  // const { isConverting, completed, total, errors } = useImageConverter();
 
   // Initialize from URL on mount
   useEffect(() => {
