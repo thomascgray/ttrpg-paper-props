@@ -404,7 +404,7 @@ function App() {
           {/* Scrollable Render Area */}
           <div className="render-area w-full h-full overflow-y-auto overflow-x-hidden flex items-center justify-center">
             <div
-              className="render-area-content min-h-full w-full flex flex-col justify-around items-center origin-center py-8"
+              className="render-area-content relative min-h-full w-full flex flex-col justify-around items-center origin-center py-8"
               style={{
                 transform: `
                     translate(${

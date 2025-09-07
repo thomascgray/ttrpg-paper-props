@@ -34,9 +34,71 @@ export const ExportImageButton = () => {
       a.href = dataUrl;
       a.download = `handout-${Date.now()}.png`;
       a.click();
-      
+
       setExportSuccess(true);
       setTimeout(() => setExportSuccess(false), 2000);
+    }
+  };
+
+  const waitForFonts = async (): Promise<void> => {
+    try {
+      // Wait for all fonts to load
+      if (document.fonts && document.fonts.ready) {
+        await Promise.race([
+          document.fonts.ready,
+          new Promise(resolve => setTimeout(resolve, 3000)) // 3s timeout
+        ]);
+      }
+      
+      // Additional small delay to ensure font rendering is complete
+      await new Promise(resolve => setTimeout(resolve, 100));
+    } catch (error) {
+      console.warn('Font loading timed out or failed:', error);
+      // Continue anyway - better to have some fonts than none
+    }
+  };
+
+  const preloadFontsForElement = async (element: HTMLElement): Promise<void> => {
+    try {
+      // Force font loading by checking computed styles
+      const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_ELEMENT,
+        null
+      );
+      
+      const elements: HTMLElement[] = [element];
+      let node: Node | null;
+      
+      while (node = walker.nextNode()) {
+        if (node instanceof HTMLElement) {
+          elements.push(node);
+        }
+      }
+      
+      // Trigger font loading by reading computed styles
+      elements.forEach(el => {
+        try {
+          const style = window.getComputedStyle(el);
+          // Reading these properties forces font loading
+          const fontFamily = style.fontFamily;
+          const fontWeight = style.fontWeight;
+          const fontStyle = style.fontStyle;
+          
+          // Log font usage for debugging
+          if (fontFamily && !fontFamily.includes('system-ui')) {
+            console.log(`Preloading font: ${fontFamily} ${fontWeight} ${fontStyle}`);
+          }
+        } catch (styleError) {
+          console.warn('Failed to read styles for element:', styleError);
+        }
+      });
+      
+      // Wait a bit more for font rendering
+      await new Promise(resolve => setTimeout(resolve, 50));
+    } catch (error) {
+      console.warn('Font preloading failed:', error);
+      // Continue anyway
     }
   };
 
@@ -45,6 +107,8 @@ export const ExportImageButton = () => {
     setExportSuccess(false);
 
     try {
+      // Ensure all fonts are loaded before starting
+      await waitForFonts();
       // Find the render area content
       const renderAreaContent = document.querySelector(".render-area-content");
       if (!renderAreaContent) {
@@ -65,33 +129,47 @@ export const ExportImageButton = () => {
         // Create a temporary wrapper div for multiple children
         const wrapper = document.createElement("div");
         wrapper.style.display = "inline-block";
-        
+
         // Clone all children into the wrapper
-        Array.from(children).forEach(child => {
+        Array.from(children).forEach((child) => {
           wrapper.appendChild(child.cloneNode(true));
         });
-        
+
         // Temporarily add wrapper to document for rendering
         document.body.appendChild(wrapper);
         elementToCapture = wrapper;
         tempWrapper = wrapper;
+        
+        // Wait for fonts to load in the cloned elements
+        await preloadFontsForElement(wrapper);
       }
+      
+      // Ensure fonts are ready for the element to capture
+      await preloadFontsForElement(elementToCapture);
 
       let dataUrl: string;
-      
+
       try {
         // Try html-to-image first (better CSS support)
         console.log("Trying html-to-image...");
+        
+        // Wait one more time to ensure fonts are absolutely ready
+        await waitForFonts();
+        
         dataUrl = await toPng(elementToCapture, {
           backgroundColor: undefined, // Transparent background
           pixelRatio: 1, // Normal resolution - half the previous size
           skipAutoScale: true,
           canvasWidth: elementToCapture.offsetWidth,
           canvasHeight: elementToCapture.offsetHeight,
-          preferredFontFormat: 'truetype',
+          
+          // Font loading options
+          preferredFontFormat: "truetype",
+          skipFonts: false, // Ensure fonts are included
+          
           filter: (node) => {
             // Skip external stylesheets and problematic nodes
-            if (node instanceof HTMLLinkElement && node.rel === 'stylesheet') {
+            if (node instanceof HTMLLinkElement && node.rel === "stylesheet") {
               return false;
             }
             if (node instanceof HTMLStyleElement && node.sheet) {
@@ -105,11 +183,18 @@ export const ExportImageButton = () => {
               }
             }
             return true;
-          }
+          },
+          
         });
         console.log("html-to-image succeeded");
       } catch (htmlToImageError) {
-        console.warn("html-to-image failed, falling back to html2canvas:", htmlToImageError);
+        console.warn(
+          "html-to-image failed, falling back to html2canvas:",
+          htmlToImageError
+        );
+
+        // Wait for fonts again before fallback
+        await waitForFonts();
         
         // Fallback to html2canvas
         const canvas = await html2canvas(elementToCapture, {
@@ -118,8 +203,23 @@ export const ExportImageButton = () => {
           logging: false,
           useCORS: true, // Allow cross-origin images
           allowTaint: true,
+          
+          // Font handling options for html2canvas
+          onclone: async (clonedDoc) => {
+            // Ensure fonts are available in the cloned document
+            try {
+              if (clonedDoc.fonts && clonedDoc.fonts.ready) {
+                await Promise.race([
+                  clonedDoc.fonts.ready,
+                  new Promise(resolve => setTimeout(resolve, 2000))
+                ]);
+              }
+            } catch (fontError) {
+              console.warn('Font loading in cloned document failed:', fontError);
+            }
+          },
         });
-        
+
         dataUrl = canvas.toDataURL("image/png");
         console.log("html2canvas fallback succeeded");
       }
@@ -131,7 +231,6 @@ export const ExportImageButton = () => {
 
       // Copy to clipboard or download
       await copyToClipboardOrDownload(dataUrl);
-
     } catch (error) {
       console.error("Export failed:", error);
       alert("Failed to export image. Please try again.");
@@ -171,7 +270,7 @@ export const ExportImageButton = () => {
           </svg>
         )}
       </button>
-      
+
       {exportSuccess && (
         <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-1 rounded-md text-sm whitespace-nowrap">
           Image copied to clipboard!
