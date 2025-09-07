@@ -34,6 +34,7 @@ import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
 import { PositioningControls } from "./PositioningControls";
+import { ExportImageButton } from "./ExportImageButton";
 
 function App() {
   const appState = useSnapshot(appStateProxy);
@@ -494,6 +495,7 @@ function App() {
           {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
           {/* <SignInFloatingButton /> */}
+          <ExportImageButton />
           <PositioningControls
             data={currentHandoutTransientRow.data}
             onChange={(path: string, value: any) => {
