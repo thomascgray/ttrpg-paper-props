@@ -81,6 +81,12 @@ export const NewspaperConfig = {
     quoteFont: [FontFamily.SANS, fontPicker()],
     quoteFontSize: [20, fontSize()],
   },
+  featureImage: {
+    featureImageUrl: ["", imageInput({ name: "Feature Image" })],
+    featureImageAlignment: ["left", select({ name: "Alignment", options: [{ label: "Left", value: "left" }, { label: "Right", value: "right" }] })],
+    isFeatureImageBlurry: [false, boolean({ name: "Blurry feature image" })],
+    featureImageFilter: ["none", imageFilter()],
+  },
   mainCopy: {
     mainCopyContent: [
       `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
@@ -94,7 +100,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula l
 Vestibulum tempor venenatis enim et rutrum. Etiam ut magna a massa convallis luctus. In justo enim, feugiat non mi sed, viverra mollis nulla. Praesent lobortis suscipit leo at lacinia. Phasellus metus tellus, fringilla vel dictum vel, congue in est. In non commodo ante. Vivamus nec placerat libero, at interdum mi. Aliquam odio purus, fringilla eu scelerisque a, dignissim sed mi. Mauris sollicitudin et massa laoreet consequat. Duis et volutpat orci, non hendrerit turpis. Sed ut mi ac purus volutpat egestas sed ut enim.
 
 Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices nisl vel justo scelerisque, non ultricies diam tristique. Proin mattis at nibh in ornare. Phasellus suscipit tincidunt ante sit amet posuere. Aenean porta, arcu eu cursus aliquet, urna turpis rhoncus tellus, in pharetra erat lectus sit amet enim. Mauris ut ultricies tellus, vitae auctor magna. Cras dapibus bibendum ante, sit amet efficitur mi. Morbi sapien augue, hendrerit a condimentum sed, eleifend vel mi. Aenean molestie turpis eget mollis accumsan. Donec ut magna vel tortor porttitor feugiat. Donec consequat eros in tellus sollicitudin ullamcorper. Donec cursus, massa in aliquet congue, metus urna porttitor orci, vel ultrices libero lacus a nisi. Donec sit amet nunc mattis, lobortis lacus sit amet, auctor risus.`,
-      textArea({ name: "Main copy", rows: 20 }),
+      textArea({ name: "Main copy", rows: 20, maxRows: 40 }),
     ],
     mainCopyColumns: [3, range({ name: "Columns", min: 1, max: 5 })],
     imageFilter: ["none", imageFilter()],

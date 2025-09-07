@@ -9,6 +9,10 @@ type NewspaperData = ExtractConfigValues<typeof NewspaperConfig>;
 export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
   const paperTint = hexToRgba(handout.paperTint, 0.5);
 
+  console.log(
+    "handout.featureImage.featureImageUrl",
+    handout.featureImage.featureImageUrl
+  );
   return (
     <div className="relative">
       {/* the front page */}
@@ -120,16 +124,59 @@ p-10
               fontSize: "1cqw",
             }}
           >
-            <Markdown
-              className={classNames(
-                `${handout.mainCopy.textAlign} font-serif copy-markdown column-count-${handout.mainCopy.mainCopyColumns} ${handout.mainCopy.imageFilter}`,
-                {
-                  blurry: handout.mainCopy.isMainCopyBlurry,
-                }
-              )}
+            <div
+              className="grid"
+              style={{
+                gridTemplateColumns: handout.featureImage.featureImageUrl
+                  ? `1fr 1fr`
+                  : `1fr`,
+              }}
             >
-              {handout.mainCopy.mainCopyContent}
-            </Markdown>
+              {handout.featureImage.featureImageUrl &&
+                handout.featureImage.featureImageAlignment === "left" && (
+                  <div
+                    className={classNames({
+                      "blur-sm": handout.featureImage.isFeatureImageBlurry,
+                    })}
+                  >
+                    <img
+                      src={handout.featureImage.featureImageUrl}
+                      alt="feature image"
+                      className={classNames(
+                        "w-full h-full object-cover pr-3",
+                        handout.featureImage.featureImageFilter
+                      )}
+                    />
+                  </div>
+                )}
+              <Markdown
+                className={classNames(
+                  `${handout.mainCopy.textAlign} font-serif copy-markdown column-count-${handout.mainCopy.mainCopyColumns} ${handout.mainCopy.imageFilter}`,
+                  {
+                    "blur-sm": handout.mainCopy.isMainCopyBlurry,
+                  }
+                )}
+              >
+                {handout.mainCopy.mainCopyContent}
+              </Markdown>
+              {handout.featureImage.featureImageUrl &&
+                handout.featureImage.featureImageAlignment === "right" && (
+                  <div
+                    className={classNames({
+                      "blur-sm": handout.featureImage.isFeatureImageBlurry,
+                    })}
+                  >
+                    <img
+                      src={handout.featureImage.featureImageUrl}
+                      alt="feature image"
+                      className={classNames(
+                        "w-full h-full object-cover pl-3",
+                        handout.featureImage.featureImageFilter
+                      )}
+                    />
+                  </div>
+                )}
+            </div>
           </div>
         </div>
       </div>
