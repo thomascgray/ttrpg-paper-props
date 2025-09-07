@@ -34,8 +34,8 @@ import { LegendItem } from "./components/LegendItems";
 
 export const NewspaperConfig = {
   ...positioning,
-  pageWidthPercentage: [
-    60,
+  pageWidth: [
+    900,
     range({ name: "Page Width", min: 10, max: 300, suffix: "%" }),
   ],
   paperTexture: ["grey", paperTexture()],
@@ -81,6 +81,12 @@ export const NewspaperConfig = {
     quoteFont: [FontFamily.SANS, fontPicker()],
     quoteFontSize: [20, fontSize()],
   },
+  featureImage: {
+    featureImageUrl: ["", imageInput({ name: "Feature Image" })],
+    featureImageAlignment: ["left", select({ name: "Alignment", options: [{ label: "Left", value: "left" }, { label: "Right", value: "right" }] })],
+    isFeatureImageBlurry: [false, boolean({ name: "Blurry feature image" })],
+    featureImageFilter: ["none", imageFilter()],
+  },
   mainCopy: {
     mainCopyContent: [
       `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
@@ -94,7 +100,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula l
 Vestibulum tempor venenatis enim et rutrum. Etiam ut magna a massa convallis luctus. In justo enim, feugiat non mi sed, viverra mollis nulla. Praesent lobortis suscipit leo at lacinia. Phasellus metus tellus, fringilla vel dictum vel, congue in est. In non commodo ante. Vivamus nec placerat libero, at interdum mi. Aliquam odio purus, fringilla eu scelerisque a, dignissim sed mi. Mauris sollicitudin et massa laoreet consequat. Duis et volutpat orci, non hendrerit turpis. Sed ut mi ac purus volutpat egestas sed ut enim.
 
 Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices nisl vel justo scelerisque, non ultricies diam tristique. Proin mattis at nibh in ornare. Phasellus suscipit tincidunt ante sit amet posuere. Aenean porta, arcu eu cursus aliquet, urna turpis rhoncus tellus, in pharetra erat lectus sit amet enim. Mauris ut ultricies tellus, vitae auctor magna. Cras dapibus bibendum ante, sit amet efficitur mi. Morbi sapien augue, hendrerit a condimentum sed, eleifend vel mi. Aenean molestie turpis eget mollis accumsan. Donec ut magna vel tortor porttitor feugiat. Donec consequat eros in tellus sollicitudin ullamcorper. Donec cursus, massa in aliquet congue, metus urna porttitor orci, vel ultrices libero lacus a nisi. Donec sit amet nunc mattis, lobortis lacus sit amet, auctor risus.`,
-      textArea({ name: "Main copy", rows: 20 }),
+      textArea({ name: "Main copy", rows: 20, maxRows: 40 }),
     ],
     mainCopyColumns: [3, range({ name: "Columns", min: 1, max: 5 })],
     imageFilter: ["none", imageFilter()],
@@ -158,22 +164,16 @@ export const CharacterCardConfig = {
   ],
   paperTexture: ["beige-3", paperTexture()],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
-  imageUrl: [
-    "https://i.pinimg.com/564x/49/c1/4d/49c14d528399386e820dd116a25590b2.jpg",
-    imageInput(),
-  ],
+  imageUrl: ["/default_images/woody.png", imageInput()],
   inkColor: ["ink-black", inkSelector()],
   imageFilter: ["none", imageFilter()],
-  textLineOne: [
-    "Lorem Ipsum",
-    text({ name: "Line 1", placeholder: "Lorem Ipsum" }),
-  ],
+  textLineOne: ["Woody", text({ name: "Line 1", placeholder: "Lorem Ipsum" })],
   textLineTwo: [
-    "Lorem Ipsum",
+    "Town Sheriff",
     text({ name: "Line 2", placeholder: "Lorem Ipsum" }),
   ],
   textLineThree: [
-    "Lorem Ipsum",
+    "There's a snake in my boot!",
     text({ name: "Line 3", placeholder: "Lorem Ipsum" }),
   ],
   font: [FontFamily.SERIF, fontPicker()],
@@ -245,23 +245,19 @@ export const BookCoverConfig = {
       ],
     }),
   ],
-  positioning: {
-    rotationDegrees: [0, rotation()],
-    zoom: [1, zoom()],
-    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
-  },
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    30,
-    range({ name: "Font Size (Relative)", min: 1, max: 100, suffix: "px" }),
+    3,
+    range({
+      name: "Font Size (Relative)",
+      min: 0.1,
+      max: 10,
+      suffix: "%",
+      step: 0.1,
+    }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textLeftMargin: [
-    13,
-    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
-  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
@@ -499,7 +495,7 @@ export const PaperMapConfig = {
     },
   }),
   paperTexture: ["beige-3", paperTexture()],
-  image: ["https://i.imgur.com/w1DaJ2q.jpeg", imageInput()],
+  image: ["/default_images/paper_map.jpeg", imageInput()],
   legend: {
     legendItems: [[] as LegendItem[], legendItems({ name: "Legend Items" })],
     legendPosition: [
@@ -535,7 +531,7 @@ export const SciFiHologramConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  image: ["https://i.imgur.com/GKTWuW2.png", imageInput()],
+  image: ["/default_images/darth.png", imageInput()],
   overlayColor: ["#456099", colour({ name: "Overlay Color" })],
   warbleEffect: [true, boolean({ name: "Warble Effect" })],
   blendEffect: [
@@ -566,10 +562,7 @@ export const SciFiHologramConfig = {
 export const PolaroidConfig = {
   ...positioning,
   paperTexture: ["none", paperTexture()],
-  imageUrl: [
-    "https://static.wikia.nocookie.net/chrisnolan/images/3/3c/Leonard.jpg",
-    imageInput(),
-  ],
+  imageUrl: ["/default_images/Leonard.webp", imageInput()],
   ...imagePostProcessing,
   captionText: {
     ...textFull({
@@ -591,15 +584,11 @@ export const PolaroidConfig = {
 
 export const CrystalBallConfig = {
   ...positioning,
-  image: [
-    "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
-    imageInput(),
-  ],
+  image: ["/default_images/adventure_party.webp", imageInput()],
   ...imagePostProcessing,
   showGlare: [true, boolean({ name: "Show Glare" })],
   showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
   showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
-  // pos: [{ x: 0, y: 0 }, x_y_position()],
 } satisfies HandoutConfig;
 
 export const TestConfig = {

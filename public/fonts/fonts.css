@@ -1,0 +1,409 @@
+/* Local Google Fonts */
+
+@font-face {
+  font-family: "Alfa Slab One";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/AlfaSlabOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Caveat";
+  font-display: swap;
+  src: url("/fonts/Caveat-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Crete Round";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/CreteRound-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Crete Round";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/CreteRound-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Dancing Script";
+  font-display: swap;
+  src: url("/fonts/DancingScript-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "IM Fell English";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IMFellEnglish-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "IM Fell English";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IMFellEnglish-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "IM Fell Great Primer SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IMFellEnglishSC-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Indie Flower";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IndieFlower-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Macondo";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Macondo-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Macondo Swash Caps";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/MacondoSwashCaps-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "MedievalSharp";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/MedievalSharp-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Merienda";
+  font-display: swap;
+  src: url("/fonts/Merienda-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "New Rocker";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/NewRocker-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Newsreader-VariableFont_opsz,wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-display: swap;
+  src: url("/fonts/Newsreader-Italic-VariableFont_opsz,wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noticia Text";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/NoticiaText-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noticia Text";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/NoticiaText-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noticia Text";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/NoticiaText-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noticia Text";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/NoticiaText-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Pirata One";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/PirataOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair Display SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/PlayfairDisplaySC-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair Display SC";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/PlayfairDisplaySC-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair Display SC";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/PlayfairDisplaySC-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair Display SC";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/PlayfairDisplaySC-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair Display SC";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/PlayfairDisplaySC-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair Display SC";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/PlayfairDisplaySC-BlackItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/fonts/Poppins-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("/fonts/Poppins-ExtraLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/Poppins-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Poppins-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Poppins-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/Poppins-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/Poppins-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/fonts/Poppins-ThinItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url("/fonts/Poppins-ExtraLightItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/Poppins-LightItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Poppins-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Poppins-MediumItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Poppins-SemiBoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Poppins-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/Poppins-ExtraBoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/Poppins-BlackItalic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Quattrocento";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Quattrocento-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Quattrocento";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Quattrocento-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Shadows Into Light";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ShadowsIntoLight-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "UnifrakturCook";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/UnifrakturCook-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "UnifrakturMaguntia";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/UnifrakturMaguntia-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Yuji Syuku";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/YujiSyuku-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Zeyada";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Zeyada-Regular.ttf") format("truetype");
+}

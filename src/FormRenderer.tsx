@@ -115,6 +115,7 @@ const renderFormInput = (
           value={value ?? restConfig.value}
           rows={restConfig.rows ?? 4}
           minRows={restConfig.minRows}
+          maxRows={restConfig.maxRows}
           autoResize={restConfig.autoResize}
           onUpdate={handleUpdate}
         />
