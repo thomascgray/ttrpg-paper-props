@@ -239,12 +239,6 @@ export const BookCoverConfig = {
       ],
     }),
   ],
-  positioning: {
-    rotationDegrees: [0, rotation()],
-    zoom: [1, zoom()],
-    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
-  },
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
@@ -258,7 +252,6 @@ export const BookCoverConfig = {
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textPosition: [{ x: 0, y: 0 }, x_y_position({ name: "Text Position" })],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
