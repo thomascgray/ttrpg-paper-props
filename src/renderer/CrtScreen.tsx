@@ -26,8 +26,8 @@ export const CrtScreen = ({ handout }: { handout: PlainLetterData }) => {
   let blackSquareOpts = {
     top: 110,
     left: 100,
-    width: 650,
-    height: 450,
+    width: 560,
+    height: 400,
   };
 
   switch (handout.crtScreen) {
@@ -107,7 +107,7 @@ translateZ(0px)`;
           <img
             style={{
               transformOrigin: "top left",
-              transform: "scaleX(1.1)",
+              // transform: "scaleX(1.1)",
               ...getImageProcessingStyles(handout.imagePostProcessing),
             }}
             src={handout.crtScreen}
