@@ -34,8 +34,8 @@ import { LegendItem } from "./components/LegendItems";
 
 export const NewspaperConfig = {
   ...positioning,
-  pageWidthPercentage: [
-    60,
+  pageWidth: [
+    900,
     range({ name: "Page Width", min: 10, max: 300, suffix: "%" }),
   ],
   paperTexture: ["grey", paperTexture()],
