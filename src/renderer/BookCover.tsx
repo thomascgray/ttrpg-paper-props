@@ -7,22 +7,31 @@ type BookCoverData = ExtractConfigValues<typeof BookCoverConfig>;
 
 export const BookCover = ({ handout }: { handout: BookCoverData }) => {
   return (
-    <div className="relative">
-      <div className={`image-wrapper`}>
-        <img src={handout.bookCoverTemplate} alt="The book cover" width={700} />
-      </div>
+    <div
+      style={{
+        maxWidth: "700px",
+        width: "100%",
+        containerType: "inline-size",
+      }}
+      className="relative"
+    >
+      <img
+        style={{
+          maxWidth: "700px",
+          width: "100%",
+        }}
+        src={handout.bookCoverTemplate}
+        alt="The book cover"
+      />
 
       <div
-        id="main_copy"
+        className="absolute top-[5%] left-[5%] w-[90%] h-[90%]"
         style={{
-          fontSize: `${handout.fontSize}px`,
-          marginLeft: `${handout.textLeftMargin}px`,
-          width: "80%",
+          fontSize: `${handout.fontSize}cqw`,
         }}
-        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em]`}
       >
         <Markdown
-          className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
+          className={`block copy-markdown ${handout.inkColor} ${handout.textAlign} ${handout.textEffect} ${handout.font} ${handout.fontWeight}`}
         >
           {handout.mainCopy}
         </Markdown>

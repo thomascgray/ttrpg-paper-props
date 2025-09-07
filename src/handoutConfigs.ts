@@ -248,14 +248,17 @@ export const BookCoverConfig = {
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    30,
-    range({ name: "Font Size (Relative)", min: 1, max: 100, suffix: "px" }),
+    3,
+    range({
+      name: "Font Size (Relative)",
+      min: 0.1,
+      max: 10,
+      suffix: "%",
+      step: 0.1,
+    }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textLeftMargin: [
-    13,
-    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
-  ],
+  textPosition: [{ x: 0, y: 0 }, x_y_position({ name: "Text Position" })],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
