@@ -40,75 +40,12 @@ export const ExportImageButton = () => {
     }
   };
 
-  const waitForFonts = async (): Promise<void> => {
-    try {
-      // Wait for all fonts to load
-      if (document.fonts && document.fonts.ready) {
-        await Promise.race([
-          document.fonts.ready,
-          new Promise(resolve => setTimeout(resolve, 3000)) // 3s timeout
-        ]);
-      }
-      
-      // Additional small delay to ensure font rendering is complete
-      await new Promise(resolve => setTimeout(resolve, 100));
-    } catch (error) {
-      console.warn('Font loading timed out or failed:', error);
-      // Continue anyway - better to have some fonts than none
-    }
-  };
-
-  const preloadFontsForElement = async (element: HTMLElement): Promise<void> => {
-    try {
-      // Force font loading by checking computed styles
-      const walker = document.createTreeWalker(
-        element,
-        NodeFilter.SHOW_ELEMENT,
-        null
-      );
-      
-      const elements: HTMLElement[] = [element];
-      let node: Node | null;
-      
-      while (node = walker.nextNode()) {
-        if (node instanceof HTMLElement) {
-          elements.push(node);
-        }
-      }
-      
-      // Trigger font loading by reading computed styles
-      elements.forEach(el => {
-        try {
-          const style = window.getComputedStyle(el);
-          // Reading these properties forces font loading
-          const fontFamily = style.fontFamily;
-          const fontWeight = style.fontWeight;
-          const fontStyle = style.fontStyle;
-          
-          // Log font usage for debugging
-          if (fontFamily && !fontFamily.includes('system-ui')) {
-            console.log(`Preloading font: ${fontFamily} ${fontWeight} ${fontStyle}`);
-          }
-        } catch (styleError) {
-          console.warn('Failed to read styles for element:', styleError);
-        }
-      });
-      
-      // Wait a bit more for font rendering
-      await new Promise(resolve => setTimeout(resolve, 50));
-    } catch (error) {
-      console.warn('Font preloading failed:', error);
-      // Continue anyway
-    }
-  };
-
   const handleExport = async () => {
     setIsExporting(true);
     setExportSuccess(false);
 
     try {
       // Ensure all fonts are loaded before starting
-      await waitForFonts();
       // Find the render area content
       const renderAreaContent = document.querySelector(".render-area-content");
       if (!renderAreaContent) {
@@ -139,52 +76,25 @@ export const ExportImageButton = () => {
         document.body.appendChild(wrapper);
         elementToCapture = wrapper;
         tempWrapper = wrapper;
-        
+
         // Wait for fonts to load in the cloned elements
-        await preloadFontsForElement(wrapper);
       }
-      
+
       // Ensure fonts are ready for the element to capture
-      await preloadFontsForElement(elementToCapture);
 
       let dataUrl: string;
 
       try {
         // Try html-to-image first (better CSS support)
         console.log("Trying html-to-image...");
-        
+
         // Wait one more time to ensure fonts are absolutely ready
-        await waitForFonts();
-        
+
         dataUrl = await toPng(elementToCapture, {
           backgroundColor: undefined, // Transparent background
           pixelRatio: 1, // Normal resolution - half the previous size
-          skipAutoScale: true,
           canvasWidth: elementToCapture.offsetWidth,
           canvasHeight: elementToCapture.offsetHeight,
-          
-          // Font loading options
-          preferredFontFormat: "truetype",
-          skipFonts: false, // Ensure fonts are included
-          
-          filter: (node) => {
-            // Skip external stylesheets and problematic nodes
-            if (node instanceof HTMLLinkElement && node.rel === "stylesheet") {
-              return false;
-            }
-            if (node instanceof HTMLStyleElement && node.sheet) {
-              try {
-                // Test if we can access the sheet rules
-                node.sheet.cssRules;
-                return true;
-              } catch (e) {
-                // Skip stylesheets we can't access due to CORS
-                return false;
-              }
-            }
-            return true;
-          },
-          
         });
         console.log("html-to-image succeeded");
       } catch (htmlToImageError) {
@@ -194,8 +104,7 @@ export const ExportImageButton = () => {
         );
 
         // Wait for fonts again before fallback
-        await waitForFonts();
-        
+
         // Fallback to html2canvas
         const canvas = await html2canvas(elementToCapture, {
           backgroundColor: null, // Transparent background
@@ -203,7 +112,7 @@ export const ExportImageButton = () => {
           logging: false,
           useCORS: true, // Allow cross-origin images
           allowTaint: true,
-          
+
           // Font handling options for html2canvas
           onclone: async (clonedDoc) => {
             // Ensure fonts are available in the cloned document
@@ -211,11 +120,14 @@ export const ExportImageButton = () => {
               if (clonedDoc.fonts && clonedDoc.fonts.ready) {
                 await Promise.race([
                   clonedDoc.fonts.ready,
-                  new Promise(resolve => setTimeout(resolve, 2000))
+                  new Promise((resolve) => setTimeout(resolve, 2000)),
                 ]);
               }
             } catch (fontError) {
-              console.warn('Font loading in cloned document failed:', fontError);
+              console.warn(
+                "Font loading in cloned document failed:",
+                fontError
+              );
             }
           },
         });

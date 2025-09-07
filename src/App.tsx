@@ -421,7 +421,7 @@ function App() {
                   `,
               }}
             >
-              <div className="p-8">
+              <div id="area-to-export" className="p-8">
                 {currentHandoutTransientRow.type === "Newspaper" &&
                   appState.selectedHandoutType === "Newspaper" && (
                     <Newspaper handout={currentHandoutTransientRow.data} />
