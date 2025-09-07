@@ -158,22 +158,16 @@ export const CharacterCardConfig = {
   ],
   paperTexture: ["beige-3", paperTexture()],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
-  imageUrl: [
-    "https://i.pinimg.com/564x/49/c1/4d/49c14d528399386e820dd116a25590b2.jpg",
-    imageInput(),
-  ],
+  imageUrl: ["/default_images/woody.png", imageInput()],
   inkColor: ["ink-black", inkSelector()],
   imageFilter: ["none", imageFilter()],
-  textLineOne: [
-    "Lorem Ipsum",
-    text({ name: "Line 1", placeholder: "Lorem Ipsum" }),
-  ],
+  textLineOne: ["Woody", text({ name: "Line 1", placeholder: "Lorem Ipsum" })],
   textLineTwo: [
-    "Lorem Ipsum",
+    "Town Sheriff",
     text({ name: "Line 2", placeholder: "Lorem Ipsum" }),
   ],
   textLineThree: [
-    "Lorem Ipsum",
+    "There's a snake in my boot!",
     text({ name: "Line 3", placeholder: "Lorem Ipsum" }),
   ],
   font: [FontFamily.SERIF, fontPicker()],
@@ -499,7 +493,7 @@ export const PaperMapConfig = {
     },
   }),
   paperTexture: ["beige-3", paperTexture()],
-  image: ["https://i.imgur.com/w1DaJ2q.jpeg", imageInput()],
+  image: ["/default_images/paper_map.jpeg", imageInput()],
   legend: {
     legendItems: [[] as LegendItem[], legendItems({ name: "Legend Items" })],
     legendPosition: [
@@ -535,7 +529,7 @@ export const SciFiHologramConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  image: ["https://i.imgur.com/GKTWuW2.png", imageInput()],
+  image: ["/default_images/darth.png", imageInput()],
   overlayColor: ["#456099", colour({ name: "Overlay Color" })],
   warbleEffect: [true, boolean({ name: "Warble Effect" })],
   blendEffect: [
@@ -566,10 +560,7 @@ export const SciFiHologramConfig = {
 export const PolaroidConfig = {
   ...positioning,
   paperTexture: ["none", paperTexture()],
-  imageUrl: [
-    "https://static.wikia.nocookie.net/chrisnolan/images/3/3c/Leonard.jpg",
-    imageInput(),
-  ],
+  imageUrl: ["/default_images/Leonard.webp", imageInput()],
   ...imagePostProcessing,
   captionText: {
     ...textFull({
@@ -591,15 +582,11 @@ export const PolaroidConfig = {
 
 export const CrystalBallConfig = {
   ...positioning,
-  image: [
-    "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
-    imageInput(),
-  ],
+  image: ["/default_images/adventure_party.webp", imageInput()],
   ...imagePostProcessing,
   showGlare: [true, boolean({ name: "Show Glare" })],
   showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
   showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
-  // pos: [{ x: 0, y: 0 }, x_y_position()],
 } satisfies HandoutConfig;
 
 export const TestConfig = {

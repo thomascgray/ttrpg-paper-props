@@ -83,13 +83,12 @@ export const ExportImageButton = () => {
         // Try html-to-image first (better CSS support)
         console.log("Trying html-to-image...");
         dataUrl = await toPng(elementToCapture, {
-          backgroundColor: null, // Transparent background
+          backgroundColor: undefined, // Transparent background
           pixelRatio: 1, // Normal resolution - half the previous size
           skipAutoScale: true,
           canvasWidth: elementToCapture.offsetWidth,
           canvasHeight: elementToCapture.offsetHeight,
-          skipFonts: true, // Skip web fonts to avoid CORS issues
-          preferredFontFormat: 'woff2',
+          preferredFontFormat: 'truetype',
           filter: (node) => {
             // Skip external stylesheets and problematic nodes
             if (node instanceof HTMLLinkElement && node.rel === 'stylesheet') {
