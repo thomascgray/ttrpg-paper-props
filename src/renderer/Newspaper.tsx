@@ -9,10 +9,6 @@ type NewspaperData = ExtractConfigValues<typeof NewspaperConfig>;
 export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
   const paperTint = hexToRgba(handout.paperTint, 0.5);
 
-  console.log(
-    "handout.featureImage.featureImageUrl",
-    handout.featureImage.featureImageUrl
-  );
   return (
     <div className="relative">
       {/* the front page */}

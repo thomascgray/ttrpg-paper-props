@@ -45,7 +45,16 @@ export const NewspaperConfig = {
   title: {
     title: ["THE LOREM IPSUM", text({ name: "Title" })],
     titleFont: [FontFamily.SANS, fontPicker()],
-    titleFontSize: [4, range({ name: "Title Font Size", min: 2, max: 8, step: 0.1, suffix: "cqw" })],
+    titleFontSize: [
+      4,
+      range({
+        name: "Title Font Size",
+        min: 2,
+        max: 8,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
     lineHeight: [3, lineHeight()],
     topMargin: [
       0,
@@ -61,7 +70,16 @@ export const NewspaperConfig = {
     bannerText2: ["Duis sodales", text({ name: "Text 2" })],
     bannerText3: ["Quisque imperdiet", text({ name: "Text 3" })],
     bannerFont: [FontFamily.SANS, fontPicker()],
-    bannerSize: [1.2, range({ name: "Banner Font Size", min: 0.8, max: 2, step: 0.1, suffix: "cqw" })],
+    bannerSize: [
+      1.2,
+      range({
+        name: "Banner Font Size",
+        min: 0.8,
+        max: 2,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
     hideTopBannerBorder: [false, boolean({ name: "Hide top border" })],
     hideBottomBannerBorder: [false, boolean({ name: "Hide bottom border" })],
   },
@@ -71,7 +89,16 @@ export const NewspaperConfig = {
       text({ name: "Headline" }),
     ],
     headlineFont: [FontFamily.SANS, fontPicker()],
-    headlineFontSize: [4, range({ name: "Headline Font Size", min: 2, max: 8, step: 0.1, suffix: "cqw" })],
+    headlineFontSize: [
+      4,
+      range({
+        name: "Headline Font Size",
+        min: 2,
+        max: 8,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
   },
   quote: {
     quote: [
@@ -79,16 +106,43 @@ export const NewspaperConfig = {
       text({ name: "Quote/Call-out" }),
     ],
     quoteFont: [FontFamily.SANS, fontPicker()],
-    quoteFontSize: [2, range({ name: "Quote Font Size", min: 1, max: 4, step: 0.1, suffix: "cqw" })],
+    quoteFontSize: [
+      2,
+      range({
+        name: "Quote Font Size",
+        min: 1,
+        max: 4,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
   },
   featureImage: {
     featureImageUrl: ["", imageInput({ name: "Feature Image" })],
-    featureImageAlignment: ["left", select({ name: "Alignment", options: [{ label: "Left", value: "left" }, { label: "Right", value: "right" }] })],
+    featureImageAlignment: [
+      "left",
+      select({
+        name: "Alignment",
+        options: [
+          { label: "Left", value: "left" },
+          { label: "Right", value: "right" },
+        ],
+      }),
+    ],
     isFeatureImageBlurry: [false, boolean({ name: "Blurry feature image" })],
     featureImageFilter: ["none", imageFilter()],
   },
   mainCopy: {
-    mainCopyFontSize: [1, range({ name: "Main Copy Font Size", min: 0.5, max: 2, step: 0.1, suffix: "cqw" })],
+    mainCopyFontSize: [
+      1,
+      range({
+        name: "Main Copy Font Size",
+        min: 0.5,
+        max: 2,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
     mainCopyContent: [
       `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
 
@@ -117,12 +171,20 @@ export const NewspaperClippingConfig = {
   },
   dimensions: {
     pageWidth: [
-      400,
-      range({ name: "Page Width", min: 100, max: 1800, suffix: "px" }),
+      60,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
     ],
-    pageHeight: [
-      700,
-      range({ name: "Page Height", min: 100, max: 1200, suffix: "px" }),
+    clippingTopPadding: [
+      0,
+      range({ name: "Clipping Top Padding", min: -20, max: 20 }),
+    ],
+    clippingBottomPadding: [
+      0,
+      range({
+        name: "Clipping Bottom Padding",
+        min: -20,
+        max: 20,
+      }),
     ],
   },
   paper: {
@@ -130,20 +192,56 @@ export const NewspaperClippingConfig = {
     paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
     isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   },
-  prefix_copy: [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius vestibulum porttitor. Donec egestas egestas commodo. Nullam tincidunt, felis ut rutrum rhoncus, nunc metus mattis arcu, sit amet vulputate velit nunc in metus. Nullam lacinia mauris id mauris semper malesuada.",
-    textArea({ name: "Prefix Copy" }),
-  ],
-  isPrefixBlurry: [true, boolean({ name: "Is Prefix Blurry?" })],
-  mainCopy: [
-    "Curabitur eu tellus et nibh ornare ornare non nec nibh. Etiam sapien enim, suscipit et fermentum id, aliquet iaculis ipsum. Mauris pharetra congue",
-    textArea({ name: "Main Copy" }),
-  ],
-  suffix_copy: [
-    "Phasellus aliquam arcu sed risus imperdiet, non tempus nisl egestas.",
-    textArea({ name: "Suffix Copy" }),
-  ],
-  isSuffixBlurry: [true, boolean({ name: "Is Suffix Blurry?" })],
+  prefixCopy: {
+    content: [
+      "am ut vehicula felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat consequat hendrerit. Morbi feugiat quis ipsum in mattis. Mauris faucibus volutpat nisl, et porta neque auctor quis. Donec non libero vel mi condimentum maximus non ac est. Proin elementum scelerisque tellus vitae luctus. Nam eu consectetur urna, nec bibendum risus. Duis consequat rhoncus leo. Donec in dignissim magna, a venenatis lorem. ",
+      textArea({ name: "Prefix Copy" }),
+    ],
+    fontSize: [
+      4,
+      range({
+        name: "Prefix Font Size",
+        min: 0.8,
+        max: 40,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+    isBlurry: [true, boolean({ name: "Is Prefix Blurry?" })],
+  },
+  mainCopy: {
+    content: [
+      "Nullam placerat, magna et tincidunt eleifend, enim justo fermentum ex, ac tempus tortor velit vitae metus. Etiam consectetur porttitor sem et egestas. Phasellus eu consequat quam. Aenean pretium ac sapien finibus fermentum. Pellentesque venenatis metus quam, eget convallis lorem ultricies ut. Quisque ultricies ligula at finibus fringilla. Nullam purus enim, auctor vitae erat nec, auctor accumsan dui. Praesent ut luctus augue, at aliquam n",
+      textArea({ name: "Main Copy" }),
+    ],
+    fontSize: [
+      4,
+      range({
+        name: "Main Copy Font Size",
+        min: 1,
+        max: 40,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+  },
+  suffixCopy: {
+    content: [
+      "In eleifend quis massa sed vulputate. Donec egestas nisi vitae risus porttitor volutpat. Donec ultricies magna risus, pharetra tempus mi porttitor imperdiet. Curabitur dictum ultricies diam, a molestie lacus efficitur eget. Maecenas et massa vehicula, ornare enim tristique, pharetra tellus. Sed tincidunt condimentum euismod. Nam pelle",
+      textArea({ name: "Suffix Copy" }),
+    ],
+    fontSize: [
+      4,
+      range({
+        name: "Suffix Font Size",
+        min: 0.8,
+        max: 40,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+    isBlurry: [true, boolean({ name: "Is Suffix Blurry?" })],
+  },
   font: [FontFamily.SERIF, fontPicker()],
   inkColor: ["ink-black", inkSelector()],
   imageFilter: ["none", imageFilter()],
