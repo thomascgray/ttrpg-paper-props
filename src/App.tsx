@@ -120,9 +120,9 @@ function App() {
 `}
         </style>
       </Helmet>
-      <div className="flex min-h-full flex-col md:flex-row">
+      <div className="flex h-screen flex-col md:flex-row">
         {/* Desktop Layout - Left Column */}
-        <div className="hidden md:block left-column bg-gray-300 overflow-y-scroll h-screen p-4 md:w-1/4 md:min-w-[500px]">
+        <div className="hidden md:block left-column bg-gray-300 overflow-y-scroll h-full p-4 md:w-1/4 md:min-w-[500px]">
           <h1 className="text-2xl font-poppins font-bold mb-4 md:min-w-[400px]">
             📜 Tombola's RPG Handout Builder
           </h1>
@@ -376,7 +376,7 @@ function App() {
 
         {/* Right Column Container - holds background and floating controls */}
         <div
-          className="right-column relative md:w-3/4 w-full h-screen"
+          className="right-column relative md:w-3/4 w-full h-full"
           style={{
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }

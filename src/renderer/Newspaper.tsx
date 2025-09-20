@@ -23,6 +23,7 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
           boxShadow: `${
             handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
           }`,
+          width: `${handout.pageWidth}cqw`,
         }}
         className={`paper
 relative
@@ -31,7 +32,6 @@ paper-${handout.paperTexture} ${handout.inkColor}
 overflow-clip
 max-w-[80em]
 aspect-[16/9]
-w-[90cqw]
 p-10
 `}
       >
@@ -45,7 +45,7 @@ p-10
             <span
               className={`${handout.title.titleFont} font-black text-center flex items-center justify-around`}
               style={{
-                fontSize: `4cqw`,
+                fontSize: `${handout.title.titleFontSize}cqw`,
                 lineHeight: `${handout.title.lineHeight}em`,
                 marginTop: `${handout.title.topMargin}px`,
                 marginBottom: `${handout.title.bottomMargin}px`,
@@ -62,7 +62,7 @@ p-10
           <div id="banner_texts" className="flex justify-between py-2">
             <label
               style={{
-                fontSize: `1.2cqw`,
+                fontSize: `${handout.bannerTexts.bannerSize}cqw`,
               }}
               className={`text-left text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
             >
@@ -71,7 +71,7 @@ p-10
 
             <label
               style={{
-                fontSize: `1.2cqw`,
+                fontSize: `${handout.bannerTexts.bannerSize}cqw`,
               }}
               className={`text-center text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
             >
@@ -80,7 +80,7 @@ p-10
 
             <label
               style={{
-                fontSize: `1.2cqw`,
+                fontSize: `${handout.bannerTexts.bannerSize}cqw`,
               }}
               className={`text-right text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
             >
@@ -98,7 +98,7 @@ p-10
             className={`${handout.headline.headlineFont} font-semibold whitespace-pre-line block text-center`}
             style={{
               textWrap: "balance",
-              fontSize: `4cqw`,
+              fontSize: `${handout.headline.headlineFontSize}cqw`,
             }}
           >
             {handout.headline.headline}
@@ -110,7 +110,7 @@ p-10
             <p
               id="quote"
               style={{
-                fontSize: `2cqw`,
+                fontSize: `${handout.quote.quoteFontSize}cqw`,
               }}
               className={`font-serif font-bold text-justify italic my-4 ${handout.quote.quoteFont}`}
             >
@@ -121,7 +121,7 @@ p-10
           <div
             id="main_copy"
             style={{
-              fontSize: "1cqw",
+              fontSize: `${handout.mainCopy.mainCopyFontSize}cqw`,
             }}
           >
             <div

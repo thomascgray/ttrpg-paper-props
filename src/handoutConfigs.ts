@@ -35,8 +35,8 @@ import { LegendItem } from "./components/LegendItems";
 export const NewspaperConfig = {
   ...positioning,
   pageWidth: [
-    900,
-    range({ name: "Page Width", min: 10, max: 300, suffix: "%" }),
+    90,
+    range({ name: "Page Width", min: 50, max: 100, suffix: "cqw" }),
   ],
   paperTexture: ["grey", paperTexture()],
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
@@ -45,7 +45,7 @@ export const NewspaperConfig = {
   title: {
     title: ["THE LOREM IPSUM", text({ name: "Title" })],
     titleFont: [FontFamily.SANS, fontPicker()],
-    titleFontSize: [34, fontSize()],
+    titleFontSize: [4, range({ name: "Title Font Size", min: 2, max: 8, step: 0.1, suffix: "cqw" })],
     lineHeight: [3, lineHeight()],
     topMargin: [
       0,
@@ -61,7 +61,7 @@ export const NewspaperConfig = {
     bannerText2: ["Duis sodales", text({ name: "Text 2" })],
     bannerText3: ["Quisque imperdiet", text({ name: "Text 3" })],
     bannerFont: [FontFamily.SANS, fontPicker()],
-    bannerSize: [16, fontSize()],
+    bannerSize: [1.2, range({ name: "Banner Font Size", min: 0.8, max: 2, step: 0.1, suffix: "cqw" })],
     hideTopBannerBorder: [false, boolean({ name: "Hide top border" })],
     hideBottomBannerBorder: [false, boolean({ name: "Hide bottom border" })],
   },
@@ -71,7 +71,7 @@ export const NewspaperConfig = {
       text({ name: "Headline" }),
     ],
     headlineFont: [FontFamily.SANS, fontPicker()],
-    headlineFontSize: [34, fontSize()],
+    headlineFontSize: [4, range({ name: "Headline Font Size", min: 2, max: 8, step: 0.1, suffix: "cqw" })],
   },
   quote: {
     quote: [
@@ -79,7 +79,7 @@ export const NewspaperConfig = {
       text({ name: "Quote/Call-out" }),
     ],
     quoteFont: [FontFamily.SANS, fontPicker()],
-    quoteFontSize: [20, fontSize()],
+    quoteFontSize: [2, range({ name: "Quote Font Size", min: 1, max: 4, step: 0.1, suffix: "cqw" })],
   },
   featureImage: {
     featureImageUrl: ["", imageInput({ name: "Feature Image" })],
@@ -88,6 +88,7 @@ export const NewspaperConfig = {
     featureImageFilter: ["none", imageFilter()],
   },
   mainCopy: {
+    mainCopyFontSize: [1, range({ name: "Main Copy Font Size", min: 0.5, max: 2, step: 0.1, suffix: "cqw" })],
     mainCopyContent: [
       `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
 
