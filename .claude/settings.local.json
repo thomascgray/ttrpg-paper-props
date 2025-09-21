@@ -6,5 +6,9 @@
       "WebSearch"
     ],
     "deny": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "sequential-thinking"
+  ],
+  "enableAllProjectMcpServers": true
 }
