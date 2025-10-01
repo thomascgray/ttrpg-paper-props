@@ -3,12 +3,13 @@
     "allow": [
       "Bash(bun x tsx:*)",
       "Bash(bun x tsc:*)",
-      "WebSearch"
+      "WebSearch",
+      "mcp__sequential-thinking__sequentialthinking"
     ],
     "deny": []
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "sequential-thinking"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

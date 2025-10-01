@@ -257,31 +257,81 @@ export const CharacterCardConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  pageWidth: [
-    700,
-    range({ name: "Page Width", min: 100, max: 1500, suffix: "px" }),
-  ],
+  dimensions: {
+    pageWidth: [
+      35,
+      range({ name: "Page Width", min: 20, max: 60, step: 1, suffix: "" }),
+    ],
+    pageHeight: [
+      50,
+      range({ name: "Page Height", min: 30, max: 80, step: 1, suffix: "" }),
+    ],
+  },
   paperTexture: ["beige-3", paperTexture()],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   imageUrl: ["/default_images/woody.png", imageInput()],
   inkColor: ["ink-black", inkSelector()],
   imageFilter: ["none", imageFilter()],
-  textLineOne: ["Woody", text({ name: "Line 1", placeholder: "Lorem Ipsum" })],
-  textLineTwo: [
-    "Town Sheriff",
-    text({ name: "Line 2", placeholder: "Lorem Ipsum" }),
-  ],
-  textLineThree: [
-    "There's a snake in my boot!",
-    text({ name: "Line 3", placeholder: "Lorem Ipsum" }),
-  ],
-  font: [FontFamily.SERIF, fontPicker()],
-  fontSize: [
-    24,
-    range({ name: "Font Size (Relative)", min: 16, max: 100, suffix: "%" }),
-  ],
-  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textAlign: ["text-left", textAlign()],
+  lineOne: {
+    content: [
+      "Woody",
+      text({ name: "Line 1 Text", placeholder: "Character Name" }),
+    ],
+    font: [FontFamily.SERIF, fontPicker({ name: "Line 1 Font" })],
+    fontSize: [
+      7,
+      range({
+        name: "Line 1 Font Size",
+        min: 1,
+        max: 20,
+        step: 0.1,
+        suffix: "",
+      }),
+    ],
+    fontWeight: [FontWeight.BOLD, fontWeightPicker({ name: "Line 1 Weight" })],
+    textAlign: ["text-center", textAlign({ name: "Line 1 Alignment" })],
+  },
+  lineTwo: {
+    content: [
+      "Town Sheriff",
+      text({ name: "Line 2 Text", placeholder: "Title/Role" }),
+    ],
+    font: [FontFamily.SERIF, fontPicker({ name: "Line 2 Font" })],
+    fontSize: [
+      3.8,
+      range({
+        name: "Line 2 Font Size",
+        min: 1,
+        max: 20,
+        step: 0.1,
+        suffix: "",
+      }),
+    ],
+    fontWeight: [
+      FontWeight.NORMAL,
+      fontWeightPicker({ name: "Line 2 Weight" }),
+    ],
+    textAlign: ["text-center", textAlign({ name: "Line 2 Alignment" })],
+  },
+  lineThree: {
+    content: [
+      "There's a snake in my boot!",
+      text({ name: "Line 3 Text", placeholder: "Quote/Description" }),
+    ],
+    font: [FontFamily.SERIF, fontPicker({ name: "Line 3 Font" })],
+    fontSize: [
+      3.2,
+      range({
+        name: "Line 3 Font Size",
+        min: 1,
+        max: 20,
+        step: 0.1,
+        suffix: "",
+      }),
+    ],
+    fontWeight: [FontWeight.LIGHT, fontWeightPicker({ name: "Line 3 Weight" })],
+    textAlign: ["text-center", textAlign({ name: "Line 3 Alignment" })],
+  },
 } satisfies HandoutConfig;
 
 export const PlainLetterConfig = {
