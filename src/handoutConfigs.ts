@@ -593,7 +593,16 @@ export const ThreePanelDirectionalSignConfig = {
 } satisfies HandoutConfig;
 
 export const CrtScreenConfig = {
-  ...positioning,
+  positioning: {
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
+  },
+  dimensions: {
+    pageWidth: [
+      90,
+      range({ name: "Page Width", min: 40, max: 120, step: 1, suffix: "" }),
+    ],
+  },
   text: [
     `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
 
@@ -607,10 +616,18 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
     crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
   textGlow: [true, boolean({ name: "Text Glow" })],
-  fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
+  fontSize: [
+    2.5,
+    range({
+      name: "Font Size",
+      min: 0.5,
+      max: 8,
+      step: 0.1,
+      suffix: "cqw",
+    }),
+  ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-center", textAlign()],
-  // bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
   crtScreen: [
     "/images/crts/c.webp",
     select({
