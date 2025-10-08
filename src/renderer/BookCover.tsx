@@ -1,5 +1,4 @@
-import React from "react";
-import Markdown from "react-markdown";
+import Markdown from "markdown-to-jsx";
 import { BookCoverConfig } from "../handoutConfigs";
 import { ExtractConfigValues } from "../types";
 
@@ -7,25 +6,30 @@ type BookCoverData = ExtractConfigValues<typeof BookCoverConfig>;
 
 export const BookCover = ({ handout }: { handout: BookCoverData }) => {
   return (
-    <div className="relative">
-      <div className={`image-wrapper`}>
-        <img src={handout.bookCoverTemplate} alt="The book cover" width={700} />
-      </div>
-
+    <div className="w-full max-w-[700px] h-auto relative">
+      <img src={handout.bookCoverTemplate} alt="The book cover" />
       <div
-        id="main_copy"
         style={{
-          fontSize: `${handout.fontSize}px`,
-          marginLeft: `${handout.textLeftMargin}px`,
+          containerType: "inline-size",
           width: "80%",
+          position: "absolute",
+          top: "0",
+          left: "2%",
+          margin: "10%",
         }}
-        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em]`}
       >
-        <Markdown
-          className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
+        <div
+          className="absolute"
+          style={{
+            fontSize: `${handout.fontSize}cqw`,
+          }}
         >
-          {handout.mainCopy}
-        </Markdown>
+          <Markdown
+            className={`block copy-markdown ${handout.inkColor} ${handout.textAlign} ${handout.textEffect} ${handout.font} ${handout.fontWeight}`}
+          >
+            {handout.mainCopy}
+          </Markdown>
+        </div>
       </div>
     </div>
   );

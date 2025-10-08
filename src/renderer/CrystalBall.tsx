@@ -18,16 +18,7 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
   } = handout;
 
   return (
-    <div
-      className="relative -mt-[50%]"
-      style={{
-        transform: `rotate(${positioning?.rotation ?? 0}deg) scale(${
-          positioning?.zoom ?? 1
-        }) translate(${positioning?.xOffset ?? 0}%, ${
-          positioning?.yOffset ?? 0
-        }%)`,
-      }}
-    >
+    <div className="relative">
       <Bulges id="crystal-ball" scale={120} />
       <Bulges id="crystal-ball-bigger" scale={450} />
 

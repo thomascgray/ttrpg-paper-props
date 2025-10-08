@@ -10,28 +10,7 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
   const paperTint = hexToRgba(handout.paperTint, 0.5);
 
   return (
-    <div
-      className="relative translate-y-20"
-      style={{
-        width: `${handout.pageWidthPercentage}%`,
-        transformOrigin: "center",
-      }}
-    >
-      {/* the "fake page" behind it */}
-      <div
-        style={{
-          backgroundColor: paperTint,
-          backgroundBlendMode: "multiply",
-          position: "absolute",
-          top: "-25px",
-          left: "25px",
-          boxShadow: `${
-            handout.isPaperShadow ? "inset -10px 10px 25px #000000" : "none"
-          }`,
-        }}
-        className={`paper relative z-10 w-full h-[calc(100%-58px)] paper-behind paper-${handout.paperTexture} ${handout.inkColor} p-10`}
-      ></div>
-
+    <div className="relative">
       {/* the front page */}
       <div
         style={{
@@ -40,111 +19,163 @@ export const Newspaper = ({ handout }: { handout: NewspaperData }) => {
           boxShadow: `${
             handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
           }`,
-          marginBottom: "58px",
+          width: `${handout.pageWidth}cqw`,
         }}
-        className={`paper relative z-20 h-[calc(100%-57px)] paper-${handout.paperTexture} ${handout.inkColor} p-10 overflow-clip rounded-bl-[2rem]`}
+        className={`paper
+relative
+z-20
+paper-${handout.paperTexture} ${handout.inkColor}
+overflow-clip
+max-w-[80em]
+aspect-[16/9]
+p-10
+`}
       >
-        <div id="title">
-          <span
-            className={`${handout.title.titleFont} font-black text-center flex items-center justify-around`}
-            style={{
-              fontSize: `${handout.title.titleFontSize}px`,
-              lineHeight: `${handout.title.lineHeight}em`,
-              marginTop: `${handout.title.topMargin}px`,
-              marginBottom: `${handout.title.bottomMargin}px`,
-            }}
-          >
-            {handout.title.title}
-          </span>
-        </div>
-
-        {!handout.bannerTexts.hideTopBannerBorder && (
-          <hr className="border-solid border-2 border-gray-600" />
-        )}
-
-        <div id="banner_texts" className="flex justify-between py-2">
-          <label
-            style={{
-              fontSize: `${handout.bannerTexts.bannerSize}px`,
-            }}
-            className={`text-left text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
-          >
-            {handout.bannerTexts.bannerText1}
-          </label>
-
-          <label
-            style={{
-              fontSize: `${handout.bannerTexts.bannerSize}px`,
-            }}
-            className={`text-center text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
-          >
-            {handout.bannerTexts.bannerText2}
-          </label>
-
-          <label
-            style={{
-              fontSize: `${handout.bannerTexts.bannerSize}px`,
-            }}
-            className={`text-right text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
-          >
-            {handout.bannerTexts.bannerText3}
-          </label>
-        </div>
-
-        {!handout.bannerTexts.hideBottomBannerBorder && (
-          <hr className="border-solid border-2 border-gray-600" />
-        )}
-
-        <span
-          id="headline"
-          className={`${handout.headline.headlineFont} font-semibold whitespace-pre-line block text-center`}
+        <div
           style={{
-            textWrap: "balance",
-            fontSize: `${handout.headline.headlineFontSize}px`,
+            containerType: "inline-size",
           }}
+          className="w-full"
         >
-          {handout.headline.headline}
-        </span>
+          <div id="title">
+            <span
+              className={`${handout.title.titleFont} font-black text-center flex items-center justify-around`}
+              style={{
+                fontSize: `${handout.title.titleFontSize}cqw`,
+                lineHeight: `${handout.title.lineHeight}em`,
+                marginTop: `${handout.title.topMargin}px`,
+                marginBottom: `${handout.title.bottomMargin}px`,
+              }}
+            >
+              {handout.title.title}
+            </span>
+          </div>
 
-        <hr className="border-solid border-4 border-gray-800 my-4" />
+          {!handout.bannerTexts.hideTopBannerBorder && (
+            <hr className="border-solid border-2 border-gray-600" />
+          )}
 
-        {(handout.quote.quote as string) !== "" && (
-          <p
-            id="quote"
+          <div id="banner_texts" className="flex justify-between py-2">
+            <label
+              style={{
+                fontSize: `${handout.bannerTexts.bannerSize}cqw`,
+              }}
+              className={`text-left text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
+            >
+              {handout.bannerTexts.bannerText1}
+            </label>
+
+            <label
+              style={{
+                fontSize: `${handout.bannerTexts.bannerSize}cqw`,
+              }}
+              className={`text-center text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
+            >
+              {handout.bannerTexts.bannerText2}
+            </label>
+
+            <label
+              style={{
+                fontSize: `${handout.bannerTexts.bannerSize}cqw`,
+              }}
+              className={`text-right text-gray-800 font-bold font-serif w-4/12 ${handout.bannerTexts.bannerFont}`}
+            >
+              {handout.bannerTexts.bannerText3}
+            </label>
+          </div>
+
+          {!handout.bannerTexts.hideBottomBannerBorder && (
+            <hr className="border-solid border-2 border-gray-600" />
+          )}
+
+          {/* the headline */}
+          <span
+            id="headline"
+            className={`${handout.headline.headlineFont} font-semibold whitespace-pre-line block text-center`}
             style={{
-              fontSize: `${handout.quote.quoteFontSize}px`,
+              textWrap: "balance",
+              fontSize: `${handout.headline.headlineFontSize}cqw`,
             }}
-            className={`font-serif font-bold text-justify italic my-4 ${handout.quote.quoteFont}`}
           >
-            {handout.quote.quote}
-          </p>
-        )}
+            {handout.headline.headline}
+          </span>
 
-        <div id="main_copy">
-          <Markdown
-            className={classNames(
-              `${handout.mainCopy.textAlign} font-serif copy-markdown column-count-${handout.mainCopy.mainCopyColumns} ${handout.mainCopy.imageFilter}`,
-              {
-                blurry: handout.mainCopy.isMainCopyBlurry,
-              }
-            )}
+          <hr className="border-solid border-4 border-gray-800 my-4" />
+
+          {(handout.quote.quote as string) !== "" && (
+            <p
+              id="quote"
+              style={{
+                fontSize: `${handout.quote.quoteFontSize}cqw`,
+              }}
+              className={`font-serif font-bold text-justify italic my-4 ${handout.quote.quoteFont}`}
+            >
+              {handout.quote.quote}
+            </p>
+          )}
+
+          <div
+            id="main_copy"
+            style={{
+              fontSize: `${handout.mainCopy.mainCopyFontSize}cqw`,
+            }}
           >
-            {handout.mainCopy.mainCopyContent}
-          </Markdown>
+            <div
+              className="grid"
+              style={{
+                gridTemplateColumns: handout.featureImage.featureImageUrl
+                  ? `1fr 1fr`
+                  : `1fr`,
+              }}
+            >
+              {handout.featureImage.featureImageUrl &&
+                handout.featureImage.featureImageAlignment === "left" && (
+                  <div
+                    className={classNames({
+                      "blur-sm": handout.featureImage.isFeatureImageBlurry,
+                    })}
+                  >
+                    <img
+                      src={handout.featureImage.featureImageUrl}
+                      alt="feature image"
+                      className={classNames(
+                        "w-full h-full object-cover pr-3",
+                        handout.featureImage.featureImageFilter
+                      )}
+                    />
+                  </div>
+                )}
+              <Markdown
+                className={classNames(
+                  `${handout.mainCopy.textAlign} font-serif copy-markdown column-count-${handout.mainCopy.mainCopyColumns} ${handout.mainCopy.imageFilter}`,
+                  {
+                    "blur-sm": handout.mainCopy.isMainCopyBlurry,
+                  }
+                )}
+              >
+                {handout.mainCopy.mainCopyContent}
+              </Markdown>
+              {handout.featureImage.featureImageUrl &&
+                handout.featureImage.featureImageAlignment === "right" && (
+                  <div
+                    className={classNames({
+                      "blur-sm": handout.featureImage.isFeatureImageBlurry,
+                    })}
+                  >
+                    <img
+                      src={handout.featureImage.featureImageUrl}
+                      alt="feature image"
+                      className={classNames(
+                        "w-full h-full object-cover pl-3",
+                        handout.featureImage.featureImageFilter
+                      )}
+                    />
+                  </div>
+                )}
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* the weird curve */}
-      <div
-        style={{
-          backgroundColor: paperTint,
-          backgroundBlendMode: "multiply",
-          boxShadow: `${
-            handout.isPaperShadow ? "inset -10px 0 25px #000000" : "none"
-          }`,
-        }}
-        className={`paper paper-${handout.paperTexture} absolute bottom-[58px] -right-[25px] w-20 h-20 rounded-br-[2rem]`}
-      ></div>
     </div>
   );
 };

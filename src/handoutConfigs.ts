@@ -34,9 +34,9 @@ import { LegendItem } from "./components/LegendItems";
 
 export const NewspaperConfig = {
   ...positioning,
-  pageWidthPercentage: [
-    60,
-    range({ name: "Page Width", min: 10, max: 300, suffix: "%" }),
+  pageWidth: [
+    90,
+    range({ name: "Page Width", min: 50, max: 100, suffix: "cqw" }),
   ],
   paperTexture: ["grey", paperTexture()],
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
@@ -45,7 +45,16 @@ export const NewspaperConfig = {
   title: {
     title: ["THE LOREM IPSUM", text({ name: "Title" })],
     titleFont: [FontFamily.SANS, fontPicker()],
-    titleFontSize: [34, fontSize()],
+    titleFontSize: [
+      4,
+      range({
+        name: "Title Font Size",
+        min: 2,
+        max: 8,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
     lineHeight: [3, lineHeight()],
     topMargin: [
       0,
@@ -61,7 +70,16 @@ export const NewspaperConfig = {
     bannerText2: ["Duis sodales", text({ name: "Text 2" })],
     bannerText3: ["Quisque imperdiet", text({ name: "Text 3" })],
     bannerFont: [FontFamily.SANS, fontPicker()],
-    bannerSize: [16, fontSize()],
+    bannerSize: [
+      1.2,
+      range({
+        name: "Banner Font Size",
+        min: 0.8,
+        max: 2,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
     hideTopBannerBorder: [false, boolean({ name: "Hide top border" })],
     hideBottomBannerBorder: [false, boolean({ name: "Hide bottom border" })],
   },
@@ -71,7 +89,16 @@ export const NewspaperConfig = {
       text({ name: "Headline" }),
     ],
     headlineFont: [FontFamily.SANS, fontPicker()],
-    headlineFontSize: [34, fontSize()],
+    headlineFontSize: [
+      4,
+      range({
+        name: "Headline Font Size",
+        min: 2,
+        max: 8,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
   },
   quote: {
     quote: [
@@ -79,9 +106,43 @@ export const NewspaperConfig = {
       text({ name: "Quote/Call-out" }),
     ],
     quoteFont: [FontFamily.SANS, fontPicker()],
-    quoteFontSize: [20, fontSize()],
+    quoteFontSize: [
+      2,
+      range({
+        name: "Quote Font Size",
+        min: 1,
+        max: 4,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+  },
+  featureImage: {
+    featureImageUrl: ["", imageInput({ name: "Feature Image" })],
+    featureImageAlignment: [
+      "left",
+      select({
+        name: "Alignment",
+        options: [
+          { label: "Left", value: "left" },
+          { label: "Right", value: "right" },
+        ],
+      }),
+    ],
+    isFeatureImageBlurry: [false, boolean({ name: "Blurry feature image" })],
+    featureImageFilter: ["none", imageFilter()],
   },
   mainCopy: {
+    mainCopyFontSize: [
+      1,
+      range({
+        name: "Main Copy Font Size",
+        min: 0.5,
+        max: 2,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
     mainCopyContent: [
       `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula lorem, a mattis quam lobortis finibus. Etiam egestas suscipit egestas. Morbi accumsan iaculis urna, nec vehicula ex feugiat eu. Aliquam vel consectetur elit. Donec erat leo, sagittis vitae porttitor nec, consectetur non sem. Donec dictum iaculis eros sit amet lacinia. Morbi pulvinar quis augue ut fringilla. Pellentesque accumsan, metus eu ultricies tristique, velit lorem molestie lacus, a malesuada nulla lectus porta mauris.
 
@@ -94,7 +155,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum vehicula l
 Vestibulum tempor venenatis enim et rutrum. Etiam ut magna a massa convallis luctus. In justo enim, feugiat non mi sed, viverra mollis nulla. Praesent lobortis suscipit leo at lacinia. Phasellus metus tellus, fringilla vel dictum vel, congue in est. In non commodo ante. Vivamus nec placerat libero, at interdum mi. Aliquam odio purus, fringilla eu scelerisque a, dignissim sed mi. Mauris sollicitudin et massa laoreet consequat. Duis et volutpat orci, non hendrerit turpis. Sed ut mi ac purus volutpat egestas sed ut enim.
 
 Vivamus id arcu interdum ante eleifend maximus nec interdum metus. Nam ultrices nisl vel justo scelerisque, non ultricies diam tristique. Proin mattis at nibh in ornare. Phasellus suscipit tincidunt ante sit amet posuere. Aenean porta, arcu eu cursus aliquet, urna turpis rhoncus tellus, in pharetra erat lectus sit amet enim. Mauris ut ultricies tellus, vitae auctor magna. Cras dapibus bibendum ante, sit amet efficitur mi. Morbi sapien augue, hendrerit a condimentum sed, eleifend vel mi. Aenean molestie turpis eget mollis accumsan. Donec ut magna vel tortor porttitor feugiat. Donec consequat eros in tellus sollicitudin ullamcorper. Donec cursus, massa in aliquet congue, metus urna porttitor orci, vel ultrices libero lacus a nisi. Donec sit amet nunc mattis, lobortis lacus sit amet, auctor risus.`,
-      textArea({ name: "Main copy", rows: 20 }),
+      textArea({ name: "Main copy", rows: 20, maxRows: 40 }),
     ],
     mainCopyColumns: [3, range({ name: "Columns", min: 1, max: 5 })],
     imageFilter: ["none", imageFilter()],
@@ -110,12 +171,20 @@ export const NewspaperClippingConfig = {
   },
   dimensions: {
     pageWidth: [
-      400,
-      range({ name: "Page Width", min: 100, max: 1800, suffix: "px" }),
+      60,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
     ],
-    pageHeight: [
-      700,
-      range({ name: "Page Height", min: 100, max: 1200, suffix: "px" }),
+    clippingTopPadding: [
+      0,
+      range({ name: "Clipping Top Padding", min: -20, max: 20 }),
+    ],
+    clippingBottomPadding: [
+      0,
+      range({
+        name: "Clipping Bottom Padding",
+        min: -20,
+        max: 20,
+      }),
     ],
   },
   paper: {
@@ -123,20 +192,56 @@ export const NewspaperClippingConfig = {
     paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
     isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   },
-  prefix_copy: [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius vestibulum porttitor. Donec egestas egestas commodo. Nullam tincidunt, felis ut rutrum rhoncus, nunc metus mattis arcu, sit amet vulputate velit nunc in metus. Nullam lacinia mauris id mauris semper malesuada.",
-    textArea({ name: "Prefix Copy" }),
-  ],
-  isPrefixBlurry: [true, boolean({ name: "Is Prefix Blurry?" })],
-  mainCopy: [
-    "Curabitur eu tellus et nibh ornare ornare non nec nibh. Etiam sapien enim, suscipit et fermentum id, aliquet iaculis ipsum. Mauris pharetra congue",
-    textArea({ name: "Main Copy" }),
-  ],
-  suffix_copy: [
-    "Phasellus aliquam arcu sed risus imperdiet, non tempus nisl egestas.",
-    textArea({ name: "Suffix Copy" }),
-  ],
-  isSuffixBlurry: [true, boolean({ name: "Is Suffix Blurry?" })],
+  prefixCopy: {
+    content: [
+      "am ut vehicula felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat consequat hendrerit. Morbi feugiat quis ipsum in mattis. Mauris faucibus volutpat nisl, et porta neque auctor quis. Donec non libero vel mi condimentum maximus non ac est. Proin elementum scelerisque tellus vitae luctus. Nam eu consectetur urna, nec bibendum risus. Duis consequat rhoncus leo. Donec in dignissim magna, a venenatis lorem. ",
+      textArea({ name: "Prefix Copy" }),
+    ],
+    fontSize: [
+      4,
+      range({
+        name: "Prefix Font Size",
+        min: 0.8,
+        max: 40,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+    isBlurry: [true, boolean({ name: "Is Prefix Blurry?" })],
+  },
+  mainCopy: {
+    content: [
+      "Nullam placerat, magna et tincidunt eleifend, enim justo fermentum ex, ac tempus tortor velit vitae metus. Etiam consectetur porttitor sem et egestas. Phasellus eu consequat quam. Aenean pretium ac sapien finibus fermentum. Pellentesque venenatis metus quam, eget convallis lorem ultricies ut. Quisque ultricies ligula at finibus fringilla. Nullam purus enim, auctor vitae erat nec, auctor accumsan dui. Praesent ut luctus augue, at aliquam n",
+      textArea({ name: "Main Copy" }),
+    ],
+    fontSize: [
+      4,
+      range({
+        name: "Main Copy Font Size",
+        min: 1,
+        max: 40,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+  },
+  suffixCopy: {
+    content: [
+      "In eleifend quis massa sed vulputate. Donec egestas nisi vitae risus porttitor volutpat. Donec ultricies magna risus, pharetra tempus mi porttitor imperdiet. Curabitur dictum ultricies diam, a molestie lacus efficitur eget. Maecenas et massa vehicula, ornare enim tristique, pharetra tellus. Sed tincidunt condimentum euismod. Nam pelle",
+      textArea({ name: "Suffix Copy" }),
+    ],
+    fontSize: [
+      4,
+      range({
+        name: "Suffix Font Size",
+        min: 0.8,
+        max: 40,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+    isBlurry: [true, boolean({ name: "Is Suffix Blurry?" })],
+  },
   font: [FontFamily.SERIF, fontPicker()],
   inkColor: ["ink-black", inkSelector()],
   imageFilter: ["none", imageFilter()],
@@ -152,37 +257,81 @@ export const CharacterCardConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  pageWidth: [
-    700,
-    range({ name: "Page Width", min: 100, max: 1500, suffix: "px" }),
-  ],
+  dimensions: {
+    pageWidth: [
+      35,
+      range({ name: "Page Width", min: 20, max: 60, step: 1, suffix: "" }),
+    ],
+    pageHeight: [
+      50,
+      range({ name: "Page Height", min: 30, max: 80, step: 1, suffix: "" }),
+    ],
+  },
   paperTexture: ["beige-3", paperTexture()],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
-  imageUrl: [
-    "https://i.pinimg.com/564x/49/c1/4d/49c14d528399386e820dd116a25590b2.jpg",
-    imageInput(),
-  ],
+  imageUrl: ["/default_images/woody.png", imageInput()],
   inkColor: ["ink-black", inkSelector()],
   imageFilter: ["none", imageFilter()],
-  textLineOne: [
-    "Lorem Ipsum",
-    text({ name: "Line 1", placeholder: "Lorem Ipsum" }),
-  ],
-  textLineTwo: [
-    "Lorem Ipsum",
-    text({ name: "Line 2", placeholder: "Lorem Ipsum" }),
-  ],
-  textLineThree: [
-    "Lorem Ipsum",
-    text({ name: "Line 3", placeholder: "Lorem Ipsum" }),
-  ],
-  font: [FontFamily.SERIF, fontPicker()],
-  fontSize: [
-    24,
-    range({ name: "Font Size (Relative)", min: 16, max: 100, suffix: "%" }),
-  ],
-  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textAlign: ["text-left", textAlign()],
+  lineOne: {
+    content: [
+      "Woody",
+      text({ name: "Line 1 Text", placeholder: "Character Name" }),
+    ],
+    font: [FontFamily.SERIF, fontPicker({ name: "Line 1 Font" })],
+    fontSize: [
+      7,
+      range({
+        name: "Line 1 Font Size",
+        min: 1,
+        max: 20,
+        step: 0.1,
+        suffix: "",
+      }),
+    ],
+    fontWeight: [FontWeight.BOLD, fontWeightPicker({ name: "Line 1 Weight" })],
+    textAlign: ["text-center", textAlign({ name: "Line 1 Alignment" })],
+  },
+  lineTwo: {
+    content: [
+      "Town Sheriff",
+      text({ name: "Line 2 Text", placeholder: "Title/Role" }),
+    ],
+    font: [FontFamily.SERIF, fontPicker({ name: "Line 2 Font" })],
+    fontSize: [
+      3.8,
+      range({
+        name: "Line 2 Font Size",
+        min: 1,
+        max: 20,
+        step: 0.1,
+        suffix: "",
+      }),
+    ],
+    fontWeight: [
+      FontWeight.NORMAL,
+      fontWeightPicker({ name: "Line 2 Weight" }),
+    ],
+    textAlign: ["text-center", textAlign({ name: "Line 2 Alignment" })],
+  },
+  lineThree: {
+    content: [
+      "There's a snake in my boot!",
+      text({ name: "Line 3 Text", placeholder: "Quote/Description" }),
+    ],
+    font: [FontFamily.SERIF, fontPicker({ name: "Line 3 Font" })],
+    fontSize: [
+      3.2,
+      range({
+        name: "Line 3 Font Size",
+        min: 1,
+        max: 20,
+        step: 0.1,
+        suffix: "",
+      }),
+    ],
+    fontWeight: [FontWeight.LIGHT, fontWeightPicker({ name: "Line 3 Weight" })],
+    textAlign: ["text-center", textAlign({ name: "Line 3 Alignment" })],
+  },
 } satisfies HandoutConfig;
 
 export const PlainLetterConfig = {
@@ -245,23 +394,19 @@ export const BookCoverConfig = {
       ],
     }),
   ],
-  positioning: {
-    rotationDegrees: [0, rotation()],
-    zoom: [1, zoom()],
-    xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
-  },
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    30,
-    range({ name: "Font Size (Relative)", min: 1, max: 100, suffix: "px" }),
+    3,
+    range({
+      name: "Font Size (Relative)",
+      min: 0.1,
+      max: 10,
+      suffix: "%",
+      step: 0.1,
+    }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  textLeftMargin: [
-    13,
-    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
-  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
@@ -448,7 +593,16 @@ export const ThreePanelDirectionalSignConfig = {
 } satisfies HandoutConfig;
 
 export const CrtScreenConfig = {
-  ...positioning,
+  positioning: {
+    rotationDegrees: [0, rotation()],
+    zoom: [1, zoom()],
+  },
+  dimensions: {
+    pageWidth: [
+      90,
+      range({ name: "Page Width", min: 40, max: 120, step: 1, suffix: "" }),
+    ],
+  },
   text: [
     `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
 
@@ -462,10 +616,18 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
     crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
   textGlow: [true, boolean({ name: "Text Glow" })],
-  fontSize: [18, range({ name: "Font Size", min: 6, max: 100, suffix: "px" })],
+  fontSize: [
+    2.5,
+    range({
+      name: "Font Size",
+      min: 0.5,
+      max: 8,
+      step: 0.1,
+      suffix: "cqw",
+    }),
+  ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-center", textAlign()],
-  // bulgeScale: [80, range({ name: "Bulge Scale", min: 0, max: 400 })],
   crtScreen: [
     "/images/crts/c.webp",
     select({
@@ -499,7 +661,7 @@ export const PaperMapConfig = {
     },
   }),
   paperTexture: ["beige-3", paperTexture()],
-  image: ["https://i.imgur.com/w1DaJ2q.jpeg", imageInput()],
+  image: ["/default_images/paper_map.jpeg", imageInput()],
   legend: {
     legendItems: [[] as LegendItem[], legendItems({ name: "Legend Items" })],
     legendPosition: [
@@ -535,7 +697,7 @@ export const SciFiHologramConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  image: ["https://i.imgur.com/GKTWuW2.png", imageInput()],
+  image: ["/default_images/darth.png", imageInput()],
   overlayColor: ["#456099", colour({ name: "Overlay Color" })],
   warbleEffect: [true, boolean({ name: "Warble Effect" })],
   blendEffect: [
@@ -566,10 +728,7 @@ export const SciFiHologramConfig = {
 export const PolaroidConfig = {
   ...positioning,
   paperTexture: ["none", paperTexture()],
-  imageUrl: [
-    "https://static.wikia.nocookie.net/chrisnolan/images/3/3c/Leonard.jpg",
-    imageInput(),
-  ],
+  imageUrl: ["/default_images/Leonard.webp", imageInput()],
   ...imagePostProcessing,
   captionText: {
     ...textFull({
@@ -591,15 +750,11 @@ export const PolaroidConfig = {
 
 export const CrystalBallConfig = {
   ...positioning,
-  image: [
-    "https://preview.redd.it/is-this-art-from-the-forgotten-realms-setting-if-so-what-v0-2284un21kjxd1.jpeg?width=640&crop=smart&auto=webp&s=eb5425ef0152e95199ce70b0fc76f603c321f27c",
-    imageInput(),
-  ],
+  image: ["/default_images/adventure_party.webp", imageInput()],
   ...imagePostProcessing,
   showGlare: [true, boolean({ name: "Show Glare" })],
   showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
   showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
-  // pos: [{ x: 0, y: 0 }, x_y_position()],
 } satisfies HandoutConfig;
 
 export const TestConfig = {
