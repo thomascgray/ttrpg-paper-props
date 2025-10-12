@@ -11,6 +11,7 @@ export const routes: Record<string, AllConfigNames> = {
   "/potion": "LabelledLiquid", // Alias for labelled liquid
   "/hanging-sign": "HangingWoodenSign",
   "/directional-sign": "ThreePanelDirectionalSign",
+  "/rectangle-sign-1": "Rectangle1WoodenSign",
   "/crt-screen": "CrtScreen",
   "/monitor": "CrtScreen", // Alias for CRT screen
   "/paper-map": "PaperMap",
@@ -32,6 +33,7 @@ export const handoutToRoute: Record<AllConfigNames, string> = {
   LabelledLiquid: "/labelled-liquid",
   HangingWoodenSign: "/hanging-sign",
   ThreePanelDirectionalSign: "/directional-sign",
+  Rectangle1WoodenSign: "/rectangle-sign-1",
   CrtScreen: "/crt-screen",
   PaperMap: "/paper-map",
   SciFiHologram: "/hologram",

@@ -16,6 +16,7 @@ import { BookCover } from "./renderer/BookCover";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
 import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
 import { ThreePanelDirectionalSign } from "./renderer/ThreePanelDirectionalSign";
+import { Rectangle1WoodenSign } from "./renderer/Rectangle1WoodenSign";
 import { CrtScreen } from "./renderer/CrtScreen";
 import { appState as appStateProxy } from "./appState";
 import { allConfigs } from "./handoutConfigs";
@@ -468,6 +469,13 @@ function App() {
                   appState.selectedHandoutType ===
                     "ThreePanelDirectionalSign" && (
                     <ThreePanelDirectionalSign
+                      handout={currentHandoutTransientRow.data}
+                    />
+                  )}
+
+                {currentHandoutTransientRow.type === "Rectangle1WoodenSign" &&
+                  appState.selectedHandoutType === "Rectangle1WoodenSign" && (
+                    <Rectangle1WoodenSign
                       handout={currentHandoutTransientRow.data}
                     />
                   )}

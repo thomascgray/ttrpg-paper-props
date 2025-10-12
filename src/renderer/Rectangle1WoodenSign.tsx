@@ -1,17 +1,17 @@
 import Markdown from "react-markdown";
-import { HangingWoodenSignConfig } from "../handoutConfigs";
+import { Rectangle1WoodenSignConfig } from "../handoutConfigs";
 import { ExtractConfigValues } from "../types";
 import classNames from "classnames";
 import { getImageProcessingStyles } from "../utils";
 
-type HangingWoodenSignData = ExtractConfigValues<
-  typeof HangingWoodenSignConfig
+type Rectangle1WoodenSignData = ExtractConfigValues<
+  typeof Rectangle1WoodenSignConfig
 >;
 
-export const HangingWoodenSign = ({
+export const Rectangle1WoodenSign = ({
   handout,
 }: {
-  handout: HangingWoodenSignData;
+  handout: Rectangle1WoodenSignData;
 }) => {
   return (
     <div
@@ -28,8 +28,8 @@ export const HangingWoodenSign = ({
       >
         <div className="relative w-full">
           <img
-            src={"/images/wooden_signs/hanging.webp"}
-            alt="Hanging wooden sign"
+            src={"/images/wooden_signs/sign post a.webp"}
+            alt="Rectangular wooden sign"
             className="w-full h-auto"
             style={{
               transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,

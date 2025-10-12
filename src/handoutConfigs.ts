@@ -516,79 +516,78 @@ export const LabelledLiquidConfig = {
 } satisfies HandoutConfig;
 
 export const HangingWoodenSignConfig = {
+  dimensions: {
+    pageWidth: [50, range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" })],
+  },
   text: [
     `# GO AWAY
 _We don't want any!_`,
     textArea({ name: "Text" }),
   ],
-  yOffset: [50, range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" })],
-  textWidth: [
-    600,
-    range({ name: "Text Width", min: 100, max: 1500, suffix: "px" }),
-  ],
+  textPosition: {
+    top: [24, range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" })],
+    yOffset: [7, range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" })],
+  },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  fontSize: [36, range({ name: "Font Size", min: 16, max: 200, suffix: "px" })],
+  fontSize: [5, range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" })],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   gnarledText: [false, boolean({ name: "Gnarled Text" })],
   ...imageOpts,
 } satisfies HandoutConfig;
 
 export const ThreePanelDirectionalSignConfig = {
+  dimensions: {
+    pageWidth: [50, range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" })],
+  },
   panel1: {
     text: ["Baldur's Gate", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
-    fontSize: [
-      58,
-      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
-    ],
+    fontSize: [8, range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" })],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
-    xOffset: [
-      0,
-      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
-    ],
-    yOffset: [
-      0,
-      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
-    ],
+    xOffset: [2, range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
   },
   panel2: {
     text: ["Waterdeep", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
-    fontSize: [
-      48,
-      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
-    ],
+    fontSize: [6.8, range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" })],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
-    xOffset: [
-      0,
-      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
-    ],
-    yOffset: [
-      0,
-      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
-    ],
+    xOffset: [2, range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
   },
   panel3: {
     text: ["Neverwinter", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
-    fontSize: [
-      48,
-      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
-    ],
+    fontSize: [6.8, range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" })],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
-    xOffset: [
-      0,
-      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
-    ],
-    yOffset: [
-      0,
-      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
-    ],
+    xOffset: [2, range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
+    yOffset: [0, range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
   },
+  ...imageOpts,
+} satisfies HandoutConfig;
+
+export const Rectangle1WoodenSignConfig = {
+  dimensions: {
+    pageWidth: [50, range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" })],
+  },
+  text: [
+    `# THE PRANCING PONY
+_Inn & Tavern_`,
+    textArea({ name: "Text" }),
+  ],
+  textPosition: {
+    top: [28, range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" })],
+    yOffset: [7, range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" })],
+  },
+  font: [FontFamily.SERIF, fontPicker()],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  fontSize: [5, range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" })],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  gnarledText: [false, boolean({ name: "Gnarled Text" })],
   ...imageOpts,
 } satisfies HandoutConfig;
 
@@ -833,6 +832,13 @@ export const allConfigs = [
       "A three-panel directional wooden sign with customizable text on each panel",
     type: "wooden_signs",
     config: ThreePanelDirectionalSignConfig,
+  } as const,
+  {
+    name: "Rectangle1WoodenSign",
+    displayName: "Rectangle 1",
+    caption: "A rectangular wooden sign post with customizable text",
+    type: "wooden_signs",
+    config: Rectangle1WoodenSignConfig,
   } as const,
   {
     name: "CrtScreen",
