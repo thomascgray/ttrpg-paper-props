@@ -616,6 +616,14 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
     crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
   textGlow: [true, boolean({ name: "Text Glow" })],
+  bulgeEffect: [
+    120,
+    range({
+      name: "Bulge Effect",
+      min: 0,
+      max: 250,
+    }),
+  ],
   fontSize: [
     2.5,
     range({
