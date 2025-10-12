@@ -93,6 +93,18 @@ export const FontSelector = (props: iFontSelector) => {
             <option className="font-caveat" value="font-caveat">
               Caveat
             </option>
+            <option className="font-gloria-hallelujah" value="font-gloria-hallelujah">
+              Gloria Hallelujah
+            </option>
+            <option className="font-lacquer" value="font-lacquer">
+              Lacquer
+            </option>
+            <option className="font-mansalva" value="font-mansalva">
+              Mansalva
+            </option>
+            <option className="font-schoolbell" value="font-schoolbell">
+              Schoolbell
+            </option>
           </optgroup>
 
           <optgroup className="font-sans" label="Fantasy">

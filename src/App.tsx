@@ -221,7 +221,7 @@ function App() {
                 <option value="TRANSIENT">Unsaved snapshot</option>
               </select>
             </div>
-            <p className="text-sm italic mt-3">
+            <p className="text-xs italic mt-3">
               Snapshots are saved locally to your machine - no data is sent to
               any server.
             </p>
@@ -282,7 +282,7 @@ function App() {
                   d="M5 15l7-7 7 7"
                 />
               </svg>
-              <span>Settings</span>
+              <span>Form</span>
             </button>
 
             <div className="p-4">
@@ -319,7 +319,7 @@ function App() {
                     <option value="TRANSIENT">Unsaved snapshot</option>
                   </select>
                 </div>
-                <p className="text-sm italic mt-3">
+                <p className="text-xs italic mt-3">
                   Snapshots are saved locally to your machine - no data is sent
                   to any server.
                 </p>
@@ -370,7 +370,7 @@ function App() {
                 d="M5 15l7-7 7 7"
               />
             </svg>
-            <span>Settings</span>
+            <span>Form</span>
           </button>
         )}
 
@@ -505,7 +505,6 @@ function App() {
 
           {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
-          {/* <SignInFloatingButton /> */}
           <ExportImageButton />
           <PositioningControls
             data={currentHandoutTransientRow.data}

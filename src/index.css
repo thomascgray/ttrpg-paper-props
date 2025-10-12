@@ -292,6 +292,22 @@ body {
   font-family: "Poppins", cursive;
 }
 
+.font-gloria-hallelujah {
+  font-family: "Gloria Hallelujah", cursive;
+}
+
+.font-lacquer {
+  font-family: "Lacquer", cursive;
+}
+
+.font-mansalva {
+  font-family: "Mansalva", cursive;
+}
+
+.font-schoolbell {
+  font-family: "Schoolbell", cursive;
+}
+
 .img-filter-none img,
 .img-filter-none {
   filter: none;

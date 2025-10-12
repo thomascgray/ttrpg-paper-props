@@ -22,6 +22,10 @@ export enum FontFamily {
   MERIENDA = "font-merienda",
   SHADOWS_INTO_LIGHT = "font-shadows-into-light",
   CAVEAT = "font-caveat",
+  GLORIA_HALLELUJAH = "font-gloria-hallelujah",
+  LACQUER = "font-lacquer",
+  MANSALVA = "font-mansalva",
+  SCHOOLBELL = "font-schoolbell",
 
   // Fantasy fonts
   MEDIEVAL_SHARP = "font-medieval-sharp",
