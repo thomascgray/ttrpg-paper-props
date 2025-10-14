@@ -786,24 +786,60 @@ export const SciFiHologramConfig = {
 
 export const PolaroidConfig = {
   ...positioning,
+  pageWidth: [50, range({ name: "Page Width", min: 20, max: 80, suffix: "" })],
   paperTexture: ["none", paperTexture()],
+  padding: [4, range({ name: "Padding", min: 0, max: 10, suffix: "cqw" })],
+  paddingBottom: [
+    16,
+    range({ name: "Padding Bottom", min: 0, max: 30, suffix: "cqw" }),
+  ],
   imageUrl: ["/default_images/Leonard.webp", imageInput()],
   ...imagePostProcessing,
+  captionGap: [
+    3,
+    range({ name: "Caption Gap", min: 0, max: 10, suffix: "cqw" }),
+  ],
   captionText: {
-    ...textFull({
-      text: {
-        default: "DON'T BELIEVE HIS LIES",
-        name: "Caption Text",
-        placeholder: "Enter caption...",
-      },
-      font: { default: FontFamily.CAVEAT },
-      fontSize: { default: 32 },
-      textAlign: { default: "text-center" },
-      textStyle: { default: "", name: "Caption Style" },
-    }),
+    text: [
+      "DON'T BELIEVE HIS LIES",
+      text({ name: "Caption Text", placeholder: "Enter caption..." }),
+    ],
+    font: [FontFamily.CAVEAT, fontPicker({ name: "Caption Font" })],
+    fontSize: [
+      7,
+      range({
+        name: "Caption Font Size",
+        min: 2,
+        max: 12,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+    fontWeight: [
+      FontWeight.NORMAL,
+      fontWeightPicker({ name: "Caption Weight" }),
+    ],
+    textAlign: ["text-center", textAlign({ name: "Caption Alignment" })],
   },
   showPin: [false, boolean({ name: "Show Pin" })],
+  pinSize: [8, range({ name: "Pin Size", min: 2, max: 20, suffix: "cqw" })],
+  pinOffset: [
+    -2.5,
+    range({ name: "Pin Offset", min: -10, max: 10, suffix: "cqw" }),
+  ],
   showPaperclip: [true, boolean({ name: "Show Paperclip" })],
+  paperclipSize: [
+    6,
+    range({ name: "Paperclip Size", min: 2, max: 15, suffix: "cqw" }),
+  ],
+  paperclipOffset: [
+    -2,
+    range({ name: "Paperclip Offset", min: -10, max: 10, suffix: "cqw" }),
+  ],
+  paperclipLeftOffset: [
+    7.5,
+    range({ name: "Paperclip Left Offset", min: 0, max: 30, suffix: "cqw" }),
+  ],
   showStack: [false, boolean({ name: "Show Stack" })],
 } satisfies HandoutConfig;
 
