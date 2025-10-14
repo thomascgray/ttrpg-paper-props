@@ -341,33 +341,31 @@ export const PlainLetterConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  pageWidth: [
-    850,
-    range({ name: "Page Width", min: 100, max: 1500, suffix: "px" }),
-  ],
+  pageWidth: [50, range({ name: "Page Width", min: 20, max: 80, suffix: "" })],
+  maintainAspectRatio: [true, boolean({ name: "Maintain Aspect Ratio" })],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   paperTexture: ["grey", paperTexture()],
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
   inkColor: ["ink-black", inkSelector()],
-  padding: [50, range({ name: "Padding", min: 0, max: 100, suffix: "px" })],
+  padding: [6, range({ name: "Padding", min: 0, max: 20, suffix: "cqw" })],
   paragraph: [
     [
       {
         id: nanoid(),
-        mainCopy: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        mainCopy: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci. 
+## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci.
 
-Nullam cursus congue magna, pulvinar commodo massa ornare quis. Etiam eleifend fermentum mauris at aliquet. Aliquam ac augue nunc. 
+Nullam cursus congue magna, pulvinar commodo massa ornare quis. Etiam eleifend fermentum mauris at aliquet. Aliquam ac augue nunc.
 
-Mauris mollis bibendum erat, et ultrices tortor pellentesque vitae. 
+Mauris mollis bibendum erat, et ultrices tortor pellentesque vitae.
 
 # Suspendisse sed accumsan augue.
 
-Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dignissim libero ut luctus. Ut mattis ut tellus quis aliquet. In hac habitasse platea dictumst.          
+Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dignissim libero ut luctus. Ut mattis ut tellus quis aliquet. In hac habitasse platea dictumst.
 `,
         font: FontFamily.SERIF,
-        fontSize: 12,
+        fontSize: 1.4,
         fontWeight: FontWeight.NORMAL,
         textAlign: "text-left",
       },
@@ -376,7 +374,7 @@ Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dign
   ],
   paragraphGap: [
     0,
-    range({ name: "Paragraph Gap", min: 0, max: 100, suffix: "px" }),
+    range({ name: "Paragraph Gap", min: 0, max: 10, suffix: "cqw" }),
   ],
 } satisfies HandoutConfig;
 
@@ -517,7 +515,10 @@ export const LabelledLiquidConfig = {
 
 export const HangingWoodenSignConfig = {
   dimensions: {
-    pageWidth: [50, range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" })],
+    pageWidth: [
+      50,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
   },
   text: [
     `# GO AWAY
@@ -525,12 +526,21 @@ _We don't want any!_`,
     textArea({ name: "Text" }),
   ],
   textPosition: {
-    top: [24, range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" })],
-    yOffset: [7, range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" })],
+    top: [
+      24,
+      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      7,
+      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+    ],
   },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  fontSize: [5, range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" })],
+  fontSize: [
+    5,
+    range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" }),
+  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   gnarledText: [false, boolean({ name: "Gnarled Text" })],
   ...imageOpts,
@@ -538,41 +548,74 @@ _We don't want any!_`,
 
 export const ThreePanelDirectionalSignConfig = {
   dimensions: {
-    pageWidth: [50, range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" })],
+    pageWidth: [
+      50,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
   },
   panel1: {
     text: ["Baldur's Gate", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
-    fontSize: [8, range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" })],
+    fontSize: [
+      8,
+      range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" }),
+    ],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
-    xOffset: [2, range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
+    xOffset: [
+      2,
+      range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      0,
+      range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
+    ],
   },
   panel2: {
     text: ["Waterdeep", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
-    fontSize: [6.8, range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" })],
+    fontSize: [
+      6.8,
+      range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" }),
+    ],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
-    xOffset: [2, range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
+    xOffset: [
+      2,
+      range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      0,
+      range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
+    ],
   },
   panel3: {
     text: ["Neverwinter", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
-    fontSize: [6.8, range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" })],
+    fontSize: [
+      6.8,
+      range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" }),
+    ],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
-    xOffset: [2, range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
-    yOffset: [0, range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" })],
+    xOffset: [
+      2,
+      range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      0,
+      range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
+    ],
   },
   ...imageOpts,
 } satisfies HandoutConfig;
 
 export const Rectangle1WoodenSignConfig = {
   dimensions: {
-    pageWidth: [50, range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" })],
+    pageWidth: [
+      50,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
   },
   text: [
     `# THE PRANCING PONY
@@ -580,12 +623,21 @@ _Inn & Tavern_`,
     textArea({ name: "Text" }),
   ],
   textPosition: {
-    top: [28, range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" })],
-    yOffset: [7, range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" })],
+    top: [
+      28,
+      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      7,
+      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+    ],
   },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  fontSize: [5, range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" })],
+  fontSize: [
+    5,
+    range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" }),
+  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   gnarledText: [false, boolean({ name: "Gnarled Text" })],
   ...imageOpts,

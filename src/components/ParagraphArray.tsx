@@ -32,7 +32,7 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
       id: nanoid(),
       mainCopy: "",
       font: FontFamily.SERIF,
-      fontSize: 12,
+      fontSize: 1.4,
       fontWeight: "font-normal",
       textAlign: "text-left",
     };
@@ -98,10 +98,10 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
           <RangeInput
             label="Font Size"
             value={paragraph.fontSize.toString()}
-            min={8}
-            max={48}
-            step={1}
-            suffix="px"
+            min={0.5}
+            max={6}
+            step={0.1}
+            suffix="cqw"
             onUpdate={(val) => updateParagraph(paragraph.id, "fontSize", val)}
           />
 
