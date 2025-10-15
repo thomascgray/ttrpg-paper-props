@@ -456,7 +456,7 @@ export const LabelledLiquidConfig = {
   ],
   imageWidth: [
     400,
-    range({ name: "Image Width", min: 100, max: 1000, step: 2, suffix: "px" }),
+    range({ name: "Image Width", min: 10, max: 100, step: 2, suffix: "cqw" }),
   ],
   imageRotation: [
     0,
@@ -471,13 +471,13 @@ export const LabelledLiquidConfig = {
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    12,
+    1.2,
     range({
-      name: "Font Size (Relative)",
-      min: 1,
-      max: 100,
+      name: "Font Size",
+      min: 0.5,
+      max: 6,
       step: 0.1,
-      suffix: "px",
+      suffix: "cqw",
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
@@ -486,8 +486,8 @@ export const LabelledLiquidConfig = {
     range({ name: "Text Top Margin", min: -100, max: 250, suffix: "%" }),
   ],
   textLeftMargin: [
-    65,
-    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
+    5,
+    range({ name: "Text Left Margin", min: -40, max: 40, suffix: "cqw" }),
   ],
   textWidth: [
     56,
@@ -501,12 +501,12 @@ export const LabelledLiquidConfig = {
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
     `# LOVE POTION No. 9
-      
+
 ### _Elixer Sue_`,
     textArea({
       name: "Main Copy",
       value: `# LOVE POTION No. 9
-      
+
 ### _Elixer Sue_`,
       rows: 4,
     }),
@@ -781,7 +781,13 @@ export const SciFiHologramConfig = {
     ],
     size: [
       0.5,
-      range({ name: "Scanline Size", min: 0, max: 3, step: 0.1, suffix: "cqw" }),
+      range({
+        name: "Scanline Size",
+        min: 0,
+        max: 3,
+        step: 0.1,
+        suffix: "cqw",
+      }),
     ],
   },
   isTransparent: [false, boolean({ name: "Is Transparent" })],

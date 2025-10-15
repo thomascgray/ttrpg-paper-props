@@ -13,11 +13,11 @@ export const LabelledLiquid = ({
   return (
     <div className="relative">
       <img
-        className="transition-all"
+        className=""
         src={handout.imageTemplate}
         alt="The labelled liquid container"
         style={{
-          width: `${handout.imageWidth}px`,
+          width: `${handout.imageWidth}cqw`,
           transform: `rotate(${handout.imageRotation}deg)`,
           filter: `hue-rotate(${handout.imageHueFilter}deg)`,
         }}
@@ -26,13 +26,13 @@ export const LabelledLiquid = ({
       <div
         id="main_copy"
         style={{
-          fontSize: `${handout.fontSize}px`,
-          marginLeft: `${handout.textLeftMargin}px`,
+          fontSize: `${handout.fontSize}cqw`,
+          marginLeft: `${handout.textLeftMargin}cqw`,
           marginTop: `${handout.textTopMargin}%`,
           width: `${handout.textWidth}%`,
           transform: `rotate(${handout.textRotation}deg)`,
         }}
-        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em] transition-all`}
+        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em] `}
       >
         <Markdown
           className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
