@@ -6,7 +6,7 @@ import { extractConfigAsData } from "./configUtils";
 import { appState } from "./appState";
 import { getHandoutFromPath } from "./routes";
 
-export const APP_VERSION = 7;
+export const APP_VERSION = 8;
 
 export const db = new Dexie("handoutsdb") as Dexie & {
   handouts: EntityTable<HandoutTable, "id">;
