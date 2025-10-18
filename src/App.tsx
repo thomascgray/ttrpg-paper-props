@@ -31,6 +31,7 @@ import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
 import { Polaroid } from "./renderer/Polaroid";
 import { CrystalBall } from "./renderer/CrystalBall";
+import { TallVertical1Flag } from "./renderer/TallVertical1Flag";
 import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
@@ -502,6 +503,10 @@ function App() {
                 {currentHandoutTransientRow.type === "CrystalBall" &&
                   appState.selectedHandoutType === "CrystalBall" && (
                     <CrystalBall handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "TallVertical1Flag" &&
+                  appState.selectedHandoutType === "TallVertical1Flag" && (
+                    <TallVertical1Flag handout={currentHandoutTransientRow.data} />
                   )}
                 {currentHandoutTransientRow.type === "Test" &&
                   appState.selectedHandoutType === "Test" && (

@@ -862,6 +862,21 @@ export const CrystalBallConfig = {
   showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
 } satisfies HandoutConfig;
 
+export const TallVertical1FlagConfig = {
+  ...positioning,
+  dimensions: {
+    pageWidth: [
+      40,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
+  },
+  overlayImage: ["", imageInput({ name: "Overlay Image" })],
+  zoom: [100, range({ name: "Zoom", min: 50, max: 300, suffix: "%" })],
+  rotation: [0, range({ name: "Rotation", min: -180, max: 180, suffix: "°" })],
+  offset: [{ x: 0, y: 0 }, x_y_position({ name: "Offset" })],
+  flag_background_colour: ["#FFFFFF", colour({ name: "Flag Background Colour" })],
+} satisfies HandoutConfig;
+
 export const TestConfig = {
   ...positioning,
   scale: [1, range({ name: "Scale", min: 0, max: 500, step: 5 })],
@@ -972,6 +987,13 @@ export const allConfigs = [
     caption: "A mystical crystal ball with a single image",
     type: "object",
     config: CrystalBallConfig,
+  } as const,
+  {
+    name: "TallVertical1Flag",
+    displayName: "Tall Vertical 1",
+    caption: "A tall vertical flag with customizable overlay image",
+    type: "flags_and_banners",
+    config: TallVertical1FlagConfig,
   } as const,
   {
     name: "Test",

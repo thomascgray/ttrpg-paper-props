@@ -20,6 +20,8 @@ export const routes: Record<string, AllConfigNames> = {
   "/sci-fi-hologram": "SciFiHologram",
   "/polaroid": "Polaroid",
   "/crystal-ball": "CrystalBall",
+  "/flag-tall-vertical-1": "TallVertical1Flag",
+  "/flag": "TallVertical1Flag", // Alias for flag
   "/test": "Test" as any,
 };
 
@@ -39,6 +41,7 @@ export const handoutToRoute: Record<AllConfigNames, string> = {
   SciFiHologram: "/hologram",
   Polaroid: "/polaroid",
   CrystalBall: "/crystal-ball",
+  TallVertical1Flag: "/flag-tall-vertical-1",
   Test: "/test" as any,
 };
 

@@ -15,7 +15,7 @@ export const HangingWoodenSign = ({
 }) => {
   return (
     <div
-      className="relative transition-all flex justify-around max-w-[80em]"
+      className="relative  flex justify-around max-w-[80em]"
       style={{
         width: `${handout.dimensions.pageWidth}cqw`,
       }}
@@ -40,13 +40,15 @@ export const HangingWoodenSign = ({
           <div
             id="main_copy"
             style={{
-              top: `${handout.textPosition.top + handout.textPosition.yOffset}cqw`,
+              top: `${
+                handout.textPosition.top + handout.textPosition.yOffset
+              }cqw`,
               fontSize: `${handout.fontSize}cqw`,
               lineHeight: `${handout.fontSize}cqw`,
               width: "90%",
             }}
             className={classNames(
-              `absolute transition-all engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
+              `absolute  engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
               {
                 "rough-edges": handout.gnarledText,
               }
