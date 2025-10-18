@@ -8,6 +8,7 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import { ErrorBoundary } from "./ErrorBoundary";
 const theme = createTheme({
   /** Put your mantine theme override here */
 });
@@ -70,17 +71,19 @@ if (container) {
   const root = createRoot(container);
   root.render(
     <StrictMode>
-      <BrowserRouter>
-        <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-          <MantineProvider theme={theme}>
-            <HelmetProvider>
-              <NoiseFilterDeclaration />
-              <RoughEdgesFilterDeclaration />
-              <App />
-            </HelmetProvider>
-          </MantineProvider>
-        </ClerkProvider>
-      </BrowserRouter>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+            <MantineProvider theme={theme}>
+              <HelmetProvider>
+                <NoiseFilterDeclaration />
+                <RoughEdgesFilterDeclaration />
+                <App />
+              </HelmetProvider>
+            </MantineProvider>
+          </ClerkProvider>
+        </BrowserRouter>
+      </ErrorBoundary>
     </StrictMode>
   );
 }
