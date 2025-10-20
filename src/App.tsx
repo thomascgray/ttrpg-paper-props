@@ -78,7 +78,10 @@ function App() {
         appStateProxy.selectedHandoutType = handoutFromUrl;
         appStateProxy.selectedVersionId = "TRANSIENT";
       }
-    } else if (window.location.pathname === "/" || window.location.pathname === "") {
+    } else if (
+      window.location.pathname === "/" ||
+      window.location.pathname === ""
+    ) {
       // At root path - update URL to match database-restored handout
       updateUrlForHandout(appStateProxy.selectedHandoutType);
     }
@@ -134,18 +137,19 @@ function App() {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Database Error</h1>
+          <h1 className="text-2xl font-bold text-red-600 mb-4">
+            Database Error
+          </h1>
           <p className="text-gray-700 mb-4">
-            Failed to initialize the application database. This might be caused by:
+            Failed to initialize the application database. This might be caused
+            by:
           </p>
           <ul className="list-disc list-inside text-gray-600 mb-4 space-y-1">
             <li>Private/Incognito browsing mode blocking storage</li>
             <li>Browser storage quota exceeded</li>
             <li>Browser security settings blocking IndexedDB</li>
           </ul>
-          <p className="text-sm text-gray-500">
-            Error: {dbError.message}
-          </p>
+          <p className="text-sm text-gray-500">Error: {dbError.message}</p>
         </div>
       </div>
     );
@@ -213,12 +217,10 @@ function App() {
                 If you want to hold onto a particular configuration, save it
                 with the "Save Snapshot"
               </li>
-              <li>To share the handouts, simply take a screenshot</li>
-              <ul className="list-disc list-inside ml-2">
-                <li>On Windows: Windows + Shift + S</li>
-                <li>On Mac: Command + Shift + 4</li>
-                <li>On Linux: Shift + Print Screen (probably)</li>
-              </ul>
+              <li>
+                To share the handout, either hit the blue export button at the
+                bottom right of the render window, simply take a screenshot
+              </li>
               <li>
                 Paste the image into your group chat, reddit post, email, etc.
               </li>
@@ -563,7 +565,9 @@ function App() {
                   )}
                 {currentHandoutTransientRow.type === "TallVertical1Flag" &&
                   appState.selectedHandoutType === "TallVertical1Flag" && (
-                    <TallVertical1Flag handout={currentHandoutTransientRow.data} />
+                    <TallVertical1Flag
+                      handout={currentHandoutTransientRow.data}
+                    />
                   )}
                 {currentHandoutTransientRow.type === "Test" &&
                   appState.selectedHandoutType === "Test" && (
