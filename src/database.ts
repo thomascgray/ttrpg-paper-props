@@ -6,7 +6,7 @@ import { extractConfigAsData } from "./configUtils";
 import { appState } from "./appState";
 import { getHandoutFromPath } from "./routes";
 
-export const APP_VERSION = 8;
+export const APP_VERSION = 9;
 
 // Database initialization state
 let dbInitialized = false;
@@ -152,6 +152,22 @@ dbInitPromise = initializeDatabase().catch((error) => {
   console.error("Failed to initialize database:", error);
   dbInitError = error instanceof Error ? error : new Error(String(error));
 });
+
+// Export function to reset database completely
+export async function resetDatabase(): Promise<void> {
+  try {
+    console.log("Resetting database...");
+    await db.delete();
+    console.log("Database deleted successfully");
+    // Reset initialization state
+    dbInitialized = false;
+    dbInitPromise = null;
+    dbInitError = null;
+  } catch (error) {
+    console.error("Error resetting database:", error);
+    throw error;
+  }
+}
 
 export const getLatestVersion = async (handoutType: string) => {
   const versions = await db.versions
