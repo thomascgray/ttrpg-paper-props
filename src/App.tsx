@@ -26,6 +26,7 @@ import {
   db,
   saveVersion,
   updateTransientRecordToVersion,
+  waitForDatabase,
 } from "./database";
 import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
@@ -46,12 +47,28 @@ function App() {
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [dbReady, setDbReady] = useState(false);
+  const [dbError, setDbError] = useState<Error | null>(null);
 
   // Initialize image conversion to prevent CORS issues during export
   // const { isConverting, completed, total, errors } = useImageConverter();
 
+  // Wait for database initialization
+  useEffect(() => {
+    waitForDatabase()
+      .then(() => {
+        setDbReady(true);
+      })
+      .catch((error) => {
+        console.error("Database initialization error:", error);
+        setDbError(error);
+      });
+  }, []);
+
   // Initialize from URL on mount
   useEffect(() => {
+    if (!dbReady) return;
+
     const handoutFromUrl = getHandoutFromPath();
     if (handoutFromUrl && handoutFromUrl !== appState.selectedHandoutType) {
       appStateProxy.selectedHandoutType = handoutFromUrl;
@@ -60,7 +77,7 @@ function App() {
       // Update URL to match current selection if no route in URL
       updateUrlForHandout(appState.selectedHandoutType);
     }
-  }, []);
+  }, [dbReady]);
 
   // Update URL when handout type changes
   useEffect(() => {
@@ -102,8 +119,38 @@ function App() {
       .sortBy("timestamp");
   }, [appState.selectedHandoutType]);
 
-  if (!currentHandoutTransientRow) {
-    return <div>Loading...</div>;
+  // Show error state if database failed to initialize
+  if (dbError) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Database Error</h1>
+          <p className="text-gray-700 mb-4">
+            Failed to initialize the application database. This might be caused by:
+          </p>
+          <ul className="list-disc list-inside text-gray-600 mb-4 space-y-1">
+            <li>Private/Incognito browsing mode blocking storage</li>
+            <li>Browser storage quota exceeded</li>
+            <li>Browser security settings blocking IndexedDB</li>
+          </ul>
+          <p className="text-sm text-gray-500">
+            Error: {dbError.message}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state while database initializes
+  if (!dbReady || !currentHandoutTransientRow) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-700">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -6,7 +6,12 @@ import { extractConfigAsData } from "./configUtils";
 import { appState } from "./appState";
 import { getHandoutFromPath } from "./routes";
 
-export const APP_VERSION = 7;
+export const APP_VERSION = 9;
+
+// Database initialization state
+let dbInitialized = false;
+let dbInitPromise: Promise<void> | null = null;
+let dbInitError: Error | null = null;
 
 export const db = new Dexie("handoutsdb") as Dexie & {
   handouts: EntityTable<HandoutTable, "id">;
@@ -90,29 +95,79 @@ async function initializeAppState() {
 
 // Initialize database with transient handouts
 async function initializeDatabase() {
-  await initializeAppState();
+  try {
+    console.log("Starting database initialization...");
+    await initializeAppState();
 
-  // for each handout, add a transient handout
-  for (const config of allConfigs) {
-    try {
-      await db.handouts.add({
-        id: `TRANSIENT_${config.name}`,
-        type: config.name,
-        data: extractConfigAsData(config.config),
-      });
-    } catch (error) {
-      // Ignore errors for already existing transient records
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      if (!errorMessage.includes("already exists")) {
-        console.log(`Error adding transient handout ${config.name}:`, error);
+    // for each handout, add a transient handout
+    for (const config of allConfigs) {
+      try {
+        await db.handouts.add({
+          id: `TRANSIENT_${config.name}`,
+          type: config.name,
+          data: extractConfigAsData(config.config),
+        });
+        console.log(`Created transient handout for ${config.name}`);
+      } catch (error) {
+        // Ignore errors for already existing transient records
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        if (!errorMessage.includes("already exists")) {
+          console.error(`Error adding transient handout ${config.name}:`, error);
+          throw error; // Re-throw non-duplicate errors
+        }
       }
     }
+
+    dbInitialized = true;
+    console.log("Database initialization complete");
+  } catch (error) {
+    console.error("Database initialization failed:", error);
+    dbInitError = error instanceof Error ? error : new Error(String(error));
+    throw error;
   }
 }
 
+// Export function to check if database is ready
+export function isDatabaseReady(): boolean {
+  return dbInitialized;
+}
+
+// Export function to wait for database initialization
+export function waitForDatabase(): Promise<void> {
+  if (dbInitialized) {
+    return Promise.resolve();
+  }
+  if (dbInitError) {
+    return Promise.reject(dbInitError);
+  }
+  if (dbInitPromise) {
+    return dbInitPromise;
+  }
+  return Promise.reject(new Error("Database initialization not started"));
+}
+
 // Start database initialization
-initializeDatabase();
+dbInitPromise = initializeDatabase().catch((error) => {
+  console.error("Failed to initialize database:", error);
+  dbInitError = error instanceof Error ? error : new Error(String(error));
+});
+
+// Export function to reset database completely
+export async function resetDatabase(): Promise<void> {
+  try {
+    console.log("Resetting database...");
+    await db.delete();
+    console.log("Database deleted successfully");
+    // Reset initialization state
+    dbInitialized = false;
+    dbInitPromise = null;
+    dbInitError = null;
+  } catch (error) {
+    console.error("Error resetting database:", error);
+    throw error;
+  }
+}
 
 export const getLatestVersion = async (handoutType: string) => {
   const versions = await db.versions
