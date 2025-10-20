@@ -152,7 +152,7 @@ export const ExportImageButton = () => {
   };
 
   return (
-    <div className="fixed md:absolute bottom-4 right-4 z-50">
+    <div className="fixed md:absolute bottom-6 right-6 z-50">
       <button
         onClick={handleExport}
         disabled={isExporting}

@@ -20,7 +20,6 @@ export const CrtScreen = ({ handout }: { handout: PlainLetterData }) => {
     transformString: ``,
     width: "70%",
     height: "34%",
-    bulgeScale: 120,
     perspective: undefined as string | undefined,
   };
 
@@ -35,6 +34,9 @@ export const CrtScreen = ({ handout }: { handout: PlainLetterData }) => {
     case "/images/crts/a.webp": // the hp
       break;
     case "/images/crts/b.webp": // the mac
+      textRenderOpts.width = "62%";
+      blackSquareOpts.top = 5.5;
+      blackSquareOpts.height = 80;
       break;
     case "/images/crts/c.webp": // the commodore pet
       textRenderOpts.transformString = `
@@ -42,20 +44,19 @@ scale(0.6)
 rotateX(-8deg)
 rotateY(-16deg)
 rotateZ(1deg)
-translateX(43%)
-translateY(-70%)
+translateX(27%)
+translateY(-80%)
 translateZ(00px)`;
-      textRenderOpts.width = "58%";
+      textRenderOpts.width = "54%";
       textRenderOpts.height = "42%";
       textRenderOpts.top = 21; // 160px / 760px * 100
-      textRenderOpts.bulgeScale = 135;
       break;
     case "/images/crts/d.webp": // the apple lisa 2
       blackSquareOpts.top = 6.5; // 50px / 760px * 100
       blackSquareOpts.left = 13; // 100px / 760px * 100
       blackSquareOpts.width = 65.5; // 500px / 760px * 100
       blackSquareOpts.height = 32.5; // 250px / 760px * 100
-      textRenderOpts.width = "62%";
+      textRenderOpts.width = "54%";
       textRenderOpts.height = "50%";
       textRenderOpts.transformString = `scale(0.65)
 translateX(-15cqw)
@@ -63,27 +64,26 @@ translateY(-23.5cqw)
 translateZ(00px)`;
       break;
     case "/images/crts/e.webp": // micral microcomputer
-      blackSquareOpts.top = 13; // 100px / 760px * 100
-      blackSquareOpts.left = 39.5; // 300px / 760px * 100
-      blackSquareOpts.width = 65.5; // 500px / 760px * 100
-      blackSquareOpts.height = 65.5; // 500px / 760px * 100
-      textRenderOpts.width = "41.5%";
-      textRenderOpts.height = "39%";
-      textRenderOpts.bulgeScale = 140;
+      blackSquareOpts.top = 10; // 100px / 760px * 100
+      blackSquareOpts.left = 32.5; // 300px / 760px * 100
+      blackSquareOpts.width = 40; // 500px / 760px * 100
+      blackSquareOpts.height = 35.5; // 500px / 760px * 100
+      textRenderOpts.width = "33%";
+      textRenderOpts.height = "34%";
       textRenderOpts.perspective = "1000px";
       textRenderOpts.transformString = `scale(0.8)
 rotateX(-7deg)
 rotateY(12deg)
 rotateZ(-5deg)
-translateX(40cqw)
-translateY(-2.5cqw)
+translateX(23cqw)
+translateY(-6.5cqw)
 translateZ(0px)`;
       break;
   }
 
   return (
     <>
-      <Bulges id="crt" scale={textRenderOpts.bulgeScale} />
+      <Bulges id="crt" scale={handout.bulgeEffect} />
       <div
         className="xl:max-w-[45em] max-w-[40em]"
         style={{
@@ -109,6 +109,7 @@ translateZ(0px)`;
                 left: `${blackSquareOpts.left}cqw`,
                 width: `${blackSquareOpts.width}cqw`,
                 height: `${blackSquareOpts.height}cqw`,
+                zIndex: 20,
               }}
               className={classNames("black-screen absolute bg-[#191919]", {
                 hidden: handout.crtScreen === "/images/crts/c.webp",
@@ -116,7 +117,13 @@ translateZ(0px)`;
             ></div>
 
             {/* the actual image of the crt with its screen cut out */}
-            <div className="image-wrapper">
+            <div
+              className="image-wrapper"
+              style={{
+                zIndex: 30,
+                position: "relative",
+              }}
+            >
               <img
                 style={{
                   width: "100%",
@@ -138,6 +145,7 @@ translateZ(0px)`;
                 transformOrigin: "center",
                 width: textRenderOpts.width,
                 height: textRenderOpts.height,
+                zIndex: 40,
               }}
             >
               <div

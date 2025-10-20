@@ -15,39 +15,46 @@ export const PlainLetter = ({ handout }: { handout: PlainLetterData }) => {
       style={{
         backgroundColor: paperTint,
         backgroundBlendMode: "multiply",
-        width: `${handout.pageWidth}px`,
+        width: `${handout.pageWidth}em`,
         boxShadow: `${
           handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
         }`,
-        padding: `${handout.padding}px`,
       }}
-      className={`paper paper-${handout.paperTexture} transition-all`}
+      className={`paper paper-${handout.paperTexture} max-w-[80em]`}
     >
       <div
-        className="flex flex-col"
+        className="w-full h-full"
         style={{
-          gap: `${handout.paragraphGap}px`,
+          containerType: handout.maintainAspectRatio ? "inline-size" : "normal",
         }}
       >
-        {handout.paragraph.map((p, idx) => {
-          return (
-            <div
-              key={p.id}
-              id="main_copy"
-              className="flex h-full items-center w-full"
-              style={{
-                fontSize: `${p.fontSize}px`,
-              }}
-            >
-              <Markdown
-                remarkPlugins={[remarkGfm, remarkBreaks]}
-                className={`block ${p.textAlign} ${handout.inkColor} ${p.font} ${p.fontWeight} copy-markdown list-inside list-disc w-full`}
+        <div
+          className="flex flex-col"
+          style={{
+            gap: `${handout.paragraphGap}cqw`,
+            padding: `${handout.padding}cqw`,
+          }}
+        >
+          {handout.paragraph.map((p, idx) => {
+            return (
+              <div
+                key={p.id}
+                id="main_copy"
+                className="flex h-full items-center w-full"
+                style={{
+                  fontSize: `${p.fontSize}cqw`,
+                }}
               >
-                {p.mainCopy}
-              </Markdown>
-            </div>
-          );
-        })}
+                <Markdown
+                  remarkPlugins={[remarkGfm, remarkBreaks]}
+                  className={`block ${p.textAlign} ${handout.inkColor} ${p.font} ${p.fontWeight} copy-markdown list-inside list-disc w-full`}
+                >
+                  {p.mainCopy}
+                </Markdown>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

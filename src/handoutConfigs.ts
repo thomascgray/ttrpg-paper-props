@@ -341,33 +341,31 @@ export const PlainLetterConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  pageWidth: [
-    850,
-    range({ name: "Page Width", min: 100, max: 1500, suffix: "px" }),
-  ],
+  pageWidth: [50, range({ name: "Page Width", min: 20, max: 80, suffix: "" })],
+  maintainAspectRatio: [true, boolean({ name: "Maintain Aspect Ratio" })],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   paperTexture: ["grey", paperTexture()],
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
   inkColor: ["ink-black", inkSelector()],
-  padding: [50, range({ name: "Padding", min: 0, max: 100, suffix: "px" })],
+  padding: [6, range({ name: "Padding", min: 0, max: 20, suffix: "cqw" })],
   paragraph: [
     [
       {
         id: nanoid(),
-        mainCopy: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        mainCopy: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci. 
+## Pellentesque nisl ipsum, sodales at velit sit amet, tempor sagittis orci.
 
-Nullam cursus congue magna, pulvinar commodo massa ornare quis. Etiam eleifend fermentum mauris at aliquet. Aliquam ac augue nunc. 
+Nullam cursus congue magna, pulvinar commodo massa ornare quis. Etiam eleifend fermentum mauris at aliquet. Aliquam ac augue nunc.
 
-Mauris mollis bibendum erat, et ultrices tortor pellentesque vitae. 
+Mauris mollis bibendum erat, et ultrices tortor pellentesque vitae.
 
 # Suspendisse sed accumsan augue.
 
-Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dignissim libero ut luctus. Ut mattis ut tellus quis aliquet. In hac habitasse platea dictumst.          
+Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dignissim libero ut luctus. Ut mattis ut tellus quis aliquet. In hac habitasse platea dictumst.
 `,
         font: FontFamily.SERIF,
-        fontSize: 12,
+        fontSize: 1.4,
         fontWeight: FontWeight.NORMAL,
         textAlign: "text-left",
       },
@@ -376,7 +374,7 @@ Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dign
   ],
   paragraphGap: [
     0,
-    range({ name: "Paragraph Gap", min: 0, max: 100, suffix: "px" }),
+    range({ name: "Paragraph Gap", min: 0, max: 10, suffix: "cqw" }),
   ],
 } satisfies HandoutConfig;
 
@@ -458,7 +456,7 @@ export const LabelledLiquidConfig = {
   ],
   imageWidth: [
     400,
-    range({ name: "Image Width", min: 100, max: 1000, step: 2, suffix: "px" }),
+    range({ name: "Image Width", min: 10, max: 100, step: 2, suffix: "cqw" }),
   ],
   imageRotation: [
     0,
@@ -473,13 +471,13 @@ export const LabelledLiquidConfig = {
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    12,
+    1.2,
     range({
-      name: "Font Size (Relative)",
-      min: 1,
-      max: 100,
+      name: "Font Size",
+      min: 0.5,
+      max: 6,
       step: 0.1,
-      suffix: "px",
+      suffix: "cqw",
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
@@ -488,8 +486,8 @@ export const LabelledLiquidConfig = {
     range({ name: "Text Top Margin", min: -100, max: 250, suffix: "%" }),
   ],
   textLeftMargin: [
-    65,
-    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "px" }),
+    5,
+    range({ name: "Text Left Margin", min: -40, max: 40, suffix: "cqw" }),
   ],
   textWidth: [
     56,
@@ -503,12 +501,12 @@ export const LabelledLiquidConfig = {
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
     `# LOVE POTION No. 9
-      
+
 ### _Elixer Sue_`,
     textArea({
       name: "Main Copy",
       value: `# LOVE POTION No. 9
-      
+
 ### _Elixer Sue_`,
       rows: 4,
     }),
@@ -516,41 +514,61 @@ export const LabelledLiquidConfig = {
 } satisfies HandoutConfig;
 
 export const HangingWoodenSignConfig = {
+  dimensions: {
+    pageWidth: [
+      50,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
+  },
   text: [
     `# GO AWAY
 _We don't want any!_`,
     textArea({ name: "Text" }),
   ],
-  yOffset: [50, range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" })],
-  textWidth: [
-    600,
-    range({ name: "Text Width", min: 100, max: 1500, suffix: "px" }),
-  ],
+  textPosition: {
+    top: [
+      24,
+      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      7,
+      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+    ],
+  },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
-  fontSize: [36, range({ name: "Font Size", min: 16, max: 200, suffix: "px" })],
+  fontSize: [
+    5,
+    range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" }),
+  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   gnarledText: [false, boolean({ name: "Gnarled Text" })],
   ...imageOpts,
 } satisfies HandoutConfig;
 
 export const ThreePanelDirectionalSignConfig = {
+  dimensions: {
+    pageWidth: [
+      50,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
+  },
   panel1: {
     text: ["Baldur's Gate", text({ name: "Text" })],
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
     fontSize: [
-      58,
-      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
+      8,
+      range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" }),
     ],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
     xOffset: [
-      0,
-      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
+      2,
+      range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
     ],
     yOffset: [
       0,
-      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
+      range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
     ],
   },
   panel2: {
@@ -558,17 +576,17 @@ export const ThreePanelDirectionalSignConfig = {
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
     fontSize: [
-      48,
-      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
+      6.8,
+      range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" }),
     ],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
     xOffset: [
-      0,
-      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
+      2,
+      range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
     ],
     yOffset: [
       0,
-      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
+      range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
     ],
   },
   panel3: {
@@ -576,19 +594,52 @@ export const ThreePanelDirectionalSignConfig = {
     font: [FontFamily.IM_FELL_DISPLAY, fontPicker()],
     fontWeight: [FontWeight.BOLD, fontWeightPicker()],
     fontSize: [
-      48,
-      range({ name: "Font Size", min: 16, max: 200, suffix: "px" }),
+      6.8,
+      range({ name: "Font Size", min: 2, max: 20, step: 0.1, suffix: "cqw" }),
     ],
     gnarledText: [true, boolean({ name: "Gnarled Text" })],
     xOffset: [
-      0,
-      range({ name: "X-Offset", min: -200, max: 300, suffix: "px" }),
+      2,
+      range({ name: "X-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
     ],
     yOffset: [
       0,
-      range({ name: "Y-Offset", min: -200, max: 300, suffix: "px" }),
+      range({ name: "Y-Offset", min: -20, max: 30, step: 0.5, suffix: "" }),
     ],
   },
+  ...imageOpts,
+} satisfies HandoutConfig;
+
+export const Rectangle1WoodenSignConfig = {
+  dimensions: {
+    pageWidth: [
+      50,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
+  },
+  text: [
+    `# THE PRANCING PONY
+_Inn & Tavern_`,
+    textArea({ name: "Text" }),
+  ],
+  textPosition: {
+    top: [
+      28,
+      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+    ],
+    yOffset: [
+      7,
+      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+    ],
+  },
+  font: [FontFamily.SERIF, fontPicker()],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  fontSize: [
+    5,
+    range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" }),
+  ],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  gnarledText: [false, boolean({ name: "Gnarled Text" })],
   ...imageOpts,
 } satisfies HandoutConfig;
 
@@ -616,6 +667,14 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
     crtPixelColours({ name: "CRT Screen Text Colour" }),
   ],
   textGlow: [true, boolean({ name: "Text Glow" })],
+  bulgeEffect: [
+    120,
+    range({
+      name: "Bulge Effect",
+      min: 0,
+      max: 250,
+    }),
+  ],
   fontSize: [
     2.5,
     range({
@@ -697,6 +756,7 @@ export const SciFiHologramConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
+  pageWidth: [60, range({ name: "Page Width", min: 20, max: 100, suffix: "" })],
   image: ["/default_images/darth.png", imageInput()],
   overlayColor: ["#456099", colour({ name: "Overlay Color" })],
   warbleEffect: [true, boolean({ name: "Warble Effect" })],
@@ -719,7 +779,16 @@ export const SciFiHologramConfig = {
       0.8,
       range({ name: "Scanline Opacity", min: 0, max: 1, step: 0.1 }),
     ],
-    size: [2, range({ name: "Scanline Size", min: 0, max: 10, step: 1 })],
+    size: [
+      0.5,
+      range({
+        name: "Scanline Size",
+        min: 0,
+        max: 3,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
   },
   isTransparent: [false, boolean({ name: "Is Transparent" })],
   isFadeOut: [false, boolean({ name: "Is Fade Out" })],
@@ -727,24 +796,60 @@ export const SciFiHologramConfig = {
 
 export const PolaroidConfig = {
   ...positioning,
+  pageWidth: [50, range({ name: "Page Width", min: 20, max: 80, suffix: "" })],
   paperTexture: ["none", paperTexture()],
+  padding: [4, range({ name: "Padding", min: 0, max: 10, suffix: "cqw" })],
+  paddingBottom: [
+    16,
+    range({ name: "Padding Bottom", min: 0, max: 30, suffix: "cqw" }),
+  ],
   imageUrl: ["/default_images/Leonard.webp", imageInput()],
   ...imagePostProcessing,
+  captionGap: [
+    3,
+    range({ name: "Caption Gap", min: 0, max: 10, suffix: "cqw" }),
+  ],
   captionText: {
-    ...textFull({
-      text: {
-        default: "DON'T BELIEVE HIS LIES",
-        name: "Caption Text",
-        placeholder: "Enter caption...",
-      },
-      font: { default: FontFamily.CAVEAT },
-      fontSize: { default: 32 },
-      textAlign: { default: "text-center" },
-      textStyle: { default: "", name: "Caption Style" },
-    }),
+    text: [
+      "DON'T BELIEVE HIS LIES",
+      text({ name: "Caption Text", placeholder: "Enter caption..." }),
+    ],
+    font: [FontFamily.CAVEAT, fontPicker({ name: "Caption Font" })],
+    fontSize: [
+      7,
+      range({
+        name: "Caption Font Size",
+        min: 2,
+        max: 12,
+        step: 0.1,
+        suffix: "cqw",
+      }),
+    ],
+    fontWeight: [
+      FontWeight.NORMAL,
+      fontWeightPicker({ name: "Caption Weight" }),
+    ],
+    textAlign: ["text-center", textAlign({ name: "Caption Alignment" })],
   },
   showPin: [false, boolean({ name: "Show Pin" })],
+  pinSize: [8, range({ name: "Pin Size", min: 2, max: 20, suffix: "cqw" })],
+  pinOffset: [
+    -2.5,
+    range({ name: "Pin Offset", min: -10, max: 10, suffix: "cqw" }),
+  ],
   showPaperclip: [true, boolean({ name: "Show Paperclip" })],
+  paperclipSize: [
+    6,
+    range({ name: "Paperclip Size", min: 2, max: 15, suffix: "cqw" }),
+  ],
+  paperclipOffset: [
+    -2,
+    range({ name: "Paperclip Offset", min: -10, max: 10, suffix: "cqw" }),
+  ],
+  paperclipLeftOffset: [
+    7.5,
+    range({ name: "Paperclip Left Offset", min: 0, max: 30, suffix: "cqw" }),
+  ],
   showStack: [false, boolean({ name: "Show Stack" })],
 } satisfies HandoutConfig;
 
@@ -755,6 +860,19 @@ export const CrystalBallConfig = {
   showGlare: [true, boolean({ name: "Show Glare" })],
   showDirectionalLight: [true, boolean({ name: "Show Directional Light" })],
   showShadowOnStand: [true, boolean({ name: "Show Shadow on Stand" })],
+} satisfies HandoutConfig;
+
+export const TallVertical1FlagConfig = {
+  ...positioning,
+  overlayImage: ["", imageInput({ name: "Overlay Image" })],
+  zoom: [100, range({ name: "Zoom", min: 50, max: 300, suffix: "%" })],
+  rotation: [0, range({ name: "Rotation", min: -180, max: 180, suffix: "°" })],
+  xOffset: [0, range({ name: "X Offset", min: -30, max: 30, suffix: "" })],
+  yOffset: [0, range({ name: "Y Offset", min: -30, max: 30, suffix: "" })],
+  flag_background_colour: [
+    "#FFFFFF",
+    colour({ name: "Flag Background Colour" }),
+  ],
 } satisfies HandoutConfig;
 
 export const TestConfig = {
@@ -827,6 +945,13 @@ export const allConfigs = [
     config: ThreePanelDirectionalSignConfig,
   } as const,
   {
+    name: "Rectangle1WoodenSign",
+    displayName: "Rectangle 1",
+    caption: "A rectangular wooden sign post with customizable text",
+    type: "wooden_signs",
+    config: Rectangle1WoodenSignConfig,
+  } as const,
+  {
     name: "CrtScreen",
     displayName: "CRT Screen",
     caption: "A CRT screen, with markdown-configurable text",
@@ -860,6 +985,13 @@ export const allConfigs = [
     caption: "A mystical crystal ball with a single image",
     type: "object",
     config: CrystalBallConfig,
+  } as const,
+  {
+    name: "TallVertical1Flag",
+    displayName: "Tall Vertical 1",
+    caption: "A tall vertical flag with customizable overlay image",
+    type: "flags_and_banners",
+    config: TallVertical1FlagConfig,
   } as const,
   {
     name: "Test",

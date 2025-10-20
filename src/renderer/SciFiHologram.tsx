@@ -17,23 +17,16 @@ interface SciFiHologramProps {
 
 export function SciFiHologram({ data }: SciFiHologramProps) {
   const { image, overlayColor } = data;
-  const scanlineSize = data.scanlines.size as unknown as string;
 
-  const [imageDimensions, setImageDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
+  const [aspectRatio, setAspectRatio] = useState(1);
 
-  // get the image width and height
+  // get the image aspect ratio
   useEffect(() => {
     if (!image) return;
 
     const img = new Image();
     img.onload = () => {
-      setImageDimensions({
-        width: img.naturalWidth,
-        height: img.naturalHeight,
-      });
+      setAspectRatio(img.naturalWidth / img.naturalHeight);
     };
     img.src = image;
   }, [image]);
@@ -49,79 +42,81 @@ drop-shadow(0px 0px 15px ${overlayColor})
 
   const scanlinesCss = `
 to bottom,
-transparent 0px,
-transparent ${scanlineSize}px,
-${hexToRgba("#000000", data.scanlines.opacity)} ${scanlineSize}px,
-${hexToRgba("#000000", data.scanlines.opacity)} ${
-    parseInt(scanlineSize) + parseInt(scanlineSize)
-  }px
+transparent 0cqw,
+transparent ${data.scanlines.size}cqw,
+${hexToRgba("#000000", data.scanlines.opacity)} ${data.scanlines.size}cqw,
+${hexToRgba("#000000", data.scanlines.opacity)} ${data.scanlines.size * 2}cqw
 `;
 
   return (
     <div
+      style={{ width: `${data.pageWidth}cqw` }}
       className={classNames(
-        "flex w-full justify-center",
+        "xl:max-w-[50em] max-w-[40em] relative inline-block",
         data.isFadeOut && "fade-bottom",
         data.isTransparent && "opacity-80"
       )}
     >
       <div
+        className="w-full h-full"
         style={{
-          width: `${imageDimensions.width}px`,
-          height: `${imageDimensions.height}px`,
+          containerType: "inline-size",
         }}
-        className={classNames(
-          "main-wrapper relative h-[80vh]"
-          // data.isFadeOut && "fade-bottom",
-          // data.isTransparent && "opacity-80"
-        )}
       >
-        <img
-          className="h-full"
-          src={data.image}
-          style={{
-            filter: baseFilter,
-          }}
-        />
-
-        {/* this is the colour effect layer: it makes the image go the right colour */}
         <div
           style={{
-            width: `${imageDimensions.width}px`,
-            backgroundColor: overlayColor,
-            maskImage: `url(${data.image})`,
-            maskRepeat: "no-repeat",
-            mixBlendMode: "color",
-            backgroundImage:
-              (data.scanlines.size >= 1 &&
-                `repeating-linear-gradient(
+            width: "100%",
+            aspectRatio: aspectRatio,
+          }}
+          className="main-wrapper relative"
+        >
+          <img
+            className="w-full h-full object-contain"
+            src={data.image}
+            style={{
+              filter: baseFilter,
+            }}
+          />
+
+          {/* this is the colour effect layer: it makes the image go the right colour */}
+          <div
+            style={{
+              backgroundColor: overlayColor,
+              maskImage: `url(${data.image})`,
+              maskRepeat: "no-repeat",
+              maskSize: "contain",
+              mixBlendMode: "color",
+              backgroundImage:
+                (data.scanlines.size >= 0.1 &&
+                  `repeating-linear-gradient(
             ${scanlinesCss}
           )`) ||
-              "",
-          }}
-          className="absolute top-0 left-0 h-full w-full noise-filter"
-        ></div>
+                "",
+            }}
+            className="absolute top-0 left-0 h-full w-full noise-filter"
+          ></div>
 
-        {/* this is the "effect" layer: it modifies the colour layer to make it look like it's been "burned in" or 
+          {/* this is the "effect" layer: it modifies the colour layer to make it look like it's been "burned in" or
 other effects */}
-        <div
-          style={{
-            width: `${imageDimensions.width}px`,
-            backgroundColor: "#ccc",
-            maskImage: `url(${data.image})`,
-            maskRepeat: "no-repeat",
-            backgroundImage:
-              (data.scanlines.size >= 1 &&
-                `repeating-linear-gradient(
+          <div
+            style={{
+              backgroundColor: "#ccc",
+              maskImage: `url(${data.image})`,
+              maskRepeat: "no-repeat",
+              maskSize: "contain",
+              backgroundImage:
+                (data.scanlines.size >= 0.1 &&
+                  `repeating-linear-gradient(
             ${scanlinesCss}
           )`) ||
-              "",
-          }}
-          className={classNames(
-            "absolute top-0 left-0 h-full w-full noise-filter",
-            data.blendEffect
-          )}
-        ></div>
+                "",
+            }}
+            className={classNames(
+              "absolute top-0 left-0 h-full w-full noise-filter",
+              data.blendEffect
+            )}
+          ></div>
+        </div>
       </div>
     </div>
   );

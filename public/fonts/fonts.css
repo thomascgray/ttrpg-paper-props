@@ -407,3 +407,35 @@
   font-display: swap;
   src: url("/fonts/Zeyada-Regular.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "Gloria Hallelujah";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/GloriaHallelujah-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lacquer";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Lacquer-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Mansalva";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Mansalva-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Schoolbell";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Schoolbell-Regular.ttf") format("truetype");
+}

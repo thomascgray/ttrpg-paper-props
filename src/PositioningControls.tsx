@@ -33,12 +33,9 @@ export const PositioningControls = ({
 
   return (
     <div
-      className={classNames(
-        "absolute top-4 left-[50%] -translate-x-[50%] transition-all z-50",
-        {
-          "bg-slate-500 p-4 rounded-md": isOpen,
-        }
-      )}
+      className={classNames("absolute top-4 right-4 transition-all z-50", {
+        "bg-slate-500 p-4 rounded-md": isOpen,
+      })}
     >
       {!isOpen && (
         <button
@@ -50,7 +47,7 @@ export const PositioningControls = ({
           <span className="flex items-center gap-2">
             <Icon name="adjustments-horizontal" colour="white" size="sm" />
             <span className="text-white font-bold text-sm">
-              Positioning Controls
+              Zoom, Rotate, Offset
             </span>
           </span>
         </button>
@@ -62,7 +59,7 @@ export const PositioningControls = ({
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-white text-md font-bold">
-                  Positioning Controls
+                  Zoom, Rotate, Offset
                 </h3>
               </div>
               <div className="flex flex-row gap-4 justify-between">
@@ -85,7 +82,7 @@ export const PositioningControls = ({
                     </label>
                     <AngleSlider
                       aria-label="Angle slider"
-                      size={60}
+                      size={100}
                       thumbSize={8}
                       value={rotation}
                       formatLabel={(value) => `${value}°`}

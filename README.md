@@ -47,3 +47,9 @@ https://codepen.io/cauners/pen/ExMaqOW
 https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/feDisplacementMap
 
 https://imgur.com/V6KB8ov
+
+---
+
+# flags
+
+google "Medieval Heraldic Banners blank" for what we want

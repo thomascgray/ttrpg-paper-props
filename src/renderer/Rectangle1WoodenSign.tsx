@@ -1,21 +1,21 @@
 import Markdown from "react-markdown";
-import { HangingWoodenSignConfig } from "../handoutConfigs";
+import { Rectangle1WoodenSignConfig } from "../handoutConfigs";
 import { ExtractConfigValues } from "../types";
 import classNames from "classnames";
 import { getImageProcessingStyles } from "../utils";
 
-type HangingWoodenSignData = ExtractConfigValues<
-  typeof HangingWoodenSignConfig
+type Rectangle1WoodenSignData = ExtractConfigValues<
+  typeof Rectangle1WoodenSignConfig
 >;
 
-export const HangingWoodenSign = ({
+export const Rectangle1WoodenSign = ({
   handout,
 }: {
-  handout: HangingWoodenSignData;
+  handout: Rectangle1WoodenSignData;
 }) => {
   return (
     <div
-      className="relative  flex justify-around max-w-[80em]"
+      className="relative transition-all flex justify-around max-w-[80em]"
       style={{
         width: `${handout.dimensions.pageWidth}cqw`,
       }}
@@ -28,8 +28,8 @@ export const HangingWoodenSign = ({
       >
         <div className="relative w-full">
           <img
-            src={"/images/wooden_signs/hanging.webp"}
-            alt="Hanging wooden sign"
+            src={"/images/wooden_signs/sign post a.webp"}
+            alt="Rectangular wooden sign"
             className="w-full h-auto"
             style={{
               transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,
@@ -40,15 +40,13 @@ export const HangingWoodenSign = ({
           <div
             id="main_copy"
             style={{
-              top: `${
-                handout.textPosition.top + handout.textPosition.yOffset
-              }cqw`,
+              top: `${handout.textPosition.top + handout.textPosition.yOffset}cqw`,
               fontSize: `${handout.fontSize}cqw`,
               lineHeight: `${handout.fontSize}cqw`,
               width: "90%",
             }}
             className={classNames(
-              `absolute  engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
+              `absolute transition-all engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
               {
                 "rough-edges": handout.gnarledText,
               }

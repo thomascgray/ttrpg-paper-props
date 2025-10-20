@@ -16,6 +16,7 @@ import { BookCover } from "./renderer/BookCover";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
 import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
 import { ThreePanelDirectionalSign } from "./renderer/ThreePanelDirectionalSign";
+import { Rectangle1WoodenSign } from "./renderer/Rectangle1WoodenSign";
 import { CrtScreen } from "./renderer/CrtScreen";
 import { appState as appStateProxy } from "./appState";
 import { allConfigs } from "./handoutConfigs";
@@ -31,6 +32,7 @@ import { PaperMap } from "./renderer/PaperMap";
 import { SciFiHologram } from "./renderer/SciFiHologram";
 import { Polaroid } from "./renderer/Polaroid";
 import { CrystalBall } from "./renderer/CrystalBall";
+import { TallVertical1Flag } from "./renderer/TallVertical1Flag";
 import { Test } from "./renderer/Test";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
@@ -63,24 +65,37 @@ function App() {
       });
   }, []);
 
-  // Initialize from URL on mount
+  // Sync URL and app state on mount
+  const [isInitialMount, setIsInitialMount] = useState(true);
+
   useEffect(() => {
     if (!dbReady) return;
 
     const handoutFromUrl = getHandoutFromPath();
-    if (handoutFromUrl && handoutFromUrl !== appState.selectedHandoutType) {
-      appStateProxy.selectedHandoutType = handoutFromUrl;
-      appStateProxy.selectedVersionId = "TRANSIENT";
-    } else {
-      // Update URL to match current selection if no route in URL
-      updateUrlForHandout(appState.selectedHandoutType);
+    if (handoutFromUrl) {
+      // URL has a valid handout - use it
+      if (handoutFromUrl !== appStateProxy.selectedHandoutType) {
+        appStateProxy.selectedHandoutType = handoutFromUrl;
+        appStateProxy.selectedVersionId = "TRANSIENT";
+      }
+    } else if (
+      window.location.pathname === "/" ||
+      window.location.pathname === ""
+    ) {
+      // At root path - update URL to match database-restored handout
+      updateUrlForHandout(appStateProxy.selectedHandoutType);
     }
+    // Note: If URL has an unrecognized path, we don't change it
+    // The appState will have the database-restored value, but URL stays as-is
+
+    setIsInitialMount(false);
   }, [dbReady]);
 
-  // Update URL when handout type changes
+  // Update URL when handout type changes (but not during initial mount)
   useEffect(() => {
+    if (!dbReady || isInitialMount) return;
     updateUrlForHandout(appState.selectedHandoutType);
-  }, [appState.selectedHandoutType]);
+  }, [appState.selectedHandoutType, dbReady, isInitialMount]);
 
   // Handle browser back/forward
   useEffect(() => {
@@ -122,18 +137,19 @@ function App() {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Database Error</h1>
+          <h1 className="text-2xl font-bold text-red-600 mb-4">
+            Database Error
+          </h1>
           <p className="text-gray-700 mb-4">
-            Failed to initialize the application database. This might be caused by:
+            Failed to initialize the application database. This might be caused
+            by:
           </p>
           <ul className="list-disc list-inside text-gray-600 mb-4 space-y-1">
             <li>Private/Incognito browsing mode blocking storage</li>
             <li>Browser storage quota exceeded</li>
             <li>Browser security settings blocking IndexedDB</li>
           </ul>
-          <p className="text-sm text-gray-500">
-            Error: {dbError.message}
-          </p>
+          <p className="text-sm text-gray-500">Error: {dbError.message}</p>
         </div>
       </div>
     );
@@ -201,12 +217,10 @@ function App() {
                 If you want to hold onto a particular configuration, save it
                 with the "Save Snapshot"
               </li>
-              <li>To share the handouts, simply take a screenshot</li>
-              <ul className="list-disc list-inside ml-2">
-                <li>On Windows: Windows + Shift + S</li>
-                <li>On Mac: Command + Shift + 4</li>
-                <li>On Linux: Shift + Print Screen (probably)</li>
-              </ul>
+              <li>
+                To share the handout, either hit the blue export button at the
+                bottom right of the render window, simply take a screenshot
+              </li>
               <li>
                 Paste the image into your group chat, reddit post, email, etc.
               </li>
@@ -268,7 +282,7 @@ function App() {
                 <option value="TRANSIENT">Unsaved snapshot</option>
               </select>
             </div>
-            <p className="text-sm italic mt-3">
+            <p className="text-xs italic mt-3">
               Snapshots are saved locally to your machine - no data is sent to
               any server.
             </p>
@@ -329,7 +343,7 @@ function App() {
                   d="M5 15l7-7 7 7"
                 />
               </svg>
-              <span>Settings</span>
+              <span>Form</span>
             </button>
 
             <div className="p-4">
@@ -366,7 +380,7 @@ function App() {
                     <option value="TRANSIENT">Unsaved snapshot</option>
                   </select>
                 </div>
-                <p className="text-sm italic mt-3">
+                <p className="text-xs italic mt-3">
                   Snapshots are saved locally to your machine - no data is sent
                   to any server.
                 </p>
@@ -417,7 +431,7 @@ function App() {
                 d="M5 15l7-7 7 7"
               />
             </svg>
-            <span>Settings</span>
+            <span>Form</span>
           </button>
         )}
 
@@ -519,6 +533,13 @@ function App() {
                     />
                   )}
 
+                {currentHandoutTransientRow.type === "Rectangle1WoodenSign" &&
+                  appState.selectedHandoutType === "Rectangle1WoodenSign" && (
+                    <Rectangle1WoodenSign
+                      handout={currentHandoutTransientRow.data}
+                    />
+                  )}
+
                 {currentHandoutTransientRow.type === "CrtScreen" &&
                   appState.selectedHandoutType === "CrtScreen" && (
                     <CrtScreen handout={currentHandoutTransientRow.data} />
@@ -542,6 +563,12 @@ function App() {
                   appState.selectedHandoutType === "CrystalBall" && (
                     <CrystalBall handout={currentHandoutTransientRow.data} />
                   )}
+                {currentHandoutTransientRow.type === "TallVertical1Flag" &&
+                  appState.selectedHandoutType === "TallVertical1Flag" && (
+                    <TallVertical1Flag
+                      handout={currentHandoutTransientRow.data}
+                    />
+                  )}
                 {currentHandoutTransientRow.type === "Test" &&
                   appState.selectedHandoutType === "Test" && (
                     <Test data={currentHandoutTransientRow.data} />
@@ -552,7 +579,6 @@ function App() {
 
           {/* Floating Controls - positioned absolute relative to right-column */}
           <BackgroundSelector />
-          {/* <SignInFloatingButton /> */}
           <ExportImageButton />
           <PositioningControls
             data={currentHandoutTransientRow.data}

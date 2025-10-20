@@ -11,6 +11,7 @@ export const routes: Record<string, AllConfigNames> = {
   "/potion": "LabelledLiquid", // Alias for labelled liquid
   "/hanging-sign": "HangingWoodenSign",
   "/directional-sign": "ThreePanelDirectionalSign",
+  "/rectangle-sign-1": "Rectangle1WoodenSign",
   "/crt-screen": "CrtScreen",
   "/monitor": "CrtScreen", // Alias for CRT screen
   "/paper-map": "PaperMap",
@@ -19,6 +20,8 @@ export const routes: Record<string, AllConfigNames> = {
   "/sci-fi-hologram": "SciFiHologram",
   "/polaroid": "Polaroid",
   "/crystal-ball": "CrystalBall",
+  "/flag-tall-vertical-1": "TallVertical1Flag",
+  "/flag": "TallVertical1Flag", // Alias for flag
   "/test": "Test" as any,
 };
 
@@ -32,11 +35,13 @@ export const handoutToRoute: Record<AllConfigNames, string> = {
   LabelledLiquid: "/labelled-liquid",
   HangingWoodenSign: "/hanging-sign",
   ThreePanelDirectionalSign: "/directional-sign",
+  Rectangle1WoodenSign: "/rectangle-sign-1",
   CrtScreen: "/crt-screen",
   PaperMap: "/paper-map",
   SciFiHologram: "/hologram",
   Polaroid: "/polaroid",
   CrystalBall: "/crystal-ball",
+  TallVertical1Flag: "/flag-tall-vertical-1",
   Test: "/test" as any,
 };
 

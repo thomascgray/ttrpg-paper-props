@@ -12,13 +12,13 @@ export const BackgroundSelector = () => {
   return (
     <div
       className={classNames(
-        "fixed md:absolute bottom-4 left-4 transition-all z-50",
+        "fixed md:absolute bottom-6 left-6 transition-all z-50",
         {
           "bg-gray-400 p-4 rounded-md": isOpen,
         }
       )}
     >
-      <span className="flex items-center gap-4 mb-4">
+      <span className="flex items-center gap-4">
         <button
           onClick={() => {
             appStateProxy.backgroundSelectorState =
