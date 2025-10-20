@@ -12,10 +12,11 @@ export const TallVertical1Flag = ({
   handout: TallVertical1FlagData;
 }) => {
   const actualZoom = handout.zoom - 100;
-  console.log("actualZoom", actualZoom);
   // then we half that, and apply half to the left and add half to the width
-  const leftToApply = (actualZoom / 2) * -1 + handout.offset.x;
-  const topToApply = (actualZoom / 2) * -1 + handout.offset.y;
+  const leftToApply =
+    (actualZoom / 2) * -1 + parseInt(handout.xOffset as unknown as string);
+  const topToApply =
+    (actualZoom / 2) * -1 + parseInt(handout.yOffset as unknown as string);
   const widthToApply = actualZoom;
   const heightToApply = actualZoom;
 
@@ -23,7 +24,7 @@ export const TallVertical1Flag = ({
     <div
       className="relative flex justify-around"
       style={{
-        width: `${handout.dimensions.pageWidth}cqw`,
+        width: `50cqw`,
         containerType: "inline-size",
       }}
     >
@@ -57,6 +58,7 @@ export const TallVertical1Flag = ({
             maskRepeat: "no-repeat",
             maskSize: "contain",
             backgroundColor: handout.flag_background_colour,
+            overflow: "clip",
             // background: `url(${handout.overlayImage})`,
             // transform: `rotateX(0deg) rotateY(-45deg) rotateZ(0deg)`,
           }}

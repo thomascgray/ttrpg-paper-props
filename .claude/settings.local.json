@@ -4,7 +4,8 @@
       "Bash(bun x tsx:*)",
       "Bash(bun x tsc:*)",
       "WebSearch",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(git fetch origin master)"
     ],
     "deny": []
   },

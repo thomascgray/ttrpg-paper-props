@@ -864,17 +864,15 @@ export const CrystalBallConfig = {
 
 export const TallVertical1FlagConfig = {
   ...positioning,
-  dimensions: {
-    pageWidth: [
-      40,
-      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
-    ],
-  },
   overlayImage: ["", imageInput({ name: "Overlay Image" })],
   zoom: [100, range({ name: "Zoom", min: 50, max: 300, suffix: "%" })],
   rotation: [0, range({ name: "Rotation", min: -180, max: 180, suffix: "°" })],
-  offset: [{ x: 0, y: 0 }, x_y_position({ name: "Offset" })],
-  flag_background_colour: ["#FFFFFF", colour({ name: "Flag Background Colour" })],
+  xOffset: [0, range({ name: "X Offset", min: -30, max: 30, suffix: "" })],
+  yOffset: [0, range({ name: "Y Offset", min: -30, max: 30, suffix: "" })],
+  flag_background_colour: [
+    "#FFFFFF",
+    colour({ name: "Flag Background Colour" }),
+  ],
 } satisfies HandoutConfig;
 
 export const TestConfig = {

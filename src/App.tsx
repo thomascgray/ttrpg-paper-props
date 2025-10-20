@@ -65,24 +65,34 @@ function App() {
       });
   }, []);
 
-  // Initialize from URL on mount
+  // Sync URL and app state on mount
+  const [isInitialMount, setIsInitialMount] = useState(true);
+
   useEffect(() => {
     if (!dbReady) return;
 
     const handoutFromUrl = getHandoutFromPath();
-    if (handoutFromUrl && handoutFromUrl !== appState.selectedHandoutType) {
-      appStateProxy.selectedHandoutType = handoutFromUrl;
-      appStateProxy.selectedVersionId = "TRANSIENT";
-    } else {
-      // Update URL to match current selection if no route in URL
-      updateUrlForHandout(appState.selectedHandoutType);
+    if (handoutFromUrl) {
+      // URL has a valid handout - use it
+      if (handoutFromUrl !== appStateProxy.selectedHandoutType) {
+        appStateProxy.selectedHandoutType = handoutFromUrl;
+        appStateProxy.selectedVersionId = "TRANSIENT";
+      }
+    } else if (window.location.pathname === "/" || window.location.pathname === "") {
+      // At root path - update URL to match database-restored handout
+      updateUrlForHandout(appStateProxy.selectedHandoutType);
     }
+    // Note: If URL has an unrecognized path, we don't change it
+    // The appState will have the database-restored value, but URL stays as-is
+
+    setIsInitialMount(false);
   }, [dbReady]);
 
-  // Update URL when handout type changes
+  // Update URL when handout type changes (but not during initial mount)
   useEffect(() => {
+    if (!dbReady || isInitialMount) return;
     updateUrlForHandout(appState.selectedHandoutType);
-  }, [appState.selectedHandoutType]);
+  }, [appState.selectedHandoutType, dbReady, isInitialMount]);
 
   // Handle browser back/forward
   useEffect(() => {
