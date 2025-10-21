@@ -15,9 +15,9 @@ export const Rectangle1WoodenSign = ({
 }) => {
   return (
     <div
-      className="relative transition-all flex justify-around max-w-[80em]"
+      className="relative flex justify-around max-w-[80em]"
       style={{
-        width: `${handout.dimensions.pageWidth}cqw`,
+        width: `${handout.handoutWidth}cqw`,
       }}
     >
       <div
@@ -26,7 +26,12 @@ export const Rectangle1WoodenSign = ({
           containerType: "inline-size",
         }}
       >
-        <div className="relative w-full">
+        <div
+          className="relative w-full"
+          style={{
+            perspective: "500px",
+          }}
+        >
           <img
             src={"/images/wooden_signs/sign post a.webp"}
             alt="Rectangular wooden sign"
@@ -40,13 +45,15 @@ export const Rectangle1WoodenSign = ({
           <div
             id="main_copy"
             style={{
-              top: `${handout.textPosition.top + handout.textPosition.yOffset}cqw`,
+              top: `${handout.textYOffset}cqw`,
+              left: `${handout.textXOffset}cqw`,
               fontSize: `${handout.fontSize}cqw`,
               lineHeight: `${handout.fontSize}cqw`,
-              width: "90%",
+              width: "83%",
+              transform: `translateX(13cqw) rotateX(0deg) rotateY(13deg) rotateZ(0deg)`,
             }}
             className={classNames(
-              `absolute transition-all engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
+              `absolute engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
               {
                 "rough-edges": handout.gnarledText,
               }

@@ -611,31 +611,43 @@ export const ThreePanelDirectionalSignConfig = {
 } satisfies HandoutConfig;
 
 export const Rectangle1WoodenSignConfig = {
-  dimensions: {
-    pageWidth: [
-      50,
-      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
-    ],
-  },
+  handoutWidth: [
+    50,
+    range({
+      name: "Handout Render Size",
+      min: 20,
+      max: 100,
+      step: 1,
+      suffix: "",
+    }),
+  ],
   text: [
     `# THE PRANCING PONY
 _Inn & Tavern_`,
     textArea({ name: "Text" }),
   ],
-  textPosition: {
-    top: [
-      28,
-      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
-    ],
-    yOffset: [
-      7,
-      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
-    ],
-  },
+  textXOffset: [
+    0,
+    range({ name: "Text X-Offset", min: -100, max: 100, suffix: "" }),
+  ],
+  textYOffset: [
+    42,
+    range({ name: "Text Y-Offset", min: -100, max: 100, suffix: "" }),
+  ],
+  // textPosition: {
+  //   top: [
+  //     28,
+  //     range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+  //   ],
+  //   yOffset: [
+  //     7,
+  //     range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+  //   ],
+  // },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   fontSize: [
-    5,
+    3,
     range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" }),
   ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
