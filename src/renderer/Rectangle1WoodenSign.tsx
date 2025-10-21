@@ -29,7 +29,7 @@ export const Rectangle1WoodenSign = ({
         <div
           className="relative w-full"
           style={{
-            perspective: "500px",
+            perspective: "250px",
           }}
         >
           <img
@@ -43,23 +43,31 @@ export const Rectangle1WoodenSign = ({
           />
 
           <div
-            id="main_copy"
             style={{
-              top: `${handout.textYOffset}cqw`,
-              left: `${handout.textXOffset}cqw`,
-              fontSize: `${handout.fontSize}cqw`,
-              lineHeight: `${handout.fontSize}cqw`,
-              width: "83%",
-              transform: `translateX(13cqw) rotateX(0deg) rotateY(13deg) rotateZ(0deg)`,
+              perspective: "250px",
+              transform: `translateY(${handout.textYOffset}em)`,
             }}
-            className={classNames(
-              `absolute engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
-              {
-                "rough-edges": handout.gnarledText,
-              }
-            )}
+            className="absolute engraved-text top-0 left-0 w-full h-full"
           >
-            <Markdown>{handout.text}</Markdown>
+            <div
+              id="main_copy"
+              style={{
+                top: `240px`,
+                left: `${handout.textXOffset}cqw`,
+                fontSize: `${handout.fontSize}cqw`,
+                lineHeight: `${handout.fontSize}cqw`,
+                width: "83%",
+                transform: `translateX(13cqw) rotateX(0deg) rotateY(10deg) rotateZ(0deg)`,
+              }}
+              className={classNames(
+                `absolute engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
+                {
+                  "rough-edges": handout.gnarledText,
+                }
+              )}
+            >
+              <Markdown>{handout.text}</Markdown>
+            </div>
           </div>
         </div>
       </div>
