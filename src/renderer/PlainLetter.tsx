@@ -15,7 +15,7 @@ export const PlainLetter = ({ handout }: { handout: PlainLetterData }) => {
       style={{
         backgroundColor: paperTint,
         backgroundBlendMode: "multiply",
-        width: `${handout.pageWidth}em`,
+        width: `${handout.pageWidth}cqw`,
         boxShadow: `${
           handout.isPaperShadow ? "inset 0 0 25px #000000" : "none"
         }`,

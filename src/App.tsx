@@ -185,129 +185,158 @@ function App() {
       </Helmet>
       <div className="flex h-screen flex-col md:flex-row">
         {/* Desktop Layout - Left Column */}
-        <div className="hidden md:block left-column bg-gray-300 overflow-y-scroll h-full p-4 md:w-1/4 md:min-w-[500px]">
-          <h1 className="text-2xl font-poppins font-bold mb-4 md:min-w-[400px]">
-            📜 Tombola's RPG Handout Builder
-          </h1>
+        <div
+          className="hidden md:block left-column  p-4 md:w-1/4 md:min-w-[500px]"
+          style={{
+            ...(appState.backgroundType === "color"
+              ? { backgroundColor: appState.backgroundColor }
+              : appState.backgroundType === "gradient"
+              ? {
+                  background:
+                    appState.backgroundGradientType === "linear"
+                      ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : appState.backgroundGradientType === "radial"
+                      ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                }
+              : appState.backgroundType === "custom" &&
+                appState.backgroundCustomImage
+              ? {
+                  backgroundImage: `url(${appState.backgroundCustomImage})`,
+                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
+                  backgroundPosition: "center center",
+                  backgroundRepeat: "no-repeat",
+                  filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+                }
+              : { backgroundColor: "#2f3640" }),
+          }}
+        >
+          <div className="bg-gray-300 p-4 overflow-y-scroll h-full rounded-lg">
+            <h1 className="text-2xl font-poppins font-bold mb-4 md:min-w-[400px]">
+              📜 Tombola's RPG Handout Builder
+            </h1>
 
-          <p className="text-xs text-gray-700 italic my-4">
-            This tool is in early and active development. I'm often releasing
-            improvements, but that means unfortunately its common for things to
-            explode, snapshots to be lost, etc. Sorry about that!
-          </p>
-
-          <details className="text-xs text-gray-700 mb-4">
-            <summary className="text-xs text-gray-700 cursor-pointer">
-              What is this tool? What am I looking at?
-            </summary>
-            <br />
-            <p className="font-bold text-sm">
-              Welcome to Tombola's RPG Handout Builder!
+            <p className="text-xs text-gray-700 italic my-4">
+              This tool is in early and active development. I'm often releasing
+              improvements, but that means unfortunately its common for things
+              to explode, snapshots to be lost, etc. Sorry about that!
             </p>
-            <p>
-              This tool is designed to help you create handouts for roleplaying
-              games.
-            </p>
-            <br />
-            <ul className="list-decimal list-inside">
-              <li>Select different handout types from the dropdown below</li>
-              <li>Then use the form below to change options</li>
-              <li>The handouts render on the right in real-time</li>
-              <li>
-                If you want to hold onto a particular configuration, save it
-                with the "Save Snapshot"
-              </li>
-              <li>
-                To share the handout, either hit the blue export button at the
-                bottom right of the render window, simply take a screenshot
-              </li>
-              <li>
-                Paste the image into your group chat, reddit post, email, etc.
-              </li>
-              <li>Bask in the praise of your playing group</li>
-            </ul>
-            <p className="mt-2 text-xs text-gray-700">
-              Made by{" "}
-              <a
-                target="_blank"
-                className="text-blue-500 underline"
-                href="https://tomg.cool/"
-              >
-                me, Tom
-              </a>
-              <br />
-              <br />
-              APP VERSION v0.{APP_VERSION}
-              <br />
-              <br />
-              Bugs? Feature requests? Love it? Hate it?{" "}
-              <a
-                target="_blank"
-                className="text-blue-500 underline"
-                href="https://bsky.app/profile/tombola.bsky.social"
-              >
-                Tell me on Bluesky!
-              </a>
-            </p>
-          </details>
 
-          <HandoutTypeSelector />
+            <details className="text-xs text-gray-700 mb-4">
+              <summary className="text-xs text-gray-700 cursor-pointer">
+                What is this tool? What am I looking at?
+              </summary>
+              <br />
+              <p className="font-bold text-sm">
+                Welcome to Tombola's RPG Handout Builder!
+              </p>
+              <p>
+                This tool is designed to help you create handouts for
+                roleplaying games.
+              </p>
+              <br />
+              <ul className="list-decimal list-inside">
+                <li>Select different handout types from the dropdown below</li>
+                <li>Then use the form below to change options</li>
+                <li>The handouts render on the right in real-time</li>
+                <li>
+                  If you want to hold onto a particular configuration, save it
+                  with the "Save Snapshot"
+                </li>
+                <li>
+                  To share the handout, either hit the blue export button at the
+                  bottom right of the render window, simply take a screenshot
+                </li>
+                <li>
+                  Paste the image into your group chat, reddit post, email, etc.
+                </li>
+                <li>Bask in the praise of your playing group</li>
+              </ul>
+              <p className="mt-2 text-xs text-gray-700">
+                Made by{" "}
+                <a
+                  target="_blank"
+                  className="text-blue-500 underline"
+                  href="https://tomg.cool/"
+                >
+                  me, Tom
+                </a>
+                <br />
+                <br />
+                APP VERSION v0.{APP_VERSION}
+                <br />
+                <br />
+                Bugs? Feature requests? Love it? Hate it?{" "}
+                <a
+                  target="_blank"
+                  className="text-blue-500 underline"
+                  href="https://bsky.app/profile/tombola.bsky.social"
+                >
+                  Tell me on Bluesky!
+                </a>
+              </p>
+            </details>
 
-          <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
-            <div className="flex items-center justify-between">
-              <button
-                className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
-                title="Save the current configuration of the handout so that it can be reloaded later"
-                onClick={() => {
-                  saveVersion(
-                    appState.selectedHandoutType,
-                    currentHandoutTransientRow.data
-                  );
-                }}
-              >
-                Save Snapshot
-              </button>
+            <HandoutTypeSelector />
 
-              <select
-                className="text-sm"
-                onChange={(e) => updateTransientRecordToVersion(e.target.value)}
-                value={appState.selectedVersionId}
-              >
-                {(versionsForThisHandoutType || []).map((version) => (
-                  <option value={version.id} key={version.id}>
-                    {version.createdAt.toLocaleDateString()} at{" "}
-                    {version.createdAt.toLocaleTimeString()}
-                  </option>
-                ))}
-                <option value="TRANSIENT">Unsaved snapshot</option>
-              </select>
+            <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
+              <div className="flex items-center justify-between">
+                <button
+                  className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
+                  title="Save the current configuration of the handout so that it can be reloaded later"
+                  onClick={() => {
+                    saveVersion(
+                      appState.selectedHandoutType,
+                      currentHandoutTransientRow.data
+                    );
+                  }}
+                >
+                  Save Snapshot
+                </button>
+
+                <select
+                  className="text-sm"
+                  onChange={(e) =>
+                    updateTransientRecordToVersion(e.target.value)
+                  }
+                  value={appState.selectedVersionId}
+                >
+                  {(versionsForThisHandoutType || []).map((version) => (
+                    <option value={version.id} key={version.id}>
+                      {version.createdAt.toLocaleDateString()} at{" "}
+                      {version.createdAt.toLocaleTimeString()}
+                    </option>
+                  ))}
+                  <option value="TRANSIENT">Unsaved snapshot</option>
+                </select>
+              </div>
+              <p className="text-xs italic mt-3">
+                Snapshots are saved locally to your machine - no data is sent to
+                any server.
+              </p>
             </div>
-            <p className="text-xs italic mt-3">
-              Snapshots are saved locally to your machine - no data is sent to
-              any server.
-            </p>
+
+            <FormRenderer
+              data={currentHandoutTransientRow.data}
+              formConfig={formConfig}
+              onChange={(path: string, value: any) => {
+                // when the user changes ANY form input...
+                // ...update the data in app state
+                const newData = _.cloneDeep(currentHandoutTransientRow.data);
+                _.set(newData, path, value);
+
+                // ...and then update the transient record in the db for this handout type
+                const newDataPlain = JSON.parse(JSON.stringify(newData));
+                db.handouts
+                  .where("id")
+                  .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+                  .modify({
+                    data: newDataPlain,
+                  });
+                appStateProxy.selectedVersionId = "TRANSIENT";
+              }}
+            />
           </div>
-
-          <FormRenderer
-            data={currentHandoutTransientRow.data}
-            formConfig={formConfig}
-            onChange={(path: string, value: any) => {
-              // when the user changes ANY form input...
-              // ...update the data in app state
-              const newData = _.cloneDeep(currentHandoutTransientRow.data);
-              _.set(newData, path, value);
-
-              // ...and then update the transient record in the db for this handout type
-              const newDataPlain = JSON.parse(JSON.stringify(newData));
-              db.handouts
-                .where("id")
-                .equals(`TRANSIENT_${appState.selectedHandoutType}`)
-                .modify({
-                  data: newDataPlain,
-                });
-              appStateProxy.selectedVersionId = "TRANSIENT";
-            }}
-          />
         </div>
 
         {/* Mobile Drawer */}

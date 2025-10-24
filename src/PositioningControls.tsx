@@ -5,8 +5,6 @@ import classNames from "classnames";
 import { AngleSlider } from "@mantine/core";
 import XYPicker from "./components/XYPicker";
 import { RangeInput } from "./components/RangeInput";
-import { useState } from "react";
-import { flushSync } from "react-dom";
 
 interface PositioningControlsProps {
   data: Record<string, any>;
@@ -55,31 +53,28 @@ export const PositioningControls = ({
 
       {isOpen && (
         <>
-          <div className="w-[70vw] md:w-[30vw] xl:w-[20vw]">
+          <div className="w-[70vw] md:w-[40vw] xl:w-[30vw]">
             <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-white text-md font-bold">
-                  Zoom, Rotate, Offset
-                </h3>
-              </div>
+              <h3 className="text-white text-md font-bold">
+                Zoom, Rotate, Offset
+              </h3>
+
               <div className="flex flex-row gap-4 justify-between">
                 {/* zoom and rotate */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 w-1/2">
                   <div className="zoom">
-                    <label className="text-white font-bold">Zoom: {zoom}</label>
+                    <label className="text-white">Zoom: {zoom}</label>
                     <RangeInput
                       value={zoom}
                       onUpdate={(value) => onChange("positioning.zoom", value)}
-                      min={-3}
-                      max={3}
-                      step={0.01}
+                      min={0}
+                      max={6}
+                      step={0.2}
                       suffix={""}
                     />
                   </div>
                   <div className="rotate">
-                    <label className="text-white font-bold">
-                      Rotation: {rotation}°
-                    </label>
+                    <label className="text-white">Rotation: {rotation}°</label>
                     <AngleSlider
                       aria-label="Angle slider"
                       size={100}
@@ -94,8 +89,8 @@ export const PositioningControls = ({
                 </div>
 
                 {/* position */}
-                <div className="">
-                  <label className="text-white font-bold">
+                <div className="w-1/2">
+                  <label className="text-white">
                     X/Y Offset:
                     <br />
                     {xOffset}, {yOffset}
