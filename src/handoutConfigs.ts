@@ -171,19 +171,19 @@ export const NewspaperClippingConfig = {
   },
   dimensions: {
     pageWidth: [
-      60,
-      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+      25,
+      range({ name: "Page Width", min: 2, max: 40, step: 1, suffix: "" }),
     ],
     clippingTopPadding: [
       0,
-      range({ name: "Clipping Top Padding", min: -20, max: 20 }),
+      range({ name: "Clipping Top Padding", min: -50, max: 50 }),
     ],
     clippingBottomPadding: [
       0,
       range({
         name: "Clipping Bottom Padding",
-        min: -20,
-        max: 20,
+        min: -50,
+        max: 50,
       }),
     ],
   },
@@ -341,7 +341,10 @@ export const PlainLetterConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  pageWidth: [50, range({ name: "Page Width", min: 20, max: 80, suffix: "" })],
+  pageWidth: [
+    50,
+    range({ name: "Handout Width", min: 20, max: 80, suffix: "" }),
+  ],
   maintainAspectRatio: [true, boolean({ name: "Maintain Aspect Ratio" })],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   paperTexture: ["grey", paperTexture()],

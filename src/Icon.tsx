@@ -18,6 +18,7 @@ export const iconNames = [
   "user",
   "check",
   "adjustments-horizontal",
+  "file-description",
 ] as const;
 
 export const iconsThatUserStrokeInsteadOfFill: IconName[] = [
@@ -25,6 +26,7 @@ export const iconsThatUserStrokeInsteadOfFill: IconName[] = [
   "x",
   "check",
   "adjustments-horizontal",
+  "file-description",
 ];
 
 export type IconName = (typeof iconNames)[number];
@@ -107,6 +109,16 @@ export const Icon = (props: IconProps) => {
             <path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
             <path d="M4 18l11 0" />
             <path d="M19 18l1 0" />
+          </>
+        )}
+
+        {props.name === "file-description" && (
+          <>
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+            <path d="M9 17h6" />
+            <path d="M9 13h6" />
           </>
         )}
       </svg>

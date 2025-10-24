@@ -30,7 +30,7 @@ export const appState = proxy<{
   backgroundSelectorState: "closed",
   waitlistSelectorState: "closed",
   positioningControls: "closed",
-  backgroundType: "color",
+  backgroundType: "gradient",
   backgroundColor: "#2f3640",
   backgroundGradientStart: "#2f3640",
   backgroundGradientEnd: "#000000",

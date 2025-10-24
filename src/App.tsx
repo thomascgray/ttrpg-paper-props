@@ -39,7 +39,8 @@ import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
 import { PositioningControls } from "./PositioningControls";
 import { ExportImageButton } from "./ExportImageButton";
-
+import { HandoutTypeSelectorFloating } from "./HandoutTypeSelectorFloating";
+import { Tooltip, Button } from "@mantine/core";
 function App() {
   const appState = useSnapshot(appStateProxy);
 
@@ -186,7 +187,7 @@ function App() {
       <div className="flex h-screen flex-col md:flex-row">
         {/* Desktop Layout - Left Column */}
         <div
-          className="hidden md:block left-column  p-4 md:w-1/4 md:min-w-[500px]"
+          className="hidden md:flex left-column p-4 pb-8  md:w-1/4 md:min-w-[500px] md:flex-col md:gap-4"
           style={{
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
@@ -211,18 +212,21 @@ function App() {
               : { backgroundColor: "#2f3640" }),
           }}
         >
-          <div className="bg-gray-300 p-4 overflow-y-scroll h-full rounded-lg">
-            <h1 className="text-2xl font-poppins font-bold mb-4 md:min-w-[400px]">
+          {/* first floating bubble - app title */}
+          <div className="bg-gray-300 border border-gray-800 p-4 rounded-lg shadow-lg">
+            <h1 className="text-2xl font-poppins font-bold">
               📜 Tombola's RPG Handout Builder
             </h1>
-
-            <p className="text-xs text-gray-700 italic my-4">
+            <p className="text-xs text-gray-700 italic mt-4">
               This tool is in early and active development. I'm often releasing
               improvements, but that means unfortunately its common for things
               to explode, snapshots to be lost, etc. Sorry about that!
             </p>
+          </div>
 
-            <details className="text-xs text-gray-700 mb-4">
+          {/* second floating bubble - what is this tool? */}
+          <div className="bg-gray-300 p-4 rounded-xl shadow-lg">
+            <details className="text-xs text-gray-700">
               <summary className="text-xs text-gray-700 cursor-pointer">
                 What is this tool? What am I looking at?
               </summary>
@@ -236,12 +240,16 @@ function App() {
               </p>
               <br />
               <ul className="list-decimal list-inside">
-                <li>Select different handout types from the dropdown below</li>
-                <li>Then use the form below to change options</li>
+                <li>
+                  Select different handouts by hitting the "browse handouts"
+                  button in the top left of the render area
+                </li>
+                <li>Use the form below to change options</li>
                 <li>The handouts render on the right in real-time</li>
                 <li>
                   If you want to hold onto a particular configuration, save it
-                  with the "Save Snapshot"
+                  with the "Save Snapshot" (and then select snapshots with the
+                  dropdown)
                 </li>
                 <li>
                   To share the handout, either hit the blue export button at the
@@ -276,46 +284,47 @@ function App() {
                 </a>
               </p>
             </details>
+          </div>
 
-            <HandoutTypeSelector />
+          {/* 3rd buuble - the snapshot stuff */}
 
-            <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
-              <div className="flex items-center justify-between">
-                <button
-                  className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
-                  title="Save the current configuration of the handout so that it can be reloaded later"
-                  onClick={() => {
-                    saveVersion(
-                      appState.selectedHandoutType,
-                      currentHandoutTransientRow.data
-                    );
-                  }}
-                >
-                  Save Snapshot
-                </button>
+          <div className="bg-gray-300 p-4 rounded-lg shadow-lg">
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-red-500 border-red-600 border-solid border-2 text-white py-2 px-3 font-bold text-sm rounded-sm hover:scale-105 transition-transform"
+                title="Save the current configuration of the handout so that it can be reloaded later"
+                onClick={() => {
+                  saveVersion(
+                    appState.selectedHandoutType,
+                    currentHandoutTransientRow.data
+                  );
+                }}
+              >
+                Save Snapshot
+              </button>
 
-                <select
-                  className="text-sm"
-                  onChange={(e) =>
-                    updateTransientRecordToVersion(e.target.value)
-                  }
-                  value={appState.selectedVersionId}
-                >
-                  {(versionsForThisHandoutType || []).map((version) => (
-                    <option value={version.id} key={version.id}>
-                      {version.createdAt.toLocaleDateString()} at{" "}
-                      {version.createdAt.toLocaleTimeString()}
-                    </option>
-                  ))}
-                  <option value="TRANSIENT">Unsaved snapshot</option>
-                </select>
-              </div>
-              <p className="text-xs italic mt-3">
-                Snapshots are saved locally to your machine - no data is sent to
-                any server.
-              </p>
+              <select
+                className="text-sm"
+                onChange={(e) => updateTransientRecordToVersion(e.target.value)}
+                value={appState.selectedVersionId}
+              >
+                {(versionsForThisHandoutType || []).map((version) => (
+                  <option value={version.id} key={version.id}>
+                    {version.createdAt.toLocaleDateString()} at{" "}
+                    {version.createdAt.toLocaleTimeString()}
+                  </option>
+                ))}
+                <option value="TRANSIENT">Unsaved snapshot</option>
+              </select>
             </div>
+            <p className="text-xs italic mt-3">
+              Snapshots are saved locally to your machine - no data is sent to
+              any server.
+            </p>
+          </div>
 
+          {/* 4th floating bubble - the actual form */}
+          <div className="bg-gray-300 p-4 overflow-y-scroll h-full rounded-lg relative">
             <FormRenderer
               data={currentHandoutTransientRow.data}
               formConfig={formConfig}
@@ -336,6 +345,28 @@ function App() {
                 appStateProxy.selectedVersionId = "TRANSIENT";
               }}
             />
+          </div>
+
+          <div className="flex justify-between text-white text-sm underline">
+            <Tooltip label="other cool things i've done">
+              <a target="_blank" href="https://tomg.cool/">
+                tomg.cool
+              </a>
+            </Tooltip>
+
+            <Tooltip label="my itch.io profile, i've made a bunch of games and stuff">
+              <a target="_blank" href="https://tmcgry.itch.io/">
+                tmcgry.itch.io
+              </a>
+            </Tooltip>
+            <Tooltip label="i post on bsky every now and then">
+              <a
+                target="_blank"
+                href="https://bsky.app/profile/tombola.bsky.social"
+              >
+                tombola.bsky.social
+              </a>
+            </Tooltip>
           </div>
         </div>
 
@@ -607,6 +638,7 @@ function App() {
           </div>
 
           {/* Floating Controls - positioned absolute relative to right-column */}
+          <HandoutTypeSelectorFloating />
           <BackgroundSelector />
           <ExportImageButton />
           <PositioningControls

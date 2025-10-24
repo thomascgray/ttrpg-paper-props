@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { iStandardComponentProps } from "./";
-
+import { RangeSlider } from "@mantine/core";
 export interface iRangeInputProps extends iStandardComponentProps {
   step: number;
   min: number;
