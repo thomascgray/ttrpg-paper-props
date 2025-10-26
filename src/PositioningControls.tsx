@@ -31,7 +31,7 @@ export const PositioningControls = ({
 
   return (
     <div
-      className={classNames("absolute top-4 right-4 transition-all z-50", {
+      className={classNames("absolute top-5 right-5 transition-all z-50", {
         "bg-slate-500 p-4 rounded-md": isOpen,
       })}
     >
@@ -40,10 +40,10 @@ export const PositioningControls = ({
           onClick={() => {
             appStateProxy.positioningControls = "open";
           }}
-          className="bg-slate-500 px-3 py-1 rounded-full hover:-translate-y-1 active:scale-90 transition-transform"
+          className="bg-slate-500 hover:bg-slate-600 px-3 py-2 rounded-lg active:scale-95 transition-transform"
         >
           <span className="flex items-center gap-2">
-            <Icon name="adjustments-horizontal" colour="white" size="sm" />
+            <Icon name="adjustments-horizontal" colour="white" size="md" />
             <span className="text-white font-bold text-sm">
               Zoom, Rotate, Offset
             </span>

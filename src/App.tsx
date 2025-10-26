@@ -41,6 +41,7 @@ import { PositioningControls } from "./PositioningControls";
 import { ExportImageButton } from "./ExportImageButton";
 import { HandoutTypeSelectorFloating } from "./HandoutTypeSelectorFloating";
 import { Tooltip, Button } from "@mantine/core";
+
 function App() {
   const appState = useSnapshot(appStateProxy);
 
@@ -187,7 +188,7 @@ function App() {
       <div className="flex h-screen flex-col md:flex-row">
         {/* Desktop Layout - Left Column */}
         <div
-          className="hidden md:flex left-column p-4 pb-8  md:w-1/4 md:min-w-[500px] md:flex-col md:gap-4"
+          className="hidden md:flex left-column p-4 pb-8  md:w-1/4 md:min-w-[500px] md:flex-col md:gap-4 relative"
           style={{
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
@@ -202,16 +203,23 @@ function App() {
                 }
               : appState.backgroundType === "custom" &&
                 appState.backgroundCustomImage
-              ? {
-                  backgroundImage: `url(${appState.backgroundCustomImage})`,
-                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
-                  backgroundPosition: "center center",
-                  backgroundRepeat: "no-repeat",
-                  filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
-                }
+              ? {}
               : { backgroundColor: "#2f3640" }),
           }}
         >
+          {/* Background layer for custom image with optional blur */}
+          {appState.backgroundType === "custom" && appState.backgroundCustomImage && (
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `url(${appState.backgroundCustomImage})`,
+                backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
+                backgroundPosition: "center center",
+                backgroundRepeat: "no-repeat",
+                filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+              }}
+            />
+          )}
           {/* first floating bubble - app title */}
           <div className="bg-gray-300 border border-gray-800 p-4 rounded-lg shadow-lg">
             <h1 className="text-2xl font-poppins font-bold">
@@ -347,7 +355,8 @@ function App() {
             />
           </div>
 
-          <div className="flex justify-between text-white text-sm underline">
+          {/* 5th floating bubble - links */}
+          <div className="flex justify-between text-white text-sm underline bg-gray-800 px-4 py-2 rounded-lg">
             <Tooltip label="other cool things i've done">
               <a target="_blank" href="https://tomg.cool/">
                 tomg.cool
@@ -512,16 +521,23 @@ function App() {
                 }
               : appState.backgroundType === "custom" &&
                 appState.backgroundCustomImage
-              ? {
-                  backgroundImage: `url(${appState.backgroundCustomImage})`,
-                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
-                  backgroundPosition: "center center",
-                  backgroundRepeat: "no-repeat",
-                  filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
-                }
+              ? {}
               : { backgroundColor: "#2f3640" }),
           }}
         >
+          {/* Background layer for custom image with optional blur */}
+          {appState.backgroundType === "custom" && appState.backgroundCustomImage && (
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: `url(${appState.backgroundCustomImage})`,
+                backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
+                backgroundPosition: "center center",
+                backgroundRepeat: "no-repeat",
+                filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+              }}
+            />
+          )}
           {/* Scrollable Render Area */}
           <div
             style={{

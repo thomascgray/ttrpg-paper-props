@@ -60,23 +60,18 @@ export const HandoutTypeSelectorFloating = () => {
     <>
       <div
         className={classNames(
-          "fixed md:absolute top-6 left-6 transition-all z-50"
+          "fixed md:absolute top-5 left-5 transition-all z-50"
         )}
       >
-        <span className="flex items-center gap-4">
-          <button
-            onClick={() => {
-              open();
-            }}
-            className="background-selector bg-orange-500 rounded-full hover:scale-[1.03] active:scale-[.96] transition-transform p-2 flex gap-2"
-          >
-            <Icon name="file-description" colour="white" size="md" />
-            <span className="text-white font-bold">Browse handouts</span>
-          </button>
-        </span>
-        <span className="text-white italic font-bold">
-          {appState.selectedHandoutType}
-        </span>
+        <button
+          onClick={() => {
+            open();
+          }}
+          className="flex items-center gap-2 browse-handouts bg-orange-500 hover:bg-orange-600 rounded-lg active:scale-95 transition-transform px-3 py-2"
+        >
+          <Icon name="file-description" colour="white" size="md" />
+          <span className="text-white font-bold text-sm">Browse handouts</span>
+        </button>
       </div>
 
       <Modal

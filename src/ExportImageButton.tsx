@@ -152,11 +152,11 @@ export const ExportImageButton = () => {
   };
 
   return (
-    <div className="fixed md:absolute bottom-6 right-6 z-50">
+    <div className="fixed flex items-center gap-1 md:absolute bottom-9 right-5 z-50">
       <button
         onClick={handleExport}
         disabled={isExporting}
-        className="bg-blue-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-2 disabled:opacity-50 disabled:cursor-not-allowed relative"
+        className="bg-blue-500 hover:bg-blue-600 rounded-lg rounded-tr-none rounded-br-none active:scale-95 transition-transform px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed relative flex items-center gap-2"
         title="Export handout as image"
       >
         {isExporting ? (
@@ -164,30 +164,20 @@ export const ExportImageButton = () => {
         ) : exportSuccess ? (
           <Icon name="check" colour="white" size="md" />
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
+          <Icon name="download" colour="white" size="md" />
         )}
+        <span className="text-white font-bold text-sm">Export Handout</span>
       </button>
 
       {exportSuccess && (
-        <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-1 rounded-md text-sm whitespace-nowrap">
+        <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-2 rounded-md text-sm whitespace-nowrap">
           Image copied to clipboard!
         </div>
       )}
+
+      <button className="bg-blue-500 hover:bg-blue-600 rounded-lg rounded-tl-none rounded-bl-none active:scale-95 transition-transform px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed relative flex items-center">
+        <Icon name="settings" colour="white" size="md" />
+      </button>
     </div>
   );
 };
