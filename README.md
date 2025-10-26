@@ -1,6 +1,10 @@
 # TODO this branch
 
-finish the positioning controls, should work on desktop and mobile, make it so they power the position stuff, remove position controls from the form
+- crystal ball export is broken
+- bottle default load is broken
+- hanging wooden sign is weirdly broken, sort of works but the handout fields are wrong
+- the angle on the rectangle sign is wrong and needs improving
+- the vertical flag needs a default image
 
 # TTRPG Paper Props
 

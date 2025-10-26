@@ -208,18 +208,19 @@ function App() {
           }}
         >
           {/* Background layer for custom image with optional blur */}
-          {appState.backgroundType === "custom" && appState.backgroundCustomImage && (
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: `url(${appState.backgroundCustomImage})`,
-                backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
-                backgroundPosition: "center center",
-                backgroundRepeat: "no-repeat",
-                filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
-              }}
-            />
-          )}
+          {appState.backgroundType === "custom" &&
+            appState.backgroundCustomImage && (
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  backgroundImage: `url(${appState.backgroundCustomImage})`,
+                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
+                  backgroundPosition: "center center",
+                  backgroundRepeat: "no-repeat",
+                  filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+                }}
+              />
+            )}
           {/* first floating bubble - app title */}
           <div className="bg-gray-300 border border-gray-800 p-4 rounded-lg shadow-lg">
             <h1 className="text-2xl font-poppins font-bold">
@@ -416,7 +417,7 @@ function App() {
             </button>
 
             <div className="p-4">
-              <HandoutTypeSelector onSelect={closeDrawer} />
+              {/* <HandoutTypeSelector onSelect={closeDrawer} /> */}
 
               <div className="p-5 bg-gray-400 mb-4 -ml-4 -mr-4">
                 <div className="flex items-center justify-between">
@@ -526,18 +527,19 @@ function App() {
           }}
         >
           {/* Background layer for custom image with optional blur */}
-          {appState.backgroundType === "custom" && appState.backgroundCustomImage && (
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: `url(${appState.backgroundCustomImage})`,
-                backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
-                backgroundPosition: "center center",
-                backgroundRepeat: "no-repeat",
-                filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
-              }}
-            />
-          )}
+          {appState.backgroundType === "custom" &&
+            appState.backgroundCustomImage && (
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  backgroundImage: `url(${appState.backgroundCustomImage})`,
+                  backgroundSize: `${appState.backgroundImageZoom * 100}% auto`,
+                  backgroundPosition: "center center",
+                  backgroundRepeat: "no-repeat",
+                  filter: appState.backgroundImageBlur ? "blur(5px)" : "none",
+                }}
+              />
+            )}
           {/* Scrollable Render Area */}
           <div
             style={{

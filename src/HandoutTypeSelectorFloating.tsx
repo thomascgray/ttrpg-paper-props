@@ -6,6 +6,23 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
 import { allConfigs, AllConfigNames } from "./handoutConfigs";
 
+// Map handout types to their example images
+const getExampleImage = (handoutType: AllConfigNames): string | null => {
+  const exampleImages: Record<string, string> = {
+    Newspaper: "/handout_examples/newspaper.png",
+    NewspaperClipping: "/handout_examples/newspaper_clipping.png",
+    CharacterCard: "/handout_examples/character_card.png",
+    PlainLetter: "/handout_examples/letter.png",
+    Polaroid: "/handout_examples/polaroid.png",
+    ThreePanelDirectionalSign: "/handout_examples/3-panel-directional-sign.png",
+    CrtScreen: "/handout_examples/crt_screen.png",
+    SciFiHologram: "/handout_examples/scifi-hologram.png",
+    BookCover: "/handout_examples/book-cover.png",
+  };
+
+  return exampleImages[handoutType] || null;
+};
+
 export const HandoutTypeSelectorFloating = () => {
   const appState = useSnapshot(appStateProxy);
 
@@ -93,7 +110,7 @@ export const HandoutTypeSelectorFloating = () => {
                 <h3 className="text-lg font-bold mb-4 text-gray-700">
                   {group.label}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {configs.map((config) => {
                     const isSelected =
                       appState.selectedHandoutType === config.name;
@@ -108,9 +125,23 @@ export const HandoutTypeSelectorFloating = () => {
                             : "border-gray-200 hover:border-orange-300"
                         )}
                       >
-                        {/* Placeholder image area */}
-                        <div className="w-full aspect-video bg-gray-200 rounded mb-3 flex items-center justify-center">
-                          <Icon name="photo" colour="#999" size="xl" />
+                        {/* Example image area */}
+                        <div
+                          className="w-full aspect-video rounded mb-3 flex items-center justify-center p-4 overflow-hidden"
+                          style={{
+                            background:
+                              "linear-gradient(180deg, #2f3640, #000000)",
+                          }}
+                        >
+                          {getExampleImage(config.name) ? (
+                            <img
+                              src={getExampleImage(config.name)}
+                              alt={config.displayName}
+                              className="w-full h-full object-contain"
+                            />
+                          ) : (
+                            <Icon name="photo" colour="#999" size="xl" />
+                          )}
                         </div>
 
                         {/* Handout name */}

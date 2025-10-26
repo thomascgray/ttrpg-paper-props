@@ -13,7 +13,7 @@ export const LabelledLiquid = ({
   return (
     <div className="relative">
       <img
-        className=""
+        className="max-w-[60cqw] lg:max-w-[30em]"
         src={handout.imageTemplate}
         alt="The labelled liquid container"
         style={{
@@ -30,12 +30,12 @@ export const LabelledLiquid = ({
           marginLeft: `${handout.textLeftMargin}cqw`,
           marginTop: `${handout.textTopMargin}%`,
           width: `${handout.textWidth}%`,
-          transform: `rotate(${handout.textRotation}deg)`,
+          transform: `translate(-50%, -50%) rotate(${handout.textRotation}deg)`,
         }}
         className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em] `}
       >
         <Markdown
-          className={`block copy-markdown ${handout.inkColor} ${handout.textAlign}`}
+          className={`block bg-red-500 copy-markdown ${handout.inkColor} ${handout.textAlign}`}
         >
           {handout.mainCopy}
         </Markdown>

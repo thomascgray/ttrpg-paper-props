@@ -2,10 +2,14 @@ import { useState } from "react";
 import html2canvas from "html2canvas";
 import { toPng } from "html-to-image";
 import { Icon } from "./Icon";
+import { Menu, Radio, Checkbox } from "@mantine/core";
+import { useSnapshot } from "valtio";
+import { appState as appStateProxy } from "./appState";
 
 export const ExportImageButton = () => {
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
+  const appState = useSnapshot(appStateProxy);
 
   const copyToClipboardOrDownload = async (dataUrl: string) => {
     try {
@@ -13,22 +17,33 @@ export const ExportImageButton = () => {
       const response = await fetch(dataUrl);
       const blob = await response.blob();
 
-      // Check if Clipboard API is available
-      if (!navigator.clipboard || !window.ClipboardItem) {
-        throw new Error("Clipboard API not supported");
+      if (appState.exportMode === "clipboard") {
+        // Check if Clipboard API is available
+        if (!navigator.clipboard || !window.ClipboardItem) {
+          throw new Error("Clipboard API not supported");
+        }
+
+        // Copy to clipboard
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ]);
+
+        setExportSuccess(true);
+        setTimeout(() => setExportSuccess(false), 2000);
+      } else {
+        // Download the image
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `handout-${Date.now()}.png`;
+        a.click();
+
+        setExportSuccess(true);
+        setTimeout(() => setExportSuccess(false), 2000);
       }
-
-      // Copy to clipboard
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": blob,
-        }),
-      ]);
-
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 2000);
-    } catch (clipboardError) {
-      console.error("Failed to copy to clipboard:", clipboardError);
+    } catch (error) {
+      console.error("Failed to export:", error);
       // Fallback: download the image
       const a = document.createElement("a");
       a.href = dataUrl;
@@ -78,6 +93,15 @@ export const ExportImageButton = () => {
         tempWrapper = wrapper;
 
         // Wait for fonts to load in the cloned elements
+      }
+
+      // Handle padding setting
+      if (!appState.exportIncludePadding) {
+        // If we don't want padding, look for the #area-to-export element
+        const areaToExport = elementToCapture.querySelector("#area-to-export");
+        if (areaToExport) {
+          elementToCapture = areaToExport as HTMLElement;
+        }
       }
 
       // Ensure fonts are ready for the element to capture
@@ -171,13 +195,49 @@ export const ExportImageButton = () => {
 
       {exportSuccess && (
         <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-2 rounded-md text-sm whitespace-nowrap">
-          Image copied to clipboard!
+          {appState.exportMode === "clipboard"
+            ? "Image copied to clipboard!"
+            : "Image downloaded!"}
         </div>
       )}
 
-      <button className="bg-blue-500 hover:bg-blue-600 rounded-lg rounded-tl-none rounded-bl-none active:scale-95 transition-transform px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed relative flex items-center">
-        <Icon name="settings" colour="white" size="md" />
-      </button>
+      <Menu position="top-end" offset={8}>
+        <Menu.Target>
+          <button className="bg-blue-500 hover:bg-blue-600 rounded-lg rounded-tl-none rounded-bl-none active:scale-95 transition-transform px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed relative flex items-center">
+            <Icon name="settings" colour="white" size="md" />
+          </button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Label>Export Settings</Menu.Label>
+
+          <div className="px-3 py-2">
+            <Radio.Group
+              value={appState.exportMode}
+              onChange={(value) => {
+                appStateProxy.exportMode = value as "clipboard" | "download";
+              }}
+            >
+              <div className="space-y-2">
+                <Radio value="clipboard" label="Copy to clipboard" />
+                <Radio value="download" label="Download as file" />
+              </div>
+            </Radio.Group>
+          </div>
+
+          {/* <Menu.Divider /> */}
+
+          {/* <div className="px-3 py-2">
+            <Checkbox
+              checked={appState.exportIncludePadding}
+              onChange={(e) => {
+                appStateProxy.exportIncludePadding = e.currentTarget.checked;
+              }}
+              label="Include padding around handout"
+            />
+          </div> */}
+        </Menu.Dropdown>
+      </Menu>
     </div>
   );
 };

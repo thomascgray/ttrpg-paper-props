@@ -6,7 +6,7 @@ import { extractConfigAsData } from "./configUtils";
 import { appState } from "./appState";
 import { getHandoutFromPath } from "./routes";
 
-export const APP_VERSION = 9;
+export const APP_VERSION = 10;
 
 // Database initialization state
 let dbInitialized = false;
@@ -113,7 +113,10 @@ async function initializeDatabase() {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
         if (!errorMessage.includes("already exists")) {
-          console.error(`Error adding transient handout ${config.name}:`, error);
+          console.error(
+            `Error adding transient handout ${config.name}:`,
+            error
+          );
           throw error; // Re-throw non-duplicate errors
         }
       }

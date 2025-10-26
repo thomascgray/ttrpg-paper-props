@@ -485,15 +485,15 @@ export const LabelledLiquidConfig = {
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textTopMargin: [
-    90,
+    100,
     range({ name: "Text Top Margin", min: -100, max: 250, suffix: "%" }),
   ],
   textLeftMargin: [
-    5,
+    18,
     range({ name: "Text Left Margin", min: -40, max: 40, suffix: "cqw" }),
   ],
   textWidth: [
-    56,
+    50,
     range({ name: "Text Width", min: -100, max: 150, suffix: "%" }),
   ],
   textRotation: [
