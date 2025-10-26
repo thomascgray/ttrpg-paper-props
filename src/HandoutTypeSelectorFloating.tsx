@@ -18,6 +18,7 @@ const getExampleImage = (handoutType: AllConfigNames): string | null => {
     CrtScreen: "/handout_examples/crt_screen.png",
     SciFiHologram: "/handout_examples/scifi-hologram.png",
     BookCover: "/handout_examples/book-cover.png",
+    LabelledLiquid: "/handout_examples/labelled-liquid.png",
   };
 
   return exampleImages[handoutType] || null;

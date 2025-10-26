@@ -11,34 +11,51 @@ export const LabelledLiquid = ({
   handout: LabelledLiquidData;
 }) => {
   return (
-    <div className="relative">
-      <img
-        className="max-w-[60cqw] lg:max-w-[30em]"
-        src={handout.imageTemplate}
-        alt="The labelled liquid container"
-        style={{
-          width: `${handout.imageWidth}cqw`,
-          transform: `rotate(${handout.imageRotation}deg)`,
-          filter: `hue-rotate(${handout.imageHueFilter}deg)`,
-        }}
-      />
-
+    <div
+      className="relative max-w-[60cqw] lg:max-w-[30em]"
+      style={{
+        width: `${handout.imageWidth}cqw`,
+      }}
+    >
       <div
-        id="main_copy"
+        className="w-full h-full"
         style={{
-          fontSize: `${handout.fontSize}cqw`,
-          marginLeft: `${handout.textLeftMargin}cqw`,
-          marginTop: `${handout.textTopMargin}%`,
-          width: `${handout.textWidth}%`,
-          transform: `translate(-50%, -50%) rotate(${handout.textRotation}deg)`,
+          containerType: "inline-size",
         }}
-        className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight} top-[2em] left-[2em] `}
       >
-        <Markdown
-          className={`block bg-red-500 copy-markdown ${handout.inkColor} ${handout.textAlign}`}
-        >
-          {handout.mainCopy}
-        </Markdown>
+        <div className="relative w-full">
+          <img
+            className="w-full h-auto"
+            src={handout.imageTemplate}
+            alt="The labelled liquid container"
+            style={{
+              transform: `rotate(${handout.imageRotation}deg)`,
+              filter: `hue-rotate(${handout.imageHueFilter}deg)`,
+            }}
+          />
+
+          <div
+            id="main_copy"
+            style={{
+              top: `${
+                105 + parseInt(handout.textTopMargin as unknown as string)
+              }cqw`,
+              left: `${
+                50 + parseInt(handout.textLeftMargin as unknown as string)
+              }cqw`,
+              fontSize: `${handout.fontSize}cqw`,
+              width: `${handout.textWidth}cqw`,
+              transform: `translate(-50%, -50%) rotate(${handout.textRotation}deg)`,
+            }}
+            className={`absolute ${handout.textEffect} ${handout.font} ${handout.fontWeight}`}
+          >
+            <Markdown
+              className={`block  copy-markdown ${handout.inkColor} ${handout.textAlign}`}
+            >
+              {handout.mainCopy}
+            </Markdown>
+          </div>
+        </div>
       </div>
     </div>
   );

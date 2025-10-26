@@ -474,28 +474,25 @@ export const LabelledLiquidConfig = {
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    1.2,
+    2.8,
     range({
       name: "Font Size",
       min: 0.5,
       max: 6,
       step: 0.1,
-      suffix: "cqw",
+      suffix: "",
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textTopMargin: [
-    100,
-    range({ name: "Text Top Margin", min: -100, max: 250, suffix: "%" }),
+    0,
+    range({ name: "Text Top Margin", min: -100, max: 100, suffix: "" }),
   ],
   textLeftMargin: [
-    18,
-    range({ name: "Text Left Margin", min: -40, max: 40, suffix: "cqw" }),
+    0,
+    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "" }),
   ],
-  textWidth: [
-    50,
-    range({ name: "Text Width", min: -100, max: 150, suffix: "%" }),
-  ],
+  textWidth: [50, range({ name: "Text Width", min: 5, max: 150, suffix: "" })],
   textRotation: [
     0,
     range({ name: "Text Rotation", min: -90, max: 90, suffix: "°" }),

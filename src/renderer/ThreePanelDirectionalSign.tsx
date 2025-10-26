@@ -20,7 +20,7 @@ export const ThreePanelDirectionalSign = ({
 
   return (
     <div
-      className="relative transition-all max-w-[80em]"
+      className="relative max-w-[80em]"
       style={{
         width: `${handout.dimensions.pageWidth}cqw`,
       }}
@@ -53,7 +53,7 @@ export const ThreePanelDirectionalSign = ({
               transformOrigin: "left center",
             }}
             className={classNames(
-              `absolute transition-all engraved-text ${handout.panel1.font} ${handout.panel1.fontWeight}`,
+              `absolute engraved-text ${handout.panel1.font} ${handout.panel1.fontWeight}`,
               {
                 "rough-edges": handout.panel1.gnarledText,
               }
@@ -74,7 +74,7 @@ export const ThreePanelDirectionalSign = ({
               transformOrigin: "left center",
             }}
             className={classNames(
-              `absolute transition-all engraved-text ${handout.panel2.font} ${handout.panel2.fontWeight}`,
+              `absolute engraved-text ${handout.panel2.font} ${handout.panel2.fontWeight}`,
               {
                 "rough-edges": handout.panel2.gnarledText,
               }
@@ -96,7 +96,7 @@ export const ThreePanelDirectionalSign = ({
               width: "20em",
             }}
             className={classNames(
-              `absolute transition-all engraved-text ${handout.panel3.font} ${handout.panel3.fontWeight}`,
+              `absolute engraved-text ${handout.panel3.font} ${handout.panel3.fontWeight}`,
               {
                 "rough-edges": handout.panel3.gnarledText,
               }
