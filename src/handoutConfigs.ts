@@ -631,12 +631,12 @@ _Inn & Tavern_`,
     textArea({ name: "Text" }),
   ],
   textXOffset: [
-    3,
+    0,
     range({ name: "Text X-Offset", min: -100, max: 100, suffix: "" }),
   ],
   textYOffset: [
     0,
-    range({ name: "Text Y-Offset", min: -10, max: 10, step: 0.1, suffix: "" }),
+    range({ name: "Text Y-Offset", min: -100, max: 100, suffix: "" }),
   ],
   // textPosition: {
   //   top: [
