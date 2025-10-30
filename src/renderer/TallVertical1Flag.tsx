@@ -71,7 +71,7 @@ export const TallVertical1Flag = ({
               left: `${leftToApply}%`,
               width: `${90 + widthToApply}%`,
               height: `${75 + heightToApply}%`,
-              backgroundImage: `url(${handout.overlayImage})`,
+              backgroundImage: `url(${handout.flagImage})`,
               transform: `rotateX(5deg) rotateY(-20deg) rotateZ(${handout.rotation}deg)`,
               backgroundSize: `100% 100%`,
               backgroundPosition: "center",

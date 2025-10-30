@@ -525,16 +525,20 @@ export const HangingWoodenSignConfig = {
 _We don't want any!_`,
     textArea({ name: "Text" }),
   ],
-  textPosition: {
-    top: [
-      24,
-      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
-    ],
-    yOffset: [
-      7,
-      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
-    ],
-  },
+  textTopMargin: [
+    0,
+    range({ name: "Text Top Margin", min: -100, max: 100, suffix: "" }),
+  ],
+  // textPosition: {
+  //   top: [
+  //     24,
+  //     range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+  //   ],
+  //   yOffset: [
+  //     7,
+  //     range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+  //   ],
+  // },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   fontSize: [
@@ -876,13 +880,16 @@ export const CrystalBallConfig = {
 
 export const TallVertical1FlagConfig = {
   ...positioning,
-  overlayImage: ["", imageInput({ name: "Overlay Image" })],
+  flagImage: [
+    "/default_images/ork-logo.png",
+    imageInput({ name: "Flag Image" }),
+  ],
   zoom: [100, range({ name: "Zoom", min: 50, max: 300, suffix: "%" })],
   rotation: [0, range({ name: "Rotation", min: -180, max: 180, suffix: "°" })],
   xOffset: [0, range({ name: "X Offset", min: -30, max: 30, suffix: "" })],
   yOffset: [0, range({ name: "Y Offset", min: -30, max: 30, suffix: "" })],
   flag_background_colour: [
-    "#FFFFFF",
+    "#c0392b",
     colour({ name: "Flag Background Colour" }),
   ],
 } satisfies HandoutConfig;

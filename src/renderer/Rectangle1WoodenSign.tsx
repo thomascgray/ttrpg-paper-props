@@ -21,53 +21,52 @@ export const Rectangle1WoodenSign = ({
       }}
     >
       <div
-        className="w-full h-full"
+        className="w-full h-full relative"
         style={{
           containerType: "inline-size",
         }}
       >
-        <div
-          className="relative w-full"
+        <img
+          src={"/images/wooden_signs/sign post a.webp"}
+          alt="Rectangular wooden sign"
+          className="w-full h-auto"
           style={{
-            perspective: "250px",
+            transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,
+            ...getImageProcessingStyles(handout.image),
           }}
-        >
-          <img
-            src={"/images/wooden_signs/sign post a.webp"}
-            alt="Rectangular wooden sign"
-            className="w-full h-auto"
-            style={{
-              transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,
-              ...getImageProcessingStyles(handout.image),
-            }}
-          />
+        />
 
+        <div
+          style={{
+            perspective: "200px",
+            // transform: `translateY(${handout.textYOffset}em)`,
+          }}
+          className="absolute engraved-text top-0 left-0 w-full h-full"
+        >
+          {/* put the y offset on a wrapper */}
           <div
+            id="main_copy"
             style={{
-              perspective: "250px",
-              transform: `translateY(${handout.textYOffset}em)`,
+              top: `${
+                45 + parseFloat(handout.textYOffset as unknown as string)
+              }%`,
+              // left: `${
+              //   -2 + parseInt(handout.textXOffset as unknown as string)
+              // }cqw`,
+
+              fontSize: `${handout.fontSize}cqw`,
+              // lineHeight: `${handout.fontSize}cqw`,
+              width: "83%",
+              transform: `translateX(13cqw) rotateX(0deg) rotateY(15deg) rotateZ(0deg)`,
             }}
-            className="absolute engraved-text top-0 left-0 w-full h-full"
+            className={classNames(
+              `absolute origin-top-left bg-red-500 engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
+              {
+                "rough-edges": handout.gnarledText,
+              }
+            )}
           >
-            <div
-              id="main_copy"
-              style={{
-                top: `240px`,
-                left: `${handout.textXOffset}cqw`,
-                fontSize: `${handout.fontSize}cqw`,
-                lineHeight: `${handout.fontSize}cqw`,
-                width: "83%",
-                transform: `translateX(13cqw) rotateX(0deg) rotateY(10deg) rotateZ(0deg)`,
-              }}
-              className={classNames(
-                `absolute engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
-                {
-                  "rough-edges": handout.gnarledText,
-                }
-              )}
-            >
-              <Markdown>{handout.text}</Markdown>
-            </div>
+            <Markdown>{handout.text}</Markdown>
           </div>
         </div>
       </div>

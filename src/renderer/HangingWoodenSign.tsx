@@ -41,14 +41,15 @@ export const HangingWoodenSign = ({
             id="main_copy"
             style={{
               top: `${
-                handout.textPosition.top + handout.textPosition.yOffset
+                33 + parseInt(handout.textTopMargin as unknown as string)
               }cqw`,
+              left: "4cqw",
               fontSize: `${handout.fontSize}cqw`,
               lineHeight: `${handout.fontSize}cqw`,
-              width: "90%",
+              width: "91%",
             }}
             className={classNames(
-              `absolute  engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
+              `absolute engraved-text ${handout.textAlign} ${handout.font} ${handout.fontWeight} copy-markdown list-inside list-disc`,
               {
                 "rough-edges": handout.gnarledText,
               }
