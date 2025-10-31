@@ -18,7 +18,13 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
   } = handout;
 
   return (
-    <div className="relative">
+    <div
+      className="relative inline-block"
+      style={{
+        width: "500px",
+        height: "750px", // Extra height to accommodate the full stand
+      }}
+    >
       <Bulges id="crystal-ball" scale={120} />
       <Bulges id="crystal-ball-bigger" scale={450} />
 
@@ -79,7 +85,9 @@ export const CrystalBall: React.FC<{ handout: CrystalBallData }> = ({
       <img
         className="crystal-ball-stand absolute"
         style={{
-          transform: `translate(50px, -30px) scale(${1.3})`,
+          top: "470px", // Position near bottom to overlap with ball
+          left: "50px",
+          transform: `scale(${1.3})`,
           ...(showShadowOnStand && {
             filter: "drop-shadow(5px 5px 13px #000000)",
           }),

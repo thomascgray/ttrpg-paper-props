@@ -25,7 +25,7 @@ export const NewspaperClipping = ({
         }`,
       }}
       className={classNames(
-        `xl:max-w-[24em] max-w-[20em] paper transition paper-${handout.paper.paperTexture}  max-w-[80em] overflow-clip`
+        `xl:max-w-[28em] max-w-[25em] paper paper-${handout.paper.paperTexture}  max-w-[80em] overflow-clip`
       )}
     >
       <div

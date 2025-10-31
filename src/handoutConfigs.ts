@@ -171,19 +171,19 @@ export const NewspaperClippingConfig = {
   },
   dimensions: {
     pageWidth: [
-      60,
-      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+      25,
+      range({ name: "Page Width", min: 2, max: 40, step: 1, suffix: "" }),
     ],
     clippingTopPadding: [
       0,
-      range({ name: "Clipping Top Padding", min: -20, max: 20 }),
+      range({ name: "Clipping Top Padding", min: -50, max: 50 }),
     ],
     clippingBottomPadding: [
       0,
       range({
         name: "Clipping Bottom Padding",
-        min: -20,
-        max: 20,
+        min: -50,
+        max: 50,
       }),
     ],
   },
@@ -341,7 +341,10 @@ export const PlainLetterConfig = {
     xOffset: [0, range({ name: "X-Offset", min: -100, max: 100, suffix: "%" })],
     yOffset: [0, range({ name: "Y-Offset", min: -100, max: 100, suffix: "%" })],
   },
-  pageWidth: [50, range({ name: "Page Width", min: 20, max: 80, suffix: "" })],
+  pageWidth: [
+    50,
+    range({ name: "Handout Width", min: 20, max: 80, suffix: "" }),
+  ],
   maintainAspectRatio: [true, boolean({ name: "Maintain Aspect Ratio" })],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   paperTexture: ["grey", paperTexture()],
@@ -471,28 +474,25 @@ export const LabelledLiquidConfig = {
   inkColor: [InkColor.BLACK, inkSelector({ value: InkColor.BLACK })],
   font: [FontFamily.SERIF, fontPicker()],
   fontSize: [
-    1.2,
+    2.8,
     range({
       name: "Font Size",
       min: 0.5,
       max: 6,
       step: 0.1,
-      suffix: "cqw",
+      suffix: "",
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textTopMargin: [
-    90,
-    range({ name: "Text Top Margin", min: -100, max: 250, suffix: "%" }),
+    0,
+    range({ name: "Text Top Margin", min: -100, max: 100, suffix: "" }),
   ],
   textLeftMargin: [
-    5,
-    range({ name: "Text Left Margin", min: -40, max: 40, suffix: "cqw" }),
+    0,
+    range({ name: "Text Left Margin", min: -100, max: 100, suffix: "" }),
   ],
-  textWidth: [
-    56,
-    range({ name: "Text Width", min: -100, max: 150, suffix: "%" }),
-  ],
+  textWidth: [50, range({ name: "Text Width", min: 5, max: 150, suffix: "" })],
   textRotation: [
     0,
     range({ name: "Text Rotation", min: -90, max: 90, suffix: "°" }),
@@ -525,16 +525,20 @@ export const HangingWoodenSignConfig = {
 _We don't want any!_`,
     textArea({ name: "Text" }),
   ],
-  textPosition: {
-    top: [
-      24,
-      range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
-    ],
-    yOffset: [
-      7,
-      range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
-    ],
-  },
+  textTopMargin: [
+    0,
+    range({ name: "Text Top Margin", min: -100, max: 100, suffix: "" }),
+  ],
+  // textPosition: {
+  //   top: [
+  //     24,
+  //     range({ name: "Top Position", min: 0, max: 50, step: 0.5, suffix: "" }),
+  //   ],
+  //   yOffset: [
+  //     7,
+  //     range({ name: "Y-Offset", min: -30, max: 30, step: 0.5, suffix: "" }),
+  //   ],
+  // },
   font: [FontFamily.SERIF, fontPicker()],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   fontSize: [
@@ -627,12 +631,12 @@ _Inn & Tavern_`,
     textArea({ name: "Text" }),
   ],
   textXOffset: [
-    3,
+    0,
     range({ name: "Text X-Offset", min: -100, max: 100, suffix: "" }),
   ],
   textYOffset: [
     0,
-    range({ name: "Text Y-Offset", min: -10, max: 10, step: 0.1, suffix: "" }),
+    range({ name: "Text Y-Offset", min: -100, max: 100, suffix: "" }),
   ],
   // textPosition: {
   //   top: [
@@ -876,13 +880,16 @@ export const CrystalBallConfig = {
 
 export const TallVertical1FlagConfig = {
   ...positioning,
-  overlayImage: ["", imageInput({ name: "Overlay Image" })],
+  flagImage: [
+    "/default_images/ork-logo.png",
+    imageInput({ name: "Flag Image" }),
+  ],
   zoom: [100, range({ name: "Zoom", min: 50, max: 300, suffix: "%" })],
   rotation: [0, range({ name: "Rotation", min: -180, max: 180, suffix: "°" })],
   xOffset: [0, range({ name: "X Offset", min: -30, max: 30, suffix: "" })],
   yOffset: [0, range({ name: "Y Offset", min: -30, max: 30, suffix: "" })],
   flag_background_colour: [
-    "#FFFFFF",
+    "#c0392b",
     colour({ name: "Flag Background Colour" }),
   ],
 } satisfies HandoutConfig;

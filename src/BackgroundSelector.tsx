@@ -12,28 +12,28 @@ export const BackgroundSelector = () => {
   return (
     <div
       className={classNames(
-        "fixed md:absolute bottom-6 left-6 transition-all z-50",
+        "fixed md:absolute bottom-9 left-5 transition-all z-50",
         {
           "bg-gray-400 p-4 rounded-md": isOpen,
         }
       )}
     >
-      <span className="flex items-center gap-4">
+      {!isOpen && (
         <button
           onClick={() => {
-            appStateProxy.backgroundSelectorState =
-              appState.backgroundSelectorState === "closed" ? "open" : "closed";
+            appStateProxy.backgroundSelectorState = "open";
           }}
-          className="background-selector bg-green-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-2"
+          className="flex items-center gap-2 px-3 py-2 background-selector bg-green-600 hover:bg-green-700 rounded-lg active:scale-95 transition-transform"
         >
           <Icon name="photo" colour="white" size="md" />
+          <span className="text-white text-sm font-bold">Background</span>
         </button>
-        {isOpen && (
-          <span className="text-white text-xl font-bold">
-            Background Selector
-          </span>
-        )}
-      </span>
+      )}
+      {isOpen && (
+        <span className="text-white text-xl font-bold mb-4 block">
+          Background Selector
+        </span>
+      )}
       {isOpen && (
         <div className="space-y-4 max-h-[70vh] overflow-y-auto">
           <div className="space-y-2">

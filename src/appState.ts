@@ -24,13 +24,15 @@ export const appState = proxy<{
   backgroundCustomImage: string;
   backgroundImageBlur: boolean;
   backgroundImageZoom: number;
+  exportMode: "clipboard" | "download";
+  exportIncludePadding: boolean;
 }>({
   selectedHandoutType: "NewspaperClipping",
   selectedVersionId: "TRANSIENT",
   backgroundSelectorState: "closed",
   waitlistSelectorState: "closed",
   positioningControls: "closed",
-  backgroundType: "color",
+  backgroundType: "gradient",
   backgroundColor: "#2f3640",
   backgroundGradientStart: "#2f3640",
   backgroundGradientEnd: "#000000",
@@ -41,6 +43,8 @@ export const appState = proxy<{
   backgroundCustomImage: "",
   backgroundImageBlur: false,
   backgroundImageZoom: 1,
+  exportMode: "clipboard",
+  exportIncludePadding: true,
 });
 
 // Auto-save app state changes to database

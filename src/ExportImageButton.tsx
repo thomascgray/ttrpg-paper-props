@@ -2,10 +2,14 @@ import { useState } from "react";
 import html2canvas from "html2canvas";
 import { toPng } from "html-to-image";
 import { Icon } from "./Icon";
+import { Menu, Radio, Checkbox } from "@mantine/core";
+import { useSnapshot } from "valtio";
+import { appState as appStateProxy } from "./appState";
 
 export const ExportImageButton = () => {
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
+  const appState = useSnapshot(appStateProxy);
 
   const copyToClipboardOrDownload = async (dataUrl: string) => {
     try {
@@ -13,22 +17,33 @@ export const ExportImageButton = () => {
       const response = await fetch(dataUrl);
       const blob = await response.blob();
 
-      // Check if Clipboard API is available
-      if (!navigator.clipboard || !window.ClipboardItem) {
-        throw new Error("Clipboard API not supported");
+      if (appState.exportMode === "clipboard") {
+        // Check if Clipboard API is available
+        if (!navigator.clipboard || !window.ClipboardItem) {
+          throw new Error("Clipboard API not supported");
+        }
+
+        // Copy to clipboard
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ]);
+
+        setExportSuccess(true);
+        setTimeout(() => setExportSuccess(false), 2000);
+      } else {
+        // Download the image
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `handout-${Date.now()}.png`;
+        a.click();
+
+        setExportSuccess(true);
+        setTimeout(() => setExportSuccess(false), 2000);
       }
-
-      // Copy to clipboard
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": blob,
-        }),
-      ]);
-
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 2000);
-    } catch (clipboardError) {
-      console.error("Failed to copy to clipboard:", clipboardError);
+    } catch (error) {
+      console.error("Failed to export:", error);
       // Fallback: download the image
       const a = document.createElement("a");
       a.href = dataUrl;
@@ -78,6 +93,15 @@ export const ExportImageButton = () => {
         tempWrapper = wrapper;
 
         // Wait for fonts to load in the cloned elements
+      }
+
+      // Handle padding setting
+      if (!appState.exportIncludePadding) {
+        // If we don't want padding, look for the #area-to-export element
+        const areaToExport = elementToCapture.querySelector("#area-to-export");
+        if (areaToExport) {
+          elementToCapture = areaToExport as HTMLElement;
+        }
       }
 
       // Ensure fonts are ready for the element to capture
@@ -152,11 +176,11 @@ export const ExportImageButton = () => {
   };
 
   return (
-    <div className="fixed md:absolute bottom-6 right-6 z-50">
+    <div className="fixed flex items-center gap-1 md:absolute bottom-9 right-5 z-50">
       <button
         onClick={handleExport}
         disabled={isExporting}
-        className="bg-blue-500 rounded-full hover:-translate-y-1 active:scale-90 transition-transform p-2 disabled:opacity-50 disabled:cursor-not-allowed relative"
+        className="bg-blue-500 hover:bg-blue-600 rounded-lg rounded-tr-none rounded-br-none active:scale-95 transition-transform px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed relative flex items-center gap-2"
         title="Export handout as image"
       >
         {isExporting ? (
@@ -164,30 +188,56 @@ export const ExportImageButton = () => {
         ) : exportSuccess ? (
           <Icon name="check" colour="white" size="md" />
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
+          <Icon name="download" colour="white" size="md" />
         )}
+        <span className="text-white font-bold text-sm">Export Handout</span>
       </button>
 
       {exportSuccess && (
-        <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-1 rounded-md text-sm whitespace-nowrap">
-          Image copied to clipboard!
+        <div className="absolute bottom-full right-0 mb-2 bg-green-500 text-white px-3 py-2 rounded-md text-sm whitespace-nowrap">
+          {appState.exportMode === "clipboard"
+            ? "Image copied to clipboard!"
+            : "Image downloaded!"}
         </div>
       )}
+
+      <Menu position="top-end" offset={8}>
+        <Menu.Target>
+          <button className="bg-blue-500 hover:bg-blue-600 rounded-lg rounded-tl-none rounded-bl-none active:scale-95 transition-transform px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed relative flex items-center">
+            <Icon name="settings" colour="white" size="md" />
+          </button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Label>Export Settings</Menu.Label>
+
+          <div className="px-3 py-2">
+            <Radio.Group
+              value={appState.exportMode}
+              onChange={(value) => {
+                appStateProxy.exportMode = value as "clipboard" | "download";
+              }}
+            >
+              <div className="space-y-2">
+                <Radio value="clipboard" label="Copy to clipboard" />
+                <Radio value="download" label="Download as file" />
+              </div>
+            </Radio.Group>
+          </div>
+
+          {/* <Menu.Divider /> */}
+
+          {/* <div className="px-3 py-2">
+            <Checkbox
+              checked={appState.exportIncludePadding}
+              onChange={(e) => {
+                appStateProxy.exportIncludePadding = e.currentTarget.checked;
+              }}
+              label="Include padding around handout"
+            />
+          </div> */}
+        </Menu.Dropdown>
+      </Menu>
     </div>
   );
 };
