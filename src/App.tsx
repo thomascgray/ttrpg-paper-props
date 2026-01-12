@@ -34,6 +34,7 @@ import { Polaroid } from "./renderer/Polaroid";
 import { CrystalBall } from "./renderer/CrystalBall";
 import { TallVertical1Flag } from "./renderer/TallVertical1Flag";
 import { Test } from "./renderer/Test";
+import { BookStack } from "./renderer/BookStack";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
@@ -133,6 +134,22 @@ function App() {
       .reverse()
       .sortBy("timestamp");
   }, [appState.selectedHandoutType]);
+
+  // Handle form action buttons - just apply whatever the handler returns
+  const handleFormAction = (
+    handler: (data: Record<string, any>) => Record<string, any>
+  ) => {
+    const currentData = currentHandoutTransientRow?.data;
+    if (!currentData) return;
+
+    const newData = handler(currentData);
+    const newDataPlain = JSON.parse(JSON.stringify(newData));
+    db.handouts
+      .where("id")
+      .equals(`TRANSIENT_${appState.selectedHandoutType}`)
+      .modify({ data: newDataPlain });
+    appStateProxy.selectedVersionId = "TRANSIENT";
+  };
 
   // Show error state if database failed to initialize
   if (dbError) {
@@ -353,6 +370,7 @@ function App() {
                   });
                 appStateProxy.selectedVersionId = "TRANSIENT";
               }}
+              onAction={handleFormAction}
             />
           </div>
 
@@ -475,6 +493,7 @@ function App() {
                     });
                   appStateProxy.selectedVersionId = "TRANSIENT";
                 }}
+                onAction={handleFormAction}
               />
             </div>
           </div>
@@ -650,6 +669,10 @@ function App() {
                 {currentHandoutTransientRow.type === "Test" &&
                   appState.selectedHandoutType === "Test" && (
                     <Test data={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "BookStack" &&
+                  appState.selectedHandoutType === "BookStack" && (
+                    <BookStack handout={currentHandoutTransientRow.data} />
                   )}
               </div>
             </div>

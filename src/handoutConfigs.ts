@@ -29,6 +29,7 @@ import {
   textFull,
   imagePostProcessing,
   x_y_position,
+  action,
 } from "./inputHelpers";
 import { LegendItem } from "./components/LegendItems";
 
@@ -392,14 +393,23 @@ export const BookCoverConfig = {
         { label: "Book Cover 2", value: "/images/book-cover-2.avif" },
         { label: "Book Cover 3", value: "/images/book-cover-3.png" },
         { label: "Book Cover 4", value: "/images/book-cover-4.png" },
-        { label: "Black Leather Book", value: "/images/books/book-cover-black-leather.png" },
+        {
+          label: "Black Leather Book",
+          value: "/images/books/book-cover-black-leather.png",
+        },
         { label: "Art Deco", value: "/images/books/art-deco-1.jpg" },
         { label: "Red and Gold", value: "/images/books/red-and-gold.jpg" },
         { label: "Beige Ornate", value: "/images/books/beige-1.jpg" },
         { label: "Beige Circular", value: "/images/books/beige-2.png" },
-        { label: "Beige Heavily Worn", value: "/images/books/beige-heavily-worn.png" },
+        {
+          label: "Beige Heavily Worn",
+          value: "/images/books/beige-heavily-worn.png",
+        },
         { label: "Black", value: "/images/books/black.png" },
-        { label: "Brown Leather", value: "/images/books/book-brown-leather.png" },
+        {
+          label: "Brown Leather",
+          value: "/images/books/book-brown-leather.png",
+        },
         { label: "Burgundy", value: "/images/books/burgundy.png" },
         { label: "Dark Turquoise", value: "/images/books/dark-turquoise.png" },
         { label: "Mustard Yellow", value: "/images/books/mustard-yellow.png" },
@@ -420,6 +430,10 @@ export const BookCoverConfig = {
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  textTopMargin: [
+    0,
+    range({ name: "Text Top Margin", min: -50, max: 100, suffix: "" }),
+  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
@@ -914,6 +928,124 @@ export const TestConfig = {
   zRotate: [1, range({ name: "Z Rotation", min: -360, max: 360 })],
 } satisfies HandoutConfig;
 
+// Helper to create a book spine text config
+const bookSpineText = (
+  defaultText: string,
+  defaultX: number,
+  defaultY: number,
+  defaultRotation: number,
+  defaultFontSize: number = 3
+) =>
+  ({
+    text: [defaultText, text({ name: "Text" })] as const,
+    font: [FontFamily.SERIF, fontPicker({ name: "Font" })] as const,
+    fontSize: [
+      defaultFontSize,
+      range({ name: "Font Size", min: 0.5, max: 10, step: 0.1, suffix: "cqw" }),
+    ] as const,
+    fontWeight: [
+      FontWeight.BOLD,
+      fontWeightPicker({ name: "Weight" }),
+    ] as const,
+    colour: ["#d4af37", colour({ name: "Colour" })] as const,
+    xOffset: [
+      defaultX,
+      range({ name: "X Offset", min: -50, max: 50, step: 0.5, suffix: "" }),
+    ] as const,
+    yOffset: [
+      defaultY,
+      range({ name: "Y Offset", min: -50, max: 150, step: 0.5, suffix: "" }),
+    ] as const,
+    rotation: [
+      defaultRotation,
+      range({ name: "Rotation", min: -90, max: 90, step: 1, suffix: "°" }),
+    ] as const,
+  } satisfies HandoutConfig);
+
+// Position defaults per book stack image (for reset button)
+export const bookStackPositionDefaults: Record<
+  string,
+  Record<string, { xOffset: number; yOffset: number; rotation: number; fontSize: number }>
+> = {
+  "/images/book_stacks/book-stack-2915944_1920.png": {
+    book1: { xOffset: 2, yOffset: 7, rotation: -2, fontSize: 3 },
+    book2: { xOffset: 0, yOffset: 16, rotation: -1, fontSize: 3 },
+    book3: { xOffset: 3, yOffset: 35, rotation: 3.3, fontSize: 3 },
+    book4: { xOffset: 0, yOffset: 40, rotation: 0, fontSize: 3 },
+    book5: { xOffset: 0, yOffset: 52, rotation: 0, fontSize: 3 },
+    book6: { xOffset: -1, yOffset: 65, rotation: 1, fontSize: 3 },
+    book7: { xOffset: 0, yOffset: 84, rotation: 0, fontSize: 3 },
+  },
+  // Add more book stack images here with their own defaults
+};
+
+export const BookStackConfig = {
+  ...positioning,
+  pageWidth: [
+    60,
+    range({
+      name: "Overall Handout Width (Relative)",
+      min: 20,
+      max: 100,
+      step: 1,
+      suffix: "",
+    }),
+  ],
+  bookStackImage: [
+    "/images/book_stacks/book-stack-2915944_1920.png",
+    select({
+      name: "Book Stack Image",
+      value: "/images/book_stacks/book-stack-2915944_1920.png",
+      options: [
+        {
+          label: "7 Book Stack",
+          value: "/images/book_stacks/book-stack-2915944_1920.png",
+        },
+      ],
+    }),
+  ],
+  resetPositions: [
+    null,
+    action({
+      name: "Reset book text positions to default for",
+      handler: (currentData) => {
+        const selectedImage = currentData.bookStackImage as string;
+        const defaults = bookStackPositionDefaults[selectedImage];
+        if (!defaults) return currentData;
+
+        const newData = { ...currentData };
+        Object.entries(defaults).forEach(([bookKey, bookDefaults]) => {
+          newData[bookKey] = {
+            ...newData[bookKey],
+            ...bookDefaults,
+          };
+        });
+        return newData;
+      },
+      dynamicLabel: {
+        path: "bookStackImage",
+        labels: {
+          "/images/book_stacks/book-stack-2915944_1920.png": "7 Book Stack",
+        },
+      },
+    }),
+  ],
+  // Book 1 - Top book (red, slight tilt)
+  book1: bookSpineText("ANCIENT LORE", 2, 7, -2),
+  // Book 2 - Second from top (red)
+  book2: bookSpineText("MYSTICAL ARTS", 0, 16, -1),
+  // Book 3 - Third from top (red/brown)
+  book3: bookSpineText("ARCANE SECRETS", 3, 35, 3.3),
+  // Book 4 - Fourth (tan/yellow)
+  book4: bookSpineText("FORBIDDEN TOME", 0, 40, 0),
+  // Book 5 - Fifth (tan)
+  book5: bookSpineText("ELDER SCROLLS", 0, 52, 0),
+  // Book 6 - Sixth (olive/green)
+  book6: bookSpineText("DRAGON TALES", -1, 65, 1),
+  // Book 7 - Bottom book (dark red)
+  book7: bookSpineText("SPELL CRAFT", 0, 84, 0),
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -1030,6 +1162,13 @@ export const allConfigs = [
     caption: "A test handout for development purposes",
     type: "test",
     config: TestConfig,
+  } as const,
+  {
+    name: "BookStack",
+    displayName: "Book Stack",
+    caption: "A stack of books with customizable text on each spine",
+    type: "object",
+    config: BookStackConfig,
   } as const,
 ];
 

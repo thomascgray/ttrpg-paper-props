@@ -200,6 +200,25 @@ export const textStyle = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+export const action = (params: {
+  name: string;
+  handler: (currentData: Record<string, any>) => Record<string, any>;
+  variant?: "primary" | "secondary";
+  dynamicLabel?: {
+    path: string;
+    labels: Record<string, string>;
+  };
+}) => {
+  return {
+    name: params.name,
+    type: "action" as const,
+    handler: params.handler,
+    variant: params.variant ?? "secondary",
+    dynamicLabel: params.dynamicLabel,
+    value: null,
+  };
+};
+
 export const fontSize = () =>
   range({ name: "Font Size", min: 16, max: 200, suffix: "px" });
 export const lineHeight = () =>

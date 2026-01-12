@@ -23,6 +23,7 @@ interface FormRendererProps {
   formConfig: Record<string, any>;
   data: Record<string, any>;
   onChange: (path: string, value: any) => void;
+  onAction?: (handler: (data: Record<string, any>) => Record<string, any>) => void;
 }
 
 const getValueAtPath = (data: Record<string, any>, path: string): any => {
@@ -43,7 +44,9 @@ const getValueAtPath = (data: Record<string, any>, path: string): any => {
 const renderFormInput = (
   config: { inputConfig: any; path: string },
   value: any,
-  onChange: (path: string, value: any) => void
+  onChange: (path: string, value: any) => void,
+  onAction?: (handler: (data: Record<string, any>) => Record<string, any>) => void,
+  data?: Record<string, any>
 ) => {
   const { inputConfig, path } = config;
   const { type, name, ...restConfig } = inputConfig;
@@ -258,6 +261,28 @@ const renderFormInput = (
         />
       );
 
+    case "action": {
+      // Build dynamic label if configured
+      let buttonLabel = name;
+      if (restConfig.dynamicLabel && data) {
+        const fieldValue = getValueAtPath(data, restConfig.dynamicLabel.path);
+        const displayLabel = restConfig.dynamicLabel.labels[fieldValue];
+        if (displayLabel) {
+          buttonLabel = `${name} "${displayLabel}"`;
+        }
+      }
+      return (
+        <button
+          key={path}
+          type="button"
+          className="px-3 py-1.5 bg-zinc-700 hover:bg-zinc-600 text-white rounded text-sm"
+          onClick={() => onAction?.(restConfig.handler)}
+        >
+          {buttonLabel}
+        </button>
+      );
+    }
+
     default:
       console.warn(`Unknown input type: ${type}`);
       return null;
@@ -268,12 +293,13 @@ const renderFormSection = (
   key: string,
   config: any,
   data: Record<string, any>,
-  onChange: (path: string, value: any) => void
+  onChange: (path: string, value: any) => void,
+  onAction?: (handler: (data: Record<string, any>) => Record<string, any>) => void
 ): React.ReactNode => {
   // If it has inputConfig and path, it's a form input
   if (config.inputConfig && config.path) {
     const value = getValueAtPath(data, config.path);
-    return renderFormInput(config, value, onChange);
+    return renderFormInput(config, value, onChange, onAction, data);
   }
 
   // Otherwise, it's a container with nested items
@@ -287,7 +313,7 @@ const renderFormSection = (
         </summary>
         <div className="space-y-6 mt-4">
           {Object.entries(config).map(([nestedKey, nestedConfig]) =>
-            renderFormSection(nestedKey, nestedConfig, data, onChange)
+            renderFormSection(nestedKey, nestedConfig, data, onChange, onAction)
           )}
         </div>
       </details>
@@ -301,13 +327,14 @@ export const FormRenderer: React.FC<FormRendererProps> = ({
   formConfig,
   data,
   onChange,
+  onAction,
 }) => {
   return (
     <div className="space-y-4">
       {Object.entries(formConfig)
         .filter(([key]) => key !== "positioning") // Skip positioning - handled by floating controls
         .map(([key, config]) =>
-          renderFormSection(key, config, data, onChange)
+          renderFormSection(key, config, data, onChange, onAction)
         )}
     </div>
   );

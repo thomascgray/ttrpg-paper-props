@@ -18,6 +18,7 @@ import type {
   legendItems,
   textStyle,
   x_y_position,
+  action,
 } from "./inputHelpers";
 
 export type ConfigTuple = [
@@ -43,6 +44,7 @@ export type ConfigTuple = [
     | ReturnType<typeof legendItems>
     | ReturnType<typeof textStyle>
     | ReturnType<typeof x_y_position>
+    | ReturnType<typeof action>
   )
 ];
 

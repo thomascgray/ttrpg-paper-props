@@ -10,7 +10,11 @@ If the user has asked you to do some work, and it involves modifying a renderer 
 
 If the user has asked you to do some work, and it involves modifying a handout config (like the configs in `src/handoutConfigs.ts`), then refer to ./CLAUDE/handout-configs.md document.
 
+If the user has asked you to do work involving action buttons, data reset actions, variant-dependent defaults, or buttons that transform handout data based on a selector, then refer to ./CLAUDE/action-buttons.md document.
+
 If the user has asked you to do some work related to mobile UI, drawer behavior, or touch interactions, then refer to ./CLAUDE/mobile-ui.md document.
+
+If the user has asked you to do work that is at all related to the rendering of handouts, then refer to ./CLAUDE/rendering-components.md AND importantly /CLAUDE/cqw-relative-proportions.md
 
 ### CLI Development
 
@@ -120,6 +124,7 @@ All form inputs use helper functions from `inputHelpers.ts`:
 - `imageInput()` - Image upload/URL
 - `paragraphArray()` - Dynamic paragraph lists
 - `select()` - Dropdown selections
+- `action()` - Clickable buttons that transform data (see ./CLAUDE/action-buttons.md)
 
 ### Component Guidelines
 
