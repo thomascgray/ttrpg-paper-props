@@ -92,9 +92,9 @@ export const HandoutTypeSelector = ({ onSelect }: HandoutTypeSelectorProps = {})
                 );
               })}
           </optgroup>
-          <optgroup label="Gravestones & Headstones">
+          <optgroup label="Headstones">
             {allConfigs
-              .filter((config) => config.type === "gravestones")
+              .filter((config) => config.type === "headstones")
               .map((config) => {
                 return (
                   <option key={config.name} value={config.name}>

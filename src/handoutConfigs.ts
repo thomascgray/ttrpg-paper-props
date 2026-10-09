@@ -550,7 +550,7 @@ _We don't want any!_`,
   ...imageOpts,
 } satisfies HandoutConfig;
 
-export const GravestoneConfig = {
+export const HeadstoneConfig = {
   dimensions: {
     pageWidth: [
       40,
@@ -558,15 +558,15 @@ export const GravestoneConfig = {
     ],
   },
   stoneImage: [
-    "/images/gravestones/placeholder.svg",
+    "/images/headstones/placeholder.svg",
     select({
-      name: "Gravestone Style",
-      value: "/images/gravestones/placeholder.svg",
+      name: "Headstone Style",
+      value: "/images/headstones/placeholder.svg",
       options: [
-        // add photos dropped into public/images/gravestones/ here
+        // add photos dropped into public/images/headstones/ here
         {
           label: "Placeholder (rounded)",
-          value: "/images/gravestones/placeholder.svg",
+          value: "/images/headstones/placeholder.svg",
         },
       ],
     }),
@@ -1024,12 +1024,11 @@ export const allConfigs = [
     config: Rectangle1WoodenSignConfig,
   } as const,
   {
-    name: "Gravestone",
-    displayName: "Gravestone",
-    caption:
-      "A gravestone / headstone, with markdown-configurable engraved text",
-    type: "gravestones",
-    config: GravestoneConfig,
+    name: "Headstone",
+    displayName: "Headstone",
+    caption: "A headstone, with markdown-configurable engraved text",
+    type: "headstones",
+    config: HeadstoneConfig,
   } as const,
   {
     name: "CrtScreen",

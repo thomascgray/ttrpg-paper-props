@@ -1,12 +1,12 @@
 import Markdown from "react-markdown";
-import { GravestoneConfig } from "../handoutConfigs";
+import { HeadstoneConfig } from "../handoutConfigs";
 import { ExtractConfigValues } from "../types";
 import classNames from "classnames";
 import { getImageProcessingStyles } from "../utils";
 
-type GravestoneData = ExtractConfigValues<typeof GravestoneConfig>;
+type HeadstoneData = ExtractConfigValues<typeof HeadstoneConfig>;
 
-export const Gravestone = ({ handout }: { handout: GravestoneData }) => {
+export const Headstone = ({ handout }: { handout: HeadstoneData }) => {
   return (
     <div
       className="relative flex justify-around max-w-[80em]"
@@ -23,7 +23,7 @@ export const Gravestone = ({ handout }: { handout: GravestoneData }) => {
         <div className="relative w-full">
           <img
             src={handout.stoneImage}
-            alt="Gravestone"
+            alt="Headstone"
             className="w-full h-auto"
             style={{
               transform: `scaleX(${handout.image.scaleX}) scaleY(${handout.image.scaleY})`,
