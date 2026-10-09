@@ -15,6 +15,7 @@ import { PlainLetter } from "./renderer/PlainLetter";
 import { BookCover } from "./renderer/BookCover";
 import { LabelledLiquid } from "./renderer/LabelledLiquid";
 import { HangingWoodenSign } from "./renderer/HangingWoodenSign";
+import { Gravestone } from "./renderer/Gravestone";
 import { ThreePanelDirectionalSign } from "./renderer/ThreePanelDirectionalSign";
 import { Rectangle1WoodenSign } from "./renderer/Rectangle1WoodenSign";
 import { CrtScreen } from "./renderer/CrtScreen";
@@ -600,6 +601,11 @@ function App() {
                     <HangingWoodenSign
                       handout={currentHandoutTransientRow.data}
                     />
+                  )}
+
+                {currentHandoutTransientRow.type === "Gravestone" &&
+                  appState.selectedHandoutType === "Gravestone" && (
+                    <Gravestone handout={currentHandoutTransientRow.data} />
                   )}
 
                 {currentHandoutTransientRow.type ===

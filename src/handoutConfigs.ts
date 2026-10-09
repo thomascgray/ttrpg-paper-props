@@ -550,6 +550,59 @@ _We don't want any!_`,
   ...imageOpts,
 } satisfies HandoutConfig;
 
+export const GravestoneConfig = {
+  dimensions: {
+    pageWidth: [
+      40,
+      range({ name: "Page Width", min: 20, max: 100, step: 1, suffix: "" }),
+    ],
+  },
+  stoneImage: [
+    "/images/gravestones/placeholder.svg",
+    select({
+      name: "Gravestone Style",
+      value: "/images/gravestones/placeholder.svg",
+      options: [
+        // add photos dropped into public/images/gravestones/ here
+        {
+          label: "Placeholder (rounded)",
+          value: "/images/gravestones/placeholder.svg",
+        },
+      ],
+    }),
+  ],
+  text: [
+    `# HERE LIES
+## Old Man Willow
+
+_1312 – 1388_
+
+_He should have stayed off the road_`,
+    textArea({ name: "Text" }),
+  ],
+  textXOffset: [
+    0,
+    range({ name: "Text X-Offset", min: -100, max: 100, suffix: "" }),
+  ],
+  textYOffset: [
+    0,
+    range({ name: "Text Y-Offset", min: -100, max: 100, suffix: "" }),
+  ],
+  textWidth: [
+    70,
+    range({ name: "Text Width", min: 20, max: 100, step: 1, suffix: "%" }),
+  ],
+  font: [FontFamily.SERIF, fontPicker()],
+  fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  fontSize: [
+    6,
+    range({ name: "Font Size", min: 2, max: 15, step: 0.1, suffix: "cqw" }),
+  ],
+  textAlign: ["text-center", textAlign({ value: "text-center" })],
+  gnarledText: [false, boolean({ name: "Gnarled Text" })],
+  ...imageOpts,
+} satisfies HandoutConfig;
+
 export const ThreePanelDirectionalSignConfig = {
   dimensions: {
     pageWidth: [
@@ -969,6 +1022,14 @@ export const allConfigs = [
     caption: "A rectangular wooden sign post with customizable text",
     type: "wooden_signs",
     config: Rectangle1WoodenSignConfig,
+  } as const,
+  {
+    name: "Gravestone",
+    displayName: "Gravestone",
+    caption:
+      "A gravestone / headstone, with markdown-configurable engraved text",
+    type: "gravestones",
+    config: GravestoneConfig,
   } as const,
   {
     name: "CrtScreen",

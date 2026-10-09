@@ -92,6 +92,17 @@ export const HandoutTypeSelector = ({ onSelect }: HandoutTypeSelectorProps = {})
                 );
               })}
           </optgroup>
+          <optgroup label="Gravestones & Headstones">
+            {allConfigs
+              .filter((config) => config.type === "gravestones")
+              .map((config) => {
+                return (
+                  <option key={config.name} value={config.name}>
+                    {config.displayName}
+                  </option>
+                );
+              })}
+          </optgroup>
           <optgroup label="Flags and Banners">
             {allConfigs
               .filter((config) => config.type === "flags_and_banners")

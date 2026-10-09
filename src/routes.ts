@@ -12,6 +12,8 @@ export const routes: Record<string, AllConfigNames> = {
   "/hanging-sign": "HangingWoodenSign",
   "/directional-sign": "ThreePanelDirectionalSign",
   "/rectangle-sign-1": "Rectangle1WoodenSign",
+  "/gravestone": "Gravestone",
+  "/headstone": "Gravestone", // Alias for gravestone
   "/crt-screen": "CrtScreen",
   "/monitor": "CrtScreen", // Alias for CRT screen
   "/paper-map": "PaperMap",
@@ -36,6 +38,7 @@ export const handoutToRoute: Record<AllConfigNames, string> = {
   HangingWoodenSign: "/hanging-sign",
   ThreePanelDirectionalSign: "/directional-sign",
   Rectangle1WoodenSign: "/rectangle-sign-1",
+  Gravestone: "/gravestone",
   CrtScreen: "/crt-screen",
   PaperMap: "/paper-map",
   SciFiHologram: "/hologram",

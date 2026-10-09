@@ -73,6 +73,10 @@ export const HandoutTypeSelectorFloating = () => {
       type: "wooden_signs" as const,
     },
     {
+      label: "Gravestones & Headstones",
+      type: "gravestones" as const,
+    },
+    {
       label: "Flags and Banners",
       type: "flags_and_banners" as const,
     },
