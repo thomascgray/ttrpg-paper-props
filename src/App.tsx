@@ -115,7 +115,7 @@ function App() {
   }, [appState.selectedHandoutType]);
 
   const selectedConfig = allConfigs.find(
-    (config) => config.name === appState.selectedHandoutType,
+    (config) => config.name === appState.selectedHandoutType
   )!;
 
   const formConfig = extractConfigAsFormConfig(selectedConfig.config);
@@ -194,18 +194,18 @@ function App() {
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
               : appState.backgroundType === "gradient"
-                ? {
-                    background:
-                      appState.backgroundGradientType === "linear"
-                        ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                        : appState.backgroundGradientType === "radial"
-                          ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                          : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
-                  }
-                : appState.backgroundType === "custom" &&
-                    appState.backgroundCustomImage
-                  ? {}
-                  : { backgroundColor: "#2f3640" }),
+              ? {
+                  background:
+                    appState.backgroundGradientType === "linear"
+                      ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : appState.backgroundGradientType === "radial"
+                      ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                }
+              : appState.backgroundType === "custom" &&
+                appState.backgroundCustomImage
+              ? {}
+              : { backgroundColor: "#2f3640" }),
           }}
         >
           {/* Background layer for custom image with optional blur */}
@@ -306,7 +306,7 @@ function App() {
                 onClick={() => {
                   saveVersion(
                     appState.selectedHandoutType,
-                    currentHandoutTransientRow.data,
+                    currentHandoutTransientRow.data
                   );
                 }}
               >
@@ -428,7 +428,7 @@ function App() {
                     onClick={() => {
                       saveVersion(
                         appState.selectedHandoutType,
-                        currentHandoutTransientRow.data,
+                        currentHandoutTransientRow.data
                       );
                     }}
                   >
@@ -513,18 +513,18 @@ function App() {
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
               : appState.backgroundType === "gradient"
-                ? {
-                    background:
-                      appState.backgroundGradientType === "linear"
-                        ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                        : appState.backgroundGradientType === "radial"
-                          ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                          : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
-                  }
-                : appState.backgroundType === "custom" &&
-                    appState.backgroundCustomImage
-                  ? {}
-                  : { backgroundColor: "#2f3640" }),
+              ? {
+                  background:
+                    appState.backgroundGradientType === "linear"
+                      ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : appState.backgroundGradientType === "radial"
+                      ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                      : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                }
+              : appState.backgroundType === "custom" &&
+                appState.backgroundCustomImage
+              ? {}
+              : { backgroundColor: "#2f3640" }),
           }}
         >
           {/* Background layer for custom image with optional blur */}
@@ -555,8 +555,8 @@ function App() {
                     translate(${
                       currentHandoutTransientRow.data.positioning?.xOffset || 0
                     }%, ${
-                      currentHandoutTransientRow.data.positioning?.yOffset || 0
-                    }%)
+                  currentHandoutTransientRow.data.positioning?.yOffset || 0
+                }%)
                     rotate(${
                       currentHandoutTransientRow.data.positioning?.rotation || 0
                     }deg) 
