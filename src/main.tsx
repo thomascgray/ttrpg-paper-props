@@ -62,6 +62,22 @@ const RoughEdgesFilterDeclaration = () => {
             yChannelSelector="G"
           />
         </filter>
+        {/* Gentler version for carved stone: finer noise, smaller displacement */}
+        <filter id="roughEdgesSubtle">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.08"
+            numOctaves="3"
+            result="noise"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="noise"
+            scale="3.5"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
       </defs>
     </svg>
   );

@@ -22,6 +22,7 @@ export const BookCover = ({ handout }: { handout: BookCoverData }) => {
           className="absolute"
           style={{
             fontSize: `${handout.fontSize}cqw`,
+            top: `${handout.textTopMargin}cqw`,
           }}
         >
           <Markdown

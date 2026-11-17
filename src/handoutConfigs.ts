@@ -16,6 +16,8 @@ import {
   fontWeightPicker,
   paragraphArray,
   select,
+  radio,
+  imageRadio,
   blendMode,
   crtPixelColours,
   fontSize,
@@ -24,12 +26,20 @@ import {
   zoom,
   imageOpts,
   legendItems,
+  booksArray,
   positioning,
   positioningNamed,
   textFull,
   imagePostProcessing,
   x_y_position,
+  action,
 } from "./inputHelpers";
+import {
+  BOOK_STACK_DEFAULTS,
+  BOOK_STACK_LABELS,
+  DEFAULT_BOOK_STACK_IMAGE,
+  createBooksFromDefaults,
+} from "./bookStackDefaults";
 import { LegendItem } from "./components/LegendItems";
 
 export const NewspaperConfig = {
@@ -384,7 +394,7 @@ Mauris orci tortor, semper nec purus ac, rhoncus mollis massa. Cras euismod dign
 export const BookCoverConfig = {
   bookCoverTemplate: [
     "/images/book-cover-1.avif",
-    select({
+    imageRadio({
       name: "Book Cover Template",
       value: "/images/book-cover-1.avif",
       options: [
@@ -392,6 +402,27 @@ export const BookCoverConfig = {
         { label: "Book Cover 2", value: "/images/book-cover-2.avif" },
         { label: "Book Cover 3", value: "/images/book-cover-3.png" },
         { label: "Book Cover 4", value: "/images/book-cover-4.png" },
+        {
+          label: "Black Leather Book",
+          value: "/images/books/book-cover-black-leather.png",
+        },
+        { label: "Art Deco", value: "/images/books/art-deco-1.jpg" },
+        { label: "Red and Gold", value: "/images/books/red-and-gold.jpg" },
+        { label: "Beige Ornate", value: "/images/books/beige-1.jpg" },
+        { label: "Beige Circular", value: "/images/books/beige-2.png" },
+        {
+          label: "Beige Heavily Worn",
+          value: "/images/books/beige-heavily-worn.png",
+        },
+        { label: "Black", value: "/images/books/black.png" },
+        {
+          label: "Brown Leather",
+          value: "/images/books/book-brown-leather.png",
+        },
+        { label: "Burgundy", value: "/images/books/burgundy.png" },
+        { label: "Dark Turquoise", value: "/images/books/dark-turquoise.png" },
+        { label: "Mustard Yellow", value: "/images/books/mustard-yellow.png" },
+        { label: "Navy Blue", value: "/images/books/navy-blue.png" },
       ],
     }),
   ],
@@ -408,6 +439,10 @@ export const BookCoverConfig = {
     }),
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
+  textTopMargin: [
+    0,
+    range({ name: "Text Top Margin", min: -50, max: 100, suffix: "" }),
+  ],
   textAlign: ["text-center", textAlign({ value: "text-center" })],
   textEffect: ["blend-mode-normal", blendMode({ name: "Text Effect" })],
   mainCopy: [
@@ -431,7 +466,7 @@ export const BookCoverConfig = {
 export const LabelledLiquidConfig = {
   imageTemplate: [
     "/images/labelled-container-1.avif",
-    select({
+    imageRadio({
       name: "Image Template",
       value: "/images/labelled-container-1.avif",
       options: [
@@ -664,12 +699,30 @@ export const CrtScreenConfig = {
     rotationDegrees: [0, rotation()],
     zoom: [1, zoom()],
   },
-  dimensions: {
-    pageWidth: [
-      90,
-      range({ name: "Page Width", min: 40, max: 120, step: 1, suffix: "" }),
-    ],
-  },
+  crtScreen: [
+    "/images/crts/c.webp",
+    imageRadio({
+      name: "CRT Screen Style/Model",
+      value: "/images/crts/c.webp",
+      options: [
+        // { label: "HP", value: "/images/crts/a.webp" },
+        { label: "Commodore PET", value: "/images/crts/c.webp" },
+        { label: "Apple Macintosh", value: "/images/crts/b.webp" },
+        { label: "Apple Lisa 2", value: "/images/crts/d.webp" },
+        { label: "Micral Microcomputer", value: "/images/crts/e.webp" },
+      ],
+    }),
+  ],
+  pageWidth: [
+    60,
+    range({
+      name: "Overall Handout Width (Relative)",
+      min: 10,
+      max: 100,
+      step: 1,
+      suffix: "",
+    }),
+  ],
   text: [
     `per conubia nostra, per inceptos himenaeos. Integer fringilla nulla eu sem rhoncus. Fusce ante velit, imperdiet id eros ut, eleifend sodales nunc.
 
@@ -703,23 +756,6 @@ _Nullam et quam vel urna mollis fermentum sit amet vehicula nisi._ Donec ut comm
   ],
   fontWeight: [FontWeight.NORMAL, fontWeightPicker()],
   textAlign: ["text-center", textAlign()],
-  crtScreen: [
-    "/images/crts/c.webp",
-    select({
-      name: "CRT Screen Style/Model",
-      value: "/images/crts/c.webp",
-      options: [
-        // { label: "HP", value: "/images/crts/a.webp" },
-        { label: "Commodore PET (c.webp)", value: "/images/crts/c.webp" },
-        { label: "Apple Macintosh (b.webp)", value: "/images/crts/b.webp" },
-        { label: "Apple Lisa 2 (d.webp)", value: "/images/crts/d.webp" },
-        {
-          label: "Micral Microcomputer (e.webp)",
-          value: "/images/crts/e.webp",
-        },
-      ],
-    }),
-  ],
   ...imagePostProcessing,
 } satisfies HandoutConfig;
 
@@ -902,6 +938,529 @@ export const TestConfig = {
   zRotate: [1, range({ name: "Z Rotation", min: -360, max: 360 })],
 } satisfies HandoutConfig;
 
+export const BookStackConfig = {
+  ...positioning,
+  pageWidth: [
+    60,
+    range({
+      name: "Overall Handout Width (Relative)",
+      min: 20,
+      max: 100,
+      step: 1,
+      suffix: "",
+    }),
+  ],
+  bookStackImage: [
+    DEFAULT_BOOK_STACK_IMAGE,
+    select({
+      name: "Book Stack Image",
+      value: DEFAULT_BOOK_STACK_IMAGE,
+      options: Object.entries(BOOK_STACK_LABELS).map(([value, label]) => ({
+        label,
+        value,
+      })),
+    }),
+  ],
+  resetBooks: [
+    null,
+    action({
+      name: "Reset books to default for",
+      handler: (currentData) => {
+        const imagePath = currentData.bookStackImage as string;
+        return {
+          ...currentData,
+          books: createBooksFromDefaults(imagePath),
+        };
+      },
+      dynamicLabel: {
+        path: "bookStackImage",
+        labels: BOOK_STACK_LABELS,
+      },
+    }),
+  ],
+  books: [
+    createBooksFromDefaults(DEFAULT_BOOK_STACK_IMAGE),
+    booksArray({ name: "Books" }),
+  ],
+} satisfies HandoutConfig;
+
+// Text area for each gravestone image, as % of the image, so the carved text
+// lands on the flat face of the stone rather than the arch or the plinth
+export const GRAVESTONE_IMAGES: Record<
+  string,
+  { label: string; top: number; left: number; width: number }
+> = {
+  "/images/gravestones/rounded.avif": {
+    label: "Rounded Headstone",
+    top: 20,
+    left: 17,
+    width: 66,
+  },
+  "/images/gravestones/pointed-arch.avif": {
+    label: "Pointed Headstone",
+    top: 22,
+    left: 12,
+    width: 76,
+  },
+  "/images/gravestones/pediment-finials.avif": {
+    label: "Tall Pediment Headstone",
+    top: 21,
+    left: 20,
+    width: 60,
+  },
+  // Text starts below the carved cross in the gable
+  "/images/gravestones/cross-pediment.avif": {
+    label: "Cross Pediment Headstone",
+    top: 37,
+    left: 19,
+    width: 62,
+  },
+  // Moss covers the lower third, so default text sits high on the face
+  "/images/gravestones/mossy-gable.avif": {
+    label: "Mossy Gabled Headstone",
+    top: 17,
+    left: 15,
+    width: 70,
+  },
+  // Narrow lower shaft of the pedestal, below the moulding band
+  "/images/gravestones/bust-pedestal.avif": {
+    label: "Bust on Pedestal",
+    top: 56,
+    left: 28,
+    width: 44,
+  },
+};
+
+const gravestoneSection = (
+  mainCopy: string,
+  font: FontFamily,
+  fontSize: number,
+  fontWeight: FontWeight = FontWeight.BOLD,
+) => ({
+  id: nanoid(),
+  mainCopy,
+  font,
+  fontSize,
+  fontWeight,
+  textAlign: "text-center",
+});
+
+export const GravestoneConfig = {
+  ...positioning,
+  pageWidth: [
+    35,
+    range({
+      name: "Overall Handout Width (Relative)",
+      min: 10,
+      max: 100,
+      step: 1,
+      suffix: "",
+    }),
+  ],
+  gravestoneImage: [
+    "/images/gravestones/rounded.avif",
+    imageRadio({
+      name: "Gravestone",
+      value: "/images/gravestones/rounded.avif",
+      options: Object.entries(GRAVESTONE_IMAGES).map(([value, { label }]) => ({
+        label,
+        value,
+      })),
+    }),
+  ],
+  sections: [
+    [
+      gravestoneSection("HERE LIES", FontFamily.IM_FELL_DISPLAY, 6),
+      gravestoneSection("BARTHOLOMEW GRIMM", FontFamily.IM_FELL_DISPLAY, 8),
+      gravestoneSection("1203 - 1267", FontFamily.IM_FELL, 5),
+      gravestoneSection(
+        "_He should have rolled for initiative_",
+        FontFamily.IM_FELL,
+        4.5,
+        FontWeight.NORMAL,
+      ),
+    ],
+    paragraphArray({
+      name: "Text Sections",
+      fontSizeRange: { min: 1, max: 20, step: 0.1 },
+      newParagraphDefaults: {
+        font: FontFamily.IM_FELL_DISPLAY,
+        fontSize: 5,
+        fontWeight: FontWeight.BOLD,
+        textAlign: "text-center",
+      },
+    }),
+  ],
+  sectionGap: [
+    3,
+    range({ name: "Section Gap", min: 0, max: 20, step: 0.5, suffix: "cqw" }),
+  ],
+  textYOffset: [
+    0,
+    range({
+      name: "Text Vertical Offset",
+      min: -30,
+      max: 80,
+      step: 0.5,
+      suffix: "cqw",
+    }),
+  ],
+  carveDepth: [
+    0.7,
+    range({ name: "Carve Depth", min: 0.1, max: 1, step: 0.05 }),
+  ],
+  weathered: [true, boolean({ name: "Weathered Edges" })],
+  ...imageOpts,
+} satisfies HandoutConfig;
+
+const chalkboardParagraph = (mainCopy: string, fontSize: number) => ({
+  id: nanoid(),
+  mainCopy,
+  font: FontFamily.ZEYADA,
+  fontSize,
+  fontWeight: FontWeight.NORMAL,
+  textAlign: "text-center",
+  rotation: 0,
+});
+
+export const ChalkboardConfig = {
+  ...positioning,
+  pageWidth: [
+    50,
+    range({
+      name: "Overall Handout Width (Relative)",
+      min: 20,
+      max: 100,
+      step: 1,
+      suffix: "",
+    }),
+  ],
+  aspectRatio: [
+    "4 / 3",
+    select({
+      name: "Board Shape",
+      value: "4 / 3",
+      options: [
+        { label: "Landscape (4:3)", value: "4 / 3" },
+        { label: "Wide (16:9)", value: "16 / 9" },
+        { label: "Portrait (3:4)", value: "3 / 4" },
+        { label: "Square", value: "1 / 1" },
+      ],
+    }),
+  ],
+  boardColour: ["#1f2421", colour({ name: "Board Colour" })],
+  frame: [
+    "light-wood",
+    select({
+      name: "Frame",
+      value: "light-wood",
+      options: [
+        { label: "None", value: "none" },
+        { label: "Light Wood", value: "light-wood" },
+        { label: "Dark Wood", value: "dark-wood" },
+      ],
+    }),
+  ],
+  frameWidth: [
+    3.5,
+    range({ name: "Frame Width", min: 1, max: 10, step: 0.25, suffix: "cqw" }),
+  ],
+  chalkColour: ["#FFFFFF", colour({ name: "Chalk Colour" })],
+  textRotation: [
+    0,
+    range({
+      name: "Rotation (All Text)",
+      min: -45,
+      max: 45,
+      step: 0.5,
+      suffix: "°",
+    }),
+  ],
+  paragraph: [
+    [
+      chalkboardParagraph("The Drowned Rat", 8),
+      chalkboardParagraph("~ Today ~", 4),
+      chalkboardParagraph(
+        "Eel pie ... 4c\nBlack ale ... 2c\nPickled egg ... 1c\nRat on a stick ... 3c",
+        5,
+      ),
+    ],
+    paragraphArray({
+      name: "Paragraphs",
+      fontSizeRange: { min: 0.5, max: 20, step: 0.1 },
+      newParagraphDefaults: {
+        font: FontFamily.ZEYADA,
+        fontSize: 4,
+        fontWeight: FontWeight.NORMAL,
+        textAlign: "text-center",
+        rotation: 0,
+      },
+      showRotation: true,
+    }),
+  ],
+  paragraphGap: [
+    2,
+    range({
+      name: "Paragraph Gap",
+      min: 0,
+      max: 15,
+      step: 0.25,
+      suffix: "cqw",
+    }),
+  ],
+  padding: [
+    5,
+    range({ name: "Padding", min: 0, max: 20, step: 0.25, suffix: "cqw" }),
+  ],
+  fadeAmount: [
+    0.35,
+    range({ name: "Faded Patches", min: 0, max: 1, step: 0.01 }),
+  ],
+  grainAmount: [
+    0.5,
+    range({ name: "Chalk Grain", min: 0, max: 1, step: 0.01 }),
+  ],
+  fadeSeed: [
+    7,
+    range({ name: "Fade Pattern (Seed)", min: 1, max: 100, step: 1 }),
+  ],
+  smudges: [true, boolean({ name: "Eraser Smudges" })],
+  ghostText: ["", textArea({ name: "Half-Erased Old Writing", minRows: 2 })],
+} satisfies HandoutConfig;
+
+// Seal styles for the envelope back. Without `src` the renderer draws the seal
+// as lit SVG wax, with `seed` and `roughness` shaping the rim. A photo seal
+// sets `src` (transparent PNG in /images/wax_seals/), and centreX/centreY
+// (% of the image) mark the blank middle where the glyph is pressed in.
+export const WAX_SEAL_IMAGES: Record<
+  string,
+  {
+    label: string;
+    src?: string;
+    seed?: number;
+    roughness?: number;
+    centreX: number;
+    centreY: number;
+    glyphSize: number;
+  }
+> = {
+  round: {
+    label: "Round",
+    seed: 4,
+    roughness: 8,
+    centreX: 50,
+    centreY: 50,
+    glyphSize: 0.42,
+  },
+  splashed: {
+    label: "Splashed",
+    seed: 11,
+    roughness: 13,
+    centreX: 50,
+    centreY: 50,
+    glyphSize: 0.38,
+  },
+  pooled: {
+    label: "Pooled",
+    seed: 27,
+    roughness: 9,
+    centreX: 50,
+    centreY: 50,
+    glyphSize: 0.4,
+  },
+};
+
+// imageOpts minus the scale sliders, which mean nothing for a seal
+const { scaleX: _scaleX, scaleY: _scaleY, ...sealImageOpts } = imageOpts.image;
+
+// Drawn by src/renderer/EnvelopePostmark.tsx, one SVG per value
+export const ENVELOPE_POSTMARK_STYLES = [
+  { label: "Circle with Wavy Lines", value: "wavy" },
+  { label: "Circle with Bars (Duplex)", value: "duplex" },
+  { label: "Double Ring with Band", value: "band" },
+  { label: "Oval", value: "oval" },
+  { label: "Boxed", value: "boxed" },
+  { label: "Toothed Ring", value: "toothed" },
+];
+
+const envelopeAddressLine = (
+  mainCopy: string,
+  fontSize: number,
+  font: FontFamily = FontFamily.DANCING_SCRIPT,
+) => ({
+  id: nanoid(),
+  mainCopy,
+  font,
+  fontSize,
+  fontWeight: FontWeight.NORMAL,
+  textAlign: "text-center",
+});
+
+export const EnvelopeConfig = {
+  ...positioning,
+  pageWidth: [
+    45,
+    range({ name: "Handout Width", min: 15, max: 90, suffix: "" }),
+  ],
+  aspectRatio: [
+    "3 / 2",
+    select({
+      name: "Shape",
+      value: "3 / 2",
+      options: [
+        { label: "Letter (3:2)", value: "3 / 2" },
+        { label: "Long (9:4)", value: "9 / 4" },
+        { label: "Square", value: "1 / 1" },
+        { label: "Card (4:3)", value: "4 / 3" },
+      ],
+    }),
+  ],
+  side: [
+    "front",
+    radio({
+      name: "Side",
+      value: "front",
+      options: [
+        {
+          label: "Front",
+          value: "front",
+          description: "Address, return address, postmark and stamp",
+        },
+        {
+          label: "Back",
+          value: "back",
+          description: "Folded flaps and wax seal",
+        },
+      ],
+    }),
+  ],
+  paperTexture: ["beige-3", paperTexture()],
+  paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
+  isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
+  inkColor: ["ink-black", inkSelector()],
+  addressLines: [
+    [
+      envelopeAddressLine("To the Honourable Magistrate Vell", 5.5),
+      envelopeAddressLine("Tower Ward, Doskvol", 4.5),
+    ],
+    paragraphArray({
+      name: "Address Lines (front only)",
+      fontSizeRange: { min: 1, max: 12, step: 0.1 },
+      newParagraphDefaults: {
+        font: FontFamily.DANCING_SCRIPT,
+        fontSize: 4.5,
+        fontWeight: FontWeight.NORMAL,
+        textAlign: "text-center",
+      },
+    }),
+  ],
+  addressRotation: [
+    0,
+    range({ name: "Address Rotation (front only)", min: -30, max: 30, suffix: "°" }),
+  ],
+  frontReturnAddress: {
+    text: [
+      "Lord Scurlock\nScurlock Manor, Six Towers",
+      textArea({ name: "Return Address", minRows: 2 }),
+    ],
+    font: [FontFamily.DANCING_SCRIPT, fontPicker({ name: "Font" })],
+    fontSize: [
+      2.4,
+      range({ name: "Font Size", min: 1, max: 8, step: 0.1, suffix: "cqw" }),
+    ],
+    rotation: [0, range({ name: "Rotation", min: -30, max: 30, suffix: "°" })],
+  },
+  frontPostmark: {
+    showPostmark: [true, boolean({ name: "Show Postmark" })],
+    // The post office's ink, not the letter writer's
+    postmarkInk: ["ink-true-black", inkSelector({ name: "Postmark Ink" })],
+    postmarkStyle: [
+      "wavy",
+      select({
+        name: "Postmark Style",
+        value: "wavy",
+        options: ENVELOPE_POSTMARK_STYLES,
+      }),
+    ],
+    text: ["CHARHOLLOW", text({ name: "Postmark Town" })],
+    centreText: ["", text({ name: "Postmark Centre Text" })],
+    size: [
+      16,
+      range({
+        name: "Postmark Size",
+        min: 6,
+        max: 40,
+        step: 0.5,
+        suffix: "cqw",
+      }),
+    ],
+    rotation: [
+      -12,
+      range({ name: "Postmark Rotation", min: -45, max: 45, suffix: "°" }),
+    ],
+  },
+  frontStamp: {
+    stampImage: ["", imageInput({ name: "Postage Stamp Image" })],
+    stampSize: [
+      13,
+      range({ name: "Stamp Size", min: 5, max: 35, step: 0.5, suffix: "cqw" }),
+    ],
+    stampRotation: [
+      2,
+      range({ name: "Stamp Rotation", min: -30, max: 30, suffix: "°" }),
+    ],
+    perforated: [true, boolean({ name: "Perforated Edges" })],
+  },
+  flapStyle: [
+    "pointed",
+    select({
+      name: "Flap Style (back only)",
+      value: "pointed",
+      options: [
+        { label: "Pointed", value: "pointed" },
+        { label: "Rounded", value: "rounded" },
+        { label: "Straight", value: "straight" },
+      ],
+    }),
+  ],
+  isOpened: [false, boolean({ name: "Opened (back only)" })],
+  backSeal: {
+    showSeal: [true, boolean({ name: "Show Wax Seal" })],
+    sealImage: [
+      "round",
+      select({
+        name: "Seal Style",
+        value: "round",
+        options: Object.entries(WAX_SEAL_IMAGES).map(([value, { label }]) => ({
+          label,
+          value,
+        })),
+      }),
+    ],
+    sealGlyph: ["S", text({ name: "Seal Letter (1-2 characters)" })],
+    sealGlyphFont: [
+      FontFamily.IM_FELL_DISPLAY,
+      fontPicker({ name: "Seal Letter Font" }),
+    ],
+    sealSize: [
+      16,
+      range({ name: "Seal Size", min: 5, max: 40, step: 0.5, suffix: "cqw" }),
+    ],
+    sealYOffset: [
+      0,
+      range({
+        name: "Seal Vertical Offset",
+        min: -30,
+        max: 30,
+        step: 0.5,
+        suffix: "cqw",
+      }),
+    ],
+    // Seal colour: red by default, hue rotation recolours it
+    ...sealImageOpts,
+  },
+} satisfies HandoutConfig;
+
 export const allConfigs = [
   {
     name: "Newspaper",
@@ -1018,6 +1577,37 @@ export const allConfigs = [
     caption: "A test handout for development purposes",
     type: "test",
     config: TestConfig,
+  } as const,
+  {
+    name: "BookStack",
+    displayName: "Book Stack",
+    caption: "A stack of books with customizable text on each spine",
+    type: "object",
+    config: BookStackConfig,
+  } as const,
+  {
+    name: "Gravestone",
+    displayName: "Gravestone",
+    caption:
+      "A headstone with carved text. Each text section has its own font and size.",
+    type: "object",
+    config: GravestoneConfig,
+  } as const,
+  {
+    name: "Chalkboard",
+    displayName: "Chalkboard",
+    caption:
+      "A slate chalkboard with patchy, half-rubbed-out chalk text and an optional wooden frame.",
+    type: "object",
+    config: ChalkboardConfig,
+  } as const,
+  {
+    name: "Envelope",
+    displayName: "Envelope",
+    caption:
+      "A paper envelope. The front has an address and postmark, the back has folded flaps and a wax seal.",
+    type: "digital_paper",
+    config: EnvelopeConfig,
   } as const,
 ];
 

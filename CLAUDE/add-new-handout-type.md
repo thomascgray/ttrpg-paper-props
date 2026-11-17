@@ -78,6 +78,23 @@ import { [HandoutName] } from "./renderer/[HandoutName]";
   )}
 ```
 
+### 5. Add the Selector Thumbnail (easy to forget, do not skip)
+
+Every handout in the selector modal needs an example image. Without one, the card shows a grey placeholder icon. This step has been missed on new handouts before, so treat the handout as unfinished until it's done.
+
+1. With the dev server running, screenshot the handout with its default config:
+   ```bash
+   bun scripts/handout-thumbnail.ts <route-without-leading-slash> '<css selector>' public/handout_examples/<kebab-name>.png
+   ```
+   - Pass the route without the leading slash (`chalkboard`, not `/chalkboard`). Git Bash rewrites `/chalkboard` into a Windows path.
+   - The selector must match the handout's outermost visible box. The script clears every ancestor background, so the PNG is transparent outside the handout, like the existing thumbnails. For example, Chalkboard uses `'[style*="aspect-ratio"]'`. If nothing unique exists, add an `id` to the renderer's root element.
+   - The script uses a fresh Chrome profile, so the thumbnail shows the config defaults and not your local edits.
+   - Read the PNG afterwards to check it framed the handout correctly.
+2. Add the entry to `getExampleImage` in `src/HandoutTypeSelectorFloating.tsx`:
+   ```typescript
+   [HandoutName]: "/handout_examples/[kebab-name].png",
+   ```
+
 ## Key Points to Remember
 
 1. **Type Pattern**: Use `ExtractConfigValues<typeof [HandoutName]Config>` for type safety
@@ -106,6 +123,8 @@ bun x tsc --noEmit
 ```
 
 This will catch any TypeScript errors in your implementation.
+
+The type check does not catch a missing thumbnail. Before calling the handout done, confirm that `public/handout_examples/<kebab-name>.png` exists and that `getExampleImage` has an entry for the new handout (step 5).
 
 ## Example: Crystal Ball
 

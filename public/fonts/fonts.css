@@ -439,3 +439,11 @@
   font-display: swap;
   src: url("/fonts/Schoolbell-Regular.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "Fredericka the Great";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/FrederickatheGreat-Regular.ttf") format("truetype");
+}

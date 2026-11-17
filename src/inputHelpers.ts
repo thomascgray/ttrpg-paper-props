@@ -139,7 +139,20 @@ export const fontWeightPicker = (overrides?: {
   };
 };
 
-export const paragraphArray = (overrides?: { name?: string }) => {
+export const paragraphArray = (overrides?: {
+  name?: string;
+  fontSizeRange?: { min: number; max: number; step?: number };
+  // Defaults applied to paragraphs added with the "Add" button
+  newParagraphDefaults?: {
+    font?: FontFamily;
+    fontSize?: number;
+    fontWeight?: string;
+    textAlign?: string;
+    rotation?: number;
+  };
+  // Adds a per-paragraph rotation slider; the renderer must apply `rotation`
+  showRotation?: boolean;
+}) => {
   return {
     name: "Paragraph Array",
     type: "paragraph_array" as const,
@@ -155,6 +168,38 @@ export const select = (overrides?: {
   return {
     name: "Select",
     type: "select" as const,
+    value: "",
+    options: [],
+    ...overrides,
+  };
+};
+
+// Like select, but every option is visible at once, with an optional
+// description under its label. Suits a handful of options that need explaining.
+export const radio = (overrides?: {
+  name?: string;
+  value?: string;
+  options?: Array<{ label: string; value: string; description?: string }>;
+}) => {
+  return {
+    name: "Radio",
+    type: "radio" as const,
+    value: "",
+    options: [],
+    ...overrides,
+  };
+};
+
+// Like radio, but each option is a picture tile. `image` defaults to the
+// option's value, so a list of image paths needs no extra field.
+export const imageRadio = (overrides?: {
+  name?: string;
+  value?: string;
+  options?: Array<{ label: string; value: string; image?: string }>;
+}) => {
+  return {
+    name: "Image Radio",
+    type: "image_radio" as const,
     value: "",
     options: [],
     ...overrides,
@@ -191,12 +236,39 @@ export const legendItems = (overrides?: { name?: string; value?: string }) => {
   };
 };
 
+export const booksArray = (overrides?: { name?: string }) => {
+  return {
+    name: "Books",
+    type: "books_array" as const,
+    ...overrides,
+  };
+};
+
 export const textStyle = (overrides?: { name?: string; value?: string }) => {
   return {
     name: "Text Style",
     type: "text_style" as const,
     value: "",
     ...overrides,
+  };
+};
+
+export const action = (params: {
+  name: string;
+  handler: (currentData: Record<string, any>) => Record<string, any>;
+  variant?: "primary" | "secondary";
+  dynamicLabel?: {
+    path: string;
+    labels: Record<string, string>;
+  };
+}) => {
+  return {
+    name: params.name,
+    type: "action" as const,
+    handler: params.handler,
+    variant: params.variant ?? "secondary",
+    dynamicLabel: params.dynamicLabel,
+    value: null,
   };
 };
 

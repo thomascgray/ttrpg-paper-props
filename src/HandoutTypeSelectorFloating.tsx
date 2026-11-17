@@ -23,6 +23,10 @@ const getExampleImage = (handoutType: AllConfigNames): string | null => {
     TallVertical1Flag: "/handout_examples/vertical-flag.png",
     HangingWoodenSign: "/handout_examples/hanging-sign.png",
     Rectangle1WoodenSign: "/handout_examples/rectangle-sign.png",
+    BookStack: "/handout_examples/book-stack.png",
+    Gravestone: "/handout_examples/gravestone.png",
+    Chalkboard: "/handout_examples/chalkboard.png",
+    Envelope: "/handout_examples/envelope.png",
   };
 
   return exampleImages[handoutType] || null;
