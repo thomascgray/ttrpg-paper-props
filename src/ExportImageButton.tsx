@@ -6,6 +6,36 @@ import { Menu, Radio, Checkbox } from "@mantine/core";
 import { useSnapshot } from "valtio";
 import { appState as appStateProxy } from "./appState";
 
+// html-to-image renders the node inside an SVG <foreignObject>, which is its own
+// document. Filters like `url(#roughEdges)` point at <filter> elements declared
+// globally in main.tsx, outside the captured node, so they resolve to nothing
+// and the effect silently disappears from the export. Copy those filter
+// definitions into the captured node for the duration of the export.
+const injectGlobalSvgFilters = (target: HTMLElement) => {
+  const filters = Array.from(
+    document.querySelectorAll<SVGFilterElement>("filter[id]")
+  ).filter((filter) => !target.contains(filter));
+
+  if (filters.length === 0) return () => {};
+
+  const svgNs = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNs, "svg");
+  svg.setAttribute("width", "0");
+  svg.setAttribute("height", "0");
+  svg.setAttribute("aria-hidden", "true");
+  svg.style.position = "absolute";
+  svg.style.overflow = "hidden";
+  svg.style.pointerEvents = "none";
+
+  const defs = document.createElementNS(svgNs, "defs");
+  filters.forEach((filter) => defs.appendChild(filter.cloneNode(true)));
+  svg.appendChild(defs);
+
+  // append, not prepend: .copy-markdown styles key off :first-child
+  target.appendChild(svg);
+  return () => svg.remove();
+};
+
 export const ExportImageButton = () => {
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
@@ -58,6 +88,7 @@ export const ExportImageButton = () => {
   const handleExport = async () => {
     setIsExporting(true);
     setExportSuccess(false);
+    let removeInjectedFilters = () => {};
 
     try {
       // Ensure all fonts are loaded before starting
@@ -107,6 +138,7 @@ export const ExportImageButton = () => {
       // Ensure fonts are ready for the element to capture
 
       let dataUrl: string;
+      removeInjectedFilters = injectGlobalSvgFilters(elementToCapture);
 
       try {
         // Try html-to-image first (better CSS support)
@@ -171,6 +203,7 @@ export const ExportImageButton = () => {
       console.error("Export failed:", error);
       alert("Failed to export image. Please try again.");
     } finally {
+      removeInjectedFilters();
       setIsExporting(false);
     }
   };
@@ -187,10 +220,16 @@ export const ExportImageButton = () => {
           <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
         ) : exportSuccess ? (
           <Icon name="check" colour="white" size="md" />
+        ) : appState.exportMode === "clipboard" ? (
+          <Icon name="copy" colour="white" size="md" />
         ) : (
           <Icon name="download" colour="white" size="md" />
         )}
-        <span className="text-white font-bold text-sm">Export Handout</span>
+        <span className="text-white font-bold text-sm">
+          {appState.exportMode === "clipboard"
+            ? "Copy to clipboard"
+            : "Export Handout"}
+        </span>
       </button>
 
       {exportSuccess && (

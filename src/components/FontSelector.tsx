@@ -105,6 +105,12 @@ export const FontSelector = (props: iFontSelector) => {
             <option className="font-schoolbell" value="font-schoolbell">
               Schoolbell
             </option>
+            <option
+              className="font-fredericka-the-great"
+              value="font-fredericka-the-great"
+            >
+              Fredericka the Great
+            </option>
           </optgroup>
 
           <optgroup className="font-sans" label="Fantasy">

@@ -20,6 +20,7 @@ export const iconNames = [
   "adjustments-horizontal",
   "file-description",
   "download",
+  "copy",
   "settings",
   "settings_filled",
 ] as const;
@@ -31,6 +32,7 @@ export const iconsThatUserStrokeInsteadOfFill: IconName[] = [
   "adjustments-horizontal",
   "file-description",
   "download",
+  "copy",
   "settings",
 ];
 
@@ -132,6 +134,13 @@ export const Icon = (props: IconProps) => {
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <polyline points="7 10 12 15 17 10" />
             <line x1="12" y1="15" x2="12" y2="3" />
+          </>
+        )}
+
+        {props.name === "copy" && (
+          <>
+            <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+            <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
           </>
         )}
 

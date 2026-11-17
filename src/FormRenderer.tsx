@@ -12,10 +12,13 @@ import { ImageFilterSelector } from "./components/ImageFilterSelector";
 import { TextAlignmentSelector } from "./components/TextAlignmentSelector";
 import { FontWeightSelector } from "./components/FontWeightSelector";
 import { Select } from "./components/Select";
+import { RadioGroup } from "./components/RadioGroup";
+import { ImageRadioGroup } from "./components/ImageRadioGroup";
 import { ImageInput } from "./components/ImageInput";
 import { ParagraphArray } from "./components/ParagraphArray";
 import { BlendModeSelector } from "./components/TextFilterSelector";
 import { LegendItems } from "./components/LegendItems";
+import { BooksArray } from "./components/BooksArray";
 import { TextStyleSelector } from "./components/TextStyleSelector";
 import XYPicker from "./components/XYPicker";
 
@@ -184,6 +187,28 @@ const renderFormInput = (
         />
       );
 
+    case "radio":
+      return (
+        <RadioGroup
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          options={restConfig.options ?? []}
+          onUpdate={handleUpdate}
+        />
+      );
+
+    case "image_radio":
+      return (
+        <ImageRadioGroup
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          options={restConfig.options ?? []}
+          onUpdate={handleUpdate}
+        />
+      );
+
     case "image_input":
       return (
         <ImageInput
@@ -210,6 +235,9 @@ const renderFormInput = (
           label={name}
           value={value ?? restConfig.value}
           onUpdate={handleUpdate}
+          fontSizeRange={restConfig.fontSizeRange}
+          newParagraphDefaults={restConfig.newParagraphDefaults}
+          showRotation={restConfig.showRotation}
         />
       );
 
@@ -238,6 +266,17 @@ const renderFormInput = (
           label={name}
           value={value ?? restConfig.value}
           onUpdate={handleUpdate}
+        />
+      );
+
+    case "books_array":
+      return (
+        <BooksArray
+          key={path}
+          label={name}
+          value={value ?? restConfig.value}
+          onUpdate={handleUpdate}
+          bookStackImage={data?.bookStackImage as string | undefined}
         />
       );
 

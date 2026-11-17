@@ -26,6 +26,7 @@ export enum FontFamily {
   LACQUER = "font-lacquer",
   MANSALVA = "font-mansalva",
   SCHOOLBELL = "font-schoolbell",
+  FREDERICKA_THE_GREAT = "font-fredericka-the-great",
 
   // Fantasy fonts
   MEDIEVAL_SHARP = "font-medieval-sharp",

@@ -308,6 +308,10 @@ body {
   font-family: "Schoolbell", cursive;
 }
 
+.font-fredericka-the-great {
+  font-family: "Fredericka the Great", cursive;
+}
+
 .img-filter-none img,
 .img-filter-none {
   filter: none;
@@ -437,8 +441,44 @@ body {
   mix-blend-mode: multiply;
 }
 
+/*
+  Carved stone text is two stacked copies of the same text:
+  - .carved-stone-highlight sits a hair lower and uses screen, so it reads as
+    light catching the bottom lip of the cut
+  - .carved-stone-text uses multiply so the stone texture shows through the
+    letters, with a top inner shadow for depth
+  multiply on a single layer would wipe out white highlights, hence two layers.
+  Shadows are in em so they scale with each section's cqw font size.
+  --carve-depth (0-1) is set inline by the renderer. The blend modes live on
+  the layer wrappers, because the rough-edges filter isolates its children
+  from the stone image.
+*/
+.carved-stone-highlight {
+  color: rgb(255 255 255 / calc(var(--carve-depth, 0.7) * 0.45));
+  transform: translateY(0.035em);
+}
+
+.carved-stone-highlight-layer {
+  mix-blend-mode: screen;
+}
+
+.carved-stone-text-layer {
+  mix-blend-mode: multiply;
+}
+
+.carved-stone-text {
+  color: rgb(20 18 16 / calc(var(--carve-depth, 0.7) * 0.85));
+  text-shadow:
+    0 -0.025em 0.02em rgb(0 0 0 / calc(var(--carve-depth, 0.7) * 0.9)),
+    0 0 0.04em rgb(0 0 0 / calc(var(--carve-depth, 0.7) * 0.4));
+}
+
 .rough-edges {
   filter: url(#roughEdges);
+}
+
+.rough-edges-subtle {
+  filter: url(#roughEdgesSubtle);
 }
 
 .font-light {

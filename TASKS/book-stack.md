@@ -21,8 +21,13 @@ The handout will:
 - Book stack images live in: `public/images/book_stacks/`
 - Current images: `book-stack-2915944_1920.png` (7 books)
 - Type should be `"object"` to appear under "Objects w/ Superimposed Text"
-- Each book stack image will need its own configuration for book positions/rotations
-- Consider using a similar pattern to `textFull()` helper for book text properties, but customized for book spine text (includes position/rotation)
+- **Single source of truth for book defaults**: `src/bookStackDefaults.ts`
+- **To add a new book stack image**:
+  1. Add image to `public/images/book_stacks/`
+  2. Add entry to `BOOK_STACK_DEFAULTS` in `src/bookStackDefaults.ts`
+  3. Add label to `BOOK_STACK_LABELS` in same file
+  4. Done - form and reset button handle everything automatically
+- When switching images, books sync automatically (truncate if fewer, add defaults if more)
 
 ## Blockers/Issues
 
@@ -43,6 +48,15 @@ None currently
 [X] Add routes in `src/routes.ts`
 [X] Update `App.tsx` with import and conditional rendering
 [X] Test that the handout appears in selector and renders correctly
+[X] Refactor to single source of truth for book defaults
+  [X] Create `src/bookStackDefaults.ts` with all defaults in one place
+  [X] Create `src/components/BooksArray.tsx` form component
+  [X] Add `booksArray` input helper
+  [X] Update BookStackConfig to use dynamic `books` array instead of `book1`-`book7`
+  [X] Update renderer to iterate over `books` array
+  [X] Wire up automatic sync when switching book stack images
+[ ] Test the refactored implementation
+[ ] Add more book stack images
 
 ## Work Log
 
@@ -67,5 +81,30 @@ Files modified:
 - X offset: Changed from `left: ${50 + book.xOffset}%` to `left: calc(50% + ${book.xOffset}cqw)` for proper CQW-based positioning
 
 Files modified:
+- src/renderer/BookStack.tsx
+
+[2026-01-12] Refactored to single source of truth for book defaults
+- Created `src/bookStackDefaults.ts` containing:
+  - `BOOK_STACK_DEFAULTS`: All book position/text/style data per image
+  - `BOOK_STACK_LABELS`: Display labels for image selector
+  - `createBooksFromDefaults()`: Creates books array with IDs
+  - `syncBooksToImage()`: Syncs books when switching images (keeps user text, truncates/extends as needed)
+- Created `src/components/BooksArray.tsx`: Collapsible form component for editing books array
+- Added `booksArray` input helper to `src/inputHelpers.ts`
+- Added `books_array` type to `src/types.ts`
+- Added BooksArray case to `src/FormRenderer.tsx`
+- Refactored `BookStackConfig` to use dynamic `books` array instead of static `book1`-`book7` fields
+- Removed old `bookSpineText` helper and `bookStackPositionDefaults` export
+- Updated `src/renderer/BookStack.tsx` to iterate over `handout.books` array
+
+Files created:
+- src/bookStackDefaults.ts
+- src/components/BooksArray.tsx
+
+Files modified:
+- src/inputHelpers.ts
+- src/types.ts
+- src/FormRenderer.tsx
+- src/handoutConfigs.ts
 - src/renderer/BookStack.tsx
 

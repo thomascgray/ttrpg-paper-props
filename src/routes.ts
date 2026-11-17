@@ -24,6 +24,10 @@ export const routes: Record<string, AllConfigNames> = {
   "/flag": "TallVertical1Flag", // Alias for flag
   "/test": "Test" as any,
   "/book-stack": "BookStack",
+  "/gravestone": "Gravestone",
+  "/headstone": "Gravestone", // Alias for gravestone
+  "/chalkboard": "Chalkboard",
+  "/envelope": "Envelope",
 };
 
 // Reverse mapping: handout type to URL path
@@ -45,6 +49,9 @@ export const handoutToRoute: Record<AllConfigNames, string> = {
   TallVertical1Flag: "/flag-tall-vertical-1",
   Test: "/test" as any,
   BookStack: "/book-stack",
+  Gravestone: "/gravestone",
+  Chalkboard: "/chalkboard",
+  Envelope: "/envelope",
 };
 
 // Get handout type from current URL

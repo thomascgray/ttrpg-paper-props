@@ -35,6 +35,9 @@ import { CrystalBall } from "./renderer/CrystalBall";
 import { TallVertical1Flag } from "./renderer/TallVertical1Flag";
 import { Test } from "./renderer/Test";
 import { BookStack } from "./renderer/BookStack";
+import { Gravestone } from "./renderer/Gravestone";
+import { Chalkboard } from "./renderer/Chalkboard";
+import { Envelope } from "./renderer/Envelope";
 import { BackgroundSelector } from "./BackgroundSelector";
 import { getHandoutFromPath, updateUrlForHandout } from "./routes";
 import { SignInFloatingButton } from "./SignInFloatingButton";
@@ -115,7 +118,7 @@ function App() {
   }, [appState.selectedHandoutType]);
 
   const selectedConfig = allConfigs.find(
-    (config) => config.name === appState.selectedHandoutType
+    (config) => config.name === appState.selectedHandoutType,
   )!;
 
   const formConfig = extractConfigAsFormConfig(selectedConfig.config);
@@ -137,7 +140,7 @@ function App() {
 
   // Handle form action buttons - just apply whatever the handler returns
   const handleFormAction = (
-    handler: (data: Record<string, any>) => Record<string, any>
+    handler: (data: Record<string, any>) => Record<string, any>,
   ) => {
     const currentData = currentHandoutTransientRow?.data;
     if (!currentData) return;
@@ -210,18 +213,18 @@ function App() {
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
               : appState.backgroundType === "gradient"
-              ? {
-                  background:
-                    appState.backgroundGradientType === "linear"
-                      ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                      : appState.backgroundGradientType === "radial"
-                      ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                      : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
-                }
-              : appState.backgroundType === "custom" &&
-                appState.backgroundCustomImage
-              ? {}
-              : { backgroundColor: "#2f3640" }),
+                ? {
+                    background:
+                      appState.backgroundGradientType === "linear"
+                        ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                        : appState.backgroundGradientType === "radial"
+                          ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                          : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                  }
+                : appState.backgroundType === "custom" &&
+                    appState.backgroundCustomImage
+                  ? {}
+                  : { backgroundColor: "#2f3640" }),
           }}
         >
           {/* Background layer for custom image with optional blur */}
@@ -248,6 +251,21 @@ function App() {
               improvements, but that means unfortunately its common for things
               to explode, snapshots to be lost, etc. Sorry about that!
             </p>
+            {import.meta.env.DEV && (
+              <button
+                className="mt-4 bg-red-700 text-white py-1 px-2 font-bold text-xs rounded-sm hover:bg-red-800"
+                title="Dev only: wipes IndexedDB and storage so you see the first-visit experience"
+                onClick={async () => {
+                  db.close();
+                  await db.delete();
+                  localStorage.clear();
+                  sessionStorage.clear();
+                  window.location.reload();
+                }}
+              >
+                Delete all local data and refresh
+              </button>
+            )}
           </div>
 
           {/* second floating bubble - what is this tool? */}
@@ -309,6 +327,34 @@ function App() {
                   Tell me on Bluesky!
                 </a>
               </p>
+              <p className="font-bold text-sm mt-4">Image use and licensing</p>
+              <ul className="list-disc list-inside">
+                <li>
+                  Every image in this tool is either my own work (e.g photos of
+                  graves), copyright free images sourced from Pixabay or
+                  Unsplash, or the odd image from Google Images. Most of them
+                  I've had to clean up a bit in an image editor. No AI-generated
+                  images are used at all.
+                </li>
+                <li>
+                  {" "}
+                  You may use handouts made with this tool in commercial
+                  projects, as long as you credit Tombola's RPG Handout Builder,
+                  Tom Gray, and{" "}
+                  <a
+                    target="_blank"
+                    className="text-blue-500 underline"
+                    href="https://tomg.cool/"
+                  >
+                    tomg.cool
+                  </a>
+                  .
+                </li>
+                <li>
+                  You may not extract the raw source images from this tool and
+                  use them on their own, for any purpose.
+                </li>
+              </ul>
             </details>
           </div>
 
@@ -322,7 +368,7 @@ function App() {
                 onClick={() => {
                   saveVersion(
                     appState.selectedHandoutType,
-                    currentHandoutTransientRow.data
+                    currentHandoutTransientRow.data,
                   );
                 }}
               >
@@ -445,7 +491,7 @@ function App() {
                     onClick={() => {
                       saveVersion(
                         appState.selectedHandoutType,
-                        currentHandoutTransientRow.data
+                        currentHandoutTransientRow.data,
                       );
                     }}
                   >
@@ -531,18 +577,18 @@ function App() {
             ...(appState.backgroundType === "color"
               ? { backgroundColor: appState.backgroundColor }
               : appState.backgroundType === "gradient"
-              ? {
-                  background:
-                    appState.backgroundGradientType === "linear"
-                      ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                      : appState.backgroundGradientType === "radial"
-                      ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
-                      : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
-                }
-              : appState.backgroundType === "custom" &&
-                appState.backgroundCustomImage
-              ? {}
-              : { backgroundColor: "#2f3640" }),
+                ? {
+                    background:
+                      appState.backgroundGradientType === "linear"
+                        ? `linear-gradient(${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                        : appState.backgroundGradientType === "radial"
+                          ? `radial-gradient(circle at ${appState.backgroundGradientPosition}, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`
+                          : `conic-gradient(from ${appState.backgroundGradientAngle}deg, ${appState.backgroundGradientStart}, ${appState.backgroundGradientEnd})`,
+                  }
+                : appState.backgroundType === "custom" &&
+                    appState.backgroundCustomImage
+                  ? {}
+                  : { backgroundColor: "#2f3640" }),
           }}
         >
           {/* Background layer for custom image with optional blur */}
@@ -573,8 +619,8 @@ function App() {
                     translate(${
                       currentHandoutTransientRow.data.positioning?.xOffset || 0
                     }%, ${
-                  currentHandoutTransientRow.data.positioning?.yOffset || 0
-                }%)
+                      currentHandoutTransientRow.data.positioning?.yOffset || 0
+                    }%)
                     rotate(${
                       currentHandoutTransientRow.data.positioning?.rotation || 0
                     }deg) 
@@ -673,6 +719,18 @@ function App() {
                 {currentHandoutTransientRow.type === "BookStack" &&
                   appState.selectedHandoutType === "BookStack" && (
                     <BookStack handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "Gravestone" &&
+                  appState.selectedHandoutType === "Gravestone" && (
+                    <Gravestone handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "Chalkboard" &&
+                  appState.selectedHandoutType === "Chalkboard" && (
+                    <Chalkboard handout={currentHandoutTransientRow.data} />
+                  )}
+                {currentHandoutTransientRow.type === "Envelope" &&
+                  appState.selectedHandoutType === "Envelope" && (
+                    <Envelope handout={currentHandoutTransientRow.data} />
                   )}
               </div>
             </div>

@@ -1,22 +1,15 @@
+import Markdown from "react-markdown";
 import type { ExtractConfigValues } from "../types";
 import type { BookStackConfig } from "../handoutConfigs";
+import type { BookSpine } from "../bookStackDefaults";
 
 type BookStackData = ExtractConfigValues<typeof BookStackConfig>;
 
 interface BookSpineProps {
-  book: {
-    text: string;
-    font: string;
-    fontSize: number;
-    fontWeight: string;
-    colour: string;
-    xOffset: number;
-    yOffset: number;
-    rotation: number;
-  };
+  book: BookSpine;
 }
 
-const BookSpine = ({ book }: BookSpineProps) => {
+const BookSpineComponent = ({ book }: BookSpineProps) => {
   return (
     <div
       className={`absolute whitespace-nowrap ${book.font} ${book.fontWeight}`}
@@ -29,7 +22,7 @@ const BookSpine = ({ book }: BookSpineProps) => {
         textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
       }}
     >
-      {book.text}
+      <Markdown className="copy-markdown text-center [&_p]:whitespace-nowrap">{book.text}</Markdown>
     </div>
   );
 };
@@ -37,16 +30,6 @@ const BookSpine = ({ book }: BookSpineProps) => {
 export const BookStack: React.FC<{ handout: BookStackData }> = ({
   handout,
 }) => {
-  const books = [
-    handout.book1,
-    handout.book2,
-    handout.book3,
-    handout.book4,
-    handout.book5,
-    handout.book6,
-    handout.book7,
-  ];
-
   return (
     <div
       style={{ width: `${handout.pageWidth}cqw` }}
@@ -68,8 +51,8 @@ export const BookStack: React.FC<{ handout: BookStackData }> = ({
 
           {/* Text overlay container */}
           <div className="absolute inset-0">
-            {books.map((book, index) => (
-              <BookSpine key={index} book={book} />
+            {handout.books.map((book) => (
+              <BookSpineComponent key={book.id} book={book} />
             ))}
           </div>
         </div>

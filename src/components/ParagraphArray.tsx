@@ -14,18 +14,25 @@ interface Paragraph {
   fontSize: number;
   fontWeight: string;
   textAlign: string;
+  rotation?: number;
 }
 
 interface ParagraphArrayProps {
   label: string;
   value: Paragraph[];
   onUpdate: (value: Paragraph[]) => void;
+  fontSizeRange?: { min: number; max: number; step?: number };
+  newParagraphDefaults?: Partial<Omit<Paragraph, "id" | "mainCopy">>;
+  showRotation?: boolean;
 }
 
 export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
   label,
   value,
   onUpdate,
+  fontSizeRange,
+  newParagraphDefaults,
+  showRotation,
 }) => {
   const addParagraph = () => {
     const newParagraph: Paragraph = {
@@ -35,6 +42,7 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
       fontSize: 1.4,
       fontWeight: "font-normal",
       textAlign: "text-left",
+      ...newParagraphDefaults,
     };
     onUpdate([...value, newParagraph]);
   };
@@ -98,9 +106,9 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
           <RangeInput
             label="Font Size"
             value={paragraph.fontSize.toString()}
-            min={0.5}
-            max={6}
-            step={0.1}
+            min={fontSizeRange?.min ?? 0.5}
+            max={fontSizeRange?.max ?? 6}
+            step={fontSizeRange?.step ?? 0.1}
             suffix="cqw"
             onUpdate={(val) => updateParagraph(paragraph.id, "fontSize", val)}
           />
@@ -116,6 +124,18 @@ export const ParagraphArray: React.FC<ParagraphArrayProps> = ({
             value={paragraph.textAlign}
             onUpdate={(val) => updateParagraph(paragraph.id, "textAlign", val)}
           />
+
+          {showRotation && (
+            <RangeInput
+              label="Rotation"
+              value={(paragraph.rotation ?? 0).toString()}
+              min={-45}
+              max={45}
+              step={0.5}
+              suffix="°"
+              onUpdate={(val) => updateParagraph(paragraph.id, "rotation", val)}
+            />
+          )}
         </div>
       ))}
 

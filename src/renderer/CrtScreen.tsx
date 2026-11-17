@@ -85,9 +85,10 @@ translateZ(0px)`;
     <>
       <Bulges id="crt" scale={handout.bulgeEffect} />
       <div
-        className="xl:max-w-[45em] max-w-[40em]"
+        className="max-w-[80em]"
         style={{
-          width: `${handout.dimensions.pageWidth}cqw`,
+          // Data saved before pageWidth moved out of `dimensions` has no value
+          width: `${handout.pageWidth ?? 60}cqw`,
         }}
       >
         <div

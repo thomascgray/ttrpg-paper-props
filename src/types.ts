@@ -13,9 +13,12 @@ import type {
   fontWeightPicker,
   paragraphArray,
   select,
+  radio,
+  imageRadio,
   blendMode,
   crtPixelColours,
   legendItems,
+  booksArray,
   textStyle,
   x_y_position,
   action,
@@ -39,9 +42,12 @@ export type ConfigTuple = [
     | ReturnType<typeof fontWeightPicker>
     | ReturnType<typeof paragraphArray>
     | ReturnType<typeof select>
+    | ReturnType<typeof radio>
+    | ReturnType<typeof imageRadio>
     | ReturnType<typeof blendMode>
     | ReturnType<typeof crtPixelColours>
     | ReturnType<typeof legendItems>
+    | ReturnType<typeof booksArray>
     | ReturnType<typeof textStyle>
     | ReturnType<typeof x_y_position>
     | ReturnType<typeof action>
