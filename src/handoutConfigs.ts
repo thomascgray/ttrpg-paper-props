@@ -1338,19 +1338,6 @@ export const EnvelopeConfig = {
   paperTint: ["#FFFFFF", colour({ name: "Paper Tint" })],
   isPaperShadow: [true, boolean({ name: "Inset paper shadow" })],
   inkColor: ["ink-black", inkSelector()],
-  flapStyle: [
-    "pointed",
-    select({
-      name: "Flap Style (back only)",
-      value: "pointed",
-      options: [
-        { label: "Pointed", value: "pointed" },
-        { label: "Rounded", value: "rounded" },
-        { label: "Straight", value: "straight" },
-      ],
-    }),
-  ],
-  isOpened: [false, boolean({ name: "Opened (back only)" })],
   addressLines: [
     [
       envelopeAddressLine("To the Honourable Magistrate Vell", 5.5),
@@ -1424,6 +1411,19 @@ export const EnvelopeConfig = {
     ],
     perforated: [true, boolean({ name: "Perforated Edges" })],
   },
+  flapStyle: [
+    "pointed",
+    select({
+      name: "Flap Style (back only)",
+      value: "pointed",
+      options: [
+        { label: "Pointed", value: "pointed" },
+        { label: "Rounded", value: "rounded" },
+        { label: "Straight", value: "straight" },
+      ],
+    }),
+  ],
+  isOpened: [false, boolean({ name: "Opened (back only)" })],
   backSeal: {
     showSeal: [true, boolean({ name: "Show Wax Seal" })],
     sealImage: [

@@ -108,3 +108,30 @@ Files modified:
 - src/handoutConfigs.ts
 - src/renderer/BookStack.tsx
 
+
+## PR Description
+
+- new handouts
+    - BookStack (object): `BookStack.tsx`, 9 book images in `public/images/books/`, per-book text/font/colour/rotation via `booksArray` input and `BooksArray.tsx`; `bookStackDefaults.ts` is the single source of defaults, books sync when switching image
+    - Gravestone: `Gravestone.tsx`, 12 stone images in `public/images/gravestones/`, carved-stone text (`.carved-stone-*` in `index.css`, two stacked layers) and `roughEdgesSubtle` filter in `main.tsx`
+    - Chalkboard: `Chalkboard.tsx`, slate with chalk text and optional frame, inline SVG chalk-fade filter
+    - Envelope: `Envelope.tsx` + `EnvelopePostmark.tsx`, front/back, flap styles, wax seal, postmark
+    - selector thumbnails in `public/handout_examples/`, routes in `routes.ts`, wiring in `App.tsx`
+
+- form inputs
+    - new `radio` and `image_radio` inputs (`RadioGroup.tsx`, `ImageRadioGroup.tsx`)
+    - new `action` input: buttons that transform handout data via `onAction` / `handleFormAction` in `App.tsx`; docs in `CLAUDE/action-buttons.md`
+    - `paragraphArray` options: `fontSizeRange`, `newParagraphDefaults`, `showRotation` (per-paragraph rotation slider)
+
+- export
+    - `ExportImageButton.tsx` copies global SVG filters into the captured node so rough-edge effects survive export
+    - button label/icon switch to "Copy to clipboard" in clipboard mode
+
+- misc
+    - Fredericka the Great font added (`fonts.css`, `FontSelector`, `enums.ts`)
+    - `PaperTextureSelect` grid shows 3-4 columns on wide screens
+    - `CrtScreen`: wider max width, `pageWidth` fallback for old saved data
+    - `BookCover`: applies `textTopMargin`
+    - `App.tsx`: image licensing notes in about section, dev-only "Delete all local data" button
+    - `scripts/handout-thumbnail.ts` generates selector thumbnails from the dev server
+    - specs added in `SPECS/` for chalkboard, envelope, tree trunk carving
